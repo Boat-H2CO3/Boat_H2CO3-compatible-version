@@ -54,7 +54,7 @@
                 android:visibility="invisible" />
 
             <org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard
-                android:id="@+id/mio_keyboard"
+                android:id="@+id/h2co3_keyboard"
                 android:layout_width="170dp"
                 android:layout_height="160dp"/>
 

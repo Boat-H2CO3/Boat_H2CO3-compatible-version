@@ -36,7 +36,7 @@ public class LogcatActivity extends H2CO3Activity {
     //public TextView textList, li;
     public List clientTxt() {
         //将读出来的一行行数据使用List存储
-        String filePath = LAUNCHER_FILE_DIR + "client_output.txt";
+        String filePath = LAUNCHER_FILE_DIR + "output.log";
 
         List<String> newList = new ArrayList<>();
         try {

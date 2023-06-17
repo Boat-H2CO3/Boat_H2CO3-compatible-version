@@ -89,6 +89,7 @@
 
         <activity
             android:name=".launch.boat.BoatActivity"
+            android:theme="@style/FullScreen"
             android:alwaysRetainTaskState="false"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:excludeFromRecents="false"

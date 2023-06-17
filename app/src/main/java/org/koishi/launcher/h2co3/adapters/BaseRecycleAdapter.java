@@ -124,7 +124,7 @@ public abstract class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseRec
     }
 
     /**
-     * 刷新数据
+     * Refresh数据
      */
     public void refresh(List<T> datas) {
         this.datas.clear();
@@ -133,7 +133,7 @@ public abstract class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseRec
     }
 
     /**
-     * 刷新数据
+     * Refresh数据
      */
     public void updata(List<T> data) {
         this.datas = data;

@@ -56,11 +56,11 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/sans"
-                android:text="Github: ShirosakiMio/BoatApp(forked)"
+                android:text="Github: ShirosakiMio/PojavLauncher(forked)"
                 android:textSize="16sp" />
 
             <ImageButton
-                android:id="@+id/lib_mio"
+                android:id="@+id/lib_h2co3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"

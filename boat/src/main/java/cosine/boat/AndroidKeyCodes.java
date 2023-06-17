@@ -1,14 +1,17 @@
 package cosine.boat;
 
+import android.annotation.SuppressLint;
 import android.view.KeyEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 
+@SuppressLint("SuspiciousIndentation")
 public class AndroidKeyCodes {
-	public static Map<Integer, Integer> keyCodeMap = new HashMap<Integer, Integer>();
-	static {
+    public static Map<Integer, Integer> keyCodeMap = new HashMap<Integer, Integer>();
+
+    static {
 	
 	    
 	    /*
@@ -57,8 +60,8 @@ public class AndroidKeyCodes {
 		//keyCodeMap.put(KeyEvent.KEYCODE_KANA, BoatKeycodes.BOAT_KEYBOARD_KANA);
 		
 		*/
-		
-		keyCodeMap.put(KeyEvent.KEYCODE_MINUS, BoatKeycodes.BOAT_KEYBOARD_minus);
+
+        keyCodeMap.put(KeyEvent.KEYCODE_MINUS, BoatKeycodes.BOAT_KEYBOARD_minus);
         keyCodeMap.put(KeyEvent.KEYCODE_EQUALS, BoatKeycodes.BOAT_KEYBOARD_equal);
         keyCodeMap.put(KeyEvent.KEYCODE_LEFT_BRACKET, BoatKeycodes.BOAT_KEYBOARD_bracketleft);
         keyCodeMap.put(KeyEvent.KEYCODE_RIGHT_BRACKET, BoatKeycodes.BOAT_KEYBOARD_bracketright);
@@ -172,60 +175,57 @@ public class AndroidKeyCodes {
 		*/
         keyCodeMap.put(KeyEvent.KEYCODE_0, BoatKeycodes.BOAT_KEYBOARD_0);
         keyCodeMap.put(KeyEvent.KEYCODE_1, BoatKeycodes.BOAT_KEYBOARD_1);
-		keyCodeMap.put(KeyEvent.KEYCODE_2,BoatKeycodes.BOAT_KEYBOARD_2);
-		keyCodeMap.put(KeyEvent.KEYCODE_3,BoatKeycodes.BOAT_KEYBOARD_3);
-		keyCodeMap.put(KeyEvent.KEYCODE_4,BoatKeycodes.BOAT_KEYBOARD_4);
-		keyCodeMap.put(KeyEvent.KEYCODE_5,BoatKeycodes.BOAT_KEYBOARD_5);
-		keyCodeMap.put(KeyEvent.KEYCODE_6,BoatKeycodes.BOAT_KEYBOARD_6);
-		keyCodeMap.put(KeyEvent.KEYCODE_7,BoatKeycodes.BOAT_KEYBOARD_7);
-		keyCodeMap.put(KeyEvent.KEYCODE_8,BoatKeycodes.BOAT_KEYBOARD_8);
-		keyCodeMap.put(KeyEvent.KEYCODE_9,BoatKeycodes.BOAT_KEYBOARD_9);
-		//q-p
-		keyCodeMap.put(KeyEvent.KEYCODE_Q,BoatKeycodes.BOAT_KEYBOARD_Q);
-		keyCodeMap.put(KeyEvent.KEYCODE_W,BoatKeycodes.BOAT_KEYBOARD_W);
-		keyCodeMap.put(KeyEvent.KEYCODE_E,BoatKeycodes.BOAT_KEYBOARD_E);
-		keyCodeMap.put(KeyEvent.KEYCODE_R,BoatKeycodes.BOAT_KEYBOARD_R);
-		keyCodeMap.put(KeyEvent.KEYCODE_T,BoatKeycodes.BOAT_KEYBOARD_T);
-		keyCodeMap.put(KeyEvent.KEYCODE_Y,BoatKeycodes.BOAT_KEYBOARD_Y);
-		keyCodeMap.put(KeyEvent.KEYCODE_U,BoatKeycodes.BOAT_KEYBOARD_U);
-		keyCodeMap.put(KeyEvent.KEYCODE_I,BoatKeycodes.BOAT_KEYBOARD_I);
-		keyCodeMap.put(KeyEvent.KEYCODE_O,BoatKeycodes.BOAT_KEYBOARD_O);
-		keyCodeMap.put(KeyEvent.KEYCODE_P,BoatKeycodes.BOAT_KEYBOARD_P);
-		//a-l
-		keyCodeMap.put(KeyEvent.KEYCODE_A,BoatKeycodes.BOAT_KEYBOARD_A);
-		keyCodeMap.put(KeyEvent.KEYCODE_S,BoatKeycodes.BOAT_KEYBOARD_S);
-		keyCodeMap.put(KeyEvent.KEYCODE_D,BoatKeycodes.BOAT_KEYBOARD_D);
-		keyCodeMap.put(KeyEvent.KEYCODE_F,BoatKeycodes.BOAT_KEYBOARD_F);
-		keyCodeMap.put(KeyEvent.KEYCODE_G,BoatKeycodes.BOAT_KEYBOARD_G);
-		keyCodeMap.put(KeyEvent.KEYCODE_H,BoatKeycodes.BOAT_KEYBOARD_H);
-		keyCodeMap.put(KeyEvent.KEYCODE_J,BoatKeycodes.BOAT_KEYBOARD_J);
-		keyCodeMap.put(KeyEvent.KEYCODE_K,BoatKeycodes.BOAT_KEYBOARD_K);
-		keyCodeMap.put(KeyEvent.KEYCODE_L,BoatKeycodes.BOAT_KEYBOARD_L);
-		//z-m
-		keyCodeMap.put(KeyEvent.KEYCODE_Z,BoatKeycodes.BOAT_KEYBOARD_Z);
-		keyCodeMap.put(KeyEvent.KEYCODE_X,BoatKeycodes.BOAT_KEYBOARD_X);
-		keyCodeMap.put(KeyEvent.KEYCODE_C,BoatKeycodes.BOAT_KEYBOARD_C);
-		keyCodeMap.put(KeyEvent.KEYCODE_V,BoatKeycodes.BOAT_KEYBOARD_V);
-		keyCodeMap.put(KeyEvent.KEYCODE_B,BoatKeycodes.BOAT_KEYBOARD_B);
-		keyCodeMap.put(KeyEvent.KEYCODE_N,BoatKeycodes.BOAT_KEYBOARD_N);
-		keyCodeMap.put(KeyEvent.KEYCODE_M,BoatKeycodes.BOAT_KEYBOARD_M);
-		//f1-f12
-		keyCodeMap.put(KeyEvent.KEYCODE_F1,BoatKeycodes.BOAT_KEYBOARD_F1);
-		keyCodeMap.put(KeyEvent.KEYCODE_F2,BoatKeycodes.BOAT_KEYBOARD_F2);
-		keyCodeMap.put(KeyEvent.KEYCODE_F3,BoatKeycodes.BOAT_KEYBOARD_F3);
-		keyCodeMap.put(KeyEvent.KEYCODE_F4,BoatKeycodes.BOAT_KEYBOARD_F4);
-		keyCodeMap.put(KeyEvent.KEYCODE_F5,BoatKeycodes.BOAT_KEYBOARD_F5);
-		keyCodeMap.put(KeyEvent.KEYCODE_F6,BoatKeycodes.BOAT_KEYBOARD_F6);
-		keyCodeMap.put(KeyEvent.KEYCODE_F7,BoatKeycodes.BOAT_KEYBOARD_F7);
-		keyCodeMap.put(KeyEvent.KEYCODE_F8,BoatKeycodes.BOAT_KEYBOARD_F8);
-		keyCodeMap.put(KeyEvent.KEYCODE_F9,BoatKeycodes.BOAT_KEYBOARD_F9);
-		keyCodeMap.put(KeyEvent.KEYCODE_F10,BoatKeycodes.BOAT_KEYBOARD_F10);
-		keyCodeMap.put(KeyEvent.KEYCODE_F11,BoatKeycodes.BOAT_KEYBOARD_F11);
-		keyCodeMap.put(KeyEvent.KEYCODE_F12,BoatKeycodes.BOAT_KEYBOARD_F12);
-		
-		
-		
-		
-		
-	}
+        keyCodeMap.put(KeyEvent.KEYCODE_2,BoatKeycodes.BOAT_KEYBOARD_2);
+        keyCodeMap.put(KeyEvent.KEYCODE_3,BoatKeycodes.BOAT_KEYBOARD_3);
+        keyCodeMap.put(KeyEvent.KEYCODE_4,BoatKeycodes.BOAT_KEYBOARD_4);
+        keyCodeMap.put(KeyEvent.KEYCODE_5,BoatKeycodes.BOAT_KEYBOARD_5);
+        keyCodeMap.put(KeyEvent.KEYCODE_6,BoatKeycodes.BOAT_KEYBOARD_6);
+        keyCodeMap.put(KeyEvent.KEYCODE_7,BoatKeycodes.BOAT_KEYBOARD_7);
+        keyCodeMap.put(KeyEvent.KEYCODE_8,BoatKeycodes.BOAT_KEYBOARD_8);
+        keyCodeMap.put(KeyEvent.KEYCODE_9,BoatKeycodes.BOAT_KEYBOARD_9);
+        //q-p
+        keyCodeMap.put(KeyEvent.KEYCODE_Q,BoatKeycodes.BOAT_KEYBOARD_Q);
+        keyCodeMap.put(KeyEvent.KEYCODE_W,BoatKeycodes.BOAT_KEYBOARD_W);
+        keyCodeMap.put(KeyEvent.KEYCODE_E,BoatKeycodes.BOAT_KEYBOARD_E);
+        keyCodeMap.put(KeyEvent.KEYCODE_R,BoatKeycodes.BOAT_KEYBOARD_R);
+        keyCodeMap.put(KeyEvent.KEYCODE_T,BoatKeycodes.BOAT_KEYBOARD_T);
+        keyCodeMap.put(KeyEvent.KEYCODE_Y,BoatKeycodes.BOAT_KEYBOARD_Y);
+        keyCodeMap.put(KeyEvent.KEYCODE_U,BoatKeycodes.BOAT_KEYBOARD_U);
+        keyCodeMap.put(KeyEvent.KEYCODE_I,BoatKeycodes.BOAT_KEYBOARD_I);
+        keyCodeMap.put(KeyEvent.KEYCODE_O,BoatKeycodes.BOAT_KEYBOARD_O);
+        keyCodeMap.put(KeyEvent.KEYCODE_P,BoatKeycodes.BOAT_KEYBOARD_P);
+        //a-l
+        keyCodeMap.put(KeyEvent.KEYCODE_A,BoatKeycodes.BOAT_KEYBOARD_A);
+        keyCodeMap.put(KeyEvent.KEYCODE_S,BoatKeycodes.BOAT_KEYBOARD_S);
+        keyCodeMap.put(KeyEvent.KEYCODE_D,BoatKeycodes.BOAT_KEYBOARD_D);
+        keyCodeMap.put(KeyEvent.KEYCODE_F,BoatKeycodes.BOAT_KEYBOARD_F);
+        keyCodeMap.put(KeyEvent.KEYCODE_G,BoatKeycodes.BOAT_KEYBOARD_G);
+        keyCodeMap.put(KeyEvent.KEYCODE_H,BoatKeycodes.BOAT_KEYBOARD_H);
+        keyCodeMap.put(KeyEvent.KEYCODE_J,BoatKeycodes.BOAT_KEYBOARD_J);
+        keyCodeMap.put(KeyEvent.KEYCODE_K,BoatKeycodes.BOAT_KEYBOARD_K);
+        keyCodeMap.put(KeyEvent.KEYCODE_L,BoatKeycodes.BOAT_KEYBOARD_L);
+        //z-m
+        keyCodeMap.put(KeyEvent.KEYCODE_Z,BoatKeycodes.BOAT_KEYBOARD_Z);
+        keyCodeMap.put(KeyEvent.KEYCODE_X,BoatKeycodes.BOAT_KEYBOARD_X);
+        keyCodeMap.put(KeyEvent.KEYCODE_C,BoatKeycodes.BOAT_KEYBOARD_C);
+        keyCodeMap.put(KeyEvent.KEYCODE_V,BoatKeycodes.BOAT_KEYBOARD_V);
+        keyCodeMap.put(KeyEvent.KEYCODE_B,BoatKeycodes.BOAT_KEYBOARD_B);
+        keyCodeMap.put(KeyEvent.KEYCODE_N,BoatKeycodes.BOAT_KEYBOARD_N);
+        keyCodeMap.put(KeyEvent.KEYCODE_M,BoatKeycodes.BOAT_KEYBOARD_M);
+        //f1-f12
+        keyCodeMap.put(KeyEvent.KEYCODE_F1,BoatKeycodes.BOAT_KEYBOARD_F1);
+        keyCodeMap.put(KeyEvent.KEYCODE_F2,BoatKeycodes.BOAT_KEYBOARD_F2);
+        keyCodeMap.put(KeyEvent.KEYCODE_F3,BoatKeycodes.BOAT_KEYBOARD_F3);
+        keyCodeMap.put(KeyEvent.KEYCODE_F4,BoatKeycodes.BOAT_KEYBOARD_F4);
+        keyCodeMap.put(KeyEvent.KEYCODE_F5,BoatKeycodes.BOAT_KEYBOARD_F5);
+        keyCodeMap.put(KeyEvent.KEYCODE_F6,BoatKeycodes.BOAT_KEYBOARD_F6);
+        keyCodeMap.put(KeyEvent.KEYCODE_F7,BoatKeycodes.BOAT_KEYBOARD_F7);
+        keyCodeMap.put(KeyEvent.KEYCODE_F8,BoatKeycodes.BOAT_KEYBOARD_F8);
+        keyCodeMap.put(KeyEvent.KEYCODE_F9,BoatKeycodes.BOAT_KEYBOARD_F9);
+        keyCodeMap.put(KeyEvent.KEYCODE_F10,BoatKeycodes.BOAT_KEYBOARD_F10);
+        keyCodeMap.put(KeyEvent.KEYCODE_F11,BoatKeycodes.BOAT_KEYBOARD_F11);
+        keyCodeMap.put(KeyEvent.KEYCODE_F12,BoatKeycodes.BOAT_KEYBOARD_F12);
+
+
+    }
 }

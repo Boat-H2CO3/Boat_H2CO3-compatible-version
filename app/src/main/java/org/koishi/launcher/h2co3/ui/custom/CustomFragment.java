@@ -165,7 +165,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
 
         libBoat = dialogView.findViewById(R.id.lib_boat);
-        libMio = dialogView.findViewById(R.id.lib_mio);
+        libMio = dialogView.findViewById(R.id.lib_h2co3);
         libCrash = dialogView.findViewById(R.id.lib_cat);
         libLogin = dialogView.findViewById(R.id.lib_login);
         libXz = dialogView.findViewById(R.id.lib_xz);
@@ -240,7 +240,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
 
         thkBoat = dialogView.findViewById(R.id.thk_boat);
-        thkMio = dialogView.findViewById(R.id.thk_mio);
+        thkMio = dialogView.findViewById(R.id.thk_h2co3);
         thkLogin = dialogView.findViewById(R.id.thk_ratsiiel);
         thkFire = dialogView.findViewById(R.id.thk_fire);
         thkFish = dialogView.findViewById(R.id.thk_fish);

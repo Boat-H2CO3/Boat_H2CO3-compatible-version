@@ -1,26 +1,41 @@
 package org.koishi.h2co3.mclauncher.customcontrol;
+/*
+ * Copyright 2023.  ShirosakiMio
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.graphics.drawable.GradientDrawable;
-import android.view.View.OnTouchListener;
-import android.view.MotionEvent;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 import cosine.boat.R;
 
 public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchListener {
 
-	private MioListener mListener;
+	private H2CO3Listener mListener;
 	private LinearLayout main;
 	private Button touchPad;
 	private Context context;
@@ -53,16 +68,71 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 		init();
 		hideBtn();
 	}
+
 	public H2CO3CrossingKeyboard(Context context, AttributeSet attr, int defStyle) {
 		super(context, attr, defStyle);
 		this.context = context;
 		init();
 		hideBtn();
 	}
-	public void setListener(MioListener mListener) {
+
+	private boolean Custom = false;
+	private int TouchX;
+	private int TouchY;
+	private int OffsetX;
+
+	/**
+	 * 计算两个点的距离
+	 *
+	 * @param event 事件
+	 * @return 返回数值
+	 */
+	private double spacing(MotionEvent event) {
+		if (event.getPointerCount() == 2) {
+			float x = event.getX(0) - event.getX(1);
+			float y = event.getY(0) - event.getY(1);
+			return Math.sqrt(x * x + y * y);
+		} else {
+			return 0;
+		}
+	}
+
+
+	/**
+	 * 设置放大缩小
+	 *
+	 * @param scale 缩放值
+	 */
+	public void setScale(float scale) {
+		setScaleX(scale);
+		setScaleY(scale);
+		mScale = scale;
+	}
+
+	//最大的缩放比例
+	public float mScale;
+	public static final float SCALE_MAX = 3.0f;
+	public static final float SCALE_MIN = 0.5f;
+
+	private double oldDist = 0;
+	private double moveDist = 0;
+
+	private TouchInfo mInfo;
+	private int lastPos = 0;
+	private final int LEFT_UP = 1, UP = 2, RIGHT_UP = 3;
+	private final int LEFT = 4, CENTER = 5, RIGHT = 6;
+	private final int LEFT_DOWN = 7, DOWN = 8, RIGHT_DOWN = 9;
+	private int OffsetY;
+	private int MarginLeft;
+	private int MarginTop;
+	private int MarginRight;
+	private int MarginDown;
+
+	public void setListener(H2CO3Listener mListener) {
 		this.mListener = mListener;
 	}
-	@SuppressLint("ClickableViewAccessibility")
+
+	@SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
 	private void init() {
 		main = new LinearLayout(context);
 		main.setOrientation(LinearLayout.VERTICAL);
@@ -73,17 +143,17 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 		layout_down = new LinearLayout(context);
 		layout_down.setOrientation(LinearLayout.HORIZONTAL);
 
-		btn_leftUp = createButton("◤", 25);
-		btn_up = createButton("▲", 32);
-		btn_rightUp = createButton("◥", 25);
+		btn_leftUp = createButton(getResources().getDrawable(R.drawable.be_lu));
+		btn_up = createButton(getResources().getDrawable(R.drawable.be_u));
+		btn_rightUp = createButton(getResources().getDrawable(R.drawable.be_ru));
 
-		btn_left = createButton("◀", 32);
-		btn_center = createButton("◆", 32);
-		btn_right = createButton("▶", 32);
+		btn_left = createButton(getResources().getDrawable(R.drawable.be_l));
+		btn_center = createButton(getResources().getDrawable(R.drawable.be_j));
+		btn_right = createButton(getResources().getDrawable(R.drawable.be_r));
 
-		btn_leftDown = createButton("◣", 25);
-		btn_down = createButton("▼", 32);
-		btn_rightDown = createButton("◢", 25);
+		btn_leftDown = createButton(getResources().getDrawable(R.drawable.be_ld));
+		btn_down = createButton(getResources().getDrawable(R.drawable.be_d));
+		btn_rightDown = createButton(getResources().getDrawable(R.drawable.be_rd));
 
 		layout_up.addView(btn_leftUp);
 		layout_up.addView(btn_up);
@@ -111,111 +181,47 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 		this.addView(touchPad, params);
 
 	}
+
 	@SuppressLint("UseCompatLoadingForDrawables")
-	private Button createButton(String text, float textSize) {
-		Button b=new Button(context);
-		b.setText(text);
-		LinearLayout.LayoutParams params=new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-		                                                               LinearLayout.LayoutParams.MATCH_PARENT,
-																	   1.0f);
+	private Button createButton(Drawable drawble) {
+		Button b = new Button(context);
+		b.setBackground(drawble);
+		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				1.0f);
 		b.setLayoutParams(params);
-		b.setTextSize(textSize);
-		b.setTextColor(getResources().getColor(R.color.appWhite_35));
-		GradientDrawable drawable = new GradientDrawable();
-		b.setBackground(getResources().getDrawable(R.drawable.control_button));
 		b.setFocusable(false);
 		b.setEnabled(false);
 		return b;
 	}
-	public void 自定义(){
-		if (自定义){
-			自定义=false;
-		}else {
-			自定义=true;
-		}
+
+	public void Custom() {
+		Custom = !Custom;
 	}
-
-	/**
-	 * 计算两个点的距离
-	 *
-	 * @param event 事件
-	 * @return 返回数值
-	 */
-	private double spacing(MotionEvent event) {
-		if (event.getPointerCount() == 2) {
-			float x = event.getX(0) - event.getX(1);
-			float y = event.getY(0) - event.getY(1);
-			return Math.sqrt(x * x + y * y);
-		} else {
-			return 0;
-		}
-	}
-
-
-	/**
-	 * 设置放大缩小
-	 *
-	 * @param scale 缩放值
-	 */
-	public void setScale(float scale) {
-		setScaleX(scale);
-		setScaleY(scale);
-		mScale=scale;
-	}
-	//最大的缩放比例
-	public float mScale;
-	public static final float SCALE_MAX = 3.0f;
-	public static final float SCALE_MIN = 0.5f;
-
-	private double oldDist = 0;
-	private double moveDist = 0;
-
-	private TouchInfo mInfo;
-	private int lastPos=0;
-	private final int LEFT_UP=1,UP=2,RIGHT_UP=3;
-	private final int LEFT=4,CENTER=5,RIGHT=6;
-	private final int LEFT_DOWN=7,DOWN=8,RIGHT_DOWN=9;
-	private boolean 自定义=false;
-
-	private int 触摸点横坐标;
-
-	private int 触摸点纵坐标;
-
-	private int 横坐标偏移;
-
-	private int 纵坐标偏移;
-
-	private int 左边距;
-
-	private int 上边距;
-
-	private int 右边距;
-
-	private int 下边距;
 
 	@Override
 	public boolean onTouch(View v, MotionEvent event) {
-		if (自定义){
-			if (event.getPointerCount()==1){
-				if (event.getAction()==MotionEvent.ACTION_DOWN){
-					触摸点横坐标 = (int)event.getX();
-					触摸点纵坐标 = (int)event.getY();
-				}else if (event.getAction()==MotionEvent.ACTION_MOVE) {
+		if (Custom) {
+			if (event.getPointerCount() == 1) {
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					TouchX = (int) event.getX();
+					TouchY = (int) event.getY();
+				} else if (event.getAction() == MotionEvent.ACTION_MOVE) {
 					ViewGroup mViewGroup = (ViewGroup) getParent();
-					横坐标偏移 = (int)event.getX() - 触摸点横坐标;
-					纵坐标偏移 = (int)event.getY() - 触摸点纵坐标;
-					左边距 = this.getLeft() + 横坐标偏移;
-					上边距 = this.getTop() +  纵坐标偏移;
-					右边距 = this.getRight() + 横坐标偏移;
-					下边距 = mViewGroup.getHeight() - this.getBottom() - 纵坐标偏移;
-					this.layout(左边距, 上边距, 右边距, 下边距);
+					OffsetX = (int) event.getX() - TouchX;
+					OffsetY = (int) event.getY() - TouchY;
+					MarginLeft = this.getLeft() + OffsetX;
+					MarginTop = this.getTop() + OffsetY;
+					MarginRight = this.getRight() + OffsetX;
+					MarginDown = mViewGroup.getHeight() - this.getBottom() - OffsetY;
+					this.layout(MarginLeft, MarginTop, MarginRight, MarginDown);
 
-					FrameLayout.LayoutParams params=(FrameLayout.LayoutParams)this.getLayoutParams();
-					params.leftMargin=左边距;
-					params.bottomMargin=下边距;
-					params.rightMargin=右边距;
-					params.topMargin=上边距;
-//				params.setMargins(左边距, 上边距, 右边距, 下边距);
+					FrameLayout.LayoutParams params = (FrameLayout.LayoutParams) this.getLayoutParams();
+					params.leftMargin = MarginLeft;
+					params.bottomMargin = MarginDown;
+					params.rightMargin = MarginRight;
+					params.topMargin = MarginTop;
+//				params.setMargins(MarginLeft, MarginTop, MarginRight, MarginDown);
 					this.setLayoutParams(params);
 				}else if (event.getAction()==MotionEvent.ACTION_UP){
 
@@ -518,15 +524,24 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 			return fingerY;
 		}
 	}
-	public interface MioListener {
+
+	public interface H2CO3Listener {
 		void onLeftUp();
+
 		void onUp();
+
 		void onRightUp();
+
 		void onLeft();
+
 		void onCenter(boolean direct);
+
 		void onRight();
+
 		void onLeftDown();
+
 		void onDown();
+
 		void onRightDown();
 
 		void onSlipLeftUp();

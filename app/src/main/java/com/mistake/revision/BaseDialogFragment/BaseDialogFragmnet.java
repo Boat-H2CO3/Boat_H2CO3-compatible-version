@@ -140,7 +140,7 @@ public class BaseDialogFragmnet extends DialogFragment {
         return this;
     }
 
-    private void setLocation() {
+    private void setButtonLocation() {
         WindowManager.LayoutParams attributes = window.getAttributes();
         attributes.alpha = mAlpha;
         attributes.gravity = mGravity;
@@ -156,7 +156,7 @@ public class BaseDialogFragmnet extends DialogFragment {
     }
 
     private void create() {
-        setLocation();
+        setButtonLocation();
         initView(mRootView);
         setCancelable(mCancelable);
         window.setWindowAnimations(mAnimation);

@@ -30,8 +30,8 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
 
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard;
+import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomButton;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomManager;
-import org.koishi.h2co3.mclauncher.customcontrol.MioCustomButton;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
@@ -62,16 +62,13 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
         // TODO: Implement this method
         System.out.println("Surface is available!");
         BoatActivity.setBoatNativeWindow(p1.getSurface());
-        new Thread() {
-            @Override
-            public void run() {
-                LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
-                LoadMe.exec(config);
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-            }
-        }.start();
+        new Thread(() -> {
+            LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
+            LoadMe.exec(config);
+            Message msg = new Message();
+            msg.what = -1;
+            mHandler.sendMessage(msg);
+        }).start();
     }
 
     @Override
@@ -104,21 +101,18 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
         mainTextureView.setSurfaceTextureListener(new TextureView.SurfaceTextureListener() {
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-                //initCustomButtom();
+                //InitCustomButton();
                 // TODO: Implement this method
                 System.out.println("SurfaceTexture is available!");
                 cosine.boat.BoatActivity.setBoatNativeWindow(new Surface(texture));
-                initCustomButtom();
-                new Thread() {
-                    @Override
-                    public void run() {
-                        LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
-                        LoadMe.exec(config);
-                        Message msg = new Message();
-                        msg.what = -1;
-                        mHandler.sendMessage(msg);
-                    }
-                }.start();
+                InitCustomButton();
+                new Thread(() -> {
+                    LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
+                    LoadMe.exec(config);
+                    Message msg = new Message();
+                    msg.what = -1;
+                    mHandler.sendMessage(msg);
+                }).start();
             }
 
             @Override
@@ -145,7 +139,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
             if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_custom) {
                 openH2CO3CustomControls();
             }/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
-                //h2co3CustomManager.按键显示隐藏(h2CO3CrossingKeyboard);
+                //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
                 openH2CO3CustomControls();
             }*/
             drawerLayout.closeDrawers();
@@ -276,49 +270,49 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
         drawerLayout.closeDrawers();
     }
 
-    private void initCustomButtom() {
+    private void InitCustomButton() {
         h2co3CustomManager = new H2CO3CustomManager();
-        h2co3CustomManager.初始化(this, (this.mControlLayout), LAUNCHER_FILE_DIR);
-        h2co3CustomManager.设置自定义按键回调(new H2CO3CustomManager.自定义按键回调() {
+        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), LAUNCHER_FILE_DIR);
+        h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
             @Override
-            public void 命令接收事件(String command) {
+            public void CommandReceived(String command) {
 
             }
 
             @Override
-            public void 键值接收事件(short 键值, boolean 按下) {
-                sendKeyPress(键值, 0, 按下);
+            public void KeyReceived(short Key, boolean Pressed) {
+                sendKeyPress(Key, 0, Pressed);
             }
 
             @Override
-            public void 控制鼠标指针移动事件(int x, int y) {
-
-            }
-
-            @Override
-            public void 鼠标回调(short 键值, boolean 按下) {
-                sendMouseButton(键值, 按下);
-            }
-
-            @Override
-            public void 按下() {
+            public void ControlsMousePointerMovement(int x, int y) {
 
             }
 
             @Override
-            public void 抬起() {
+            public void MouseCallback(short Key, boolean Pressed) {
+                sendMouseButton(Key, Pressed);
+            }
+
+            @Override
+            public void Pressed() {
+
+            }
+
+            @Override
+            public void unPressed() {
 
             }
         });
-        h2CO3CrossingKeyboard = findViewById(cosine.boat.R.id.mio_keyboard);
-        float xxx = msh.getFloat("方向键x", (float) 0.09 * (CallbackBridge.windowWidth));
-        float yyy = msh.getFloat("方向键y", (float) 0.49 * (CallbackBridge.windowHeight));
+        h2CO3CrossingKeyboard = findViewById(cosine.boat.R.id.h2co3_keyboard);
+        float xxx = msh.getFloat("CrossingKeyBoardX", (float) 0.09 * (CallbackBridge.windowWidth));
+        float yyy = msh.getFloat("CrossingKeyBoardY", (float) 0.49 * (CallbackBridge.windowHeight));
         if (xxx != 0 && yyy != 0) {
             h2CO3CrossingKeyboard.setX(xxx);
             h2CO3CrossingKeyboard.setY(yyy);
         }
-        h2CO3CrossingKeyboard.setScale(msh.getFloat("方向键缩放", 1.0f));
-        h2CO3CrossingKeyboard.setListener(new H2CO3CrossingKeyboard.MioListener() {
+        h2CO3CrossingKeyboard.setScale(msh.getFloat("CrossingKeyBoardResize", 1.0f));
+        h2CO3CrossingKeyboard.setListener(new H2CO3CrossingKeyboard.H2CO3Listener() {
             private boolean upFromCenter = false;
             private boolean upToCenter = false;
             private boolean isShift = false;
@@ -329,6 +323,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, true);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -337,6 +332,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -345,6 +341,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, true);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -353,6 +350,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_W, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -364,6 +362,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                     BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
                     BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
                     BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                    BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
                 } else {
                     upFromCenter = true;
                 }
@@ -375,6 +374,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_W, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -383,6 +383,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_S, 0, true);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_W, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -391,6 +392,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_W, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -399,6 +401,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_D, 0, true);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_W, 0, false);
                 BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_A, 0, false);
+                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_space, 0, false);
             }
 
             @Override
@@ -476,35 +479,35 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
     }
 
     private void openH2CO3CustomControls() {
-        h2co3CustomManager.自定义开关();
-        h2CO3CrossingKeyboard.自定义();
+        h2co3CustomManager.isEditCustomButton();
+        h2CO3CrossingKeyboard.Custom();
         navDrawer.getMenu().clear();
-        navDrawer.inflateMenu(cosine.boat.R.menu.menu_mio);
+        navDrawer.inflateMenu(cosine.boat.R.menu.menu_h2co3);
         navDrawer.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == cosine.boat.R.id.menu_mio_add) {
-                if (h2co3CustomManager.获取按键选择模式()) {
-                    h2co3CustomManager.设置按键选择模式(false);
-                    if (h2co3CustomManager.获取按键修改模式()) {
-                        h2co3CustomManager.自定义按键对话框(false);
-                        if (h2co3CustomManager.获取当前按键().get按键类型().equals("显隐控制按键")) {
-                            for (String 标识 : h2co3CustomManager.获取当前按键().get目标按键标识()) {
-                                MioCustomButton b = h2co3CustomManager.获取按键(标识);
-                                b.setTextColor(Color.parseColor(b.get文本颜色()));
+            if (item.getItemId() == cosine.boat.R.id.menu_h2co3_add) {
+                if (h2co3CustomManager.getSelectCustomButtonMode()) {
+                    h2co3CustomManager.setSelectCustomButtonMode(false);
+                    if (h2co3CustomManager.getEditCustomButtonMode()) {
+                        h2co3CustomManager.CustomButtonDialog(false);
+                        if (h2co3CustomManager.getCurrentKeyPress().getButtonKeyType().equals("显隐控制按键")) {
+                            for (String ID : h2co3CustomManager.getCurrentKeyPress().getTargetKeyID()) {
+                                H2CO3CustomButton b = h2co3CustomManager.getButton(ID);
+                                b.setTextColor(Color.parseColor(b.getButtonTextColor()));
                                 b.setVisibility(View.VISIBLE);
                             }
                         }
                     } else {
-                        h2co3CustomManager.自定义按键对话框(true);
+                        h2co3CustomManager.CustomButtonDialog(true);
                     }
                 } else {
-                    h2co3CustomManager.自定义按键对话框(true);
+                    h2co3CustomManager.CustomButtonDialog(true);
                 }
-            } else if (item.getItemId() == cosine.boat.R.id.menu_mio_save) {
-                h2co3CustomManager.自定义开关();
-                h2CO3CrossingKeyboard.自定义();
-                mshe.putFloat("方向键x", h2CO3CrossingKeyboard.getX());
-                mshe.putFloat("方向键y", h2CO3CrossingKeyboard.getY());
-                mshe.putFloat("方向键缩放", h2CO3CrossingKeyboard.mScale);
+            } else if (item.getItemId() == cosine.boat.R.id.menu_h2co3_save) {
+                h2co3CustomManager.isEditCustomButton();
+                h2CO3CrossingKeyboard.Custom();
+                mshe.putFloat("CrossingKeyBoardX", h2CO3CrossingKeyboard.getX());
+                mshe.putFloat("CrossingKeyBoardY", h2CO3CrossingKeyboard.getY());
+                mshe.putFloat("CrossingKeyBoardResize", h2CO3CrossingKeyboard.mScale);
                 mshe.commit();
                 navDrawer.getMenu().clear();
                 navDrawer.inflateMenu(cosine.boat.R.menu.menu_boat_overlay);
@@ -547,16 +550,13 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
         System.out.println("SurfaceTexture is available!");
         BoatActivity.setBoatNativeWindow(new Surface(surface));
 
-        new Thread() {
-            @Override
-            public void run() {
-                LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
-                LoadMe.exec(config);
-                Message msg = new Message();
-                msg.what = -1;
-                mHandler.sendMessage(msg);
-            }
-        }.start();
+        new Thread(() -> {
+            LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
+            LoadMe.exec(config);
+            Message msg = new Message();
+            msg.what = -1;
+            mHandler.sendMessage(msg);
+        }).start();
     }
 
     @Override

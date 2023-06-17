@@ -3,10 +3,8 @@ package cosine.boat;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.os.Build;
 import android.view.Surface;
 
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class BoatInput{
@@ -63,7 +61,6 @@ public class BoatInput{
 	public static native void send(long time, int type, int p1, int p2);
 
 	// To be called by lwjgl/glfw.
-	@RequiresApi(api = Build.VERSION_CODES.O)
 	public static void setCursorMode(int mode){
 		AppCompatActivity activity = BoatApplication.getCurrentActivity();
 		if (activity instanceof BoatActivity){
@@ -76,7 +73,6 @@ public class BoatInput{
 
 	}
 
-	@RequiresApi(api = Build.VERSION_CODES.O)
 	public static void setCursorPos(int x, int y){
 
 		AppCompatActivity activity = BoatApplication.getCurrentActivity();

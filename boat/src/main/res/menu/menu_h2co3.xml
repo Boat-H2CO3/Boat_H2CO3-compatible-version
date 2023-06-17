@@ -2,11 +2,11 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:ignore="MissingDefaultResource">
     <item
-        android:id="@+id/menu_mio_add"
+        android:id="@+id/menu_h2co3_add"
         android:title="添加按键"/>
 
     <item
-        android:id="@+id/menu_mio_save"
+        android:id="@+id/menu_h2co3_save"
         android:title="保存"/>
 
 </menu>

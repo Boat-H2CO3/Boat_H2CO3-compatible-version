@@ -1,6 +1,20 @@
 package cosine.boat;
 
+import static cosine.boat.LoadMe.chdir;
+import static cosine.boat.LoadMe.dlexec;
+import static cosine.boat.LoadMe.dlopen;
+import static cosine.boat.LoadMe.patchLinker;
+import static cosine.boat.LoadMe.redirectStdio;
+import static cosine.boat.LoadMe.setenv;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -9,14 +23,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
-import java.io.File;
-import java.io.FileInputStream;
-
-import static cosine.boat.LoadMe.*;
 
 public class BoatScript {
 
@@ -35,7 +41,7 @@ public class BoatScript {
         byte[] buffer = new byte[(int)fis.available()];
         fis.read(buffer);
         fis.close();
-        String json = new String(buffer, "UTF-8");
+        String json = new String(buffer, StandardCharsets.UTF_8);
 
         Type type = new TypeToken<LinkedList<String[]>>() {}.getType();
         return new Gson().fromJson(json, type);

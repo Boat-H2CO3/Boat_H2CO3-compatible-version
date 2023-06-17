@@ -114,7 +114,7 @@ public class DownloadTask extends Handler {
                     }
 
 
-                    // 获取资源大小
+                    // get资源大小
                     mFileLength = response.body().contentLength();
 
 

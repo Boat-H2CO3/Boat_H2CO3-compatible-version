@@ -17,7 +17,7 @@ public class PullListView extends ListView implements OnTouchListener {
 
     private final Context mContext;
     /**
-     * 是否支持显示下拉刷新loading
+     * 是否支持显示下拉Refreshloading
      */
     private final boolean mEnableRefreshHeader = false;
     /**
