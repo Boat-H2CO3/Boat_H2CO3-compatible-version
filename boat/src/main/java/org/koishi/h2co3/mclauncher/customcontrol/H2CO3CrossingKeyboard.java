@@ -38,8 +38,8 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 	private H2CO3Listener mListener;
 	private LinearLayout main;
 	private Button touchPad;
-	private Context context;
-	private LinearLayout layout_up;
+    private final Context context;
+    private LinearLayout layout_up;
 	private Button btn_leftUp,
 	btn_up,
 	btn_rightUp;
@@ -337,12 +337,8 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 							}
 							hideBtn();
 							if (mListener != null&&lastPos!=CENTER) {
-								if (lastPos==0){
-									mListener.onCenter(true);
-								}else {
-									mListener.onCenter(false);
-								}
-								lastPos=CENTER;
+                                mListener.onCenter(lastPos == 0);
+                                lastPos = CENTER;
 							}
 							if (event.getAction() == MotionEvent.ACTION_DOWN) {
 								fromCenter = true;

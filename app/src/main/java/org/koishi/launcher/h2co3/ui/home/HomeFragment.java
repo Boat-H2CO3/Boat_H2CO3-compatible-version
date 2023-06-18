@@ -50,6 +50,7 @@ import androidx.fragment.app.Fragment;
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
@@ -1035,7 +1036,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                         pf = minecraftAuthenticator.checkOwnership(tk);
                         xboxHandler.sendEmptyMessage(1);
                     } catch (AuthenticationException e) {
-                        Snackbar.make(getView(), e.toString(), Snackbar.LENGTH_LONG)
+                        Snackbar.make(requireView(), e.toString(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
                         xboxHandler.sendEmptyMessage(0);
                     } catch (UnsupportedEncodingException e) {
@@ -1071,9 +1072,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         //添加"Yes"按钮
         //添加"Yes"按钮
         //添加"Yes"按钮
-        AlertDialog alertDialog1 = new AlertDialog.Builder(getActivity())
-                .setTitle(getResources().getString(R.string.action))//标题
-                .setIcon(R.drawable.ic_boat)//图标
+        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(requireActivity(), R.style.AppTheme_MaterialAlertDialog)
+                .setTitle(getResources().getString(R.string.action))
+                .setIcon(R.drawable.ic_boat)
                 .setMessage(getResources().getString(R.string.choose_mode))
                 .setPositiveButton(getResources().getString(R.string.choose_mode_touch), (dialogInterface, i) -> {
                     //TODO

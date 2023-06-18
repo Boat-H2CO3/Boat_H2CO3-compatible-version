@@ -172,8 +172,6 @@
         <item name="fontFamily">@font/josefin_sans</item>
     </style>
 
-    \
-
     <style name="AppTheme.BottomSheetDialog" parent="Theme.Material3.Dark.BottomSheetDialog">
         <item name="android:windowIsFloating">false</item>
     </style>
