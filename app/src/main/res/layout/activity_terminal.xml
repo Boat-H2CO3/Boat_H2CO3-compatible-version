@@ -115,7 +115,7 @@
         android:typeface="monospace" />
 
     <com.google.android.material.card.MaterialCardView
-        style="@style/CardViewStyle"
+        style="@style/Theme.H2CO3.CardViewStyle"
         android:id="@+id/terminal_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -28,8 +28,6 @@
                 android:id="@+id/client_surface"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
                 android:layout_marginStart="0dp"
                 android:layout_marginBottom="0dp" />
                 <ImageView
@@ -48,15 +46,16 @@
                 android:id="@+id/touch_pad2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:layout_weight="1"
                 android:alpha="0.0"
                 android:visibility="invisible" />
 
             <org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard
+                android:layout_width="160dp"
                 android:id="@+id/h2co3_keyboard"
-                android:layout_width="170dp"
-                android:layout_height="160dp"/>
+                android:layout_gravity="bottom"
+                android:layout_margin="15dp"
+                android:visibility="invisible"
+                android:layout_height="160dp" />
 
         </FrameLayout>
 

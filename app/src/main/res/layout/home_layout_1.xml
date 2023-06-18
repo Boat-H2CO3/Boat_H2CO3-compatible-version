@@ -48,7 +48,7 @@
                         android:paddingEnd="15dp">
 
                         <ImageView
-                            style="@style/CardIcon"
+                            style="@style/Theme.H2CO3.CardIcon"
                             android:id="@+id/home_skin"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
 
                                     <com.google.android.material.textview.MaterialTextView
                                         android:id="@+id/user_info"
-                                        style="@style/CardTitle"
+                                        style="@style/Theme.H2CO3.CardTitle"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
@@ -208,7 +208,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
             android:layout_marginBottom="5dp"
-            style="@style/CardViewStyle"
+            style="@style/Theme.H2CO3.CardViewStyle"
             android:foreground="?attr/selectableItemBackground"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -230,7 +230,7 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            style="@style/CardIcon"
+                            style="@style/Theme.H2CO3.CardIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:contentDescription="TODO"
@@ -256,7 +256,7 @@
                                     android:orientation="horizontal">
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        style="@style/CardTitle"
+                                        style="@style/Theme.H2CO3.CardTitle"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/launcher_check_file_msg_ver" />
@@ -385,7 +385,7 @@
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="@dimen/card_radius"
-            style="@style/CardViewStyle"
+            style="@style/Theme.H2CO3.CardViewStyle"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
@@ -410,7 +410,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_btn_blue"
-                            style="@style/CardIcon"
+                            style="@style/Theme.H2CO3.CardIcon"
                             android:contentDescription="TODO"
                             app:srcCompat="@drawable/ic_home_notification" />
 
@@ -434,7 +434,7 @@
                                     android:orientation="horizontal">
 
                                     <com.google.android.material.textview.MaterialTextView
-                                        style="@style/CardTitle"
+                                        style="@style/Theme.H2CO3.CardTitle"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:text="@string/broadcast" />

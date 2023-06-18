@@ -23,7 +23,7 @@
             android:textSize="16.5sp" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/CardViewStyle"
+            style="@style/Theme.H2CO3.CardViewStyle"
             android:id="@+id/install_mc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

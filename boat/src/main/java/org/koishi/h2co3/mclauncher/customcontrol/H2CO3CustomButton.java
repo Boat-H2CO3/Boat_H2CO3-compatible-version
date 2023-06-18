@@ -21,22 +21,23 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatButton;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class H2CO3CustomButton extends com.google.android.material.button.MaterialButton {
+public class H2CO3CustomButton extends AppCompatButton {
 
-	@Expose
-	private String ID;
+    @Expose
+    private String ID;
 
-	@Expose
-	private String String;
+    @Expose
+    private String String;
 
-	@Expose
-	private String ButtonKeyType;//显隐控制按键 命令按键 普通按键
+    @Expose
+    private String ButtonKeyType;//显隐控制按键 命令按键 普通按键
 
 	@Expose
 	private List<String> ButtonKeyValueGroups;

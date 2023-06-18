@@ -66,6 +66,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 import cosine.boat.R;
@@ -197,54 +198,55 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
 		}
 
 
-	}
+    }
 
-	public void setContainerCallBack(ContainerCallBack ContainerCallBack) {
-		this.ContainerCallBack = ContainerCallBack;
-	}
+    public void setContainerCallBack(ContainerCallBack ContainerCallBack) {
+        this.ContainerCallBack = ContainerCallBack;
+    }
 
-	public void setCustomButtonCallback(CustomButtonCallback CustomButtonCallback) {
-		this.CustomButtonCallback = CustomButtonCallback;
-	}
+    public void setCustomButtonCallback(CustomButtonCallback CustomButtonCallback) {
+        this.CustomButtonCallback = CustomButtonCallback;
+    }
 
-	public void setKeyConversionType(int 类型) {
-		KeyConverters.setMode(类型);
-		Log.d("键值转换器模式改变", 类型 + "");
-	}
+    public void setKeyConversionType(int Type) {
+        KeyConverters.setMode(Type);
+        Log.d("键值转换器模式改变", Type + "");
+    }
 
-	private void Deserialization() {
-		GsonBuilder builder = new GsonBuilder();
-		builder.excludeFieldsWithoutExposeAnnotation();
-		builder.registerTypeAdapter(H2CO3CustomButton.class, new H2CO3Deserializer(context));
-		mGson = builder.setPrettyPrinting().create();
-		CustomButtonGroup = new ArrayMap<String, H2CO3CustomButton>();
-		try {
-			FileReader reader = new FileReader(new File(CustomButtonStoragePath, "H2CO3KeyBoard.json"));
-			BufferedReader bfr = new BufferedReader(reader);
-			String tmp = null;
-			String result = "";
-			while ((tmp = bfr.readLine()) != null) {
-				result += tmp;
-			}
-			bfr.close();
-			reader.close();
-			JSONArray mJSONArray=new JSONArray(result);
-			for (int i = 0; i < mJSONArray.length(); i++) {
-				H2CO3CustomButton mH2CO3CustomButton = mGson.fromJson(mJSONArray.get(i).toString(), H2CO3CustomButton.class);
-				CustomButtonGroup.put(mH2CO3CustomButton.getID(), mH2CO3CustomButton);
-				mH2CO3CustomButton.setOnTouchListener(this);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    @SuppressLint("ClickableViewAccessibility")
+    private void Deserialization() {
+        GsonBuilder builder = new GsonBuilder();
+        builder.excludeFieldsWithoutExposeAnnotation();
+        builder.registerTypeAdapter(H2CO3CustomButton.class, new H2CO3Deserializer(context));
+        mGson = builder.setPrettyPrinting().create();
+        CustomButtonGroup = new ArrayMap<String, H2CO3CustomButton>();
+        try {
+            FileReader reader = new FileReader(new File(CustomButtonStoragePath, "H2CO3KeyBoard.json"));
+            BufferedReader bfr = new BufferedReader(reader);
+            String tmp = null;
+            String result = "";
+            while ((tmp = bfr.readLine()) != null) {
+                result += tmp;
+            }
+            bfr.close();
+            reader.close();
+            JSONArray mJSONArray=new JSONArray(result);
+            for (int i = 0; i < mJSONArray.length(); i++) {
+                H2CO3CustomButton mH2CO3CustomButton = mGson.fromJson(mJSONArray.get(i).toString(), H2CO3CustomButton.class);
+                CustomButtonGroup.put(mH2CO3CustomButton.getID(), mH2CO3CustomButton);
+                mH2CO3CustomButton.setOnTouchListener(this);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 	private void AddButtonToContainer() {
 		if (Container != null && CustomButtonGroup != null) {
 			Set<String> IDGroup = CustomButtonGroup.keySet();
 			for (String ID : IDGroup) {
-				Container.addView(CustomButtonGroup.get(ID));
-				CustomButtonGroup.get(ID).InitCustomButton();
+                Container.addView(CustomButtonGroup.get(ID));
+                Objects.requireNonNull(CustomButtonGroup.get(ID)).InitCustomButton();
 			}
 			for (String ID : IDGroup) {
 				try {

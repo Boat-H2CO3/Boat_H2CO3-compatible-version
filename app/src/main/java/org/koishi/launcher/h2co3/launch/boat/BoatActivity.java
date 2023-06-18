@@ -3,6 +3,7 @@ package org.koishi.launcher.h2co3.launch.boat;
 import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.SurfaceTexture;
@@ -32,6 +33,7 @@ import com.google.android.material.navigation.NavigationView;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomButton;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomManager;
+import org.koishi.launcher.h2co3.MainActivity;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
@@ -674,6 +676,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
             switch (msg.what) {
                 case BoatInput.CursorDisabled:
+                    BoatActivity.this.h2CO3CrossingKeyboard.setVisibility(View.VISIBLE);
                     BoatActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
                     BoatActivity.this.cursorMode = BoatInput.CursorDisabled;
                     BoatActivity.this.touchPad.setVisibility(View.INVISIBLE);
@@ -681,6 +684,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                     break;
 
                 case BoatInput.CursorEnabled:
+                    BoatActivity.this.h2CO3CrossingKeyboard.setVisibility(View.INVISIBLE);
                     BoatActivity.this.mouseCursor.setVisibility(View.VISIBLE);
                     BoatActivity.this.cursorMode = BoatInput.CursorEnabled;
                     BoatActivity.this.touchPad.setVisibility(View.VISIBLE);
@@ -688,12 +692,14 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                     break;
 
                 case BoatInput.CursorSetPos:
+                    BoatActivity.this.h2CO3CrossingKeyboard.setVisibility(View.INVISIBLE);
                     BoatActivity.this.mouseCursor.setX((float) msg.arg1);
                     BoatActivity.this.mouseCursor.setY((float) msg.arg2);
                     break;
 
                 default:
                     BoatActivity.this.finish();
+                    startActivity(new Intent(BoatActivity.this, MainActivity.class));
                     break;
             }
         }

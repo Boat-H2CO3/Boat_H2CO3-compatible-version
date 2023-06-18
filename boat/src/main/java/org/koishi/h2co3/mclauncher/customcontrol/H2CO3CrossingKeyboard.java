@@ -79,6 +79,9 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 	private boolean Custom = false;
 	private int TouchX;
 	private int TouchY;
+	/**
+	 *
+	 */
 	private int OffsetX;
 
 	/**
@@ -183,9 +186,9 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 	}
 
 	@SuppressLint("UseCompatLoadingForDrawables")
-	private Button createButton(Drawable drawble) {
+	private Button createButton(Drawable drawable) {
 		Button b = new Button(context);
-		b.setBackground(drawble);
+		b.setBackground(drawable);
 		LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 				LinearLayout.LayoutParams.MATCH_PARENT,
 				1.0f);
