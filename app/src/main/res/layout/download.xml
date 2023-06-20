@@ -7,7 +7,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="15dp">
+    android:padding="@dimen/app_15dp">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -38,7 +38,7 @@
                     android:background="@drawable/close"
                     android:contentDescription="TODO" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     style="@style/TextStyleMain"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,11 +48,11 @@
 
             </LinearLayout>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/TextStyleMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="15dp"
+                android:padding="@dimen/app_15dp"
                 android:text="@string/download_page_title"
                 android:textSize="20sp" />
 
@@ -64,11 +64,11 @@
                 android:visibility="gone"
                 app:hideAnimationBehavior="outward" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/TextStyleSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:drawablePadding="15dp"
+                android:drawablePadding="@dimen/app_15dp"
                 android:gravity="center_vertical"
                 android:padding="10dp"
                 android:text="@string/download_tip"
@@ -90,7 +90,7 @@
                     android:gravity="center"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/downloadTextView1"
                         style="@style/TextStyleMain"
                         android:layout_width="match_parent"
@@ -130,7 +130,7 @@
                     android:layout_weight="1.0"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/downloadTextView2"
                         style="@style/TextStyleMain"
                         android:layout_width="match_parent"
@@ -171,7 +171,7 @@
                     android:layout_weight="1.0"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/downloadTextView3"
                         style="@style/TextStyleMain"
                         android:layout_width="match_parent"
@@ -211,7 +211,7 @@
                     android:layout_weight="1.0"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/downloadTextView7"
                         style="@style/TextStyleMain"
                         android:layout_width="match_parent"
@@ -243,7 +243,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/downloadTextView4"
                     style="@style/TextStyleMain"
                     android:layout_width="wrap_content"
@@ -251,7 +251,7 @@
                     android:layout_weight="1.0"
                     android:text="@string/total" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/downloadTextView5"
                     style="@style/TextStyleMain"
                     android:layout_width="wrap_content"
@@ -266,7 +266,7 @@
                 android:layout_margin="5dp"
                 android:visibility="gone">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/downloadTextView6"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

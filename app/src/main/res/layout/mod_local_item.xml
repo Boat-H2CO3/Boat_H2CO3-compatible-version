@@ -6,6 +6,7 @@
     android:orientation="horizontal">
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/Theme.H2CO3.CardViewStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="5dp"
@@ -21,20 +22,16 @@
             android:layout_height="wrap_content"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="10dp">
+            android:orientation="horizontal">
 
             <ImageView
                 android:id="@+id/mod_icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
                 android:contentDescription="TODO"
-                android:paddingHorizontal="15dp"
+                style="@style/Theme.H2CO3.CardIcon"
                 android:paddingVertical="2dp"
-                app:srcCompat="@drawable/ic_custom_more"
-                app:tint="?colorPrimary" />
+                app:srcCompat="@drawable/ic_custom_more" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -54,7 +51,7 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/ver_name"
                             style="@style/TextStyleMain"
                             android:layout_width="match_parent"
@@ -63,7 +60,7 @@
                             android:gravity="center_vertical"
                             android:textSize="18sp" />
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/ver_info"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

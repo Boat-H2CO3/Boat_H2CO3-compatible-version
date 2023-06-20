@@ -15,11 +15,14 @@
         android:paddingBottom="7.5dp">
 
         <com.google.android.material.card.MaterialCardView
+            android:id="@+id/show_login"
+            style="@style/Theme.H2CO3.CardViewStyle"
+            android:layout_marginStart="@dimen/app_15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
+            app:cardBackgroundColor="@color/app_green_normal"
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
             android:visibility="visible"
@@ -28,10 +31,8 @@
             app:strokeWidth="0dp">
 
             <LinearLayout
-                android:id="@+id/show_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/app_green_normal"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -43,9 +44,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp">
+                        android:orientation="horizontal">
 
                         <ImageView
                             style="@style/Theme.H2CO3.CardIcon"
@@ -59,7 +58,6 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_margin="15dp"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
@@ -99,7 +97,7 @@
 
                             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/account_after" />
@@ -127,8 +125,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp">
+                        android:paddingStart="@dimen/app_15dp"
+                        android:paddingEnd="@dimen/app_15dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -142,7 +140,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="15dp"
+                            android:layout_marginHorizontal="@dimen/app_15dp"
                             android:layout_marginVertical="5dp"
                             android:orientation="vertical">
 
@@ -204,9 +202,9 @@
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:layout_marginBottom="5dp"
             style="@style/Theme.H2CO3.CardViewStyle"
             android:foreground="?attr/selectableItemBackground"
@@ -272,7 +270,7 @@
 
                             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/welcome_start" />
@@ -284,7 +282,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/app_15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -302,7 +300,7 @@
 
                             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="0dp"
+                                android:layout_height="match_parent"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
@@ -379,9 +377,9 @@
             android:id="@+id/bc_open"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_15dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="@dimen/card_radius"
@@ -449,7 +447,7 @@
 
                             </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/launcher_main_how_to_use_tip" />
@@ -461,7 +459,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="15dp"
+                    android:layout_marginTop="@dimen/app_15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -551,8 +549,8 @@
             android:id="@+id/main_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -577,7 +575,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -610,8 +608,8 @@
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -635,7 +633,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -667,9 +665,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
             android:layout_marginTop="7.5dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:layout_marginBottom="7.5dp"
             android:foreground="?attr/selectableItemBackground"
             android:visibility="gone"
@@ -693,8 +691,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="15dp"
-                        android:paddingEnd="15dp">
+                        android:paddingStart="@dimen/app_15dp"
+                        android:paddingEnd="@dimen/app_15dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -710,11 +708,11 @@
                             android:gravity="center_vertical"
                             android:orientation="vertical">
 
-                            <TextView
+                            <com.google.android.material.textview.MaterialTextView
                                 style="@style/TextStyleMain"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="15dp"
+                                android:layout_marginStart="@dimen/app_15dp"
                                 android:text="@string/broadcast" />
 
                         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
@@ -732,14 +730,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="15dp"
-                    android:paddingVertical="15dp">
+                    android:paddingHorizontal="@dimen/app_15dp"
+                    android:paddingVertical="@dimen/app_15dp">
 
                     <androidx.core.widget.NestedScrollView
                         android:layout_width="match_parent"
                         android:layout_height="150dp">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/home_bc"
                             style="@style/TextStyleSummary"
                             android:layout_width="match_parent"
@@ -782,7 +780,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -841,7 +839,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -899,7 +897,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -936,7 +934,7 @@
             app:elevation="0dp"
             android:fitsSystemWindows="true"
             app:itemBackground="?android:colorBackground"
-            app:itemVerticalPadding="15dp"
+            app:itemVerticalPadding="@dimen/app_15dp"
             app:itemIconTint="?colorPrimary"
             app:menu="@menu/menu_home_nav" />
 

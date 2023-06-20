@@ -29,7 +29,7 @@
         android:id="@+id/username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/app_15dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp">
@@ -65,7 +65,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="@dimen/app_15dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -97,14 +97,14 @@
         android:id="@+id/root_check"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="@dimen/app_15dp"
         android:hint="Root" />
 
     <EditText
         android:id="@+id/terminal_command"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="15dp"
+        android:layout_marginHorizontal="@dimen/app_15dp"
         android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
         android:autofillHints=""
@@ -119,9 +119,9 @@
         android:id="@+id/terminal_card"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="15dp"
+        android:layout_marginStart="@dimen/app_15dp"
         android:layout_marginTop="7.5dp"
-        android:layout_marginEnd="15dp"
+        android:layout_marginEnd="@dimen/app_15dp"
         android:layout_marginBottom="7.5dp"
         android:foreground="?attr/selectableItemBackground"
         android:visibility="gone"
@@ -133,9 +133,9 @@
             android:id="@+id/terminal_output"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
             android:layout_marginTop="7.5dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:layout_marginBottom="7.5dp"
             android:alpha="0.85"
             android:autofillHints="name"

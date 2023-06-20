@@ -11,11 +11,11 @@
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="通用属性"
-			android:textAppearance="?android:attr/textAppearanceMedium"/>
+		<com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="通用属性"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		<LinearLayout
 			android:orientation="horizontal"
@@ -23,11 +23,11 @@
 			android:layout_height="wrap_content"
 			android:gravity="center">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="名称:"
-				android:textAppearance="?android:attr/textAppearanceLarge"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="名称:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			<EditText
 				android:id="@+id/alert_h2co3custom_main_edit_name"
@@ -41,12 +41,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="高:"
-				android:layout_centerVertical="true"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="高:"
+                android:layout_centerVertical="true" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -56,30 +56,30 @@
 				android:layout_marginRight="20dp"
 				android:gravity="center">
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_height_left"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="←"
-					android:textAppearance="?android:attr/textAppearanceLarge" />
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_height"
                     android:layout_width="70dp"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:inputType="number"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"
-					android:gravity="center"
-					android:text="50"/>
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:gravity="center"
+                    android:text="50" />
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_height_right"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="→"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="→"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			</LinearLayout>
 
@@ -89,12 +89,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="宽:"
-				android:layout_centerVertical="true"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="宽:"
+                android:layout_centerVertical="true" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -104,30 +104,30 @@
 				android:layout_marginRight="20dp"
 				android:gravity="center">
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_width_left"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="←"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_width"
                     android:layout_width="70dp"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:inputType="number"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"
-					android:gravity="center"
-					android:text="50"/>
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:gravity="center"
+                    android:text="50" />
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_width_right"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="→"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="→"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			</LinearLayout>
 
@@ -137,12 +137,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="圆角:"
-				android:layout_centerVertical="true"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="圆角:"
+                android:layout_centerVertical="true" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -152,30 +152,30 @@
 				android:layout_marginRight="20dp"
 				android:gravity="center">
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_round_left"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="←"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_round"
                     android:layout_width="70dp"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:inputType="number"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"
-					android:gravity="center"
-					android:text="25"/>
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:gravity="center"
+                    android:text="25" />
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_round_right"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="→"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="→"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			</LinearLayout>
 
@@ -185,12 +185,12 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:textAppearance="?android:attr/textAppearanceLarge"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="文本大小:"
-				android:layout_centerVertical="true"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="文本大小:"
+                android:layout_centerVertical="true" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -200,30 +200,30 @@
 				android:layout_marginRight="20dp"
 				android:gravity="center">
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_textsize_left"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="←"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="←"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_textsize"
                     android:layout_width="70dp"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:inputType="number"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"
-					android:gravity="center"
-					android:text="15"/>
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:inputType="number"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:gravity="center"
+                    android:text="15" />
 
-				<TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_textsize_right"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="→"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                    android:layout_height="wrap_content"
+                    android:text="→"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 			</LinearLayout>
 
@@ -233,7 +233,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -263,7 +263,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -294,11 +294,11 @@
 			android:layout_width="match_parent"
 			android:layout_height="1dp"/>
 
-		<TextView
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="高级属性"
-			android:textAppearance="?android:attr/textAppearanceMedium"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="高级属性"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
 		<RadioGroup
 			android:orientation="horizontal"
@@ -337,11 +337,11 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="普通按键"
-				android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="普通按键"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -350,11 +350,11 @@
 				android:layout_gravity="center"
 				android:gravity="center_vertical">
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="键值:"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="键值:"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 				<EditText
                     android:focusable="false"
@@ -365,12 +365,12 @@
 					android:layout_marginLeft="5dp"
 					android:textIsSelectable="false"/>
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="+"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp" />
 
 				<EditText
                     android:focusable="false"
@@ -380,12 +380,12 @@
 					android:maxLines="1"
 					android:textIsSelectable="false"/>
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="+"
-					android:layout_marginLeft="15dp"
-					android:layout_marginRight="15dp"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="+"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp" />
 
 				<EditText
                     android:focusable="false"
@@ -424,11 +424,11 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="命令按键"
-				android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="命令按键"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			<LinearLayout
 				android:orientation="horizontal"
@@ -436,11 +436,11 @@
 				android:layout_height="wrap_content"
 				android:gravity="center">
 
-				<TextView
-					android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:text="命令:"
-					android:textAppearance="?android:attr/textAppearanceLarge"/>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="命令:"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
 
 				<EditText
                     android:id="@+id/alert_h2co3custom_main_edit_cmd"
@@ -457,11 +457,11 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content">
 
-			<TextView
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="显隐控制按键"
-				android:textAppearance="?android:attr/textAppearanceMedium"/>
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="显隐控制按键"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
 
 			<Button
                 android:id="@+id/alert_h2co3custom_main_btn_btnselect"

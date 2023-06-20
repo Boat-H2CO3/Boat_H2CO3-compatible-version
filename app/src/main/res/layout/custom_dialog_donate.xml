@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,23 +14,23 @@
         android:text="RMB ¥ 5.00"
         android:textSize="20sp" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
         android:drawableStart="@drawable/ic_main_msg_app"
-        android:drawablePadding="15dp"
-        android:paddingHorizontal="15dp"
+        android:drawablePadding="@dimen/app_15dp"
+        android:paddingHorizontal="@dimen/app_15dp"
         android:text="通过捐赠即可有资格加入到启动器官方群中参与讨论以及获取最新的开发进度消息。记住，这只是入群资格，并不代表启动器需要付费！可以放心传播哦。" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:drawablePadding="15dp"
-        android:paddingHorizontal="15dp"
+        android:drawablePadding="@dimen/app_15dp"
+        android:paddingHorizontal="@dimen/app_15dp"
         android:text="捐赠请注明qq号，验证加群需要辨认（仅支持微信捐赠）。"
         app:drawableStartCompat="@drawable/ic_main_msg_app"
         app:drawableTint="@color/empty" />
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content"
         android:gravity="end"
         android:orientation="horizontal"
-        android:paddingHorizontal="15dp"
+        android:paddingHorizontal="@dimen/app_15dp"
         android:paddingBottom="10dp">
 
         <com.google.android.material.button.MaterialButton

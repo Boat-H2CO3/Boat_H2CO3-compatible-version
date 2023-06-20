@@ -10,7 +10,7 @@
     android:paddingEnd="20dp"
     android:paddingBottom="10dp">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
 
             </RadioGroup>
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 style="@style/TextStyleSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

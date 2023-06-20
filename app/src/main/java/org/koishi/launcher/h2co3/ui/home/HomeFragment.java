@@ -51,12 +51,11 @@ import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.materialswitch.MaterialSwitch;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.google.android.material.textview.MaterialTextView;
 import com.mistake.revision.Download.DownloadFragment;
 import com.mistake.revision.VanillaActivity;
 
@@ -94,8 +93,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import cosine.boat.LauncherActivityMk;
-
 public class HomeFragment extends Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final Handler handler = new Handler();
@@ -104,7 +101,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
 
     public AppCompatSpinner list;
     public Button newacc;
-    public LinearLayout mainCheck, mainInfo, mainHelp, mainFix, showAcc, saveAcc;
+    public LinearLayout mainCheck, mainInfo, mainHelp, mainFix, saveAcc;
     public CheckBox mCheckBox, info, xbox;
     public DBHelper dbHelper;
     public EditText mUserName, mPassword, mOffline, mAPI;
@@ -113,7 +110,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public ImageView img1, skin;
     public ImageButton mDropDown;
     public MaterialButton homeReg, homeNew, homeMan, homeQQ;
-    MaterialCardView mLoginButton, openBc;
+    public MaterialSwitch swOnline;
     public MyAdapter dropDownAdapter;
     public MinecraftProfile pf;
     public MinecraftToken tk;
@@ -218,7 +215,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         }
     };
     public ScrollView onlineLayout;
-    public SwitchMaterial swOnline;
+    MaterialCardView mLoginButton, openBc, showAcc;
     public String message;
     public boolean flag = true;
     String[] UserMsg;
@@ -626,7 +623,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 mOffline.setVisibility(View.GONE);
                 offlineLayout.setVisibility(View.GONE);
                 userStatus.setText(getResources().getString(R.string.nav_header_account_mode));
-                showAcc.setBackgroundColor(getResources().getColor(R.color.app_green_normal));
+                showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_green_normal));
                 // 我们先来个吐司
                 sp = getActivity().getSharedPreferences("isChecked", 0);
                 // 使用编辑器来进行操作
@@ -640,7 +637,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 mOffline.setVisibility(View.VISIBLE);
                 offlineLayout.setVisibility(View.VISIBLE);
                 userStatus.setText(getResources().getString(R.string.login_offline));
-                showAcc.setBackgroundColor(getResources().getColor(R.color.app_blue_normal));
+                showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_blue_normal));
                 sp = getActivity().getSharedPreferences("isChecked", 0);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putBoolean("choose", false);
@@ -825,10 +822,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         }
 
         if (swOnline.isChecked()) {
-            showAcc.setBackgroundColor(getResources().getColor(R.color.app_green_normal));
+            showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_green_normal));
             loadSkin();
         } else {
-            showAcc.setBackgroundColor(getResources().getColor(R.color.app_blue_normal));
+            showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_blue_normal));
             skin.setImageResource(R.drawable.ic_home_user_normal);
         }
 
@@ -1108,7 +1105,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
         if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-            startActivity(new Intent(getActivity(), LauncherActivityMk.class));
+            //startActivity(new Intent(getActivity(), LauncherActivityMk.class));
         } else {
             Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -1276,7 +1273,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      * -----------------选择登录API--------------------
      */
     public void showAPIDialog() {
-        Dialog mDialog = new Dialog(requireActivity());
+        Dialog mDialog = new Dialog(requireActivity(), R.style.AppTheme_MaterialAlertDialog);
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.home_dialog_api, null);
         mDialog.setContentView(dialogView);
         MaterialButton cancel = dialogView.findViewById(R.id.custom_api_cancel);
@@ -1386,7 +1383,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     @SuppressLint("HandlerLeak")
     public void showBC() {
-        Dialog mDialog = new Dialog(requireActivity());
+        /*Dialog mDialog = new Dialog(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.home_dialog_notice, null);
         mDialog.setContentView(dialogView);
         MaterialButton cancel = dialogView.findViewById(R.id.bc_cancel);
@@ -1399,7 +1396,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         Display display = windowManager.getDefaultDisplay();
         WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
-        mDialog.show();
+        mDialog.show();*/
+        new MaterialAlertDialogBuilder(requireActivity())
+                .setTitle(getResources().getString(R.string.broadcast))
+                .setMessage(message)
+                .setPositiveButton("取消", null)
+                .show();
     }
 
     static class ViewHolder {

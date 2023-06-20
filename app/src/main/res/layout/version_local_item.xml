@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/ver_name"
                     style="@style/TextStyleMain"
                     android:layout_width="match_parent"

@@ -5,8 +5,8 @@
         android:gravity="center">
         <shape xmlns:android="http://schemas.android.com/apk/res/android">
             <corners
-                android:topLeftRadius="15dp"
-                android:topRightRadius="15dp" />
+                android:topLeftRadius="@dimen/app_15dp"
+                android:topRightRadius="@dimen/app_15dp" />
             <solid android:color="?colorPrimary" />
         </shape>
     </item>

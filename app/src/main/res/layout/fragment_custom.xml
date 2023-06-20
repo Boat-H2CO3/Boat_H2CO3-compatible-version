@@ -17,8 +17,8 @@
             android:id="@+id/open_set"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -39,7 +39,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -66,8 +66,8 @@
             android:id="@+id/open_ter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -88,7 +88,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -115,8 +115,8 @@
             android:id="@+id/open_donate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -137,7 +137,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -164,8 +164,8 @@
             android:id="@+id/open_about"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -186,7 +186,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -213,8 +213,8 @@
             android:id="@+id/open_lib"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -235,7 +235,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -262,8 +262,8 @@
             android:id="@+id/open_thk"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_15dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -284,7 +284,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="15dp"
+                    android:layout_marginStart="@dimen/app_15dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">

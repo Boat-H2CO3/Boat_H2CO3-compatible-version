@@ -12,7 +12,7 @@
         android:layout_marginBottom="5dp"
         android:orientation="vertical">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             style="@style/TextStyleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         style="@style/TextStyleMain"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

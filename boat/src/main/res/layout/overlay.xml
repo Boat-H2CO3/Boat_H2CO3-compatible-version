@@ -53,13 +53,13 @@
                 android:layout_width="160dp"
                 android:id="@+id/h2co3_keyboard"
                 android:layout_gravity="bottom"
-                android:layout_margin="15dp"
+                android:layout_margin="@dimen/app_15dp"
                 android:visibility="invisible"
                 android:layout_height="160dp" />
 
         </FrameLayout>
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:text="H2CO3 debug" />

@@ -10,15 +10,15 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"/>
 
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="0dp"
-            android:alpha="0.5"
-            android:text="@string/app_version"
-            android:textColor="#FFFFFFFF"
-            android:textSize="10sp"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="0dp"
+        android:alpha="0.5"
+        android:text="@string/app_version"
+        android:textColor="#FFFFFFFF"
+        android:textSize="10sp" />
 
     <FrameLayout
             android:layout_width="match_parent"
@@ -43,21 +43,21 @@
             android:layout_height="16dp"
             app:srcCompat="@drawable/cursor5"/>
 
-    <TextView
-            android:id="@+id/mainTextView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginTop="50dp"
-            android:text="Stand By"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mainTextView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="50dp"
+        android:text="Stand By" />
 
-    <TextView
-            android:id="@+id/mainTextView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/mainTextView1"
-            android:layout_marginLeft="5dp"
-            android:text="Stand By"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/mainTextView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/mainTextView1"
+        android:layout_marginLeft="5dp"
+        android:text="Stand By" />
 
     <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"

@@ -1,8 +1,11 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.H2CO3" parent="AppBaseTheme.NoActionBar">
+        <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
+        <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
         <item name="fontFamily">@font/josefin_sans</item>
         <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
+        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
         <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
         <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
@@ -14,10 +17,12 @@
     </style>
 
     <style name="Theme.H2CO3.DynamicColors" parent="Theme.Material3.DynamicColors.Light">
+        <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
+        <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
-        <item name="switchPreferenceStyle">@style/AppBaseTheme.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
         <item name="fontFamily">@font/josefin_sans</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -29,7 +34,7 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
-        <item name="switchPreferenceStyle">@style/AppBaseTheme.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
@@ -68,12 +73,12 @@
         <item name="android:clipChildren">false</item>
         <item name="android:clipToPadding">false</item>
         <item name="cardCornerRadius">@dimen/card_radius</item>
-        <item name="contentPaddingStart">15dp</item>
-        <item name="contentPaddingEnd">15dp</item>
-        <item name="contentPaddingLeft">15dp</item>
-        <item name="contentPaddingRight">15dp</item>
-        <item name="contentPaddingTop">15dp</item>
-        <item name="contentPaddingBottom">15dp</item>
+        <item name="contentPaddingStart">@dimen/app_15dp</item>
+        <item name="contentPaddingEnd">@dimen/app_15dp</item>
+        <item name="contentPaddingLeft">@dimen/app_15dp</item>
+        <item name="contentPaddingRight">@dimen/app_15dp</item>
+        <item name="contentPaddingTop">@dimen/app_15dp</item>
+        <item name="contentPaddingBottom">@dimen/app_15dp</item>
         <item name="cardBackgroundColor">?colorSecondaryContainer</item>
         <item name="strokeWidth">0dp</item>
     </style>
@@ -86,7 +91,7 @@
     </style>
 
     <style name="Theme.H2CO3.CardIcon">
-        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginRight">@dimen/app_15dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:background">@drawable/shape_circle_icon_background</item>

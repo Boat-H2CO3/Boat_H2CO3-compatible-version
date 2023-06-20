@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_name"
                         style="@style/TextStyleMain"
                         android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                         android:text=""
                         android:textSize="18sp" />
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tv_record"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
