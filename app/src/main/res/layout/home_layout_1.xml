@@ -102,11 +102,6 @@
 
                         </LinearLayout>
 
-                        <View
-                            android:layout_width="1dp"
-                            android:layout_height="40dp"
-                            android:layout_margin="5dp" />
-
                     </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
 
