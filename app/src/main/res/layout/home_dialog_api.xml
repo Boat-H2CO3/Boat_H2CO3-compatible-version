@@ -8,7 +8,7 @@
     android:paddingStart="20dp"
     android:paddingTop="20dp"
     android:paddingEnd="20dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="@dimen/app_10dp">
 
     <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleMain"
@@ -25,7 +25,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/app_10dp"
             android:orientation="vertical">
 
             <RadioGroup
@@ -57,8 +57,8 @@
                 style="@style/TextStyleSummary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/app_10dp"
+                android:layout_marginBottom="@dimen/app_10dp"
                 android:drawablePadding="5dp"
                 android:fontFamily="@font/sans"
                 android:paddingStart="4dp"
@@ -69,7 +69,7 @@
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/api_lay"
-                style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone">
@@ -79,8 +79,8 @@
                     style="@style/TextStyleMain"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="@dimen/app_10dp"
+                    android:layout_marginBottom="@dimen/app_10dp"
                     android:hint="API URL"
                     android:maxLines="1"
                     android:singleLine="true"

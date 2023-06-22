@@ -13,6 +13,12 @@ import android.support.annotation.Nullable;
 public class Logcat {
 
     /**
+     * Background service class for out-of-process mode.
+     */
+    //@Nullable
+    private static Class<? extends LogcatService> mServiceClass = null;
+
+    /**
      * Initializes NDCrash library signal handler using out-of-process mode. Should be called from
      * onCreate() method of your subclass of Application.
      *
@@ -49,7 +55,6 @@ public class Logcat {
         return 0;
     }
 
-
     /**
      * De-initializes NDCrash library signal handler using out-of-process mode.
      *
@@ -63,17 +68,6 @@ public class Logcat {
         }
         return true;
     }
-
-    
-
-    
-
-    /**
-     * Background service class for out-of-process mode.
-     */
-    //@Nullable
-    private static Class<? extends LogcatService> mServiceClass = null;
-
 
 
 }

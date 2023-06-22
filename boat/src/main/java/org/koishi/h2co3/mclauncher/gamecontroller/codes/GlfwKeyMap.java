@@ -1,10 +1,10 @@
-package org.koishi.aof.mcinabox.gamecontroller.codes;
-
-import org.koishi.aof.mcinabox.gamecontroller.definitions.map.KeyMap;
-
-import java.util.HashMap;
+package org.koishi.h2co3.mclauncher.gamecontroller.codes;
 
 import static org.lwjgl.glfw.GLFW.*;
+
+import org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.KeyMap;
+
+import java.util.HashMap;
 
 public class GlfwKeyMap implements KeyMap, CoKeyMap {
 

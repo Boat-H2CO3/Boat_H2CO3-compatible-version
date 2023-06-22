@@ -31,6 +31,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
@@ -319,7 +320,7 @@ public class ModsActivity extends H2CO3Activity {
             holder.btn.setOnClickListener(v -> {
                 //添加"Yes"按钮
                 //添加"Yes"按钮
-                AlertDialog alertDialog1 = new AlertDialog.Builder(ModsActivity.this)
+                AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(ModsActivity.this)
                         .setTitle(getResources().getString(R.string.action))//标题
                         .setIcon(R.drawable.ic_boat)//图标
                         .setMessage(R.string.ver_if_del)

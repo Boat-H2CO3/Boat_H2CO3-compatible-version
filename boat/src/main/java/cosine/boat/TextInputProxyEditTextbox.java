@@ -10,16 +10,10 @@ import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputConnectionWrapper;
 
 public class TextInputProxyEditTextbox extends androidx.appcompat.widget.AppCompatEditText {
-    /* access modifiers changed from: private */
-    public MCPEKeyWatcher _mcpeKeyWatcher;
     public final int allowedLength;
     public final boolean limitInput;
-
-    public interface MCPEKeyWatcher {
-        void onBackKeyPressed();
-
-        void onDeleteKeyPressed();
-    }
+    /* access modifiers changed from: private */
+    public MCPEKeyWatcher _mcpeKeyWatcher;
 
     public TextInputProxyEditTextbox(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -65,6 +59,12 @@ public class TextInputProxyEditTextbox extends androidx.appcompat.widget.AppComp
 
     public void setOnMCPEKeyWatcher(MCPEKeyWatcher mcpeKeyWatcher) {
         this._mcpeKeyWatcher = mcpeKeyWatcher;
+    }
+
+    public interface MCPEKeyWatcher {
+        void onBackKeyPressed();
+
+        void onDeleteKeyPressed();
     }
 
     private class MCPEInputConnection extends InputConnectionWrapper {

@@ -210,6 +210,7 @@ public class DownloadFragment extends DialogFragment {
         getDialog().getWindow().setAttributes(params);
         super.onConfigurationChanged(newConfig);
     }
+
     @Override
     public void onResume() {
 
@@ -489,7 +490,23 @@ public class DownloadFragment extends DialogFragment {
         }
     }
 
-    private final View.OnClickListener onclick = new View.OnClickListener() {
+    @SuppressLint("SetTextI18n")
+    private void Dwonload_Version_json(String id, String url) {
+        File e = new File(Version_json);
+        if (!e.exists()) {
+            download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
+        } else {
+            if (e.isDirectory()) {
+                //文件夹怎么删除?
+                e.delete();
+                download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
+            } else {
+                mpath1.setText("Version->" + Version + "->json");
+                mpath_progress1.setProgress(100);//留空白不好看
+                mhandler.sendEmptyMessage(2);
+            }
+        }
+    }    private final View.OnClickListener onclick = new View.OnClickListener() {
 
         @Override
         public void onClick(View p1) {
@@ -514,24 +531,6 @@ public class DownloadFragment extends DialogFragment {
             }
         }
     };
-
-    @SuppressLint("SetTextI18n")
-    private void Dwonload_Version_json(String id, String url) {
-        File e = new File(Version_json);
-        if (!e.exists()) {
-            download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
-        } else {
-            if (e.isDirectory()) {
-                //文件夹怎么删除?
-                e.delete();
-                download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
-            } else {
-                mpath1.setText("Version->" + Version + "->json");
-                mpath_progress1.setProgress(100);//留空白不好看
-                mhandler.sendEmptyMessage(2);
-            }
-        }
-    }
 
     public void Get_okHttp_Response_body_string(String url1, final int msg1) {
         HttpUtil.sendOkHttpRequest(url1, new okhttp3.Callback() {
@@ -682,7 +681,40 @@ public class DownloadFragment extends DialogFragment {
         }
     }
 
-    @SuppressLint("HandlerLeak")
+    //同上
+    public void VersionAssets(String json) {
+        if (json == null) {
+            mhandler.sendEmptyMessage(2);
+            return;
+        }
+        try {
+            //String json= ReadString("/sdcard/assets.json");
+            JSONObject assetindex = JSON.parseObject(json);
+            JSONObject objects = assetindex.getJSONObject("objects");
+            String turn_txt = objects.toJSONString();
+            Gson gson = new Gson();
+            Map<String, VersionAssetsUtil> map = gson.fromJson(turn_txt, new TypeToken<Map<String, VersionAssetsUtil>>() {
+            }.getType());
+            assets = new ArrayList<>();
+            for (Map.Entry<String, VersionAssetsUtil> entry : map.entrySet()) {
+                //System.out.println("key= " +  + " and value= " + );
+                AssetsUtil util = new AssetsUtil();
+                util.setname(entry.getKey());
+                util.sethash(entry.getValue().gethash());
+                util.setsize(entry.getValue().getsize());
+                util.set(true);
+                assets.add(util);
+            }
+        } catch (Exception e) {
+            //e.toString();
+            //建议重载
+            setText(e.toString());
+        }
+    }
+
+    private String Path_name(String path) {
+        return path.substring(path.lastIndexOf("/") + 1);
+    }    @SuppressLint("HandlerLeak")
     private final Handler mhandler = new Handler() {
         @SuppressLint("SetTextI18n")
         @Override
@@ -819,41 +851,6 @@ public class DownloadFragment extends DialogFragment {
             super.handleMessage(msg);
         }
     };
-
-    //同上
-    public void VersionAssets(String json) {
-        if (json == null) {
-            mhandler.sendEmptyMessage(2);
-            return;
-        }
-        try {
-            //String json= ReadString("/sdcard/assets.json");
-            JSONObject assetindex = JSON.parseObject(json);
-            JSONObject objects = assetindex.getJSONObject("objects");
-            String turn_txt = objects.toJSONString();
-            Gson gson = new Gson();
-            Map<String, VersionAssetsUtil> map = gson.fromJson(turn_txt, new TypeToken<Map<String, VersionAssetsUtil>>() {
-            }.getType());
-            assets = new ArrayList<>();
-            for (Map.Entry<String, VersionAssetsUtil> entry : map.entrySet()) {
-                //System.out.println("key= " +  + " and value= " + );
-                AssetsUtil util = new AssetsUtil();
-                util.setname(entry.getKey());
-                util.sethash(entry.getValue().gethash());
-                util.setsize(entry.getValue().getsize());
-                util.set(true);
-                assets.add(util);
-            }
-        } catch (Exception e) {
-            //e.toString();
-            //建议重载
-            setText(e.toString());
-        }
-    }
-
-    private String Path_name(String path) {
-        return path.substring(path.lastIndexOf("/") + 1);
-    }
 
     private String Path(String path) {
         return path.substring(0, path.lastIndexOf("/"));
@@ -1294,6 +1291,10 @@ public class DownloadFragment extends DialogFragment {
         stages_progress.setText(turn_Length(success_libraries) + File.pathSeparatorChar + turn_Length(overall_libraries));
 
     }
+
+
+
+
 
 
 //不太需要?

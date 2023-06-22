@@ -27,7 +27,7 @@
         style="@style/TextStyleMain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
+        android:layout_marginLeft="@dimen/app_10dp"
         android:layout_marginRight="100dp"
         android:spinnerMode="dropdown"
         android:textSize="@dimen/text_mid" />
@@ -44,7 +44,7 @@
             style="@style/TextStyleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:checked="true"
             android:text="@string/download_release" />
 
@@ -52,7 +52,7 @@
             android:id="@+id/rb_snapshot"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:text="@string/download_snapshot" />
 
         <RadioButton
@@ -60,7 +60,7 @@
             style="@style/TextStyleMain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:text="@string/download_old_beta" />
 
     </RadioGroup>

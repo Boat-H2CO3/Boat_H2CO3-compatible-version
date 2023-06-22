@@ -1,49 +1,33 @@
 package org.lwjgl.glfw;
-import java.io.*;
-import java.nio.ByteBuffer;
-import java.nio.FloatBuffer;
-import java.util.*;
-import android.widget.*;
-import android.content.*;
 
-import cosine.boat.BoatActivity;
+import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
+
 import cosine.boat.BoatInput;
-import cosine.boat.BoatKeycodes;
 
 public class CallbackBridge {
     public static final int ANDROID_TYPE_GRAB_STATE = 0;
-    
+
     public static final int CLIPBOARD_COPY = 2000;
     public static final int CLIPBOARD_PASTE = 2001;
-    
+
     public static volatile int windowWidth, windowHeight;
     public static volatile int physicalWidth, physicalHeight;
     public static int mouseX, mouseY;
     public static boolean mouseLeft;
     public static StringBuilder DEBUG_STRING = new StringBuilder();
-    
-    // volatile private static boolean isGrabbing = false;
-    public static class PusherRunnable implements Runnable {
-        int button; int x; int y;
-        public PusherRunnable(int button, int x, int y) {
-           this.button = button;
-           this.x = x;
-           this.y = y;
-        }
-        @Override
-        public void run() {
-            putMouseEventWithCoords(button, 1, x, y);
-            try { Thread.sleep(40); } catch (InterruptedException e) {}
-            putMouseEventWithCoords(button, 0, x, y);
-        }
+    public volatile static boolean holdingAlt, holdingCapslock, holdingCtrl,
+            holdingNumlock, holdingShift;
+    private static boolean threadAttached;
+
+    static {
+        System.loadLibrary("boat");
     }
-    
+
     public static void putMouseEventWithCoords(int button, int state, int x, int y /* , int dz, long nanos */) {
         sendCursorPos(x, y);
         sendMouseKeycode(button, CallbackBridge.getCurrentMods(), state == 1);
     }
 
-    private static boolean threadAttached;
     public static void sendCursorPos(float x, float y) {
 
         DEBUG_STRING.append("CursorPos=").append(x).append(", ").append(y).append("\n");
@@ -51,7 +35,7 @@ public class CallbackBridge {
         mouseY = (int) y;
         nativeSendCursorPos(mouseX, mouseY);
     }
-    
+
     public static void sendPrepareGrabInitialPos() {
         DEBUG_STRING.append("Prepare set grab initial posititon: ignored");
         //sendMouseKeycode(-1, CallbackBridge.getCurrentMods(), false);
@@ -68,10 +52,10 @@ public class CallbackBridge {
 
         //nativeSendKeycode(keycode, keychar, scancode, isDown ? 1 : 0, modifiers);
         BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_Control_L, 0, true);
-        if(keycode != 0)  nativeSendKey(keycode,scancode,isDown ? 1 : 0, modifiers);
+        if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
         //else nativeSendKey(32,scancode,isDown ? 1 : 0, modifiers);
-        if(isDown && keychar != '\u0000') {
-            nativeSendCharMods(keychar,modifiers);
+        if (isDown && keychar != '\u0000') {
+            nativeSendCharMods(keychar, modifiers);
             nativeSendChar(keychar);
         }
         //throw new IllegalStateException("Tracing call");
@@ -88,7 +72,7 @@ public class CallbackBridge {
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), true);
         sendMouseKeycode(keycode, CallbackBridge.getCurrentMods(), false);
     }
-    
+
     public static void sendScroll(double xoffset, double yoffset) {
         DEBUG_STRING.append("ScrollX=").append(xoffset).append(",ScrollY=").append(yoffset);
         nativeSendScroll(xoffset, yoffset);
@@ -96,11 +80,6 @@ public class CallbackBridge {
 
     public static void sendUpdateWindowSize(int w, int h) {
         nativeSendScreenSize(w, h);
-    }
-
-    public static boolean isGrabbing() {
-        // return isGrabbing;
-        return nativeIsGrabbing();
     }
 
     // Called from JRE side
@@ -123,26 +102,33 @@ public class CallbackBridge {
     private static native void nativeSendData(boolean isAndroid, int type, String data);
 */
 
-    public volatile static boolean holdingAlt, holdingCapslock, holdingCtrl,
-        holdingNumlock, holdingShift;
+    public static boolean isGrabbing() {
+        // return isGrabbing;
+        return nativeIsGrabbing();
+    }
+
     public static int getCurrentMods() {
         int currMods = 0;
         if (holdingAlt) {
             currMods |= LWJGLGLFWKeycode.GLFW_MOD_ALT;
-        } if (holdingCapslock) {
+        }
+        if (holdingCapslock) {
             currMods |= LWJGLGLFWKeycode.GLFW_MOD_CAPS_LOCK;
-        } if (holdingCtrl) {
+        }
+        if (holdingCtrl) {
             currMods |= LWJGLGLFWKeycode.GLFW_MOD_CONTROL;
-        } if (holdingNumlock) {
+        }
+        if (holdingNumlock) {
             currMods |= LWJGLGLFWKeycode.GLFW_MOD_NUM_LOCK;
-        } if (holdingShift) {
+        }
+        if (holdingShift) {
             currMods |= LWJGLGLFWKeycode.GLFW_MOD_SHIFT;
         }
         return currMods;
     }
 
-    public static void setModifiers(int keyCode, boolean isDown){
-        switch (keyCode){
+    public static void setModifiers(int keyCode, boolean isDown) {
+        switch (keyCode) {
             case LWJGLGLFWKeycode.GLFW_KEY_LEFT_SHIFT:
                 CallbackBridge.holdingShift = isDown;
                 return;
@@ -161,25 +147,50 @@ public class CallbackBridge {
 
             case LWJGLGLFWKeycode.GLFW_KEY_NUM_LOCK:
                 CallbackBridge.holdingNumlock = isDown;
-                return;
         }
     }
 
     public static native boolean nativeAttachThreadToOther(boolean isAndroid, boolean isUsePushPoll);
 
     private static native boolean nativeSendChar(char codepoint);
+
     // GLFW: GLFWCharModsCallback deprecated, but is Minecraft still use?
     private static native boolean nativeSendCharMods(char codepoint, int mods);
+
     private static native void nativeSendKey(int key, int scancode, int action, int mods);
+
     // private static native void nativeSendCursorEnter(int entered);
     private static native void nativeSendCursorPos(int x, int y);
+
     private static native void nativeSendMouseButton(int button, int action, int mods);
+
     private static native void nativeSendScroll(double xoffset, double yoffset);
+
     private static native void nativeSendScreenSize(int width, int height);
-    
+
     public static native boolean nativeIsGrabbing();
-    static {
-        System.loadLibrary("boat");
+
+    // volatile private static boolean isGrabbing = false;
+    public static class PusherRunnable implements Runnable {
+        int button;
+        int x;
+        int y;
+
+        public PusherRunnable(int button, int x, int y) {
+            this.button = button;
+            this.x = x;
+            this.y = y;
+        }
+
+        @Override
+        public void run() {
+            putMouseEventWithCoords(button, 1, x, y);
+            try {
+                Thread.sleep(40);
+            } catch (InterruptedException e) {
+            }
+            putMouseEventWithCoords(button, 0, x, y);
+        }
     }
 }
 

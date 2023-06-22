@@ -30,34 +30,21 @@ public class BoatScript {
     public static final String BOAT_ENV_WINDOW_HEIGHT = "window_height";
     public static final String BOAT_ENV_TMPDIR = "tmpdir";
 
-    private static Pattern variablePattern;
+    private static final Pattern variablePattern;
+
     static {
         variablePattern = Pattern.compile("\\$\\{[a-zA-Z_]+\\}");
     }
 
-    public static LinkedList<String[]> parseJson(String filePath) throws IOException {
-        File file = new File(filePath);
-        FileInputStream fis = new FileInputStream(file);
-        byte[] buffer = new byte[(int)fis.available()];
-        fis.read(buffer);
-        fis.close();
-        String json = new String(buffer, StandardCharsets.UTF_8);
-
-        Type type = new TypeToken<LinkedList<String[]>>() {}.getType();
-        return new Gson().fromJson(json, type);
-    }
-
-    private Map<String, String> variables;
-    private List<String[]> commands;
-
+    private final Map<String, String> variables;
+    private final List<String[]> commands;
     private String scriptFile;
 
     public BoatScript(Map<String, String> envvars, boolean priv, List<String[]> cmds, String file) {
         if (priv) {
             this.variables = new HashMap<>();
             this.variables.putAll(envvars);
-        }
-        else {
+        } else {
             this.variables = envvars;
         }
         this.commands = new LinkedList<>();
@@ -66,6 +53,19 @@ public class BoatScript {
         if (this.scriptFile == null) {
             this.scriptFile = "";
         }
+    }
+
+    public static LinkedList<String[]> parseJson(String filePath) throws IOException {
+        File file = new File(filePath);
+        FileInputStream fis = new FileInputStream(file);
+        byte[] buffer = new byte[(int) fis.available()];
+        fis.read(buffer);
+        fis.close();
+        String json = new String(buffer, StandardCharsets.UTF_8);
+
+        Type type = new TypeToken<LinkedList<String[]>>() {
+        }.getType();
+        return new Gson().fromJson(json, type);
     }
 
     private String replaceVariables(String str) throws ParseException {
@@ -153,13 +153,12 @@ public class BoatScript {
                         new BoatScript(this.variables, false, includes, args[1]).execute();
                         break;
                     }
-                    default : {
+                    default: {
                         break;
                     }
                 }
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.out.println("Exception occurred, " + this.scriptFile + ":" + line);
             System.out.println(Arrays.toString(this.commands.get(line)));
             e.printStackTrace();

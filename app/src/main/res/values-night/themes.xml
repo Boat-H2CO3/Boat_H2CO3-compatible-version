@@ -6,7 +6,9 @@
         <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
-        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
+        </item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
         <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
         <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
@@ -24,7 +26,9 @@
         <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
         <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
-        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
+        </item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
         <item name="windowActionBar">false</item>
@@ -36,7 +40,6 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
         <!-- Color Theme: https://material.io/develop/android/theming/color/ -->
-        <item name="switchPreferenceCompatStyle">@style/AppBaseTheme.SwitchPreference</item>
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>

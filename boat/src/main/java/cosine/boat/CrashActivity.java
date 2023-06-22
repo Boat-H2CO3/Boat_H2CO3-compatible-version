@@ -1,14 +1,14 @@
 package cosine.boat;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
@@ -29,12 +29,12 @@ public class CrashActivity extends AppCompatActivity {
         crash = findViewById(R.id.crash);
         Typeface tf = Typeface.createFromAsset(this.getAssets(),
                 "Sans.ttf");
-        TextView bigTitle= (TextView) toolbar.getChildAt(0);
+        TextView bigTitle = (TextView) toolbar.getChildAt(0);
         bigTitle.setTypeface(tf);
         bigTitle.setText(getResources().getString(R.string.crash_title));
         restart = findViewById(R.id.restart);
         restart.setTypeface(tf);
-        restart.setOnClickListener(rv->restart());
+        restart.setOnClickListener(rv -> restart());
         initData();
 
     }
@@ -53,7 +53,7 @@ public class CrashActivity extends AppCompatActivity {
             CustomActivityOnCrash.closeApplication(CrashActivity.this, config);
     }
 
-    public void restart(){
+    public void restart() {
         Intent i = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

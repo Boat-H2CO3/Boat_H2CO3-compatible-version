@@ -3,13 +3,17 @@ package com.yuan.lib_markdownview;
 import android.content.Context;
 import android.net.Uri;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 
 /**
  *
  */
 public class ByteBuffer {
+    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
     byte[] buf;
     int count;
 
@@ -25,49 +29,12 @@ public class ByteBuffer {
         this.count = buf.length;
     }
 
-    public byte[] getData() {
-        return this.buf;
-    }
-
-    private void ensureCapacity(int minCapacity) {
-        // overflow-conscious code
-        if (minCapacity - buf.length > 0)
-            grow(minCapacity);
-    }
-
-    private static final int MAX_ARRAY_SIZE = Integer.MAX_VALUE - 8;
-
-    private void grow(int minCapacity) {
-        // overflow-conscious code
-        int oldCapacity = buf.length;
-        int newCapacity = oldCapacity << 1;
-        if (newCapacity - minCapacity < 0)
-            newCapacity = minCapacity;
-        if (newCapacity - MAX_ARRAY_SIZE > 0)
-            newCapacity = hugeCapacity(minCapacity);
-        buf = Arrays.copyOf(buf, newCapacity);
-    }
-
     private static int hugeCapacity(int minCapacity) {
         if (minCapacity < 0) // overflow
             throw new OutOfMemoryError();
         return (minCapacity > MAX_ARRAY_SIZE) ?
                 Integer.MAX_VALUE :
                 MAX_ARRAY_SIZE;
-    }
-
-    public synchronized void write(byte[] b, int off, int len) {
-        if ((off < 0) || (off > b.length) || (len < 0) ||
-                ((off + len) - b.length > 0)) {
-            throw new IndexOutOfBoundsException();
-        }
-        ensureCapacity(count + len);
-        System.arraycopy(b, off, buf, count, len);
-        count += len;
-    }
-
-    public synchronized int size() {
-        return count;
     }
 
     public static ByteBuffer create(InputStream is, int size) throws IOException {
@@ -161,5 +128,40 @@ public class ByteBuffer {
         }
 
         return buf;
+    }
+
+    public byte[] getData() {
+        return this.buf;
+    }
+
+    private void ensureCapacity(int minCapacity) {
+        // overflow-conscious code
+        if (minCapacity - buf.length > 0)
+            grow(minCapacity);
+    }
+
+    private void grow(int minCapacity) {
+        // overflow-conscious code
+        int oldCapacity = buf.length;
+        int newCapacity = oldCapacity << 1;
+        if (newCapacity - minCapacity < 0)
+            newCapacity = minCapacity;
+        if (newCapacity - MAX_ARRAY_SIZE > 0)
+            newCapacity = hugeCapacity(minCapacity);
+        buf = Arrays.copyOf(buf, newCapacity);
+    }
+
+    public synchronized void write(byte[] b, int off, int len) {
+        if ((off < 0) || (off > b.length) || (len < 0) ||
+                ((off + len) - b.length > 0)) {
+            throw new IndexOutOfBoundsException();
+        }
+        ensureCapacity(count + len);
+        System.arraycopy(b, off, buf, count, len);
+        count += len;
+    }
+
+    public synchronized int size() {
+        return count;
     }
 }

@@ -32,7 +32,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.cardview:cardview:1.0.0'
-    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.6.1'
     implementation 'cat.ereza:customactivityoncrash:2.4.0'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'

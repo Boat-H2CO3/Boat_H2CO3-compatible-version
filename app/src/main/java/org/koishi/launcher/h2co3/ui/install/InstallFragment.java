@@ -68,7 +68,6 @@ public class InstallFragment extends Fragment {
 
         cardMc.setOnClickListener(v -> {
             startActivity(new Intent(getActivity(), VanillaActivity.class));
-            requireActivity().finish();
         });
 
         return root;

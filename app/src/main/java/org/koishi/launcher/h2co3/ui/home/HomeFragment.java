@@ -40,7 +40,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.browser.customtabs.CustomTabsIntent;
@@ -62,7 +61,6 @@ import com.mistake.revision.VanillaActivity;
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.InstructionActivity;
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.VersionsActivity;
 import org.koishi.launcher.h2co3.launch.boat.LauncherActivity;
 import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.data.DBHelper;
@@ -109,7 +107,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public Handler getNotice;
     public ImageView img1, skin;
     public ImageButton mDropDown;
-    public MaterialButton homeReg, homeNew, homeMan, homeQQ;
+    public MaterialButton homeReg, homeNew, homeQQ;
     public MaterialSwitch swOnline;
     public MyAdapter dropDownAdapter;
     public MinecraftProfile pf;
@@ -121,6 +119,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public TextInputLayout userNameLayout, passwordLayout, offlineLayout, apiLayout;
     public SharedPreferences sp;
     public SharedPreferences.Editor editorName, editorPass, editorApi;
+    public ScrollView onlineLayout;
+    public String message;
+    public boolean flag = true;
+    MaterialCardView mLoginButton, openBc, showAcc;
     /**
      * -----------------登录线程--------------------
      */
@@ -214,10 +216,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
 
         }
     };
-    public ScrollView onlineLayout;
-    MaterialCardView mLoginButton, openBc, showAcc;
-    public String message;
-    public boolean flag = true;
     String[] UserMsg;
     @SuppressLint("HandlerLeak")
     final
@@ -301,12 +299,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     final String resultAc = mUserName.getText().toString();
                     final String resultPw = mPassword.getText().toString();
                     final String resultApi = mAPI.getText().toString();
-
-                    //以下三行用于将获取的登录信息写入config.txt
-                    //需要添加文件操作权限
-//                LoginTask.set("auth_access_token", userCon[0]);
-//                LoginTask.set("auth_player_name", userCon[1]);
-//                LoginTask.set("auth_uuid", userCon[2]);
 
                     //将获取到的token等显示出来
                     CHTools.setBoatJson("auth_player_name", UserMsg[1]);
@@ -515,9 +507,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 Comparator<Object> cp = Collator.getInstance(Locale.CHINA);
                 String[] getVer = versionlist.list();
                 List<String> verList = Arrays.asList(Objects.requireNonNull(getVer));  //此集合无法操作添加元素
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                    verList.sort(cp);
-                }
+                verList.sort(cp);
                 getVer = verList.toArray(new String[0]);
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -832,7 +822,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         /*-----------------卡片UI--------------------*/
         homeReg = root.findViewById(R.id.home_reg);
         homeNew = root.findViewById(R.id.home_new);
-        homeMan = root.findViewById(R.id.home_manager);
         homeQQ = root.findViewById(R.id.home_qq);
 
         homeReg.setOnClickListener(v -> {
@@ -841,19 +830,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         });
         homeNew.setOnClickListener(v -> {
             startActivity(new Intent(requireActivity(), VanillaActivity.class));
-            requireActivity().finish();
-        });
-        homeMan.setOnClickListener(v -> {
-            startActivity(new Intent(requireActivity(), VersionsActivity.class));
-            requireActivity().finish();
         });
         homeQQ.setOnClickListener(v -> joinQQGroup("-c3oG3cfXX-v6W8MbEl9_Fl2JjuuvpC6"));
 
         nav = root.findViewById(R.id.nav_view);
         nav.setNavigationItemSelectedListener(this);
         Menu m = nav.getMenu();
-        //mainFix.setVisibility(View.VISIBLE);
-        //mainFix.setVisibility(View.GONE);
         m.findItem(R.id.home_open_fix).setVisible(CHTools.getAppCfg("checkFile", "false").equals("false"));
 
         return root;
@@ -936,6 +918,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     Snackbar.make(layout2, getResources().getString(R.string.home_no_account), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
+                    doLogin();
+                    loadSkin();
                     layout1.setVisibility(View.VISIBLE);
                     layout2.setVisibility(View.GONE);
                 }
@@ -944,6 +928,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     Snackbar.make(layout2, getResources().getString(R.string.home_no_account), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 } else {
+                    doLogin();
+                    loadSkin();
                     layout1.setVisibility(View.VISIBLE);
                     layout2.setVisibility(View.GONE);
                 }
@@ -955,7 +941,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     /**
      * -----------------点击--------------------
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
@@ -964,7 +949,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         if (v == mLoginButton) {
             if (swOnline.isChecked()) {
                 if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-                    doLogin();
                 } else {
                     Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
@@ -976,7 +960,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 } else {
                     if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
                         CHTools.setBoatJson("auth_player_name", mOffline.getText().toString());
-                        userInfo.setText(getResources().getString(R.string.account_before) + " " + mOffline.getText().toString());
                         chooseMode();
                     } else {
                         Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
@@ -1013,50 +996,54 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     /**
      * -----------------登录--------------------
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void doLogin() {
         final String userName = mUserName.getText().toString();
         final String password = mPassword.getText().toString();
         final String api = mAPI.getText().toString();
-        if (!userName.equals("") && !password.equals("") && !api.equals("")) {
-            //Toast.makeText(getActivity(), getResources().getString(R.string.home_login_start_toast), Toast.LENGTH_SHORT).show();
-            Snackbar.make(requireView(), getResources().getString(R.string.home_login_start_toast), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-            mLoginButton.setEnabled(false);
-            pb.show();
-            //登录操作为耗时操作，必须放到线程中执行
-            if (api.equals("Microsoft")) {
-                new Thread(() -> {
-                    try {
-                        MinecraftAuthenticator minecraftAuthenticator = new MinecraftAuthenticator();
-                        tk = minecraftAuthenticator.loginWithXbox(mUserName.getText().toString(), mPassword.getText().toString());
-                        pf = minecraftAuthenticator.checkOwnership(tk);
-                        xboxHandler.sendEmptyMessage(1);
-                    } catch (AuthenticationException e) {
-                        Snackbar.make(requireView(), e.toString(), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                        xboxHandler.sendEmptyMessage(0);
-                    } catch (UnsupportedEncodingException e) {
-                        throw new RuntimeException(e);
-                    }
-                }).start();
+        if (swOnline.isChecked()) {
+            if (!userName.equals("") && !password.equals("") && !api.equals("")) {
+                //Toast.makeText(getActivity(), getResources().getString(R.string.home_login_start_toast), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), getResources().getString(R.string.home_login_start_toast), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+                mLoginButton.setEnabled(false);
+                pb.show();
+                //登录操作为耗时操作，必须放到线程中执行
+                if (api.equals("Microsoft")) {
+                    new Thread(() -> {
+                        try {
+                            MinecraftAuthenticator minecraftAuthenticator = new MinecraftAuthenticator();
+                            tk = minecraftAuthenticator.loginWithXbox(mUserName.getText().toString(), mPassword.getText().toString());
+                            pf = minecraftAuthenticator.checkOwnership(tk);
+                            xboxHandler.sendEmptyMessage(1);
+                        } catch (AuthenticationException e) {
+                            Snackbar.make(requireView(), e.toString(), Snackbar.LENGTH_LONG)
+                                    .setAction("Action", null).show();
+                            xboxHandler.sendEmptyMessage(0);
+                        } catch (UnsupportedEncodingException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }).start();
+                } else {
+                    new Thread(() -> {
+                        if (LoginTask.checkif(LoginTask.get("auth_access_token"), api + "/authserver/validate")) {
+                            //token不可用
+                            //调用LoginTask
+                            UserMsg = LoginTask.login(userName, password, api + "/authserver/authenticate");
+                            CheckMsg.sendEmptyMessage(0);
+                        } else {
+                            //token可用，无需调用登录
+                            CheckMsg.sendEmptyMessage(1);
+                        }
+                    }).start();
+                }
             } else {
-                new Thread(() -> {
-                    if (LoginTask.checkif(LoginTask.get("auth_access_token"), api + "/authserver/validate")) {
-                        //token不可用
-                        //调用LoginTask
-                        UserMsg = LoginTask.login(userName, password, api + "/authserver/authenticate");
-                        CheckMsg.sendEmptyMessage(0);
-                    } else {
-                        //token可用，无需调用登录
-                        CheckMsg.sendEmptyMessage(1);
-                    }
-                }).start();
+                //Toast.makeText(getActivity(), getResources().getString(R.string.home_no_account), Toast.LENGTH_SHORT).show();
+                Snackbar.make(requireView(), getResources().getString(R.string.home_no_account), Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         } else {
-            //Toast.makeText(getActivity(), getResources().getString(R.string.home_no_account), Toast.LENGTH_SHORT).show();
-            Snackbar.make(requireView(), getResources().getString(R.string.home_no_account), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
+            CHTools.setBoatJson("auth_player_name", mOffline.getText().toString());
+            userInfo.setText(getResources().getString(R.string.account_before) + " " + mOffline.getText().toString());
         }
 
     }
@@ -1065,7 +1052,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      * -----------------启动--------------------
      */
     public void chooseMode() {
-        loadSkin();
         //添加"Yes"按钮
         //添加"Yes"按钮
         //添加"Yes"按钮
@@ -1265,7 +1251,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             String skinUrl = "https://crafatar.com/avatars/" + uuid + "?overlay=true";
             Glide.with(this).load(skinUrl).placeholder(R.drawable.ic_home_user_normal).error(R.drawable.xicon_red).into(skin);
         } else {
-            skin.setImageResource(R.drawable.ic_home_user_normal);
+            skin.setImageResource(R.drawable.xicon_red);
         }
     }
 
@@ -1383,25 +1369,87 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     @SuppressLint("HandlerLeak")
     public void showBC() {
-        /*Dialog mDialog = new Dialog(requireActivity());
-        View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.home_dialog_notice, null);
-        mDialog.setContentView(dialogView);
-        MaterialButton cancel = dialogView.findViewById(R.id.bc_cancel);
-        MaterialTextView text = dialogView.findViewById(R.id.bc_text);
-
-        text.setText(message);
-        cancel.setOnClickListener(v -> mDialog.dismiss());
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
-        mDialog.show();*/
         new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(getResources().getString(R.string.broadcast))
                 .setMessage(message)
-                .setPositiveButton("取消", null)
+                .setPositiveButton(getResources().getString(R.string.cancel), null)
                 .show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        boolean existMcConfig = FileExists(boatCfg);
+        //boolean existRuntime = FileExists("/data/data/"+getActivity().getPackageName()+"/libopenal.so.1");
+        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
+        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
+        f = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
+        /**重载版本列表**/
+        if (existMcConfig && existGame) {
+            if (file.exists() && file.isDirectory()) {
+                File versionlist = new File(f + "/versions");
+                Comparator<Object> cp = Collator.getInstance(Locale.CHINA);
+                String[] getVer = versionlist.list();
+                List<String> verList = Arrays.asList(Objects.requireNonNull(getVer));  //此集合无法操作添加元素
+                verList.sort(cp);
+                getVer = verList.toArray(new String[0]);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                list.setAdapter(adapter);
+                list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
+                        if (!p1.getItemAtPosition(p3).equals("Null")) {
+                            setVersion((String) p1.getItemAtPosition(p3));
+                        }
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> p1) {
+                    }
+                });
+                list.setSelection(adapter.getPosition(getVer()));
+            } else {
+                String s = "Error,  ";
+                final String[] getVer = s.split(",");
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                list.setAdapter(adapter);
+                list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
+                        p1.getItemAtPosition(p3);
+
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> p1) {
+                    }
+                });
+                list.setSelection(adapter.getPosition(getVer()));
+            }
+        } else {
+            String s = "Error,  ";
+            final String[] getVer = s.split(",");
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+            list.setAdapter(adapter);
+            list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> p1, View p2, int p3, long p4) {
+                    p1.getItemAtPosition(p3);
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> p1) {
+                }
+            });
+            list.setSelection(adapter.getPosition(getVer()));
+        }
     }
 
     static class ViewHolder {

@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:padding="10dp"
-	android:layout_height="match_parent"
-	android:background="@drawable/background_layout_item">
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/app_10dp">
 
-	<LinearLayout
-		android:orientation="vertical"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-		<com.google.android.material.textview.MaterialTextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="通用属性"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-		<LinearLayout
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -29,32 +27,32 @@
                 android:text="名称:"
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<EditText
-				android:id="@+id/alert_h2co3custom_main_edit_name"
+            <EditText
+                android:id="@+id/alert_h2co3custom_main_edit_name"
                 android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:maxLines="1"/>
+                android:layout_height="wrap_content"
+                android:maxLines="1" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="高:"
-                android:layout_centerVertical="true" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"
-				android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_height_left"
@@ -67,11 +65,11 @@
                     android:id="@+id/alert_h2co3custom_main_edit_height"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:inputType="number"
                     android:layout_marginLeft="@dimen/app_15dp"
                     android:layout_marginRight="@dimen/app_15dp"
                     android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:text="50" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -81,28 +79,28 @@
                     android:text="→"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="宽:"
-                android:layout_centerVertical="true" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"
-				android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_width_left"
@@ -115,11 +113,11 @@
                     android:id="@+id/alert_h2co3custom_main_edit_width"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:inputType="number"
                     android:layout_marginLeft="@dimen/app_15dp"
                     android:layout_marginRight="@dimen/app_15dp"
                     android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:text="50" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -129,28 +127,28 @@
                     android:text="→"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="圆角:"
-                android:layout_centerVertical="true" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"
-				android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_round_left"
@@ -163,11 +161,11 @@
                     android:id="@+id/alert_h2co3custom_main_edit_round"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:inputType="number"
                     android:layout_marginLeft="@dimen/app_15dp"
                     android:layout_marginRight="@dimen/app_15dp"
                     android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:text="25" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -177,28 +175,28 @@
                     android:text="→"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:text="文本大小:"
-                android:layout_centerVertical="true" />
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:layout_alignParentRight="true"
-				android:layout_marginRight="20dp"
-				android:gravity="center">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/alert_h2co3custom_main_tv_textsize_left"
@@ -211,11 +209,11 @@
                     android:id="@+id/alert_h2co3custom_main_edit_textsize"
                     android:layout_width="70dp"
                     android:layout_height="wrap_content"
-                    android:maxLines="1"
-                    android:inputType="number"
                     android:layout_marginLeft="@dimen/app_15dp"
                     android:layout_marginRight="@dimen/app_15dp"
                     android:gravity="center"
+                    android:inputType="number"
+                    android:maxLines="1"
                     android:text="15" />
 
                 <com.google.android.material.textview.MaterialTextView
@@ -225,74 +223,74 @@
                     android:text="→"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/alerth2co3custommainTextView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="边框颜色:"
                 android:layout_centerVertical="true"
-                android:id="@+id/alerth2co3custommainTextView1" />
+                android:text="边框颜色:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<EditText
+            <EditText
                 android:id="@+id/alert_h2co3custom_main_edit_strokecolor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/alerth2co3custommainTextView1"
                 android:layout_marginLeft="30dp"
-				android:text="#FFFFFFFF"
-				android:maxLines="1"/>
+                android:layout_toRightOf="@id/alerth2co3custommainTextView1"
+                android:maxLines="1"
+                android:text="#FFFFFFFF" />
 
-			<View
+            <View
                 android:id="@+id/alert_h2co3custom_main_view_strokecolor"
                 android:layout_width="40dp"
-				android:layout_height="40dp"
-				android:background="#FFFFFFFF"
-				android:layout_alignParentRight="true"/>
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="#FFFFFFFF" />
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<RelativeLayout
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
             <com.google.android.material.textview.MaterialTextView
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/alerth2co3custommainTextView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="文本颜色:"
                 android:layout_centerVertical="true"
-                android:id="@+id/alerth2co3custommainTextView2" />
+                android:text="文本颜色:"
+                android:textAppearance="?android:attr/textAppearanceLarge" />
 
-			<EditText
+            <EditText
                 android:id="@+id/alert_h2co3custom_main_edit_textcolor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/alerth2co3custommainTextView2"
                 android:layout_marginLeft="30dp"
-				android:text="#FFFFFFFF"
-				android:maxLines="1"/>
+                android:layout_toRightOf="@id/alerth2co3custommainTextView2"
+                android:maxLines="1"
+                android:text="#FFFFFFFF" />
 
-			<View
+            <View
                 android:id="@+id/alert_h2co3custom_main_view_textcolor"
                 android:layout_width="40dp"
-				android:layout_height="40dp"
-				android:background="#FFFFFFFF"
-				android:layout_alignParentRight="true"/>
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:background="#FFFFFFFF" />
 
-		</RelativeLayout>
+        </RelativeLayout>
 
-		<View
-			android:background="?attr/dividerVertical"
-			android:layout_width="match_parent"
-			android:layout_height="1dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/dividerVertical" />
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -300,42 +298,42 @@
             android:text="高级属性"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
-		<RadioGroup
-			android:orientation="horizontal"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content">
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-			<RadioButton
-                android:checked="true"
+            <RadioButton
                 android:id="@+id/alert_h2co3custom_main_radio_normalbtn"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:hint="普通按键"/>
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:hint="普通按键" />
 
-			<RadioButton
+            <RadioButton
                 android:id="@+id/alert_h2co3custom_main_radio_cmdbtn"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:hint="命令按键"/>
+                android:layout_height="wrap_content"
+                android:hint="命令按键" />
 
-			<RadioButton
+            <RadioButton
                 android:id="@+id/alert_h2co3custom_main_radio_vsbbtn"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:hint="显隐控制按键"/>
+                android:layout_height="wrap_content"
+                android:hint="显隐控制按键" />
 
-		</RadioGroup>
+        </RadioGroup>
 
-		<View
-			android:background="?attr/dividerVertical"
-			android:layout_width="match_parent"
-			android:layout_height="1dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?attr/dividerVertical" />
 
-		<LinearLayout
+        <LinearLayout
             android:id="@+id/alert_h2co3custom_main_layout_normalbtn"
-            android:orientation="vertical"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -343,12 +341,12 @@
                 android:text="普通按键"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:gravity="center_vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -356,73 +354,73 @@
                     android:text="键值:"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
-                    android:focusable="false"
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_key1"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:layout_marginLeft="5dp"
-					android:textIsSelectable="false"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:focusable="false"
+                    android:maxLines="1"
+                    android:textIsSelectable="false" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
                     android:layout_marginLeft="@dimen/app_15dp"
-                    android:layout_marginRight="@dimen/app_15dp" />
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:text="+" />
 
-				<EditText
-                    android:focusable="false"
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_key2"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:textIsSelectable="false"/>
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:maxLines="1"
+                    android:textIsSelectable="false" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="+"
                     android:layout_marginLeft="@dimen/app_15dp"
-                    android:layout_marginRight="@dimen/app_15dp" />
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:text="+" />
 
-				<EditText
-                    android:focusable="false"
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_key3"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:maxLines="1"
-					android:textIsSelectable="false"/>
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:maxLines="1"
+                    android:textIsSelectable="false" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="wrap_content"
-				android:layout_height="wrap_content">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-				<CheckBox
+                <CheckBox
                     android:id="@+id/alert_h2co3custom_main_check_autokeep"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:hint="自动保持"/>
+                    android:layout_height="wrap_content"
+                    android:hint="自动保持" />
 
-				<CheckBox
+                <CheckBox
                     android:id="@+id/alert_h2co3custom_main_check_mousectrl"
                     android:layout_width="wrap_content"
-					android:layout_height="wrap_content"
-					android:hint="控制视角(指针)移动"/>
+                    android:layout_height="wrap_content"
+                    android:hint="控制视角(指针)移动" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
+        <LinearLayout
             android:id="@+id/alert_h2co3custom_main_layout_cmdbtn"
-            android:orientation="vertical"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -430,11 +428,11 @@
                 android:text="命令按键"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<LinearLayout
-				android:orientation="horizontal"
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:gravity="center">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
@@ -442,20 +440,20 @@
                     android:text="命令:"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
-				<EditText
+                <EditText
                     android:id="@+id/alert_h2co3custom_main_edit_cmd"
                     android:layout_width="match_parent"
-					android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content" />
 
-			</LinearLayout>
+            </LinearLayout>
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
+        <LinearLayout
             android:id="@+id/alert_h2co3custom_main_layout_vsbbtn"
-            android:orientation="vertical"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -463,46 +461,45 @@
                 android:text="显隐控制按键"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-			<Button
+            <Button
                 android:id="@+id/alert_h2co3custom_main_btn_btnselect"
                 android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:text="选择按键"
-				android:background="@drawable/control_button"
-				android:textColor="#FFFFFFFF"
-				android:layout_margin="5dp"/>
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:text="选择按键"
+                android:textColor="#FFFFFFFF" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-		<LinearLayout
-			android:orientation="horizontal"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:gravity="center"
-			android:padding="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="@dimen/app_10dp">
 
-			<Button
+            <Button
                 android:id="@+id/alert_h2co3custom_main_btn_ok"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="确定"
-				android:background="@drawable/control_button"
-				android:layout_marginRight="10dp"
-				android:textColor="#FFFFFFFF"
-				android:layout_weight="1.0"/>
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/app_10dp"
+                android:layout_weight="1.0"
+                android:background="@drawable/control_button"
+                android:text="确定"
+                android:textColor="#FFFFFFFF" />
 
-			<Button
+            <Button
                 android:id="@+id/alert_h2co3custom_main_btn_cancle"
                 android:layout_width="wrap_content"
-				android:layout_height="wrap_content"
-				android:text="取消"
-				android:background="@drawable/control_button"
-				android:textColor="#FFFFFFFF"
-				android:layout_weight="1.0"/>
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:background="@drawable/control_button"
+                android:text="取消"
+                android:textColor="#FFFFFFFF" />
 
-		</LinearLayout>
+        </LinearLayout>
 
-	</LinearLayout>
+    </LinearLayout>
 
 </ScrollView>
 

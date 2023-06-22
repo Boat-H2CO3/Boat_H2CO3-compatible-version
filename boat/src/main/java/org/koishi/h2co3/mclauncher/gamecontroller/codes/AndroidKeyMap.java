@@ -1,8 +1,8 @@
-package org.koishi.aof.mcinabox.gamecontroller.codes;
+package org.koishi.h2co3.mclauncher.gamecontroller.codes;
 
 import android.view.KeyEvent;
 
-import org.koishi.aof.mcinabox.gamecontroller.definitions.map.KeyMap;
+import org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.KeyMap;
 
 import java.util.HashMap;
 

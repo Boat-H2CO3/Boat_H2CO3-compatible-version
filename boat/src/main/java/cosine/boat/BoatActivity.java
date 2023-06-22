@@ -12,23 +12,21 @@ import android.widget.RelativeLayout;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.koishi.h2co3.mclauncher.customcontrol.ControlLayout;
-
-import org.lwjgl.glfw.CallbackBridge;
+import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
 
 import java.util.Timer;
 
 //import com.koishi.launcher.h2o2.MainActivity;
 
 
-public class BoatActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener{
+public class BoatActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
 
     static {
         System.loadLibrary("boat");
 
     }
 
-    public int cursorMode = BoatInput.CursorEnabled;
-    public Timer timer, timer2;
+    public Timer timer;
     public RelativeLayout base;
     public ControlLayout mainTextureView;
     public MyHandler mHandler;
@@ -38,6 +36,27 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
     public int baseY;
 
     public static native void setBoatNativeWindow(Surface surface);
+
+    public static void sendKeyPress(int keyCode, int modifiers, boolean status) {
+        //sendKeyPress(keyCode, 0, modifiers, status);
+        BoatInput.setKey(keyCode, 0, status);
+        System.out.print(keyCode);
+    }
+
+    public static void sendKeyPress(int keyCode, char keyChar, int scancode, int modifiers, boolean status) {
+        BoatInput.setKey(keyCode, 0, status);
+        System.out.print(keyCode);
+    }
+
+    public static void sendKeyPress(int keyCode) {
+        BoatInput.setKey(keyCode, 0, true);
+        BoatInput.setKey(keyCode, 0, false);
+        System.out.print(keyCode);
+    }
+
+    public static void sendMouseButton(int button, boolean status) {
+        BoatInput.setMouseButton(button, status);
+    }
 
     @Override
     @SuppressLint("ClickableViewAccessibility")
@@ -112,30 +131,11 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
         mHandler.sendMessage(msg);
     }
 
-
     public void setCursorPos(int x, int y) {
     }
 
     @SuppressLint("HandlerLeak")
     private static class MyHandler extends Handler {
-    }
-
-    public static void sendKeyPress(int keyCode, int modifiers, boolean status) {
-        //sendKeyPress(keyCode, 0, modifiers, status);
-        BoatInput.setKey(keyCode, 0, status);
-    }
-
-    public static void sendKeyPress(int keyCode, char keyChar, int scancode, int modifiers, boolean status) {
-        CallbackBridge.sendKeycode(keyCode, keyChar, scancode, modifiers, status);
-        System.out.print(keyCode);
-    }
-    public static void sendKeyPress(int keyCode) {
-        sendKeyPress(keyCode, CallbackBridge.getCurrentMods(), true);
-        sendKeyPress(keyCode, CallbackBridge.getCurrentMods(), false);
-    }
-
-    public static void sendMouseButton(int button, boolean status) {
-        CallbackBridge.sendMouseKeycode(button, CallbackBridge.getCurrentMods(), status);
     }
 
 

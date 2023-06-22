@@ -4,12 +4,13 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import org.koishi.launcher.h2co3.R;
 
-public class H2CO3Activity extends AppCompatActivity {
+import rikka.material.app.MaterialActivity;
+
+public class H2CO3Activity extends MaterialActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

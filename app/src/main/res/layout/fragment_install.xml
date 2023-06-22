@@ -17,37 +17,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:text="@string/install_title_1"
             android:textSize="16.5sp" />
 
         <com.google.android.material.card.MaterialCardView
-            style="@style/Theme.H2CO3.CardViewStyle"
             android:id="@+id/install_mc"
+            style="@style/Theme.H2CO3.CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginTop="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
-            app:cardCornerRadius="@dimen/card_radius"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:background="@drawable/shape_circle_icon_background"
                     android:layout_width="35dp"
                     android:layout_height="35dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="@dimen/app_15dp"
+                    android:background="@drawable/shape_circle_icon_background"
                     android:contentDescription="TODO"
                     app:srcCompat="@drawable/ic_mc_vanilla_release" />
 
@@ -56,8 +54,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:orientation="vertical"
-                    android:padding="10dp">
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         style="@style/TextStyleMain"
@@ -68,15 +65,10 @@
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="1dp"
-                    android:layout_height="40dp"
-                    android:layout_margin="5dp" />
-
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="@dimen/app_10dp"
                     android:contentDescription="TODO"
                     app:srcCompat="@drawable/ic_arrow_right_black" />
 

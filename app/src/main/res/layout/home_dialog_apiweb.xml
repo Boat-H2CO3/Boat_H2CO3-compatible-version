@@ -6,7 +6,7 @@
     android:paddingStart="20dp"
     android:paddingTop="20dp"
     android:paddingEnd="20dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="@dimen/app_10dp">
 
     <com.google.android.material.textview.MaterialTextView
         style="@style/TextStyleMain"
@@ -18,11 +18,11 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/api_web_lay"
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
+        style="@style/Widget.Material3.TextInputLayout.FilledBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginTop="@dimen/app_10dp"
+        android:layout_marginBottom="@dimen/app_10dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/dialog_edit_web"

@@ -29,15 +29,14 @@ import java.util.Stack;
  * Created by 沈钦赐 on 16/6/23.
  */
 public class PerformEdit {
-    //操作序号(一次编辑可能对应多个操作，如替换文字，就是删除+插入)
-    int index;
     //撤销栈
     final Stack<Action> history = new Stack<>();
     //恢复栈
     final Stack<Action> historyBack = new Stack<>();
-
-    private Editable editable;
     private final EditText editText;
+    //操作序号(一次编辑可能对应多个操作，如替换文字，就是删除+插入)
+    int index;
+    private Editable editable;
     //自动操作标志，防止重复回调,导致无限撤销
     private boolean flag = false;
 
@@ -48,6 +47,10 @@ public class PerformEdit {
         editText.addTextChangedListener(new Watcher());
     }
 
+    private static void CheckNull(Object o, String message) {
+        if (o == null) throw new IllegalStateException(message);
+    }
+
     protected void onEditableChanged(Editable s) {
 
     }
@@ -55,7 +58,6 @@ public class PerformEdit {
     protected void onTextChanged(Editable s) {
 
     }
-
 
     /**
      * 清理记录
@@ -65,7 +67,6 @@ public class PerformEdit {
         history.clear();
         historyBack.clear();
     }
-
 
     /**
      * 撤销
@@ -135,6 +136,42 @@ public class PerformEdit {
         flag = true;
         editable.replace(0, editable.length(), text);
         flag = false;
+    }
+
+    private static class Action {
+        /**
+         * 改变字符.
+         */
+        final CharSequence actionTarget;
+        /**
+         * 光标位置.
+         */
+        final int startCursor;
+        /**
+         * 标志增加操作.
+         */
+        final boolean isAdd;
+        int endCursor;
+        /**
+         * 操作序号.
+         */
+        int index;
+
+
+        public Action(CharSequence actionTag, int startCursor, boolean add) {
+            this.actionTarget = actionTag;
+            this.startCursor = startCursor;
+            this.endCursor = startCursor;
+            this.isAdd = add;
+        }
+
+        public void setSelectCount(int count) {
+            this.endCursor = endCursor + count;
+        }
+
+        public void setIndex(int index) {
+            this.index = index;
+        }
     }
 
     private class Watcher implements TextWatcher {
@@ -212,38 +249,5 @@ public class PerformEdit {
             PerformEdit.this.onTextChanged(s);
         }
 
-    }
-
-    private static class Action {
-        /** 改变字符. */
-        final CharSequence actionTarget;
-        /** 光标位置. */
-        final int startCursor;
-        int endCursor;
-        /** 标志增加操作. */
-        final boolean isAdd;
-        /** 操作序号. */
-        int index;
-
-
-        public Action(CharSequence actionTag, int startCursor, boolean add) {
-            this.actionTarget = actionTag;
-            this.startCursor = startCursor;
-            this.endCursor = startCursor;
-            this.isAdd = add;
-        }
-
-        public void setSelectCount(int count) {
-            this.endCursor = endCursor + count;
-        }
-
-        public void setIndex(int index) {
-            this.index = index;
-        }
-    }
-
-
-    private static void CheckNull(Object o, String message) {
-        if (o == null) throw new IllegalStateException(message);
     }
 }

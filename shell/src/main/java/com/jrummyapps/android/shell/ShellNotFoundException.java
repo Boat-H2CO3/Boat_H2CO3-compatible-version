@@ -23,26 +23,23 @@ import java.io.IOException;
  */
 public class ShellNotFoundException extends IOException {
 
-  /**
-   * Constructs a new {@code Exception} with the current stack trace and the specified detail message.
-   *
-   * @param detailMessage
-   *     the detail message for this exception.
-   */
-  public ShellNotFoundException(String detailMessage) {
-    super(detailMessage);
-  }
+    /**
+     * Constructs a new {@code Exception} with the current stack trace and the specified detail message.
+     *
+     * @param detailMessage the detail message for this exception.
+     */
+    public ShellNotFoundException(String detailMessage) {
+        super(detailMessage);
+    }
 
-  /**
-   * Constructs a new {@code Exception} with the current stack trace and the specified cause.
-   *
-   * @param message
-   *     the detail message for this exception.
-   * @param cause
-   *     the cause of this exception.
-   */
-  public ShellNotFoundException(String message, Throwable cause) {
-    super(message, cause);
-  }
+    /**
+     * Constructs a new {@code Exception} with the current stack trace and the specified cause.
+     *
+     * @param message the detail message for this exception.
+     * @param cause   the cause of this exception.
+     */
+    public ShellNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
 }

@@ -5,7 +5,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.STATUS_BAR"
+    <uses-permission
+        android:name="android.permission.STATUS_BAR"
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
     <uses-permission
@@ -15,32 +16,33 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
     <application
-        android:allowNativeHeapPointerTagging="false"
-        android:hardwareAccelerated="true"
         android:name="cosine.boat.BoatApplication"
         android:allowBackup="true"
+        android:allowNativeHeapPointerTagging="false"
+        android:appCategory="game"
+        android:hardwareAccelerated="true"
         android:icon="@drawable/ic_h2o2_low_px"
+        android:isGame="true"
         android:label="@string/app_name"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:isGame="true"
-        android:appCategory="game"
         android:theme="@style/Theme.H2CO3"
         tools:targetApi="r">
         <activity
+            android:name=".CustomKeyBoardActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:exported="false"
+            android:label="@string/title_activity_custom_key_board" />
+        <activity
             android:name=".LogcatActivity"
-            android:screenOrientation="portrait"
             android:label="@string/log_title"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings" />
         <activity
             android:name=".ModsActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".VersionsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -62,8 +64,8 @@
             tools:ignore="LockedOrientationActivity" />
         <activity
             android:name=".SplashActivity"
-            android:screenOrientation="portrait"
             android:exported="true"
+            android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -86,18 +88,17 @@
             android:name=".InitialActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
-
         <activity
             android:name=".launch.boat.BoatActivity"
-            android:theme="@style/FullScreen"
             android:alwaysRetainTaskState="false"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:excludeFromRecents="false"
             android:launchMode="singleInstance"
-            android:screenOrientation="sensorLandscape">
-        <meta-data
-            android:name="android.app.lib_name"
-            android:value="boat" />
+            android:screenOrientation="sensorLandscape"
+            android:theme="@style/FullScreen">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="boat" />
         </activity>
 
         <provider
@@ -109,7 +110,6 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
-
     </application>
 
 </manifest>

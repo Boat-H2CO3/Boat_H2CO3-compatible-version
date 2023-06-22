@@ -32,6 +32,7 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
+import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -41,15 +42,15 @@ import java.io.InputStreamReader;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class BoatActivityMk extends AppCompatActivity implements TextureView.SurfaceTextureListener, SurfaceHolder.Callback, OnTouchListener, View.OnClickListener, TextWatcher, TextView.OnEditorActionListener, View.OnCapturedPointerListener {
     public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
+    private final static String TAG = BoatActivityMk.class.getSimpleName();
 
     static {
         System.loadLibrary("boat");
 
     }
 
-    private final static String TAG = BoatActivityMk.class.getSimpleName();
-
     public int cursorMode = BoatInput.CursorEnabled;
+    View controllerView;
     private TextView text;
     private Button button;
     private int height;
@@ -74,8 +75,6 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
     private ImageView mouseCursor;
     private TextureView mainTextureView;
     private MyHandler mHandler;
-
-    View controllerView;
 
     public static native void setBoatNativeWindow(Surface surface);
 
@@ -208,12 +207,7 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
         mouseCursor = (ImageView) findViewById(R.id.mouse_cursor2);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            alpha = true;
-        } else {
-            alpha = false;
-
-        }
+        alpha = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
 
         Resources resources = this.getResources();
         DisplayMetrics dm = resources.getDisplayMetrics();
@@ -358,7 +352,7 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
 
     }
 
-    public void loadCursor(){
+    public void loadCursor() {
         controllerView = findViewById(R.id.controller_view);
         controllerView.setFocusable(true);
         controllerView.setDefaultFocusHighlightEnabled(false);
@@ -372,9 +366,9 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
     @Override
     public boolean onCapturedPointer(View view, MotionEvent event) {
         Log.d("MyTouchTest", "onCapturedPointer: " + event.getAction() + " " + event.getSource());
-        int horizonOffset = (int)event.getX();
-        int verticalOffset = (int)event.getY();
-        BoatInput.setPointer(horizonOffset,verticalOffset);
+        int horizonOffset = (int) event.getX();
+        int verticalOffset = (int) event.getY();
+        BoatInput.setPointer(horizonOffset, verticalOffset);
         mouseCursor.setX(horizonOffset);
         mouseCursor.setY(verticalOffset);
         return true;
@@ -580,21 +574,17 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
         }
 
 
-        switch (event.getActionMasked()) {
-            case MotionEvent.ACTION_SCROLL:
+        if (event.getActionMasked() == MotionEvent.ACTION_SCROLL) {
+            if (event.getAxisValue(MotionEvent.AXIS_VSCROLL) < 0.0f) {
+                text.append("down");//5
+                BoatInput.setMouseButton(BoatInput.Button5, true);
+                xia = true;
 
-                if (event.getAxisValue(MotionEvent.AXIS_VSCROLL) < 0.0f) {
-                    text.append("down");//5
-                    BoatInput.setMouseButton(BoatInput.Button5, true);
-                    xia = true;
-
-                } else {
-                    text.append("up");//4
-                    BoatInput.setMouseButton(BoatInput.Button4, true);
-                    shang = true;
-                }
-                break;
-
+            } else {
+                text.append("up");//4
+                BoatInput.setMouseButton(BoatInput.Button4, true);
+                shang = true;
+            }
         }
 
         return false;
@@ -631,12 +621,7 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
         //button.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION);
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            alpha = true;
-        } else {
-            alpha = false;
-
-        }
+        alpha = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O;
     }
 
     //private boolean overlayCreated = false;

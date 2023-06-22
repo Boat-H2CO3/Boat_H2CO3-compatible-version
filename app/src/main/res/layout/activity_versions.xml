@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VersionsActivity">
+    tools:context=".ui.version.VersionFragment">
 
     <LinearLayout
         android:id="@+id/dir_layout"
@@ -12,33 +12,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.google.android.material.appbar.AppBarLayout
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-
-            android:fitsSystemWindows="true"
-            android:theme="@style/AppBaseTheme.AppBarOverlay"
-            app:elevation="0dp">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-
-                app:elevation="0dp"
-                app:popupTheme="@style/AppBaseTheme.PopupOverlay"
-                app:title="@string/menu_ver" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/ver_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:orientation="horizontal"
             app:layout_scrollFlags="scroll|enterAlways"
-            app:tabIndicator="@drawable/tab_selector"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorFullWidth="false">
 
@@ -61,7 +40,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_marginTop="2.5dp"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -106,12 +85,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginStart="@dimen/app_16dp"
+        android:layout_marginTop="@dimen/app_16dp"
+        android:layout_marginEnd="@dimen/app_16dp"
+        android:layout_marginBottom="@dimen/app_16dp"
         android:contentDescription="TODO"
-        android:onClick="newDir"
         android:src="@drawable/file_folder"
         android:tint="@color/appWhite_ff_l" />
 
@@ -121,9 +99,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/app_16dp"
         android:contentDescription="TODO"
-        android:onClick="newVer"
         android:src="@drawable/ic_launcher_install_file"
         android:tint="@color/appWhite_ff_l" />
 

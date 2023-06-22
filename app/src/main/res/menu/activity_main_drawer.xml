@@ -19,18 +19,17 @@
             android:id="@+id/fragment_custom"
             android:icon="@drawable/ic_build"
             android:title="@string/menu_more" />
-
+        <item
+            android:id="@+id/fragment_version"
+            android:icon="@drawable/ic_list_ver"
+            android:title="@string/menu_ver" />
         <item
             android:id="@+id/fragment_manager"
             android:icon="@drawable/ic_directory"
             android:title="@string/menu_manager" />
 
-    </group>
 
-    <item
-        android:id="@+id/fragment_version"
-        android:icon="@drawable/ic_list_ver"
-        android:title="@string/menu_ver" />
+    </group>
 
     <item android:title="@string/menu_terminal">
         <menu>

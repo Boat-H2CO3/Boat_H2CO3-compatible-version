@@ -1,4 +1,4 @@
-package org.koishi.aof.mcinabox.gamecontroller.definitions.id.key;
+package org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key;
 
 public interface KeyEvent {
     //Define Type ID

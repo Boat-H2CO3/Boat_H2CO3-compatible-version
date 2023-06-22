@@ -1,4 +1,4 @@
-package org.koishi.aof.mcinabox.gamecontroller.definitions.map;
+package org.koishi.h2co3.mclauncher.gamecontroller.definitions.map;
 
 public interface MouseMap {
     String

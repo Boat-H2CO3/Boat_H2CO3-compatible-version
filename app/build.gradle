@@ -11,7 +11,7 @@ android {
         minSdk 26
         targetSdk 33
         versionCode 1025
-        versionName "0.0.3"
+        versionName "0.0.5"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -30,33 +30,62 @@ android {
     namespace 'org.koishi.launcher.h2co3'
     buildToolsVersion '33.0.2'
     ndkVersion '25.2.9519653'
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+configurations.all {
+    exclude group: 'androidx.appcompat', module: 'appcompat'
 }
 
 dependencies {
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'androidx.browser:browser:1.4.0'
+
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.6.0'
     implementation 'androidx.navigation:navigation-ui:2.6.0'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.6.1'
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1'
+    implementation 'androidx.browser:browser:1.5.0'
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
     implementation 'androidx.legacy:legacy-support-v13:1.0.0'
-    implementation 'androidx.preference:preference:1.2.0'
-    implementation 'androidx.recyclerview:recyclerview:1.3.0'
     implementation 'com.afollestad.material-dialogs:commons:0.9.6.0'
     implementation 'com.android.billingclient:billing:4.1.0'
     implementation 'com.github.bumptech.glide:glide:4.15.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'com.google.dagger:hilt-android:2.46.1'
+
     implementation 'com.github.getActivity:XXPermissions:16.8'
 
     implementation 'cat.ereza:customactivityoncrash:2.4.0'
 
+    implementation 'dev.rikka.rikkax.appcompat:appcompat:1.6.1'
+    implementation 'dev.rikka.rikkax.compatibility:compatibility:2.0.0'
+    implementation 'dev.rikka.rikkax.core:core-ktx:1.4.1'
+    implementation 'dev.rikka.rikkax.material:material:2.7.0'
+    implementation 'dev.rikka.rikkax.material:material-preference:2.0.0'
+    implementation 'dev.rikka.rikkax.html:html-ktx:1.1.2'
+    implementation 'dev.rikka.rikkax.recyclerview:recyclerview-adapter:1.3.0'
+    implementation 'dev.rikka.rikkax.recyclerview:recyclerview-ktx:1.3.1'
+    implementation 'dev.rikka.rikkax.insets:insets:1.3.0'
+    implementation 'dev.rikka.rikkax.layoutinflater:layoutinflater:1.3.0'
+    implementation 'dev.rikka.rikkax.widget:borderview:1.1.0'
+    implementation 'dev.rikka.rikkax.preference:simplemenu-preference:1.0.3'
+    implementation 'dev.rikka.rikkax.lifecycle:lifecycle-resource-livedata:1.0.1'
+    implementation 'dev.rikka.rikkax.lifecycle:lifecycle-shared-viewmodel:1.0.1'
+    implementation 'dev.rikka.rikkax.lifecycle:lifecycle-viewmodel-lazy:2.0.0'
+
     implementation project(path: ':boat')
     implementation project(path: ':shell')
     implementation project(path: ':markdown')
+    implementation 'androidx.privacysandbox.tools:tools-core:+'
+    implementation 'com.android.volley:volley:1.2.1'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'

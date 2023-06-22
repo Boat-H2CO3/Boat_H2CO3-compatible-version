@@ -30,7 +30,6 @@
 
         android:orientation="horizontal"
         app:layout_scrollFlags="scroll|enterAlways"
-        app:tabIndicator="@drawable/tab_selector"
         app:tabIndicatorAnimationMode="elastic"
         app:tabIndicatorFullWidth="false">
 

@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/selecter_keyboard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-	android:id="@+id/selecter_keyboard"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/app_10dp"
         android:layout_weight="1"
         android:orientation="horizontal">
 
@@ -168,10 +168,10 @@
 
     </LinearLayout>
 
-<!--    <View-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="0dp"-->
-<!--        android:layout_weight="0.5" />-->
+    <!--    <View-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_weight="0.5" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -331,7 +331,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -489,7 +489,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -518,7 +518,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -667,7 +667,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4"/>
+            android:layout_weight="4" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -808,7 +808,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -821,7 +821,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.5"/>
+            android:layout_weight="1.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -930,7 +930,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"
@@ -959,7 +959,7 @@
         <View
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5" />
 
         <org.koishi.h2co3.mclauncher.customcontrol.H2CO3SelectButton
             style="@style/selecterButtonStyle"

@@ -4,7 +4,6 @@ import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
 import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -24,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.VersionsActivity;
 import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.data.DbDao;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
@@ -116,12 +114,6 @@ public class ManagerFragment extends Fragment {
         mOutputButton = root.findViewById(R.id.manager_output_button);
 
         pbM = root.findViewById(R.id.pb_m);
-
-        openVer = root.findViewById(R.id.manager_open_ver);
-        openVer.setOnClickListener(v -> {
-            startActivity(new Intent(requireActivity(), VersionsActivity.class));
-            requireActivity().finish();
-        });
 
         mSetButton.setOnClickListener(v -> setDirectory());
         mResetButton.setOnClickListener(v -> reset());

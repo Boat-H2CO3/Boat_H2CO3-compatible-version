@@ -10,22 +10,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:animateLayoutChanges="true"
-        android:orientation="vertical"
-        android:paddingHorizontal="7.5dp"
-        android:paddingBottom="7.5dp">
+        android:orientation="vertical">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/show_login"
             style="@style/Theme.H2CO3.CardViewStyle"
-            android:layout_marginStart="@dimen/app_15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/app_15dp"
-            android:layout_marginEnd="@dimen/app_15dp"
-            app:cardBackgroundColor="@color/app_green_normal"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginTop="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
             android:visibility="visible"
+            app:cardBackgroundColor="@color/app_green_normal"
             app:cardCornerRadius="@dimen/card_radius"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -47,8 +45,8 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            style="@style/Theme.H2CO3.CardIcon"
                             android:id="@+id/home_skin"
+                            style="@style/Theme.H2CO3.CardIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_btn_green"
@@ -125,8 +123,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="@dimen/app_15dp"
-                        android:paddingEnd="@dimen/app_15dp">
+                        android:paddingStart="@dimen/app_10dp"
+                        android:paddingEnd="@dimen/app_10dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -140,7 +138,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginHorizontal="@dimen/app_15dp"
+                            android:layout_marginHorizontal="@dimen/app_10dp"
                             android:layout_marginVertical="5dp"
                             android:orientation="vertical">
 
@@ -200,13 +198,13 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/login"
+            style="@style/Theme.H2CO3.CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="5dp"
-            style="@style/Theme.H2CO3.CardViewStyle"
             android:foreground="?attr/selectableItemBackground"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
@@ -282,9 +280,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/app_15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_10dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
@@ -323,17 +321,6 @@
                                         app:icon="@drawable/ic_new_add"
                                         app:iconGravity="textStart" />
 
-                                    <com.google.android.material.button.MaterialButton
-                                        android:id="@+id/home_manager"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:fontFamily="@font/sans"
-                                        android:text="@string/menu_manager"
-                                        app:cornerRadius="@dimen/card_radius"
-                                        app:icon="@drawable/ic_folder_outline"
-                                        app:iconGravity="textStart" />
-
 
                                 </com.google.android.material.circularreveal.CircularRevealLinearLayout>
 
@@ -360,8 +347,8 @@
                         <ImageView
                             android:layout_width="65dp"
                             android:layout_height="65dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="@dimen/app_10dp"
+                            android:layout_marginBottom="@dimen/app_10dp"
                             android:src="@drawable/ic_boat" />
                             -->
 
@@ -375,15 +362,15 @@
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/bc_open"
+            style="@style/Theme.H2CO3.CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="5dp"
             android:foreground="?attr/selectableItemBackground"
             app:cardCornerRadius="@dimen/card_radius"
-            style="@style/Theme.H2CO3.CardViewStyle"
             app:cardElevation="0dp"
             app:strokeWidth="0dp">
 
@@ -405,10 +392,10 @@
                         android:orientation="horizontal">
 
                         <ImageView
+                            style="@style/Theme.H2CO3.CardIcon"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:background="@drawable/ic_btn_blue"
-                            style="@style/Theme.H2CO3.CardIcon"
                             android:contentDescription="TODO"
                             app:srcCompat="@drawable/ic_home_notification" />
 
@@ -459,9 +446,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_marginTop="@dimen/app_15dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/app_10dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
@@ -532,8 +519,8 @@
                         <ImageView
                             android:layout_width="65dp"
                             android:layout_height="65dp"
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="@dimen/app_10dp"
+                            android:layout_marginBottom="@dimen/app_10dp"
                             android:src="@drawable/ic_boat" />
                             -->
 
@@ -549,8 +536,8 @@
             android:id="@+id/main_check"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_15dp"
-            android:layout_marginEnd="@dimen/app_15dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -575,7 +562,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/app_15dp"
+                    android:layout_marginStart="@dimen/app_10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -608,8 +595,8 @@
         <com.google.android.material.circularreveal.CircularRevealLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_15dp"
-            android:layout_marginEnd="@dimen/app_15dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -633,7 +620,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/app_15dp"
+                    android:layout_marginStart="@dimen/app_10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -665,9 +652,9 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/app_15dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:layout_marginTop="7.5dp"
-            android:layout_marginEnd="@dimen/app_15dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="7.5dp"
             android:foreground="?attr/selectableItemBackground"
             android:visibility="gone"
@@ -691,8 +678,8 @@
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="@dimen/app_15dp"
-                        android:paddingEnd="@dimen/app_15dp">
+                        android:paddingStart="@dimen/app_10dp"
+                        android:paddingEnd="@dimen/app_10dp">
 
                         <ImageView
                             android:layout_width="wrap_content"
@@ -712,7 +699,7 @@
                                 style="@style/TextStyleMain"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="@dimen/app_15dp"
+                                android:layout_marginStart="@dimen/app_10dp"
                                 android:text="@string/broadcast" />
 
                         </com.google.android.material.circularreveal.CircularRevealLinearLayout>
@@ -730,8 +717,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="@dimen/app_15dp"
-                    android:paddingVertical="@dimen/app_15dp">
+                    android:paddingHorizontal="@dimen/app_10dp"
+                    android:paddingVertical="@dimen/app_10dp">
 
                     <androidx.core.widget.NestedScrollView
                         android:layout_width="match_parent"
@@ -756,8 +743,8 @@
             android:id="@+id/main_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -780,7 +767,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/app_15dp"
+                    android:layout_marginStart="@dimen/app_10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -815,8 +802,8 @@
             android:id="@+id/main_fix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -839,7 +826,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/app_15dp"
+                    android:layout_marginStart="@dimen/app_10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -873,8 +860,8 @@
             android:id="@+id/main_help"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:background="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="vertical"
@@ -897,7 +884,7 @@
                 <com.google.android.material.circularreveal.CircularRevealLinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/app_15dp"
+                    android:layout_marginStart="@dimen/app_10dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:orientation="vertical">
@@ -926,16 +913,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="@dimen/app_10dp"
             android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/app_10dp"
             android:layout_marginBottom="5dp"
             android:background="?android:colorBackground"
-            app:elevation="0dp"
             android:fitsSystemWindows="true"
+            app:elevation="0dp"
             app:itemBackground="?android:colorBackground"
-            app:itemVerticalPadding="@dimen/app_15dp"
             app:itemIconTint="?colorPrimary"
+            app:itemVerticalPadding="@dimen/app_10dp"
             app:menu="@menu/menu_home_nav" />
 
         <View

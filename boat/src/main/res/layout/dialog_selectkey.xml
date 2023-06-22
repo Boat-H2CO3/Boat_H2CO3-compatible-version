@@ -1,93 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#80D7D7D7"
+    android:orientation="vertical"
     android:padding="@dimen/app_15dp">
 
     <RelativeLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/dialog_selectkey_mouse_left"
+            style="@style/selecterButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-			android:text="鼠标左"
-			style="@style/selecterButtonStyle"
-			android:textSize="15sp"/>
+            android:text="鼠标左"
+            android:textSize="15sp" />
 
-		<Button
-			android:layout_toRightOf="@id/dialog_selectkey_mouse_left"
-			android:id="@+id/dialog_selectkey_mouse_center"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="鼠标中"
-			style="@style/selecterButtonStyle"
-			android:textSize="15sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_mouse_center"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/dialog_selectkey_mouse_left"
+            android:text="鼠标中"
+            android:textSize="15sp" />
 
-		<Button
-			android:layout_toRightOf="@id/dialog_selectkey_mouse_center"
-			android:id="@+id/dialog_selectkey_mouse_right"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="鼠标右"
-			style="@style/selecterButtonStyle"
-			android:textSize="15sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_mouse_right"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/dialog_selectkey_mouse_center"
+            android:text="鼠标右"
+            android:textSize="15sp" />
 
-		<Button
-			android:layout_toRightOf="@id/dialog_selectkey_mouse_right"
-			android:id="@+id/dialog_selectkey_mouse_wheel_up"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="鼠滚轮上"
-			style="@style/selecterButtonStyle"
-			android:textSize="15sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_mouse_wheel_up"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/dialog_selectkey_mouse_right"
+            android:text="鼠滚轮上"
+            android:textSize="15sp" />
 
-		<Button
-			android:layout_toRightOf="@id/dialog_selectkey_mouse_wheel_up"
-			android:id="@+id/dialog_selectkey_mouse_wheel_down"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="滚轮下"
-			style="@style/selecterButtonStyle"
-			android:textSize="15sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_mouse_wheel_down"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/dialog_selectkey_mouse_wheel_up"
+            android:text="滚轮下"
+            android:textSize="15sp" />
 
-		<Button
-			android:id="@+id/dialog_selectkey_btn_cancel"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="取消"
-			android:layout_alignParentRight="true"
-			style="@style/selecterButtonStyle"
-			android:textSize="18sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_btn_cancel"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="取消"
+            android:textSize="18sp" />
 
-		<Button
-			android:id="@+id/dialog_selectkey_btn_ok"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:text="确定"
-			android:layout_toLeftOf="@id/dialog_selectkey_btn_cancel"
-			style="@style/selecterButtonStyle"
-			android:textSize="18sp"/>
+        <Button
+            android:id="@+id/dialog_selectkey_btn_ok"
+            style="@style/selecterButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/dialog_selectkey_btn_cancel"
+            android:text="确定"
+            android:textSize="18sp" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/dialog_selectkey_text_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
             android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/app_10dp"
             android:layout_toRightOf="@id/dialog_selectkey_mouse_wheel_down"
-            android:layout_marginLeft="10dp" />
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-	</RelativeLayout>
+    </RelativeLayout>
 
-	<include
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		layout="@layout/selecter_keyboard"/>
+    <include
+        layout="@layout/selecter_keyboard"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
 

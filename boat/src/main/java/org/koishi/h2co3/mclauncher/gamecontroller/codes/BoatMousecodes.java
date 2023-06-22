@@ -1,4 +1,4 @@
-package org.koishi.aof.mcinabox.gamecontroller.codes;
+package org.koishi.h2co3.mclauncher.gamecontroller.codes;
 
 public class BoatMousecodes {
     public static final int BOAT_MOUSE_BUTTON_left = 1;

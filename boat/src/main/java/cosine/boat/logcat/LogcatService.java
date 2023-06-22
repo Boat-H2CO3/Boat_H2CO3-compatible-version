@@ -11,24 +11,20 @@ import java.io.IOException;
 /**
  * Service for out-of-process crash handling daemon. Should be run from a separate process.
  */
-public class LogcatService extends Service
-{
-
-    /**
-     * Indicates if a daemon was started.
-     */
-    private static boolean mDaemonStarted = false;
-
-    /**
-     * A name for shared preferences.
-     */
-    private static final String PREFS_NAME = "LogcatService";
+public class LogcatService extends Service {
 
     /**
      * Key for report file in arguments.
      */
     public static final String EXTRA_REPORT_FILE = "report_file";
-
+    /**
+     * A name for shared preferences.
+     */
+    private static final String PREFS_NAME = "LogcatService";
+    /**
+     * Indicates if a daemon was started.
+     */
+    private static boolean mDaemonStarted = false;
     private static Process mLogcatProcess;
 
     /**
@@ -50,6 +46,16 @@ public class LogcatService extends Service
         } catch (IOException ignored) {
         }
         return 0;
+    }
+
+    /**
+     * Stops NDCrash out-of-process unwinding daemon.
+     *
+     * @return Flag whether daemon stopping was successful.
+     */
+    static boolean stopOutOfProcessDaemon() {
+        mLogcatProcess.destroy();
+        return true;
     }
 
     @Override //@CallSuper
@@ -105,14 +111,4 @@ public class LogcatService extends Service
         return Service.START_STICKY;
     }
 
-    /**
-     * Stops NDCrash out-of-process unwinding daemon.
-     *
-     * @return Flag whether daemon stopping was successful.
-     */
-    static boolean stopOutOfProcessDaemon() {
-        mLogcatProcess.destroy();
-        return true;
-    }
-	
 }

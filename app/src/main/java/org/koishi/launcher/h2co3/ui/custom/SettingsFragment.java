@@ -18,7 +18,8 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
-import androidx.preference.SwitchPreferenceCompat;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.LogcatActivity;
 import org.koishi.launcher.h2co3.MainActivity;
@@ -29,6 +30,8 @@ import org.koishi.launcher.h2co3.tool.file.AppExecute;
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
+
+import rikka.material.preference.MaterialSwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
 
@@ -49,7 +52,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     };
     public Preference delRun, delCfg, crash, logView, langTr;
     public EditTextPreference etId, editJvm, editMcf;
-    public SwitchPreferenceCompat appTheme;
+    public MaterialSwitchPreference appTheme;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -113,7 +116,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void reset() {
         //添加"Yes"按钮
         //添加"Yes"按钮
-        AlertDialog alertDialog1 = new AlertDialog.Builder(getActivity())
+        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(getResources().getString(R.string.action))//标题
                 .setIcon(R.drawable.ic_boat)//图标
                 .setMessage(getResources().getString(R.string.resetwarn))
@@ -151,7 +154,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
     public void del() {
         //添加"Yes"按钮
         //添加"Yes"按钮
-        AlertDialog alertDialog1 = new AlertDialog.Builder(getActivity())
+        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(getActivity())
                 .setTitle(getResources().getString(R.string.action))//标题
                 .setIcon(R.drawable.ic_boat)//图标
                 .setMessage(getResources().getString(R.string.resetwarn))

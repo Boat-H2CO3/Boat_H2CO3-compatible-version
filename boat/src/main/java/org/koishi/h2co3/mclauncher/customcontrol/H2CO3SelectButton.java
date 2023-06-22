@@ -14,6 +14,7 @@ package org.koishi.h2co3.mclauncher.customcontrol;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
@@ -22,6 +23,8 @@ import cosine.boat.R;
 
 public class H2CO3SelectButton extends androidx.appcompat.widget.AppCompatButton {
 
+    private String key;
+
     public H2CO3SelectButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.H2CO3SelectButton);
@@ -29,15 +32,13 @@ public class H2CO3SelectButton extends androidx.appcompat.widget.AppCompatButton
         array.recycle();
     }
 
-    private String key;
+    public String getKey() {
+        return key;
+    }
 
-	public void setKey(String key) {
-		this.key = key;
-	}
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-	public String getKey() {
-		return key;
-	}
 
-  
 }

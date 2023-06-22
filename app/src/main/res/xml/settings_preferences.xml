@@ -2,7 +2,7 @@
 
     <PreferenceCategory app:title="@string/custom_basic">
 
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             app:icon="@drawable/ic_settings_mouse_mode"
             app:key="set_click"
             app:summary="@string/launcher_settings_right_click_mode_summary"
@@ -33,7 +33,7 @@
 
     <PreferenceCategory app:title="@string/app">
 
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             app:icon="@drawable/ic_theme_custom"
             app:key="material"
             app:summary="@string/theme_summary"
@@ -61,7 +61,7 @@
 
     <PreferenceCategory app:title="@string/menu_title_game">
 
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             app:icon="@drawable/ic_launcher_file_checker"
             app:key="set_single"
             app:summary="@string/single_ver"
@@ -71,7 +71,7 @@
         <Preference
             app:summary="@string/mods_tip" />
         -->
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             app:key="set_pause"
             app:summary="@string/custom_pause"
             app:title="@string/custom_back" />
@@ -112,7 +112,7 @@
 
     <PreferenceCategory app:title="@string/menu_custom">
 
-        <SwitchPreferenceCompat
+        <rikka.material.preference.MaterialSwitchPreference
             app:defaultValue="false"
             app:key="set_check_file"
             app:summary="@string/launcher_check_file_summary"

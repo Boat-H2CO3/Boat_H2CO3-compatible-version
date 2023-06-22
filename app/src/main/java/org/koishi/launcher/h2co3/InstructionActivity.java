@@ -39,14 +39,14 @@ public class InstructionActivity extends H2CO3Activity {
         markdownWebView = findViewById(R.id.markdown_view);
 
         try {
-            markdownWebView.setText(MarkDownFileUtil.getString(LAUNCHER_FILE_DIR+"markdown", "info.md"));
+            markdownWebView.setText(MarkDownFileUtil.getString(LAUNCHER_FILE_DIR + "markdown", "info.md"));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void startBili(View v){
+    public void startBili(View v) {
         CustomTabsIntent intent = new CustomTabsIntent.Builder().build();
         intent.launchUrl(InstructionActivity.this, Uri.parse("https://b23.tv/ea3HRj\n"));
     }

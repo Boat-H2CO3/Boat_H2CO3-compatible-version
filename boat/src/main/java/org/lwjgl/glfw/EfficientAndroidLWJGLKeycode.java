@@ -2,8 +2,6 @@ package org.lwjgl.glfw;
 
 import android.view.KeyEvent;
 
-import org.lwjgl.glfw.CallbackBridge;
-
 import java.util.Arrays;
 
 import cosine.boat.BoatActivity;
@@ -17,13 +15,14 @@ public class EfficientAndroidLWJGLKeycode {
     private static final int[] androidKeycodes = new int[KEYCODE_COUNT];
     private static final short[] LWJGLKeycodes = new short[KEYCODE_COUNT];
     private static String[] androidKeyNameArray; /* = new String[androidKeycodes.length]; */
+    private static short index = 0;
 
     static {
 
         /*  BINARY SEARCH IS PERFORMED ON THE androidKeycodes ARRAY !
             WHEN ADDING A MAPPING, ADD IT SO THE androidKeycodes ARRAY STAYS SORTED ! */
         // Mapping Android Keycodes to LWJGL Keycodes
-        add(KeyEvent.KEYCODE_UNKNOWN,LWJGLGLFWKeycode.GLFW_KEY_UNKNOWN);
+        add(KeyEvent.KEYCODE_UNKNOWN, LWJGLGLFWKeycode.GLFW_KEY_UNKNOWN);
         add(KeyEvent.KEYCODE_HOME, LWJGLGLFWKeycode.GLFW_KEY_HOME);
         // Escape key
         add(KeyEvent.KEYCODE_BACK, LWJGLGLFWKeycode.GLFW_KEY_ESCAPE);
@@ -40,7 +39,7 @@ public class EfficientAndroidLWJGLKeycode {
         add(KeyEvent.KEYCODE_8, LWJGLGLFWKeycode.GLFW_KEY_8);
         add(KeyEvent.KEYCODE_9, LWJGLGLFWKeycode.GLFW_KEY_9); //16
 
-        add(KeyEvent.KEYCODE_POUND,LWJGLGLFWKeycode.GLFW_KEY_3);
+        add(KeyEvent.KEYCODE_POUND, LWJGLGLFWKeycode.GLFW_KEY_3);
 
         // Arrow keys
         add(KeyEvent.KEYCODE_DPAD_UP, LWJGLGLFWKeycode.GLFW_KEY_UP); //19
@@ -101,7 +100,7 @@ public class EfficientAndroidLWJGLKeycode {
         add(KeyEvent.KEYCODE_SEMICOLON, LWJGLGLFWKeycode.GLFW_KEY_SEMICOLON); //74
 
         add(KeyEvent.KEYCODE_SLASH, LWJGLGLFWKeycode.GLFW_KEY_SLASH); //76
-        add(KeyEvent.KEYCODE_AT,LWJGLGLFWKeycode.GLFW_KEY_2);
+        add(KeyEvent.KEYCODE_AT, LWJGLGLFWKeycode.GLFW_KEY_2);
 
         add(KeyEvent.KEYCODE_PLUS, LWJGLGLFWKeycode.GLFW_KEY_KP_ADD);
 
@@ -156,31 +155,28 @@ public class EfficientAndroidLWJGLKeycode {
 
     }
 
-    private static short index = 0;
-
-    private static void add(int androidKeycode, short LWJGLKeycode){
+    private static void add(int androidKeycode, short LWJGLKeycode) {
         androidKeycodes[index] = androidKeycode;
         LWJGLKeycodes[index] = LWJGLKeycode;
         ++index;
     }
 
 
-    public static boolean containsKey(int keycode){
+    public static boolean containsKey(int keycode) {
         return getIndexByKey(keycode) >= 0;
     }
-
 
 
     public static String[] generateKeyName() {
         if (androidKeyNameArray == null) {
             androidKeyNameArray = new String[androidKeycodes.length];
-            for(int i=0; i < androidKeyNameArray.length; ++i){
+            for (int i = 0; i < androidKeyNameArray.length; ++i) {
                 androidKeyNameArray[i] = KeyEvent.keyCodeToString(androidKeycodes[i]).replace("KEYCODE_", "");
             }
         }
         return androidKeyNameArray;
     }
-    
+
     public static void execKey(KeyEvent keyEvent) {
         execKey(keyEvent, getIndexByKey(keyEvent.getKeyCode()));
     }
@@ -195,8 +191,8 @@ public class EfficientAndroidLWJGLKeycode {
         CallbackBridge.holdingShift = keyEvent.isShiftPressed();
 
         try {
-            System.out.println(keyEvent.getKeyCode() + " " +keyEvent.getDisplayLabel());
-            char key = (char)(keyEvent.getUnicodeChar() != 0 ? keyEvent.getUnicodeChar() : '\u0000');
+            System.out.println(keyEvent.getKeyCode() + " " + keyEvent.getDisplayLabel());
+            char key = (char) (keyEvent.getUnicodeChar() != 0 ? keyEvent.getUnicodeChar() : '\u0000');
             BoatActivity.sendKeyPress(
                     getValueByIndex(valueIndex),
                     key,
@@ -209,20 +205,20 @@ public class EfficientAndroidLWJGLKeycode {
         }
     }
 
-    public static void execKeyIndex(int index){
+    public static void execKeyIndex(int index) {
         //Send a quick key press.
         BoatActivity.sendKeyPress(getValueByIndex(index));
     }
-    
+
     public static int getValueByIndex(int index) {
         return LWJGLKeycodes[index];
     }
 
-    public static int getIndexByKey(int key){
+    public static int getIndexByKey(int key) {
         return Arrays.binarySearch(androidKeycodes, key);
     }
 
-    public static short getValue(int key){
+    public static short getValue(int key) {
         return LWJGLKeycodes[Arrays.binarySearch(androidKeycodes, key)];
     }
 
@@ -230,9 +226,9 @@ public class EfficientAndroidLWJGLKeycode {
         //Since the LWJGL keycodes aren't sorted, linear search is used.
         //You should avoid using this function on performance critical areas
         for (int i = 0; i < LWJGLKeycodes.length; i++) {
-            if(LWJGLKeycodes[i] == lwjglKey) return i;
+            if (LWJGLKeycodes[i] == lwjglKey) return i;
         }
-        
+
         return 0;
     }
 }

@@ -171,5 +171,8 @@
     <string name="spinner_bmclapi">BMCLAPI</string>
     <string name="ver_type_release">release</string>
     <string name="can_not_material_you"><![CDATA[Can not use Material You Theme(Your Android API<31)]]></string>
+    <string name="title_activity_custom_key_board">CustomKeyBoardActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

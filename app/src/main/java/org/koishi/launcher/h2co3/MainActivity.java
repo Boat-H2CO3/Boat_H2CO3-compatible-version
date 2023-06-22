@@ -213,14 +213,13 @@ public class MainActivity extends H2CO3Activity implements NavigationView.OnNavi
     }
 
     private void initFragment2() {
-        //FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        //transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
-        //if (versionFragment == null) {
-        //    versionFragment = new VersionFragment();
-        //}
-        //transaction.replace(R.id.content, versionFragment);
-        //transaction.commit();
-        startActivity(new Intent(MainActivity.this, VersionsActivity.class));
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out);
+        if (versionFragment == null) {
+            versionFragment = new VersionFragment();
+        }
+        transaction.replace(R.id.content, versionFragment);
+        transaction.commit();
     }
 
     private void initFragment3() {

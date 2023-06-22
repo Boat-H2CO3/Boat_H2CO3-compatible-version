@@ -14,6 +14,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
@@ -110,7 +111,7 @@ public class LogcatActivity extends H2CO3Activity {
                 break;
             case R.id.loga:
                 //添加"Yes"按钮
-                AlertDialog alertDialog1 = new AlertDialog.Builder(LogcatActivity.this)
+                AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(LogcatActivity.this)
                         .setTitle(getResources().getString(R.string.action))//标题
                         .setIcon(R.drawable.ic_boat)//图标
                         .setMessage("Boat log:\n/storage/emulated/0/games/org.koishi.launcher/h2co3/client_output.txt\nClient log:\n/storage/emulated/0/games/org.koishi.launcher/h2co3/log.txt")

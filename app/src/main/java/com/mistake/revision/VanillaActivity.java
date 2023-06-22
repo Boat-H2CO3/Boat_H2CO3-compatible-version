@@ -3,11 +3,11 @@ package com.mistake.revision;
 import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
 import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 
@@ -36,7 +35,6 @@ import com.mistake.revision.Download.DownloadFragment;
 import com.mistake.revision.adapter.Version_List_Adpater;
 import com.mistake.revision.view.PullListView;
 
-import org.koishi.launcher.h2co3.MainActivity;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 
@@ -58,7 +56,7 @@ public class VanillaActivity extends H2CO3Activity {
             "android.permission.READ_EXTERNAL_STORAGE",
             "android.permission.WRITE_EXTERNAL_STORAGE"};
     private static final int REQUEST_OVERLAY = 4444;
-    private final MyHandler mHandler = new MyHandler();
+    private final MyHandler mHandler = new MyHandler(Looper.getMainLooper());
     private LauncherSettingModel settingModel;
     private Spinner spDownloadSourceMode;
     private String download_source;
@@ -83,7 +81,7 @@ public class VanillaActivity extends H2CO3Activity {
         return LAUNCHER_FILE_DIR + ".minecraft";
     }
 
-    public static void verifyStoragePermissions(AppCompatActivity activity) {
+    public static void verifyStoragePermissions(H2CO3Activity activity) {
 
         try {
             //检测是否有写的权限
@@ -101,74 +99,6 @@ public class VanillaActivity extends H2CO3Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        /*
-		String sys = CHTools.getAppCfg("followSys","true");
-		if (sys.equals("true")){
-			String getThemeType = CHTools.getAppCfg("theme","1");
-			if (getThemeType.equals("0")){
-				setTheme(R.style.AppTheme_NoActionBar);
-			} else if (getThemeType.equals("1")){
-				setTheme(R.style.AppTheme_NoActionBar);
-			} else if (getThemeType.equals("2")){
-				setTheme(R.style.PurpleTheme_NoActionBar);
-			} else if (getThemeType.equals("3")){
-				setTheme(R.style.OrangeTheme_NoActionBar);
-			} else if (getThemeType.equals("4")){
-				setTheme(R.style.RedTheme_NoActionBar);
-			} else if (getThemeType.equals("5")){
-				setTheme(R.style.GreenTheme_NoActionBar);
-			} else if (getThemeType.equals("6")) {
-				setTheme(R.style.PinkTheme_NoActionBar);
-			}
-		} else {
-			String getDarkType = CHTools.getAppCfg("darkMode","1");
-			if (getDarkType.equals("0")){
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-				String getThemeType = CHTools.getAppCfg("theme","1");
-				if (getThemeType.equals("0")){
-					setTheme(R.style.AppTheme_NoActionBar);
-				} else if (getThemeType.equals("1")){
-					setTheme(R.style.AppTheme_NoActionBar);
-				} else if (getThemeType.equals("2")){
-					setTheme(R.style.PurpleTheme_NoActionBar);
-				} else if (getThemeType.equals("3")){
-					setTheme(R.style.OrangeTheme_NoActionBar);
-				} else if (getThemeType.equals("4")){
-					setTheme(R.style.RedTheme_NoActionBar);
-				} else if (getThemeType.equals("5")){
-					setTheme(R.style.GreenTheme_NoActionBar);
-				} else if (getThemeType.equals("6")) {
-					setTheme(R.style.PinkTheme_NoActionBar);
-				}
-			} else if (getDarkType.equals("1")){
-				AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-				String getThemeType = CHTools.getAppCfg("theme","0");
-				Window window = getWindow();
-				if (getThemeType.equals("0")){
-					setTheme(R.style.AppTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("1")){
-					setTheme(R.style.BlueTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("2")){
-					setTheme(R.style.PurpleTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("3")){
-					setTheme(R.style.OrangeTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("4")){
-					setTheme(R.style.RedTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("5")){
-					setTheme(R.style.GreenTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				} else if (getThemeType.equals("6")) {
-					setTheme(R.style.PinkTheme_NoActionBar);
-					window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_VISIBLE);
-				}
-			}
-		}
-         */
 
         setContentView(R.layout.activity_download);
 
@@ -179,7 +109,6 @@ public class VanillaActivity extends H2CO3Activity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         toolbar.setNavigationOnClickListener(v -> {
             finish();
-            startActivity(new Intent(VanillaActivity.this, MainActivity.class));
         });
 
         verifyStoragePermissions(this);//读写权限获取
@@ -286,7 +215,6 @@ public class VanillaActivity extends H2CO3Activity {
     @Override
     public void onBackPressed() {
         finish();
-        startActivity(new Intent(VanillaActivity.this, MainActivity.class));
     }
 
     @Override
@@ -478,6 +406,9 @@ public class VanillaActivity extends H2CO3Activity {
     }
 
     private class MyHandler extends Handler {
+        public MyHandler(Looper mainLooper) {
+        }
+
         @Override
         public void handleMessage(Message msg) {
 

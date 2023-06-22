@@ -38,6 +38,75 @@ public class MarkdownWebView extends WebView {
         this.init(context);
     }
 
+    static void open(Context context, Uri uri) {
+        int launchFlags = Intent.FLAG_ACTIVITY_NEW_TASK
+                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
+
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        intent.setFlags(launchFlags);
+
+        try {
+            context.startActivity(intent);
+        } catch (Exception ignored) {
+
+        }
+
+    }
+
+    static String escape(String s) {
+
+        StringBuilder out = new StringBuilder(s.length() + 128);
+
+        for (int i = 0, length = s.length(); i < length; i++) {
+            char c = s.charAt(i);
+
+            /*
+             * From RFC 4627, "All Unicode characters may be placed within the
+             * quotation marks except for the characters that must be escaped:
+             * quotation mark, reverse solidus, and the control characters
+             * (U+0000 through U+001F)."
+             */
+            switch (c) {
+                case '"':
+                case '\\':
+                case '/':
+                    out.append('\\').append(c);
+                    break;
+
+                case '\t':
+                    out.append("\\t");
+                    break;
+
+                case '\b':
+                    out.append("\\b");
+                    break;
+
+                case '\n':
+                    out.append("\\n");
+                    break;
+
+                case '\r':
+                    out.append("\\r");
+                    break;
+
+                case '\f':
+                    out.append("\\f");
+                    break;
+
+                default:
+                    if (c <= 0x1F) {
+                        out.append(String.format("\\u%04x", (int) c));
+                    } else {
+                        out.append(c);
+                    }
+                    break;
+            }
+
+        }
+
+        return out.toString();
+    }
+
     void init(Context context) {
 
         {
@@ -110,75 +179,6 @@ public class MarkdownWebView extends WebView {
 
         String javascriptCommand = "javascript:setText('" + escapeText + "')";
         this.loadUrl(javascriptCommand);
-    }
-
-    static void open(Context context, Uri uri) {
-        int launchFlags = Intent.FLAG_ACTIVITY_NEW_TASK
-                | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED;
-
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-        intent.setFlags(launchFlags);
-
-        try {
-            context.startActivity(intent);
-        } catch (Exception ignored) {
-
-        }
-
-    }
-
-    static String escape(String s) {
-
-        StringBuilder out = new StringBuilder(s.length() + 128);
-
-        for (int i = 0, length = s.length(); i < length; i++) {
-            char c = s.charAt(i);
-
-            /*
-             * From RFC 4627, "All Unicode characters may be placed within the
-             * quotation marks except for the characters that must be escaped:
-             * quotation mark, reverse solidus, and the control characters
-             * (U+0000 through U+001F)."
-             */
-            switch (c) {
-                case '"':
-                case '\\':
-                case '/':
-                    out.append('\\').append(c);
-                    break;
-
-                case '\t':
-                    out.append("\\t");
-                    break;
-
-                case '\b':
-                    out.append("\\b");
-                    break;
-
-                case '\n':
-                    out.append("\\n");
-                    break;
-
-                case '\r':
-                    out.append("\\r");
-                    break;
-
-                case '\f':
-                    out.append("\\f");
-                    break;
-
-                default:
-                    if (c <= 0x1F) {
-                        out.append(String.format("\\u%04x", (int) c));
-                    } else {
-                        out.append(c);
-                    }
-                    break;
-            }
-
-        }
-
-        return out.toString();
     }
 
 }

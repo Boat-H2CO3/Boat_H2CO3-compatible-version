@@ -21,6 +21,7 @@ public class SettingsActivity extends H2CO3Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.getTheme().applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true);
         setContentView(R.layout.activity_settings);
 
         toolbar = findViewById(R.id.terminal_toolbar);
@@ -33,7 +34,7 @@ public class SettingsActivity extends H2CO3Activity {
         });
         TextView bigTitle = (TextView) toolbar.getChildAt(0);
         bigTitle.setText(getResources().getString(R.string.settings));
-        sp = getSharedPreferences("h2co3_preferences_setting", MODE_PRIVATE);
+        sp = getSharedPreferences("h2co3_preferences_launcher_setting", MODE_PRIVATE);
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
