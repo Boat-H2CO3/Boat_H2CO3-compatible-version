@@ -54,10 +54,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".TerminalActivity"
             android:label="@string/menu_terminal"
             android:screenOrientation="portrait"
@@ -80,7 +76,7 @@
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name="com.mistake.revision.VanillaActivity"
+            android:name=".VanillaActivity"
             android:label="Minecraft"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />

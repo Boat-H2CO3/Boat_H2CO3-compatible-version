@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.manager;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -23,7 +23,6 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.data.DbDao;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
 
@@ -32,6 +31,8 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
+
+import cosine.boat.CHTools;
 
 public class ManagerFragment extends Fragment {
 

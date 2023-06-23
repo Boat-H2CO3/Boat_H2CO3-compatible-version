@@ -4,7 +4,6 @@
     <string name="app_name" translatable="false">Boat_H2CO3</string>
     <string name="app_version" translatable="false">3.3.13</string>
     <!--Menu-->
-    <string name="menu_home">Home</string>
     <string name="menu_install">Install</string>
     <string name="menu_custom">Config</string>
     <string name="menu_manager">Dir</string>
@@ -24,9 +23,6 @@
     <!--extra-->
     <string name="launcher_settings_right_click_mode_summary">Some ROMs changed the mouse</string>
     <!--color-->
-
-    <string name="navigation_drawer_open" translatable="false">open_drawer</string>
-    <string name="navigation_drawer_close" translatable="false">close_drawer</string>
 
     <string name="nav_header_account_mode">Online</string>
     <string name="launcher_initial_install_check">Checking file...</string>
@@ -72,14 +68,12 @@
     <string name="choose_mode_touch">Touch</string>
     <string name="choose_mode_mouse">Mouse and key</string>
     <string name="choose_mode_cancel">Cancel</string>
-    <string name="menu_more">More</string>
     <string name="bc_wait">Waiting for the notification...</string>
     <string name="install_title_1">Game</string>
     <string name="device_info">My device</string>
     <string name="broadcast">Broadcast</string>
     <string name="account_before">Welcome</string>
     <string name="account_after">Press to set</string>
-    <string name="coming_soon">Coming soon!</string>
     <string name="welcome_start">Start</string>
     <string name="info_android_ver">Android</string>
     <string name="info_device">My device</string>
@@ -172,7 +166,5 @@
     <string name="ver_type_release">release</string>
     <string name="can_not_material_you"><![CDATA[Can not use Material You Theme(Your Android API<31)]]></string>
     <string name="title_activity_custom_key_board">CustomKeyBoardActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

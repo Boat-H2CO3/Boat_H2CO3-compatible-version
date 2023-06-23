@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.custom;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.h2co3Cfg;
+import static cosine.boat.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.CHTools.h2co3Cfg;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -24,13 +24,13 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.koishi.launcher.h2co3.LogcatActivity;
 import org.koishi.launcher.h2co3.MainActivity;
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import cosine.boat.CHTools;
 import rikka.material.preference.MaterialSwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {
@@ -43,7 +43,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 Intent intent1 = new Intent(getActivity(), MainActivity.class);
-                intent1.putExtra("fragment", getResources().getString(R.string.menu_home));
+                intent1.putExtra("fragment", getResources().getString(R.string.app_name));
                 startActivity(intent1);
                 Toast.makeText(getActivity(), getResources().getString(R.string.delete), Toast.LENGTH_SHORT).show();
                 requireActivity().finish();

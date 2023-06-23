@@ -1,6 +1,6 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="Theme.H2CO3" parent="AppBaseTheme.NoActionBar">
+    <style name="Theme.H2CO3" parent="AppBaseTheme">
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
@@ -15,10 +15,12 @@
     </style>
 
     <style name="FullScreen" parent="Theme.H2CO3">
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:windowFullscreen">true</item>
     </style>
 
     <style name="Theme.H2CO3.DynamicColors" parent="Theme.Material3.DynamicColors.Light">
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
@@ -55,6 +57,7 @@
         <item name="colorOnError">@color/md_theme_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
         <item name="android:colorBackground">@color/md_theme_background</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="colorOnBackground">@color/md_theme_onBackground</item>
         <item name="colorSurface">@color/md_theme_surface</item>
         <item name="colorOnSurface">@color/md_theme_onSurface</item>
@@ -108,11 +111,6 @@
     <style name="AppBaseTheme.AppBarOverlay" parent="ThemeOverlay.Material3.ActionBar" />
 
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
-
-    <style name="AppBaseTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
 
     <style name="AppTheme.CheckBox" parent="Widget.Material3.CompoundButton.CheckBox">
         <item name="buttonTint">@color/md_theme_secondary</item>
@@ -200,6 +198,13 @@
         <item name="android:textColor">?android:textColorSecondary</item>
         <item name="android:textSize">14sp</item>
         <item name="android:lineSpacingExtra">2sp</item>
+    </style>
+
+    <style name="NProgressBar" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:maxHeight">50dip</item>
+        <item name="android:minHeight">5dip</item>
+        <item name="android:indeterminateOnly">false</item>
+        <item name="android:progressDrawable">@drawable/progress</item>
     </style>
 
 

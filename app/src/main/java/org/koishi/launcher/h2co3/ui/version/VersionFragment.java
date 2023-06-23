@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.version;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -38,13 +38,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-import com.mistake.revision.VanillaActivity;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.ModsActivity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.VanillaActivity;
 import org.koishi.launcher.h2co3.adapters.BaseRecycleAdapter;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.data.DbDao;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
 
@@ -58,6 +57,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import cosine.boat.CHTools;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -126,7 +127,7 @@ public class VersionFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View root = inflater.inflate(R.layout.activity_versions, container, false);
+        View root = inflater.inflate(R.layout.fragment_versions, container, false);
         page = root.findViewById(R.id.dir_layout);
 
         dir = root.findViewById(R.id.ver_new_dir);

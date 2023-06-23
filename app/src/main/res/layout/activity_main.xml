@@ -1,42 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/include"
-        layout="@layout/app_bar_main"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <androidx.drawerlayout.widget.DrawerLayout
-        android:id="@+id/drawer_layout"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:openDrawer="start">
+        android:orientation="vertical"
+        tools:context=".MainActivity">
 
-        <include layout="@layout/content_main" />
+        <include
+            layout="@layout/app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
-        <com.google.android.material.navigation.NavigationView
-            android:id="@+id/nav_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="start"
-            android:fitsSystemWindows="true"
-            app:menu="@menu/activity_main_drawer" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </androidx.drawerlayout.widget.DrawerLayout>
+            <include
+                layout="@layout/content_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_above="@+id/nav_layout" />
+
+            <LinearLayout
+                android:id="@+id/nav_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <com.google.android.material.bottomnavigation.BottomNavigationView
+                    android:id="@+id/navigation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/material_card_background"
+                    app:elevation="0dp"
+                    app:labelVisibilityMode="labeled"
+                    app:menu="@menu/bottom_nav_menu" />
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <View
         android:id="@+id/dialog_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/appBlack_70"
-        android:fitsSystemWindows="true"
-        android:visibility="gone" />
-
-</LinearLayout>
+        android:fitsSystemWindows="true" />
+</androidx.constraintlayout.widget.ConstraintLayout>

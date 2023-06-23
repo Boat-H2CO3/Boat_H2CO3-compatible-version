@@ -59,14 +59,12 @@
     <string name="choose_mode_mouse">鍵盤與滑鼠(有Bug)</string>
     <string name="choose_mode_touch">觸摸</string>
     <string name="choose_mode_cancel">取消</string>
-    <string name="menu_more">更多內容</string>
     <string name="bc_wait">從伺服器獲取公告...</string>
     <string name="install_title_1">遊戲</string>
     <string name="device_info">裝置訊息</string>
     <string name="broadcast">公告</string>
     <string name="account_before">歡迎</string>
     <string name="account_after">點擊管理</string>
-    <string name="coming_soon">製作中！</string>
     <string name="welcome_start">開始吧</string>
     <string name="info_android_ver">Android版本</string>
     <string name="info_device">裝置</string>

@@ -1,9 +1,9 @@
 package org.koishi.launcher.h2co3;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
-import static org.koishi.launcher.h2co3.tool.CHTools.h2co3Cfg;
+import static cosine.boat.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.boatCfg;
+import static cosine.boat.CHTools.h2co3Cfg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,7 +20,6 @@ import com.hjq.permissions.XXPermissions;
 
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 import org.koishi.launcher.h2co3.tool.AssetsUtils;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
 
 import java.io.File;
@@ -28,6 +27,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+
+import cosine.boat.CHTools;
 
 public class SplashActivity extends H2CO3Activity {
 
@@ -177,7 +178,7 @@ public class SplashActivity extends H2CO3Activity {
             if (existGame && existMcConfig && existH2oConfig) {
                 updateMarkDown();
                 Intent i = new Intent(this, MainActivity.class);
-                i.putExtra("fragment", getResources().getString(R.string.menu_home));
+                i.putExtra("fragment", getResources().getString(R.string.app_name));
                 startActivity(i);
                 this.finish();
             } else {
@@ -192,7 +193,7 @@ public class SplashActivity extends H2CO3Activity {
                 splashCheck.setText(getResources().getString(R.string.launcher_initial_install_start));
                 new Handler().postDelayed(() -> {
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
-                    i.putExtra("fragment", getResources().getString(R.string.menu_home));
+                    i.putExtra("fragment", getResources().getString(R.string.app_name));
                     startActivity(i);
                     finish();
                 }, 3000);

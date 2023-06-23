@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.card.MaterialCardView;
-import com.mistake.revision.VanillaActivity;
 
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.VanillaActivity;
 
 /**
  * A simple {@link Fragment} subclass.

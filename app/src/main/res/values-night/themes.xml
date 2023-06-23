@@ -17,6 +17,7 @@
     </style>
 
     <style name="Theme.H2CO3.DynamicColors" parent="Theme.Material3.DynamicColors.Dark">
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
         <item name="android:windowActionBar">false</item>
@@ -36,6 +37,7 @@
     </style>
 
     <style name="AppBaseTheme" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">?android:colorBackground</item>

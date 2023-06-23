@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.home;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -56,13 +56,12 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.mistake.revision.Download.DownloadFragment;
-import com.mistake.revision.VanillaActivity;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.InstructionActivity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.VanillaActivity;
 import org.koishi.launcher.h2co3.launch.boat.LauncherActivity;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.tool.data.DBHelper;
 import org.koishi.launcher.h2co3.tool.login.NewLoginTask.auth.abstracts.exception.AuthenticationException;
 import org.koishi.launcher.h2co3.tool.login.NewLoginTask.auth.model.mojang.MinecraftAuthenticator;
@@ -90,6 +89,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import cosine.boat.CHTools;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
@@ -1535,6 +1536,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             });
             return convertView;
         }
+    }
+
+    public static void ExsitGame() {
+
     }
 
 }

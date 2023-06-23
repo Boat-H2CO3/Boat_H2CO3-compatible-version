@@ -32,7 +32,6 @@
     <color name="md_theme_inversePrimary">#4359A9</color>
 
     <color name="appBlack_35">#35FFFFFF</color>
-    <color name="appWhite_35">#35000000</color>
     <color name="appBlack_ff">#AAFFFFFF</color>
     <color name="appWhite_ff_l">#AA000000</color>
     <color name="appTint">#AAFFFFFF</color>

@@ -61,7 +61,7 @@
 
                             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
@@ -234,7 +234,7 @@
 
                             <com.google.android.material.circularreveal.CircularRevealLinearLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
+                                android:layout_height="0dp"
                                 android:layout_weight="1"
                                 android:gravity="center_vertical"
                                 android:orientation="vertical">
@@ -904,7 +904,6 @@
 
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
-            style="@style/CardView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="start"
@@ -914,8 +913,6 @@
             android:layout_marginBottom="5dp"
             android:background="?android:colorBackground"
             android:fitsSystemWindows="true"
-            app:elevation="0dp"
-            app:itemBackground="?android:colorBackground"
             app:itemIconTint="?colorPrimary"
             app:itemVerticalPadding="@dimen/app_10dp"
             app:menu="@menu/menu_home_nav" />

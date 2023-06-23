@@ -22,11 +22,6 @@
         <item name="android:statusBarColor">@color/material_card_background</item>
     </style>
 
-    <style name="AppBaseTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="MyActionBar" parent="@style/Widget.AppCompat.ActionBar">
         <item name="background">@color/material_background</item>
     </style>

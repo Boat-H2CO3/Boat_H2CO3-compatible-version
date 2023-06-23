@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mods_view"
     android:layout_width="match_parent"
@@ -8,37 +7,11 @@
     android:orientation="vertical"
     tools:context=".ModsActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <include
+        android:id="@+id/include"
+        layout="@layout/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-
-        android:fitsSystemWindows="true"
-        android:theme="@style/AppBaseTheme.AppBarOverlay"
-        app:elevation="0dp">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-
-            app:elevation="0dp"
-            app:popupTheme="@style/AppBaseTheme.PopupOverlay"
-            app:title="@string/menu_mod" />
-
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <!--
-    <com.google.android.material.textview.MaterialTextView
-        style="@style/TextStyleSummary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginVertical="@dimen/app_10dp"
-        android:layout_marginStart="@dimen/app_15dp"
-        android:layout_marginEnd="@dimen/app_10dp"
-        android:drawableStart="@drawable/ic_main_msg_app"
-        android:drawablePadding="@dimen/app_15dp"
-        android:text="@string/mods_tip" />
--->
+        android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/mod_list"

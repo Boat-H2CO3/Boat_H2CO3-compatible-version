@@ -1,7 +1,7 @@
-package com.mistake.revision;
+package org.koishi.launcher.h2co3;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tool.CHTools.boatCfg;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.boatCfg;
 
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
@@ -32,10 +32,10 @@ import com.download.service.util.VersionUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mistake.revision.Download.DownloadFragment;
+import com.mistake.revision.LauncherSettingModel;
 import com.mistake.revision.adapter.Version_List_Adpater;
 import com.mistake.revision.view.PullListView;
 
-import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 
 import java.io.BufferedReader;
@@ -281,26 +281,6 @@ public class VanillaActivity extends H2CO3Activity {
                 bundle.putString("address", download_source);
                 showDialog.setArguments(bundle);
                 showDialog.show(getSupportFragmentManager(), "show");
-
-
-					/*
-					if(DownloadService.isStarted)return;
-					Intent i=new Intent(MainActivity.this,DownloadService.class);
-					Bundle bundle=new Bundle();
-					bundle.putString("version",id);
-					bundle.putString("game","/sdcard/boat/.minecraft");
-					bundle.putString("address",download_source);
-					i.putExtras(bundle);
-					startService(i);*/
-
-					/*
-					Intent i=new Intent(MainActivity.this,DownloadService.class);
-					Bundle bundle=new Bundle();
-					bundle.putString("version",id);
-					bundle.putString("game","/sdcard/boat/.minecraft");
-					bundle.putString("address",download_source);
-					i.putExtras(bundle);
-					startService(i);*/
 
             }
         });

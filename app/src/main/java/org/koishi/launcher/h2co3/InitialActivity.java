@@ -29,7 +29,7 @@ public class InitialActivity extends H2CO3Activity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             Intent intent1 = new Intent(InitialActivity.this, MainActivity.class);
-            intent1.putExtra("fragment", getResources().getString(R.string.menu_home));
+            intent1.putExtra("fragment", getResources().getString(R.string.app_name));
             startActivity(intent1);
             InitialActivity.this.finish();
 

@@ -39,6 +39,7 @@ import org.koishi.launcher.h2co3.MainActivity;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
+import cosine.boat.CHTools;
 import cosine.boat.LauncherConfig;
 import cosine.boat.LoadMe;
 
@@ -276,7 +277,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
     private void InitCustomButton() {
         h2co3CustomManager = new H2CO3CustomManager();
-        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), LAUNCHER_FILE_DIR);
+        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR));
         h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
             @Override
             public void CommandReceived(String command) {

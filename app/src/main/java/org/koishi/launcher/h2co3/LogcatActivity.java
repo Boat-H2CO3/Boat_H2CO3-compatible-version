@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3;
 
-import static org.koishi.launcher.h2co3.tool.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
 
 import android.os.Bundle;
 import android.view.Menu;

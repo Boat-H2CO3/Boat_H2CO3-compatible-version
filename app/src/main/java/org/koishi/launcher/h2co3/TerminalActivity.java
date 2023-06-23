@@ -47,7 +47,7 @@ public class TerminalActivity extends H2CO3Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_terminal);
 
-        toolbar = findViewById(R.id.terminal_toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.menu_terminal);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

@@ -8,10 +8,11 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
-import org.koishi.launcher.h2co3.tool.CHTools;
 import org.koishi.launcher.h2co3.ui.custom.SettingsFragment;
 
 import java.util.Objects;
+
+import cosine.boat.CHTools;
 
 public class SettingsActivity extends H2CO3Activity {
 
@@ -24,7 +25,7 @@ public class SettingsActivity extends H2CO3Activity {
         this.getTheme().applyStyle(rikka.material.preference.R.style.ThemeOverlay_Rikka_Material3_Preference, true);
         setContentView(R.layout.activity_settings);
 
-        toolbar = findViewById(R.id.terminal_toolbar);
+        toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.menu_terminal);
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);

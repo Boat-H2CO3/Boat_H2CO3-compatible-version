@@ -26,11 +26,6 @@
         <item name="background">@color/material_background</item>
     </style>
 
-    <style name="AppBaseTheme.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-    </style>
-
     <style name="AppBaseTheme.AppBarOverlay" parent="ThemeOverlay.Material3.ActionBar" />
 
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.Material3.Light" />
