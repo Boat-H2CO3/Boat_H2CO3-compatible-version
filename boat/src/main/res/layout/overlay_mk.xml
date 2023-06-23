@@ -39,8 +39,8 @@
 
     <ImageView
         android:id="@+id/mouse_cursor2"
-        android:layout_width="@dimen/app_16dp"
-        android:layout_height="@dimen/app_16dp"
+        android:layout_width="@dimen/app_15dp"
+        android:layout_height="@dimen/app_15dp"
         app:srcCompat="@drawable/cursor5" />
 
     <com.google.android.material.textview.MaterialTextView
