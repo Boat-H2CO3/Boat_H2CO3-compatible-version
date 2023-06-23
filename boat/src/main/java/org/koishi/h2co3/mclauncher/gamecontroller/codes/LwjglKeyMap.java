@@ -125,10 +125,6 @@ public class LwjglKeyMap implements KeyMap, CoKeyMap {
 
     @Override
     public Object translate(Object keyCode) {
-        if (lwjglMap.containsKey(keyCode)) {
-            return lwjglMap.get(keyCode);
-        } else {
-            return -1;
-        }
+        return lwjglMap.getOrDefault(keyCode, -1);
     }
 }

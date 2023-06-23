@@ -35,6 +35,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 
 import java.io.File;
@@ -47,8 +48,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import cosine.boat.CHTools;
 
 public class ModsActivity extends H2CO3Activity {
 

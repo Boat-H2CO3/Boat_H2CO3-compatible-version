@@ -3,7 +3,6 @@ package cosine.boat;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.view.Surface;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -111,8 +110,6 @@ public class BoatInput {
         }
 
     }
-
-    public static native void setBoatNativeWindow(Surface surface);
 
     public static native void setEventPipe();
 

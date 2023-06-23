@@ -1,9 +1,9 @@
 package org.koishi.launcher.h2co3;
 
-import static cosine.boat.CHTools.LAUNCHER_DATA_DIR;
-import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.CHTools.boatCfg;
-import static cosine.boat.CHTools.h2co3Cfg;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.h2co3.tools.CHTools.boatCfg;
+import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 import org.koishi.launcher.h2co3.tool.AssetsUtils;
 import org.koishi.launcher.h2co3.tool.file.AppExecute;
@@ -27,8 +28,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
-
-import cosine.boat.CHTools;
 
 public class SplashActivity extends H2CO3Activity {
 

@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.custom;
 
-import static cosine.boat.CHTools.LAUNCHER_DATA_DIR;
-import static cosine.boat.CHTools.h2co3Cfg;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -21,6 +21,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.LogcatActivity;
 import org.koishi.launcher.h2co3.MainActivity;
 import org.koishi.launcher.h2co3.R;
@@ -30,7 +31,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
-import cosine.boat.CHTools;
 import rikka.material.preference.MaterialSwitchPreference;
 
 public class SettingsFragment extends PreferenceFragmentCompat {

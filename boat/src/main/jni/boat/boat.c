@@ -1,33 +1,84 @@
-#include "boat_internal.h"
+#include "boat.h"
+#include "boat_activity.h"
+#include <string.h>
+#include <stdlib.h>
 
-#include <android/native_window_jni.h>
-#include <jni.h>
+void (*current_event_processor)();
 
-BoatInternal mBoat;
+BoatInputEvent current_event;
 
-ANativeWindow* boatGetNativeWindow() {
-    return mBoat.window;
+EGLNativeWindowType boatGetNativeWindow() {
+    return (EGLNativeWindowType) boat.window;
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_BoatLib_setBoatNativeWindow(JNIEnv* env, jclass clazz, jobject surface) {
-    mBoat.window = ANativeWindow_fromSurface(env, surface);
-    BOAT_INTERNAL_LOG("setBoatNativeWindow : %p", mBoat.window);
+EGLNativeDisplayType boatGetNativeDisplay() {
+    return EGL_DEFAULT_DISPLAY;
 }
 
-JNIEXPORT jint JNI_OnLoad(JavaVM* vm, void* reserved) {
-    memset(&mBoat, 0, sizeof(mBoat));
-    mBoat.android_jvm = vm;
-    JNIEnv* env = 0;
-    jint result = (*mBoat.android_jvm)->AttachCurrentThread(mBoat.android_jvm, &env, 0);
-    if (result != JNI_OK || env == 0) {
-        BOAT_INTERNAL_LOG("Failed to attach thread to JavaVM.");
+void boatGetCurrentEvent(BoatInputEvent *event) {
+    memcpy(event, &current_event, sizeof(BoatInputEvent));
+}
+
+void boatSetCurrentEventProcessor(void (*processor)()) {
+    current_event_processor = processor;
+}
+
+// TODO: Should be boatSetGrabCursor
+void boatSetCursorMode(int mode) {
+    JNIEnv *env;
+
+    if (!boat.isLoaded)
+        return;
+
+    jint result = (*boat.vm)->AttachCurrentThread(boat.vm, &env, 0);
+    if (result != JNI_OK) {
+        BOAT_LOGE("Failed to attach thread to JavaVM.");
         abort();
     }
-    jclass class_BoatLib = (*env)->FindClass(env, "cosine/boat/BoatLib");
-    if (class_BoatLib == 0) {
-        BOAT_INTERNAL_LOG("Failed to find class: cosine/boat/BoatLib.");
-        abort();
+
+    (*env)->CallVoidMethod(env, boat.boatActivity, boat.setGrabCursorId, mode == CursorDisabled ? JNI_TRUE : JNI_FALSE);
+
+    (*boat.vm)->DetachCurrentThread(boat.vm);
+}
+
+JNIEXPORT jintArray JNICALL
+Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
+    jintArray ja = (*env)->NewIntArray(env, 2);
+    int arr[2] = {current_event.x, current_event.y};
+    (*env)->SetIntArrayRegion(env, ja, 0, 2, arr);
+    return ja;
+}
+
+JNIEXPORT void JNICALL
+Java_cosine_boat_BoatInput_setMouseButton(JNIEnv *env, jclass clazz, jlong time, jint button,
+                                          jboolean is_pressed) {
+    current_event.time = time;
+    current_event.mouse_button = button;
+    current_event.type = is_pressed == JNI_TRUE ? ButtonPress : ButtonRelease;
+    if (current_event_processor != NULL) {
+        current_event_processor();
     }
-    mBoat.class_BoatLib = (jclass)(*env)->NewGlobalRef(env, class_BoatLib);
-    return JNI_VERSION_1_2;
+}
+
+JNIEXPORT void JNICALL
+Java_cosine_boat_BoatInput_setPointer(JNIEnv *env, jclass clazz, jlong time, jint x, jint y) {
+    current_event.time = time;
+    current_event.x = x;
+    current_event.y = y;
+    current_event.type = MotionNotify;
+    if (current_event_processor != NULL) {
+        current_event_processor();
+    }
+}
+
+JNIEXPORT void JNICALL
+Java_cosine_boat_BoatInput_setKey(JNIEnv *env, jclass clazz, jlong time, jboolean is_pressed,
+                                  jint key_code, jint key_char) {
+    current_event.time = time;
+    current_event.keycode = key_code;
+    current_event.keychar = key_char;
+    current_event.type = is_pressed == JNI_TRUE ? KeyPress : KeyRelease;
+    if (current_event_processor != NULL) {
+        current_event_processor();
+    }
 }

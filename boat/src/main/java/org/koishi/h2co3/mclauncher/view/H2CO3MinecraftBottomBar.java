@@ -1,4 +1,4 @@
-package org.koishi.h2co3.mclauncher.customcontrol;
+package org.koishi.h2co3.mclauncher.view;
 /*
  * Copyright 2023.  ShirosakiMio
  *
@@ -19,16 +19,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import cosine.boat.R;
 
-public class H2CO3MinecraftBottomBar extends RelativeLayout implements OnTouchListener, View.OnClickListener {
+public class H2CO3MinecraftBottomBar extends LinearLayout implements OnTouchListener, View.OnClickListener {
 
     public static final float SCALE_MAX = 3.0f;
     public static final float SCALE_MIN = 0.5f;
@@ -84,15 +85,6 @@ public class H2CO3MinecraftBottomBar extends RelativeLayout implements OnTouchLi
      * @param event 事件
      * @return 返回数值
      */
-    private double spacing(MotionEvent event) {
-        if (event.getPointerCount() == 2) {
-            float x = event.getX(0) - event.getX(1);
-            float y = event.getY(0) - event.getY(1);
-            return Math.sqrt(x * x + y * y);
-        } else {
-            return 0;
-        }
-    }
 
     /**
      * 设置放大缩小
@@ -109,6 +101,11 @@ public class H2CO3MinecraftBottomBar extends RelativeLayout implements OnTouchLi
         this.mListener = mListener;
     }
 
+    private final ItemButton[] itemButtons = new ItemButton[9];
+
+    private Context mContext;
+    private LinearLayout itemBar;
+
     @SuppressLint({"ClickableViewAccessibility", "UseCompatLoadingForDrawables"})
     private void init() {
         main = new LinearLayout(context);
@@ -116,33 +113,40 @@ public class H2CO3MinecraftBottomBar extends RelativeLayout implements OnTouchLi
         layout = new LinearLayout(context);
         layout.setOrientation(LinearLayout.HORIZONTAL);
 
-        btn_1 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_2 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_3 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_4 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_5 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_6 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_7 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_8 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-        btn_9 = createButton(getResources().getDrawable(R.drawable.control_button_normal));
-
-        layout.addView(btn_1);
-        layout.addView(btn_2);
-        layout.addView(btn_3);
-        layout.addView(btn_4);
-        layout.addView(btn_5);
-        layout.addView(btn_6);
-        layout.addView(btn_7);
-        layout.addView(btn_8);
-        layout.addView(btn_9);
-
         LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT,
                 1.0f);
         main.addView(layout, params1);
+        itemBar = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.minecraft_bottom_bar, null);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                 LinearLayout.LayoutParams.MATCH_PARENT);
         this.addView(main, params);
+        itemButtons[0] = itemBar.findViewById(R.id.itembutton_1);
+        itemButtons[1] = itemBar.findViewById(R.id.itembutton_2);
+        itemButtons[2] = itemBar.findViewById(R.id.itembutton_3);
+        itemButtons[3] = itemBar.findViewById(R.id.itembutton_4);
+        itemButtons[4] = itemBar.findViewById(R.id.itembutton_5);
+        itemButtons[5] = itemBar.findViewById(R.id.itembutton_6);
+        itemButtons[6] = itemBar.findViewById(R.id.itembutton_7);
+        itemButtons[7] = itemBar.findViewById(R.id.itembutton_8);
+        itemButtons[8] = itemBar.findViewById(R.id.itembutton_9);
+
+        //设定监听器
+        for (View v : itemButtons) {
+            v.setOnTouchListener(this);
+        }
+
+        //计算并设定物品栏大小
+        int height = mContext.getResources().getDisplayMetrics().heightPixels;
+        int width = mContext.getResources().getDisplayMetrics().widthPixels;
+        int scale = 1;
+        while (width / (scale + 1) >= 320 && height / (scale + 1) >= 240) {
+            scale++;
+        }
+        ViewGroup.LayoutParams lp = itemBar.getLayoutParams();
+        lp.height = 20 * scale;
+        lp.width = 20 * scale * 9;
+        itemBar.setLayoutParams(lp);
         touchPad = new Button(context);
         touchPad.setOnTouchListener(this);
         touchPad.setAlpha(0);

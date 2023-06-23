@@ -124,10 +124,6 @@ public class GlfwKeyMap implements KeyMap, CoKeyMap {
 
     @Override
     public Object translate(Object keyCode) {
-        if (glfwKeyMap.containsKey(keyCode)) {
-            return glfwKeyMap.get(keyCode);
-        } else {
-            return -1;
-        }
+        return glfwKeyMap.getOrDefault(keyCode, -1);
     }
 }

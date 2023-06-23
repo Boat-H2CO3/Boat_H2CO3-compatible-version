@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.home;
 
-import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.CHTools.boatCfg;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.h2co3.tools.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -58,6 +58,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mistake.revision.Download.DownloadFragment;
 
 import org.json.JSONObject;
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.InstructionActivity;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.VanillaActivity;
@@ -89,8 +90,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import cosine.boat.CHTools;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 

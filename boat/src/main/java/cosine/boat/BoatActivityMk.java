@@ -1,7 +1,7 @@
 package cosine.boat;
 
 
-import static cosine.boat.CHTools.h2co3Cfg;
+import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
 
 import android.content.res.Resources;
 import android.graphics.SurfaceTexture;

@@ -499,7 +499,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                     .setPositiveButton("Ok",//提示框的两个按钮
                             (dialog, which) -> {
                                 //事件
-                                CurrentEditBox.setText("#" + CurrentColor);
+                                CurrentEditBox.setText(String.format("#%s", CurrentColor));
                                 CurrentView.setBackgroundColor(Color.parseColor("#" + CurrentColor));
                             }).setNegativeButton("取消", (di, p2) -> {
                         // TODO: Implement this method
@@ -696,7 +696,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         return CurrentKeyPress;
     }
 
-    public boolean get开关状态() {
+    public boolean getSwitchState() {
         return isEditCustomButton;
     }
 
@@ -796,7 +796,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                             CustomButtonCallback.Pressed();
                         }
                         if (!key.equals("")) {
-                            short Key = KeyConverters.trans(key);
+                            int Key = KeyConverters.trans(key);
                             if (key.contains("MOUSE")) {
                                 CustomButtonCallback.MouseCallback(Key, true);
                                 Log.d("鼠标", key);
@@ -828,7 +828,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                             CurrentKeyPress.setisAutoHold(false);
                             for (String key : CurrentKeyPress.getButtonKeyValueGroups()) {
                                 if (!key.equals("")) {
-                                    short Key = KeyConverters.trans(key);
+                                    int Key = KeyConverters.trans(key);
                                     if (key.contains("MOUSE")) {
                                         CustomButtonCallback.MouseCallback(Key, false);
                                     } else {
@@ -840,7 +840,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                     } else {
                         for (String key : CurrentKeyPress.getButtonKeyValueGroups()) {
                             if (!key.equals("")) {
-                                short Key = KeyConverters.trans(key);
+                                int Key = KeyConverters.trans(key);
                                 if (key.contains("MOUSE")) {
                                     CustomButtonCallback.MouseCallback(Key, false);
                                 } else {
@@ -926,11 +926,11 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
     public interface CustomButtonCallback {
         void CommandReceived(String command);
 
-        void KeyReceived(short Key, boolean Pressed);
+        void KeyReceived(int Key, boolean Pressed);
 
         void ControlsMousePointerMovement(int x, int y);
 
-        void MouseCallback(short Key, boolean Pressed);
+        void MouseCallback(int Key, boolean Pressed);
 
         void Pressed();
 

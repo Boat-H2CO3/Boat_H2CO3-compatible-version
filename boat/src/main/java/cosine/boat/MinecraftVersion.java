@@ -7,6 +7,8 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 
+import org.koishi.h2co3.tools.Utils;
+
 import java.io.File;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;

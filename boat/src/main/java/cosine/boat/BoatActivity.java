@@ -44,7 +44,7 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
     }
 
     public static void sendKeyPress(int keyCode, char keyChar, int scancode, int modifiers, boolean status) {
-        BoatInput.setKey(keyCode, 0, status);
+        BoatInput.setKey(keyCode, keyChar, status);
         System.out.print(keyCode);
     }
 

@@ -1,10 +1,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 
-# build libboat
-set(INCLUDE_DIR include/)
+project(boat)
 
-add_library(boat SHARED boat.c boat_clipboard.c boat_event.c)
-include_directories(${INCLUDE_DIR})
+add_library(${PROJECT_NAME} SHARED boat.c loadme.c boat_activity.c)
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99 -O2 -Wall -Werror -DBUILD_BOAT")
-target_link_libraries(boat dl android)
+target_link_libraries(${PROJECT_NAME} android log)

@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launch.boat;
 
-import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -33,13 +33,13 @@ import com.google.android.material.navigation.NavigationView;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomButton;
 import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomManager;
-import org.koishi.h2co3.mclauncher.customcontrol.H2CO3MinecraftBottomBar;
 import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
+import org.koishi.h2co3.mclauncher.view.H2CO3MinecraftBottomBar;
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.MainActivity;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
-import cosine.boat.CHTools;
 import cosine.boat.LauncherConfig;
 import cosine.boat.LoadMe;
 
@@ -285,17 +285,34 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
             }
 
             @Override
-            public void KeyReceived(short Key, boolean Pressed) {
+            public void KeyReceived(int Key, boolean Pressed) {
                 sendKeyPress(Key, 0, Pressed);
             }
 
             @Override
             public void ControlsMousePointerMovement(int x, int y) {
-
+                float itialY, itialX;
+                long currentMS;
+                int moveX, moveY;
+                moveX = 0;
+                moveY = 0;
+                initialX = (int) x;
+                initialY = (int) y;
+                itialX = x;
+                itialY = y;
+                currentMS = System.currentTimeMillis();
+                moveX += Math.abs(x - itialX);
+                moveY += Math.abs(y - itialY);
+                long movesTime = System.currentTimeMillis() - currentMS;//移动时间
+                if (movesTime > 400 && moveX < 3 && moveY < 3) {
+                    BoatInput.setMouseButton(BoatInput.Button1, true);
+                    BoatInput.setPointer(baseX + (int) x - initialX, baseY + (int) y - initialY);
+                }
+                BoatInput.setPointer(baseX + (int) x - initialX, baseY + (int) y - initialY);
             }
 
             @Override
-            public void MouseCallback(short Key, boolean Pressed) {
+            public void MouseCallback(int Key, boolean Pressed) {
                 sendMouseButton(Key, Pressed);
             }
 
@@ -307,54 +324,6 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
             @Override
             public void unPressed() {
 
-            }
-        });
-        h2CO3MinecraftBottombar = findViewById(cosine.boat.R.id.h2co3_mcbottombar);
-        h2CO3MinecraftBottombar.setScale(msh.getFloat("CrossingKeyBoardResize", 1.0f));
-        h2CO3MinecraftBottombar.setListener(new H2CO3MinecraftBottomBar.H2CO3Listener() {
-            @Override
-            public void Btn_1() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_1, 0, true);
-            }
-
-            @Override
-            public void Btn_2() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_2, 0, true);
-            }
-
-            @Override
-            public void Btn_3() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_3, 0, true);
-            }
-
-            @Override
-            public void Btn_4() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_4, 0, true);
-            }
-
-            @Override
-            public void Btn_5() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_5, 0, true);
-            }
-
-            @Override
-            public void Btn_6() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_6, 0, true);
-            }
-
-            @Override
-            public void Btn_7() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_7, 0, true);
-            }
-
-            @Override
-            public void Btn_8() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_8, 0, true);
-            }
-
-            @Override
-            public void Btn_9() {
-                BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_9, 0, true);
             }
         });
         h2CO3CrossingKeyboard = findViewById(cosine.boat.R.id.h2co3_keyboard);

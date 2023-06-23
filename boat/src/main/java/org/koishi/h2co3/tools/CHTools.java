@@ -1,4 +1,4 @@
-package cosine.boat;
+package org.koishi.h2co3.tools;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

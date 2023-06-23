@@ -61,11 +61,6 @@
                         android:layout_margin="@dimen/app_15dp"
                         android:visibility="invisible" />
 
-                    <org.koishi.h2co3.mclauncher.customcontrol.H2CO3MinecraftBottomBar
-                        android:id="@+id/h2co3_mcbottombar"
-                        android:layout_width="270dp"
-                        android:layout_height="30dp"
-                        android:layout_gravity="center_horizontal|bottom" />
 
                 </FrameLayout>
 

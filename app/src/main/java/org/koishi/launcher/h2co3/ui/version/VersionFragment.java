@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.ui.version;
 
-import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.CHTools.boatCfg;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.h2co3.tools.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -40,6 +40,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.ModsActivity;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.VanillaActivity;
@@ -57,8 +58,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-
-import cosine.boat.CHTools;
 
 /**
  * A simple {@link Fragment} subclass.

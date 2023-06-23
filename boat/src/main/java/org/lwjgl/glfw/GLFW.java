@@ -6,6 +6,7 @@
 package org.lwjgl.glfw;
 
 
+
 /**
  * Native bindings to the <a target="_blank" href="http://www.glfw.org/docs/latest/">GLFW</a> library.
  *
@@ -20,9 +21,7 @@ public class GLFW {
      */
     public static final int GLFW_RELEASE = 0;
 
-    /**
-     * The key or button was pressed.
-     */
+    /** The key or button was pressed. */
     public static final int GLFW_PRESS = 1;
 
     /**
@@ -188,12 +187,12 @@ public class GLFW {
     public static final int GLFW_MOD_SUPER = 0x8;
 
     /**
-     * If this bit is set the Caps Lock key is enabled and the {@link #GLFW_LOCK_KEY_MODS LOCK_KEY_MODS} input mode is set.
+     * If this bit is set the Caps Lock key is enabled and the  input mode is set.
      */
     public static final int GLFW_MOD_CAPS_LOCK = 0x10;
 
     /**
-     * If this bit is set the Num Lock key is enabled and the {@link #GLFW_LOCK_KEY_MODS LOCK_KEY_MODS} input mode is set.
+     * If this bit is set the Num Lock key is enabled and the  input mode is set.
      */
     public static final int GLFW_MOD_NUM_LOCK = 0x20;
 
@@ -213,5 +212,5 @@ public class GLFW {
             GLFW_MOUSE_BUTTON_LEFT = GLFW_MOUSE_BUTTON_1,
             GLFW_MOUSE_BUTTON_RIGHT = GLFW_MOUSE_BUTTON_2,
             GLFW_MOUSE_BUTTON_MIDDLE = GLFW_MOUSE_BUTTON_3;
-
+	
 }

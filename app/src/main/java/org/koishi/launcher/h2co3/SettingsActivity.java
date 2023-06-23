@@ -7,12 +7,11 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
 import org.koishi.launcher.h2co3.ui.custom.SettingsFragment;
 
 import java.util.Objects;
-
-import cosine.boat.CHTools;
 
 public class SettingsActivity extends H2CO3Activity {
 

@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launch.boat;
 
-import static cosine.boat.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.CHTools.boatCfg;
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.h2co3.tools.CHTools.boatCfg;
 
 import android.content.Intent;
 import android.os.Bundle;

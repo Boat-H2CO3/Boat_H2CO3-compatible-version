@@ -1,6 +1,6 @@
 package cosine.boat;
 
-import static cosine.boat.CHTools.h2co3Cfg;
+import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
 
 import android.util.Log;
 
@@ -8,6 +8,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
+import org.koishi.h2co3.tools.Utils;
 
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
