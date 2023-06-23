@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/selectableItemBackground"
         android:gravity="center_vertical"
-        android:onClick="newDir"
         android:orientation="vertical"
         android:paddingLeft="18dp"
         android:paddingRight="18dp">
