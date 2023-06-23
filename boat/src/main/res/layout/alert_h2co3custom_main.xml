@@ -21,17 +21,19 @@
             android:gravity="center"
             android:orientation="horizontal">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="名称:"
-                android:textAppearance="?android:attr/textAppearanceLarge" />
-
-            <EditText
-                android:id="@+id/alert_h2co3custom_main_edit_name"
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.FilledBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:maxLines="1" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/alert_h2co3custom_main_edit_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="名称:"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
@@ -393,6 +395,21 @@
                     android:maxLines="1"
                     android:textIsSelectable="false" />
 
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/app_15dp"
+                    android:layout_marginRight="@dimen/app_15dp"
+                    android:text="+" />
+
+                <EditText
+                    android:id="@+id/alert_h2co3custom_main_edit_key4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:maxLines="1"
+                    android:textIsSelectable="false" />
+
             </LinearLayout>
 
             <LinearLayout
@@ -461,7 +478,7 @@
                 android:text="显隐控制按键"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/alert_h2co3custom_main_btn_btnselect"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -478,24 +495,20 @@
             android:orientation="horizontal"
             android:padding="@dimen/app_10dp">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/alert_h2co3custom_main_btn_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/app_10dp"
+                android:layout_marginEnd="@dimen/app_10dp"
                 android:layout_weight="1.0"
-                android:background="@drawable/control_button"
-                android:text="确定"
-                android:textColor="#FFFFFFFF" />
+                android:text="确定" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/alert_h2co3custom_main_btn_cancle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
-                android:background="@drawable/control_button"
-                android:text="取消"
-                android:textColor="#FFFFFFFF" />
+                android:text="取消" />
 
         </LinearLayout>
 

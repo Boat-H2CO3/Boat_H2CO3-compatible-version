@@ -26,13 +26,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap;
 
 import cosine.boat.R;
 
-public class H2CO3DialogSelectKey extends MaterialAlertDialogBuilder implements OnClickListener {
+public class H2CO3DialogSelectKey extends AlertDialog.Builder implements OnClickListener {
     private final Context context;
     private LinearLayout mMainLayout;
     private LinearLayout mKeyboardLayout;

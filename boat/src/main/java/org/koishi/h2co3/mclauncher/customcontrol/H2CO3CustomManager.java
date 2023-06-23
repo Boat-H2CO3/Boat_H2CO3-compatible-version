@@ -17,7 +17,6 @@ package org.koishi.h2co3.mclauncher.customcontrol;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Handler;
 import android.util.ArrayMap;
@@ -110,6 +109,21 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
     private EditText alert_h2co3custom_main_edit_key1;
     private EditText alert_h2co3custom_main_edit_key2;
     private EditText alert_h2co3custom_main_edit_key3;
+    private final Runnable PressTimeTask = new Runnable() {
+        @Override
+        public void run() {
+            AlertDialog dialog = new MaterialAlertDialogBuilder(context)
+                    .setTitle("警告")
+                    .setMessage("是否删除该按键?")
+                    .setPositiveButton("Ok", (dia, which) -> {
+                        Container.removeView(CurrentKeyPress);
+                        CustomButtonGroup.remove(CurrentKeyPress.getID());
+                    })
+                    .setNegativeButton("取消", null)
+                    .create();
+            dialog.show();
+        }
+    };
     private CheckBox alert_h2co3custom_main_check_autokeep;
     private CheckBox alert_h2co3custom_main_check_mousectrl;
     private LinearLayout alert_h2co3custom_main_layout_cmdbtn;
@@ -150,24 +164,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
     private long PressDuration;
     private final Handler PressTimer = new Handler();
     private H2CO3CustomButton CurrentKeyPress;
-    private final Runnable PressTimeTask = new Runnable() {
-        @Override
-        public void run() {
-            AlertDialog dialog = new MaterialAlertDialogBuilder(context)
-                    .setTitle("警告")
-                    .setMessage("是否删除该按键?")
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dia, int which) {
-                            Container.removeView(CurrentKeyPress);
-                            CustomButtonGroup.remove(CurrentKeyPress.getID());
-                        }
-                    })
-                    .setNegativeButton("取消", null)
-                    .create();
-            dialog.show();
-        }
-    };
+    private EditText alert_h2co3custom_main_edit_key4;
     private boolean vi = true;
     private float downX, downY;
 
@@ -194,7 +191,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
             Deserialization();
             AddButtonToContainer();
             isInit = true;
-            TargetKeyID = new ArrayList<String>();
+            TargetKeyID = new ArrayList<>();
         }
 
 
@@ -219,18 +216,18 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         builder.excludeFieldsWithoutExposeAnnotation();
         builder.registerTypeAdapter(H2CO3CustomButton.class, new H2CO3Deserializer(context));
         mGson = builder.setPrettyPrinting().create();
-        CustomButtonGroup = new ArrayMap<String, H2CO3CustomButton>();
+        CustomButtonGroup = new ArrayMap<>();
         try {
             FileReader reader = new FileReader(new File(CustomButtonStoragePath, "H2CO3KeyBoard.json"));
             BufferedReader bfr = new BufferedReader(reader);
-            String tmp = null;
-            String result = "";
+            String tmp;
+            StringBuilder result = new StringBuilder();
             while ((tmp = bfr.readLine()) != null) {
-                result += tmp;
+                result.append(tmp);
             }
             bfr.close();
             reader.close();
-            JSONArray mJSONArray = new JSONArray(result);
+            JSONArray mJSONArray = new JSONArray(result.toString());
             for (int i = 0; i < mJSONArray.length(); i++) {
                 H2CO3CustomButton mH2CO3CustomButton = mGson.fromJson(mJSONArray.get(i).toString(), H2CO3CustomButton.class);
                 CustomButtonGroup.put(mH2CO3CustomButton.getID(), mH2CO3CustomButton);
@@ -250,12 +247,12 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
             }
             for (String ID : IDGroup) {
                 try {
-                    if (CustomButtonGroup.get(ID).getButtonKeyType().equals("显隐控制按键")) {
-                        for (String ID_ : CustomButtonGroup.get(ID).getTargetKeyID()) {
+                    if (Objects.requireNonNull(CustomButtonGroup.get(ID)).getButtonKeyType().equals("显隐控制按键")) {
+                        for (String ID_ : Objects.requireNonNull(CustomButtonGroup.get(ID)).getTargetKeyID()) {
                             getButton(ID_).setVisibility(View.GONE);
                         }
 
-                        CustomButtonGroup.get(ID).setTextColor(Color.RED);
+                        Objects.requireNonNull(CustomButtonGroup.get(ID)).setTextColor(Color.RED);
                     }
                 } catch (Exception ignored) {
 
@@ -296,7 +293,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                 }
             }
             json.put("TargetKeyID", mJ);
-            json.put("ButtonKeyValueGroups", new JSONArray().put(getText(alert_h2co3custom_main_edit_key1)).put(getText(alert_h2co3custom_main_edit_key2)).put(getText(alert_h2co3custom_main_edit_key3)));
+            json.put("ButtonKeyValueGroups", new JSONArray().put(getText(alert_h2co3custom_main_edit_key1)).put(getText(alert_h2co3custom_main_edit_key2)).put(getText(alert_h2co3custom_main_edit_key3)).put(getText(alert_h2co3custom_main_edit_key4)));
             H2CO3CustomButton tmp = mGson.fromJson(json.toString(), H2CO3CustomButton.class);
             CustomButtonGroup.put(tmp.getID(), tmp);
             Container.addView(tmp);
@@ -368,7 +365,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                 }
             }
             json.put("TargetKeyID", mJ);
-            json.put("ButtonKeyValueGroups", new JSONArray().put(getText(alert_h2co3custom_main_edit_key1)).put(getText(alert_h2co3custom_main_edit_key2)).put(getText(alert_h2co3custom_main_edit_key3)));
+            json.put("ButtonKeyValueGroups", new JSONArray().put(getText(alert_h2co3custom_main_edit_key1)).put(getText(alert_h2co3custom_main_edit_key2)).put(getText(alert_h2co3custom_main_edit_key3)).put(getText(alert_h2co3custom_main_edit_key4)));
             H2CO3CustomButton tmp = mGson.fromJson(json.toString(), H2CO3CustomButton.class);
             CustomButtonGroup.put(tmp.getID(), tmp);
             Container.addView(tmp);
@@ -461,6 +458,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         }
     }
 
+    @SuppressLint("InflateParams")
     public void CustomButtonDialog(boolean CreateOrEdit) {
         if (!isEditCustomButton) {
             return;
@@ -491,31 +489,21 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
             colorpicker.setShowOldCenterColor(false);
 
             CurrentColor = "#" + Integer.toHexString(colorpicker.getColor());
-            colorpicker.setOnColorChangedListener(new ColorPicker.OnColorChangedListener() {
-                @Override
-                public void onColorChanged(int p1) {
-                    CurrentColor = Integer.toHexString(p1).length() < 8 ? "10ffffff" : Integer.toHexString(p1);
-                    Log.e("CurrentColor", CurrentColor);
-                }
+            colorpicker.setOnColorChangedListener(p1 -> {
+                CurrentColor = Integer.toHexString(p1).length() < 8 ? "10ffffff" : Integer.toHexString(p1);
+                Log.e("CurrentColor", CurrentColor);
             });
             ColorSelectDialog = new MaterialAlertDialogBuilder(context)
                     .setTitle("ColorSelect")//提示框标题
                     .setView(v)
                     .setPositiveButton("Ok",//提示框的两个按钮
-                            new DialogInterface.OnClickListener() {
-                                @SuppressLint("SetTextI18n")
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //事件
-                                    CurrentEditBox.setText("#" + CurrentColor);
-                                    CurrentView.setBackgroundColor(Color.parseColor("#" + CurrentColor));
-                                }
-                            }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface di, int p2) {
-                            // TODO: Implement this method
+                            (dialog, which) -> {
+                                //事件
+                                CurrentEditBox.setText("#" + CurrentColor);
+                                CurrentView.setBackgroundColor(Color.parseColor("#" + CurrentColor));
+                            }).setNegativeButton("取消", (di, p2) -> {
+                        // TODO: Implement this method
 
-                        }
                     }).create();
         }
         ColorSelectDialog.show();
@@ -544,6 +532,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         alert_h2co3custom_main_edit_key1 = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_edit_key1);
         alert_h2co3custom_main_edit_key2 = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_edit_key2);
         alert_h2co3custom_main_edit_key3 = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_edit_key3);
+        alert_h2co3custom_main_edit_key4 = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_edit_key4);
         alert_h2co3custom_main_check_autokeep = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_check_autokeep);
         alert_h2co3custom_main_check_mousectrl = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_check_mousectrl);
         alert_h2co3custom_main_layout_cmdbtn = CustomButtonMenuLayoutContainer.findViewById(R.id.alert_h2co3custom_main_layout_cmdbtn);
@@ -579,15 +568,17 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         alert_h2co3custom_main_edit_key1.setOnClickListener(this);
         alert_h2co3custom_main_edit_key2.setOnClickListener(this);
         alert_h2co3custom_main_edit_key3.setOnClickListener(this);
+        alert_h2co3custom_main_edit_key4.setOnClickListener(this);
 
 
     }
 
-    private void 重置CustomButtonDialog() {
+    private void reSetCustomButtonDialog() {
         alert_h2co3custom_main_edit_name.setText("");
         alert_h2co3custom_main_edit_key1.setText("");
         alert_h2co3custom_main_edit_key2.setText("");
         alert_h2co3custom_main_edit_key3.setText("");
+        alert_h2co3custom_main_edit_key4.setText("");
         alert_h2co3custom_main_edit_cmd.setText("");
         alert_h2co3custom_main_radio_normalbtn.setChecked(true);
         alert_h2co3custom_main_view_strokecolor.setBackgroundColor(Color.WHITE);
@@ -632,10 +623,10 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
             } else {
                 Toast.makeText(context, "属性不能为空。", Toast.LENGTH_LONG).show();
             }
-            重置CustomButtonDialog();
+            reSetCustomButtonDialog();
         } else if (v == alert_h2co3custom_main_btn_cancle) {
             CustomButtonDialog.dismiss();
-            重置CustomButtonDialog();
+            reSetCustomButtonDialog();
         } else if (v == alert_h2co3custom_main_view_strokecolor) {
             ColorSelect(v, alert_h2co3custom_main_edit_strokecolor);
         } else if (v == alert_h2co3custom_main_view_textcolor) {
@@ -655,7 +646,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
 
             }
             Toast.makeText(context, "请点击需要隐藏的按键。点击黑色区域退出结束按键选择。", Toast.LENGTH_SHORT).show();
-        } else if (v == alert_h2co3custom_main_edit_key1 || v == alert_h2co3custom_main_edit_key2 || v == alert_h2co3custom_main_edit_key3) {
+        } else if (v == alert_h2co3custom_main_edit_key1 || v == alert_h2co3custom_main_edit_key2 || v == alert_h2co3custom_main_edit_key3 || v == alert_h2co3custom_main_edit_key4) {
             EditText tmpEdit = (EditText) v;
             if (KeySelectDialog == null) {
                 KeySelectDialog = new H2CO3DialogSelectKey(context);
@@ -709,6 +700,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         return isEditCustomButton;
     }
 
+    @SuppressLint("DefaultLocale")
     @Override
     public boolean onTouch(View v, MotionEvent event) {
         // TODO: Implement this method
@@ -740,17 +732,18 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
                     EditCustomButtonMode = true;
                     alert_h2co3custom_main_edit_name.setText(CurrentKeyPress.getString());
                     alert_h2co3custom_main_edit_cmd.setText(CurrentKeyPress.getCommand());
-                    alert_h2co3custom_main_edit_height.setText("" + CurrentKeyPress.getButtonSize().get(0));
-                    alert_h2co3custom_main_edit_width.setText("" + CurrentKeyPress.getButtonSize().get(1));
-                    alert_h2co3custom_main_edit_textsize.setText("" + CurrentKeyPress.getButtonTextSize());
+                    alert_h2co3custom_main_edit_height.setText(String.format("%d", CurrentKeyPress.getButtonSize().get(0)));
+                    alert_h2co3custom_main_edit_width.setText(String.format("%d", CurrentKeyPress.getButtonSize().get(1)));
+                    alert_h2co3custom_main_edit_textsize.setText(String.format("%d", CurrentKeyPress.getButtonTextSize()));
                     alert_h2co3custom_main_edit_textcolor.setText(CurrentKeyPress.getButtonTextColor());
                     alert_h2co3custom_main_edit_strokecolor.setText(CurrentKeyPress.getBorderColor());
-                    alert_h2co3custom_main_edit_round.setText("" + CurrentKeyPress.getCornerRadius());
+                    alert_h2co3custom_main_edit_round.setText(String.format("%d", CurrentKeyPress.getCornerRadius()));
                     alert_h2co3custom_main_check_autokeep.setChecked(CurrentKeyPress.isButtonAutoHold());
                     alert_h2co3custom_main_check_mousectrl.setChecked(CurrentKeyPress.isButtonControlsMousePointer());
                     alert_h2co3custom_main_edit_key1.setText(CurrentKeyPress.getButtonKeyValueGroups().get(0));
                     alert_h2co3custom_main_edit_key2.setText(CurrentKeyPress.getButtonKeyValueGroups().get(1));
                     alert_h2co3custom_main_edit_key3.setText(CurrentKeyPress.getButtonKeyValueGroups().get(2));
+                    alert_h2co3custom_main_edit_key4.setText(CurrentKeyPress.getButtonKeyValueGroups().get(3));
                     TargetKeyID.clear();
                     TargetKeyID.addAll(CurrentKeyPress.getTargetKeyID());
                     if (CurrentKeyPress.getButtonKeyType().contentEquals(alert_h2co3custom_main_radio_normalbtn.getHint())) {

@@ -38,7 +38,7 @@
                         android:layout_height="27dp"
                         android:src="@drawable/cursor5" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/touch_pad"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
@@ -46,7 +46,7 @@
                         android:layout_marginBottom="0dp"
                         android:alpha="0.0" />
 
-                    <Button
+                    <com.google.android.material.button.MaterialButton
                         android:id="@+id/touch_pad2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
