@@ -1,5 +1,6 @@
 package com.yuan.lib_markdownview;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -107,6 +108,7 @@ public class MarkdownWebView extends WebView {
         return out.toString();
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     void init(Context context) {
 
         {

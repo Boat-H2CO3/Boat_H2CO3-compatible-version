@@ -9,7 +9,7 @@
     <string name="launcher_main_device">信息</string>
     <string name="launcher_main_help">使用帮助</string>
 
-    <string name="launcher_initial_install">未检测到运行库，正在解压安装...</string>
+    <string name="launcher_initial_install">未检测到运行库，正在解压安装…</string>
     <!--Setting page-->
     <!--basic-->
     <!--func-->
@@ -18,8 +18,8 @@
     <!--color-->
 
     <string name="nav_header_account_mode">在线模式</string>
-    <string name="launcher_initial_install_check">检查文件...</string>
-    <string name="launcher_initial_install_start">正在安装默认主体文件...</string>
+    <string name="launcher_initial_install_check">检查文件…</string>
+    <string name="launcher_initial_install_start">正在安装默认主体文件…</string>
 
     <string name="login_account">邮箱</string>
     <string name="login_password">密码</string>
@@ -28,7 +28,7 @@
     <string name="login_offline">离线模式</string>
     <string name="login_new">登出</string>
     <string name="login_welcome">欢迎玩家</string>
-    <string name="login_ing">正在登入...</string>
+    <string name="login_ing">正在登入…</string>
     <!--
     <string name="login_env">[简体中文:注意，自2021年起所有Mojang账号将会陆续迁移至Microsoft账号，在此页面将无法使用新的微软账号或旧的Mojang账号进行登录。后续该启动器将会提供Microsoft账号登录功能。]</string>
     -->
@@ -64,7 +64,7 @@
     <string name="choose_mode_mouse">键鼠(有Bug)</string>
     <string name="choose_mode_touch">触控</string>
     <string name="choose_mode_cancel">取消</string>
-    <string name="bc_wait">拉取公告中...</string>
+    <string name="bc_wait">拉取公告中…</string>
     <string name="install_title_1">游戏</string>
     <string name="device_info">我的设备</string>
     <string name="broadcast">公告</string>
@@ -108,7 +108,7 @@
     <string name="menu_theme">主题</string>
     <string name="api_3rd">第三方认证API</string>
     <string name="api_title">选择登录方式</string>
-    <string name="home_login_start_toast">正在登入...</string>
+    <string name="home_login_start_toast">正在登入…</string>
     <string name="home_no_account">没有账号或者输入框有空内容</string>
     <string name="home_no_username">用户名不能为空</string>
     <string name="custom_mcf">额外的Minecraft参数</string>
@@ -124,7 +124,7 @@
     <string name="download_snapshot">快照版</string>
     <string name="download_old_beta">远古版</string>
     <string name="ver_input_hint">确保路径前缀为 /storage/emulated/0 或者 /sdcard 或者 /mnt/sdcard</string>
-    <string name="ver_not_dir">这好像不是一个目录...</string>
+    <string name="ver_not_dir">这好像不是一个目录…</string>
     <string name="ver_already_exists">这条路径已经存在</string>
     <string name="ver_not_right_dir">这不是正确的路径</string>
     <string name="ver_add_done">完成</string>
@@ -152,5 +152,6 @@
     <string name="spinner_bmclapi">BMCLAPI源</string>
     <string name="ver_type_release">release</string>
     <string name="can_not_material_you"><![CDATA[Can not use Material You Theme(Your Android API<31)]]></string>
+    <string name="log_log">Log</string>
 
 </resources>

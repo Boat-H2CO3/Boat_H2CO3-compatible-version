@@ -2,6 +2,9 @@
 <resources>
 
 
+    <string name="menu_install">Install</string>
+    <string name="menu_custom">Config</string>
+    <string name="menu_manager">Dir</string>
     <string name="launcher_check_file_msg_ver">遊戲版本</string>
     <string name="launcher_main_how_to_use_tip">注意事項</string>
     <string name="launcher_check_file">檢查文件</string>
@@ -146,4 +149,5 @@
     <string name="spinner_bmclapi">BMCLAPI源</string>
     <string name="ver_type_release">release</string>
     <string name="can_not_material_you"><![CDATA[Can not use Material You Theme(Your Android API<31)]]></string>
+    <string name="log_log">Log</string>
 </resources>
