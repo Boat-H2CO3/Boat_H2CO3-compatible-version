@@ -1,6 +1,7 @@
 package org.koishi.launcher.h2co3.launch.boat;
 
 import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.launcher.h2co3.ui.home.HomeFragment.FileExists;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -37,6 +38,7 @@ import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
 import org.koishi.h2co3.mclauncher.view.H2CO3MinecraftBottomBar;
 import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.MainActivity;
+import org.koishi.launcher.h2co3.tool.AssetsUtils;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
@@ -98,6 +100,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
         setContentView(cosine.boat.R.layout.overlay);
 
+
         msh = getSharedPreferences("Boat_H2CO3", MODE_PRIVATE);
         mshe = msh.edit();
 
@@ -110,7 +113,23 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 // TODO: Implement this method
                 System.out.println("SurfaceTexture is available!");
                 cosine.boat.BoatActivity.setBoatNativeWindow(new Surface(texture));
-                InitCustomButton();
+                boolean existGame = FileExists(CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/H2CO3KeyBoard.json");
+                if (existGame) {
+                    InitCustomButton();
+                } else {
+                    AssetsUtils.getInstance(BoatActivity.this).copyAssetsToSD("KeyBoard/H2CO3KeyBoard.json", CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
+                        @Override
+                        public void onSuccess() {
+                            InitCustomButton();
+                            // TODO: 文件复制成功时，主线程回调
+                        }
+
+                        @Override
+                        public void onFailed(String error) {
+                            // TODO: 文件复制失败时，主线程回调
+                        }
+                    });
+                }
                 new Thread(() -> {
                     LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
                     LoadMe.exec(config);
@@ -277,7 +296,23 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
     private void InitCustomButton() {
         h2co3CustomManager = new H2CO3CustomManager();
-        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR));
+        boolean existGame = FileExists(CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/H2CO3KeyBoard.json");
+        if (existGame) {
+            h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard");
+        } else {
+            AssetsUtils.getInstance(BoatActivity.this).copyAssetsToSD("KeyBoard", LAUNCHER_FILE_DIR + "KeyBoard").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
+                @Override
+                public void onSuccess() {
+                    // TODO: 文件复制成功时，主线程回调
+                }
+
+                @Override
+                public void onFailed(String error) {
+                    // TODO: 文件复制失败时，主线程回调
+                }
+            });
+        }
+
         h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
             @Override
             public void CommandReceived(String command) {
@@ -291,24 +326,11 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
             @Override
             public void ControlsMousePointerMovement(int x, int y) {
-                float itialY, itialX;
-                long currentMS;
-                int moveX, moveY;
-                moveX = 0;
-                moveY = 0;
-                initialX = (int) x;
-                initialY = (int) y;
-                itialX = x;
-                itialY = y;
-                currentMS = System.currentTimeMillis();
-                moveX += Math.abs(x - itialX);
-                moveY += Math.abs(y - itialY);
-                long movesTime = System.currentTimeMillis() - currentMS;//移动时间
-                if (movesTime > 400 && moveX < 3 && moveY < 3) {
-                    BoatInput.setMouseButton(BoatInput.Button1, true);
-                    BoatInput.setPointer(baseX + (int) x - initialX, baseY + (int) y - initialY);
+                if (cursorMode == BoatInput.CursorDisabled) {
+                    baseX = x;
+                    baseY = y;
+                    BoatInput.setPointer(baseX, baseY);
                 }
-                BoatInput.setPointer(baseX + (int) x - initialX, baseY + (int) y - initialY);
             }
 
             @Override
@@ -326,6 +348,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
             }
         });
+
         h2CO3CrossingKeyboard = findViewById(cosine.boat.R.id.h2co3_keyboard);
         float xxx = msh.getFloat("CrossingKeyBoardX", (float) 0.09 * (CallbackBridge.windowWidth));
         float yyy = msh.getFloat("CrossingKeyBoardY", (float) 0.49 * (CallbackBridge.windowHeight));
@@ -555,12 +578,6 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
     }
 
     @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        // TODO: Implement this method
-        super.onWindowFocusChanged(hasFocus);
-    }
-
-    @Override
     public void onBackPressed() {
         BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_Escape, 0, true);
         // TODO: Implement this method
@@ -722,6 +739,14 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                     startActivity(new Intent(BoatActivity.this, MainActivity.class));
                     break;
             }
+        }
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        if (hasFocus) {
+        } else {
+            BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_Escape, 0, true);
         }
     }
 

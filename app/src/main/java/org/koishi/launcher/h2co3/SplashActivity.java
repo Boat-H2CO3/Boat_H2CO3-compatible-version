@@ -157,7 +157,7 @@ public class SplashActivity extends H2CO3Activity {
     }
 
     public void updateAuthlib() {
-        AssetsUtils.getInstance(SplashActivity.this).copyAssetsToSD("authlib", "games/org.koishi.launcher/h2co3/authlib").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
+        AssetsUtils.getInstance(SplashActivity.this).copyAssetsToSD("authlib", LAUNCHER_FILE_DIR + "authlib").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
             @Override
             public void onSuccess() {
                 // TODO: 文件复制成功时，主线程回调

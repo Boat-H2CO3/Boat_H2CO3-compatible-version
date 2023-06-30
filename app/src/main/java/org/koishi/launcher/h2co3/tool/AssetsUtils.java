@@ -67,7 +67,7 @@ public class AssetsUtils {
         try {
             String[] fileNames = context.getAssets().list(srcPath);
             if (fileNames.length > 0) {
-                File file = new File(Environment.getExternalStorageDirectory(), dstPath);
+                File file = new File(dstPath);
                 if (!file.exists()) file.mkdirs();
                 for (String fileName : fileNames) {
                     if (!srcPath.equals("")) { // assets 文件夹下的目录
