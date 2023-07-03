@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launch.boat;
 
 import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.ui.home.HomeFragment.FileExists;
+import static org.koishi.h2co3.tools.CHTools.getBoatCfg;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -31,14 +31,12 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard;
-import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomButton;
-import org.koishi.h2co3.mclauncher.customcontrol.H2CO3CustomManager;
 import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
+import org.koishi.h2co3.mclauncher.view.H2CO3CrossingKeyboard;
 import org.koishi.h2co3.mclauncher.view.H2CO3MinecraftBottomBar;
-import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.MainActivity;
-import org.koishi.launcher.h2co3.tool.AssetsUtils;
+import org.koishi.launcher.h2co3.control.H2CO3CustomButton;
+import org.koishi.launcher.h2co3.control.H2CO3CustomManager;
 import org.lwjgl.glfw.CallbackBridge;
 
 import cosine.boat.BoatInput;
@@ -113,23 +111,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
                 // TODO: Implement this method
                 System.out.println("SurfaceTexture is available!");
                 cosine.boat.BoatActivity.setBoatNativeWindow(new Surface(texture));
-                boolean existGame = FileExists(CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/H2CO3KeyBoard.json");
-                if (existGame) {
-                    InitCustomButton();
-                } else {
-                    AssetsUtils.getInstance(BoatActivity.this).copyAssetsToSD("KeyBoard/H2CO3KeyBoard.json", CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
-                        @Override
-                        public void onSuccess() {
-                            InitCustomButton();
-                            // TODO: 文件复制成功时，主线程回调
-                        }
-
-                        @Override
-                        public void onFailed(String error) {
-                            // TODO: 文件复制失败时，主线程回调
-                        }
-                    });
-                }
+                InitCustomButton();
                 new Thread(() -> {
                     LauncherConfig config = LauncherConfig.fromFile(getIntent().getExtras().getString("config"));
                     LoadMe.exec(config);
@@ -296,23 +278,7 @@ public class BoatActivity extends cosine.boat.BoatActivity implements OnClickLis
 
     private void InitCustomButton() {
         h2co3CustomManager = new H2CO3CustomManager();
-        boolean existGame = FileExists(CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard/H2CO3KeyBoard.json");
-        if (existGame) {
-            h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), CHTools.getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/KeyBoard");
-        } else {
-            AssetsUtils.getInstance(BoatActivity.this).copyAssetsToSD("KeyBoard", LAUNCHER_FILE_DIR + "KeyBoard").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
-                @Override
-                public void onSuccess() {
-                    // TODO: 文件复制成功时，主线程回调
-                }
-
-                @Override
-                public void onFailed(String error) {
-                    // TODO: 文件复制失败时，主线程回调
-                }
-            });
-        }
-
+        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/H2CO3KeyBoard.json");
         h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
             @Override
             public void CommandReceived(String command) {

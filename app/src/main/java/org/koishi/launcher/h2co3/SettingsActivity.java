@@ -9,7 +9,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import org.koishi.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.application.H2CO3Activity;
-import org.koishi.launcher.h2co3.ui.custom.SettingsFragment;
+import org.koishi.launcher.h2co3.ui.custom.LauncherSettingsFragment;
 
 import java.util.Objects;
 
@@ -38,7 +38,7 @@ public class SettingsActivity extends H2CO3Activity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.settings, new SettingsFragment())
+                    .replace(R.id.settings, new LauncherSettingsFragment())
                     .commit();
         }
         ActionBar actionBar = getSupportActionBar();

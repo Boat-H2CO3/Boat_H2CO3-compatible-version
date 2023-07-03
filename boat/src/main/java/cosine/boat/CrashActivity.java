@@ -1,7 +1,6 @@
 package cosine.boat;
 
 import android.content.Intent;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -27,13 +26,9 @@ public class CrashActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getWindow().setStatusBarColor(getResources().getColor(R.color.material_card_background));
         crash = findViewById(R.id.crash);
-        Typeface tf = Typeface.createFromAsset(this.getAssets(),
-                "Sans.ttf");
         TextView bigTitle = (TextView) toolbar.getChildAt(0);
-        bigTitle.setTypeface(tf);
         bigTitle.setText(getResources().getString(R.string.crash_title));
         restart = findViewById(R.id.restart);
-        restart.setTypeface(tf);
         restart.setOnClickListener(rv -> restart());
         initData();
 

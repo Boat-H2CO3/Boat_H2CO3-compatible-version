@@ -81,9 +81,21 @@ public class CHTools {
         }
     }
 
+    public static String H2CO3CfgPath() {
+        String h2co3Cfg = getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/h2co3Cfg.json";
+        String pdir = getExtraCfg("allVerLoad", "false", h2co3Cfg);
+        String H2CO3CfgPath = getBoatCfg("currentVersion", LAUNCHER_FILE_DIR);
+        if (pdir.equals("false")) {
+            H2CO3CfgPath = LAUNCHER_FILE_DIR + "/h2co3Cfg.json";
+        } else {
+            H2CO3CfgPath = getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/h2co3Cfg.json";
+        }
+        return H2CO3CfgPath;
+    }
+
     public static void setAppJson(String name, String value) {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -91,7 +103,7 @@ public class CHTools {
             JSONObject json = new JSONObject(str);
             json.remove(name);
             json.put(name, value);
-            FileWriter fr = new FileWriter(h2co3Cfg);
+            FileWriter fr = new FileWriter(CHTools.H2CO3CfgPath());
             fr.write(json.toString());
             fr.close();
         } catch (Exception e) {
@@ -135,7 +147,7 @@ public class CHTools {
 
     public static String getAppCfg(String name, String defaultValue) {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -234,7 +246,7 @@ public class CHTools {
 
     }
 
-    public static String getAppLicatiom(Context context) {
+    public static String getAppLication(Context context) {
 
         String versionName = "";
         try {

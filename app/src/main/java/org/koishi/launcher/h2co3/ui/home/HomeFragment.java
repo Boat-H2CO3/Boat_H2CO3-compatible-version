@@ -40,7 +40,6 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.widget.NestedScrollView;
@@ -122,7 +121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public ScrollView onlineLayout;
     public String message;
     public boolean flag = true;
-    MaterialCardView mLoginButton, openBc, showAcc;
+    MaterialCardView mLaunchBoatButton, openBc, showAcc;
     /**
      * -----------------登录线程--------------------
      */
@@ -158,13 +157,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     dbHelper.insertOrUpdate(resultAc, "", resultApi, 0);
                 }
                 pb.hide();
-                //Toast.makeText(getActivity(), getResources().getString(R.string.login_done), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireActivity(), getResources().getString(R.string.login_done), Toast.LENGTH_SHORT).show();
                 Snackbar.make(requireView(), getResources().getString(R.string.login_done), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mLoginButton.setEnabled(true);
+                mLaunchBoatButton.setEnabled(true);
                 userInfo.setText(getResources().getString(R.string.account_before) + " " + pf.getUsername());
                 mOffline.setText(CHTools.getBoatCfg("auth_player_name", "Null"));
-                //mLoginButton.setVisibility(View.VISIBLE);
+                //mLaunchBoatButton.setVisibility(View.VISIBLE);
                 newacc.setEnabled(true);
                 userNameLayout.setVisibility(View.GONE);
                 passwordLayout.setVisibility(View.GONE);
@@ -179,10 +178,9 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 logt.setVisibility(View.VISIBLE);
                 newacc.setVisibility(View.VISIBLE);
                 logt.setText(getResources().getString(R.string.login_welcome) + "\n" + pf.getUsername());
-                chooseMode();
             } else {
                 mCheckBox.setChecked(false);
-                mLoginButton.setEnabled(true);
+                mLaunchBoatButton.setEnabled(true);
                 pb.hide();
                 logt.setText(":(");
                 mPassword.setText("");
@@ -225,11 +223,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             super.handleMessage(msg);
             if (msg.what == 0) {
                 if (UserMsg == null) {
-                    //Toast.makeText(getActivity(), UserMsg[0], Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(requireActivity(), UserMsg[0], Toast.LENGTH_SHORT).show();
                     Snackbar.make(requireView(), UserMsg[0], Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     mCheckBox.setChecked(false);
-                    mLoginButton.setEnabled(true);
+                    mLaunchBoatButton.setEnabled(true);
                     pb.hide();
                     logt.setText(":(");
                     mPassword.setText("");
@@ -261,11 +259,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     layout2.setVisibility(View.VISIBLE);
                 } else if (UserMsg.length == 1) {
                     //UserMsg长度为1时说明出现了错误，使用toast输出错误信息
-                    //Toast.makeText(getActivity(), getResources().getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(requireActivity(), getResources().getString(R.string.login_fail), Toast.LENGTH_SHORT).show();
                     Snackbar.make(requireView(), getResources().getString(R.string.login_fail), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                     mCheckBox.setChecked(false);
-                    mLoginButton.setEnabled(true);
+                    mLaunchBoatButton.setEnabled(true);
                     pb.hide();
                     logt.setText(":(");
                     mPassword.setText("");
@@ -327,12 +325,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                             .setAction("Action", null).show();
 
                     pb.hide();
-                    //Toast.makeText(getActivity(), getResources().getString(R.string.login_done), Toast.LENGTH_SHORT).show();
-                    mLoginButton.setEnabled(true);
+                    //Toast.makeText(requireActivity(), getResources().getString(R.string.login_done), Toast.LENGTH_SHORT).show();
+                    mLaunchBoatButton.setEnabled(true);
                     userInfo.setText(getResources().getString(R.string.account_before) + " " + UserMsg[1]);
                     mOffline.setText(UserMsg[1]);
                     newacc.setEnabled(true);
-                    //mLoginButton.setVisibility(View.VISIBLE);
+                    //mLaunchBoatButton.setVisibility(View.VISIBLE);
                     userNameLayout.setVisibility(View.GONE);
                     passwordLayout.setVisibility(View.GONE);
                     apiLayout.setVisibility(View.GONE);
@@ -346,7 +344,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     logt.setVisibility(View.VISIBLE);
                     newacc.setVisibility(View.VISIBLE);
                     logt.setText(getResources().getString(R.string.login_welcome) + "\n" + CHTools.getBoatCfg("auth_player_name", "Null"));
-                    chooseMode();
                 }
             } else if (msg.what == 1) {
                 //token可用就显示登录成功
@@ -374,7 +371,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 }
                 Snackbar.make(requireView(), getResources().getString(R.string.login_done), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mLoginButton.setEnabled(true);
+                mLaunchBoatButton.setEnabled(true);
                 userInfo.setText(getResources().getString(R.string.account_before) + " " + CHTools.getBoatCfg("auth_player_name", "Null"));
                 mOffline.setText(CHTools.getBoatCfg("auth_player_name", "Null"));
                 userNameLayout.setVisibility(View.GONE);
@@ -390,7 +387,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 logt.setVisibility(View.VISIBLE);
                 newacc.setVisibility(View.VISIBLE);
                 logt.setText(getResources().getString(R.string.login_welcome) + "\n" + CHTools.getBoatCfg("auth_player_name", "Null"));
-                chooseMode();
 
             }
 
@@ -482,6 +478,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 con.disconnect();
                 Message msg = new Message();
                 message = "" + str;
+                message = CHTools.H2CO3CfgPath();
             } catch (IOException e) {
                 Message msg = new Message();
                 message = "拉取公告失败: " + e;
@@ -493,7 +490,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
 
         /*-----------------文件检查--------------------*/
         boolean existMcConfig = FileExists(boatCfg);
-        //boolean existRuntime = FileExists("/data/data/"+getActivity().getPackageName()+"/libopenal.so.1");
+        //boolean existRuntime = FileExists("/data/data/"+requireActivity().getPackageName()+"/libopenal.so.1");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         f = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
@@ -509,7 +506,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 List<String> verList = Arrays.asList(Objects.requireNonNull(getVer));  //此集合无法操作添加元素
                 verList.sort(cp);
                 getVer = verList.toArray(new String[0]);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 list.setAdapter(adapter);
@@ -530,7 +527,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             } else {
                 String s = "Error,  ";
                 final String[] getVer = s.split(",");
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 list.setAdapter(adapter);
@@ -550,7 +547,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         } else {
             String s = "Error,  ";
             final String[] getVer = s.split(",");
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             list.setAdapter(adapter);
@@ -615,7 +612,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 userStatus.setText(getResources().getString(R.string.nav_header_account_mode));
                 showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_green_normal));
                 // 我们先来个吐司
-                sp = getActivity().getSharedPreferences("isChecked", 0);
+                sp = requireActivity().getSharedPreferences("isChecked", 0);
                 // 使用编辑器来进行操作
                 SharedPreferences.Editor edit = sp.edit();
                 // 将勾选的状态保存起来
@@ -628,7 +625,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 offlineLayout.setVisibility(View.VISIBLE);
                 userStatus.setText(getResources().getString(R.string.login_offline));
                 showAcc.setCardBackgroundColor(getResources().getColor(R.color.app_blue_normal));
-                sp = getActivity().getSharedPreferences("isChecked", 0);
+                sp = requireActivity().getSharedPreferences("isChecked", 0);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putBoolean("choose", false);
                 edit.apply();
@@ -652,7 +649,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         });
         mainInfo.setOnClickListener(v -> showInfoDialog());
         mainHelp.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), InstructionActivity.class));
+            startActivity(new Intent(requireActivity(), InstructionActivity.class));
         });
         mainFix.setOnClickListener(v -> launchFragment());
 
@@ -664,27 +661,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         apiLayout = root.findViewById(R.id.api_lay);
         mUserName = root.findViewById(R.id.username);
         mPassword = root.findViewById(R.id.password);
-        mLoginButton = root.findViewById(R.id.login);
+        mLaunchBoatButton = root.findViewById(R.id.launch_boat);
         mAPI = root.findViewById(R.id.login_api);
         mDropDown = root.findViewById(R.id.dropdown_button);
         mCheckBox = root.findViewById(R.id.remember);
         newacc = root.findViewById(R.id.newacc);
         info = root.findViewById(R.id.infocb);
         xbox = root.findViewById(R.id.xboxcb);
-        mLoginButton.setOnClickListener(this);
+        mLaunchBoatButton.setOnClickListener(this);
         mDropDown.setOnClickListener(this);
         mAPI.setKeyListener(null);
         mAPI.setOnClickListener(v -> showAPIDialog());
         dbHelper = new DBHelper(getActivity());
         dbHelper.queryAllUserName();//offline.setText("Demo");
 
-        SharedPreferences nameSp = getActivity().getSharedPreferences("name", getContext().MODE_PRIVATE);
-        SharedPreferences passSp = getActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE);
-        SharedPreferences apiSp = getActivity().getSharedPreferences("api", getContext().MODE_PRIVATE);
+        SharedPreferences nameSp = requireActivity().getSharedPreferences("name", getContext().MODE_PRIVATE);
+        SharedPreferences passSp = requireActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE);
+        SharedPreferences apiSp = requireActivity().getSharedPreferences("api", getContext().MODE_PRIVATE);
 
-        editorName = getActivity().getSharedPreferences("name", getContext().MODE_PRIVATE).edit();
-        editorPass = getActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE).edit();
-        editorApi = getActivity().getSharedPreferences("api", getContext().MODE_PRIVATE).edit();
+        editorName = requireActivity().getSharedPreferences("name", getContext().MODE_PRIVATE).edit();
+        editorPass = requireActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE).edit();
+        editorApi = requireActivity().getSharedPreferences("api", getContext().MODE_PRIVATE).edit();
 
         //offline = root.findViewById(R.id.offline);
         newacc.setOnClickListener(v -> {
@@ -712,7 +709,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             //info.setVisibility(View.VISIBLE);
             img1.setVisibility(View.GONE);
             logt.setVisibility(View.GONE);
-            mLoginButton.setVisibility(View.VISIBLE);
+            mLaunchBoatButton.setVisibility(View.VISIBLE);
         });
 
         info.setChecked(false);
@@ -739,7 +736,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
 
         final String password = mPassword.getText().toString();
         if (!password.equals("")) {
-            //mLoginButton.setVisibility(View.VISIBLE);
+            //mLaunchBoatButton.setVisibility(View.VISIBLE);
             userNameLayout.setVisibility(View.GONE);
             passwordLayout.setVisibility(View.GONE);
             apiLayout.setVisibility(View.GONE);
@@ -754,7 +751,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             newacc.setVisibility(View.VISIBLE);
         } else {
             newacc.setEnabled(false);
-            //mLoginButton.setVisibility(View.GONE);
+            //mLaunchBoatButton.setVisibility(View.GONE);
             userNameLayout.setVisibility(View.VISIBLE);
             passwordLayout.setVisibility(View.VISIBLE);
             apiLayout.setVisibility(View.VISIBLE);
@@ -769,19 +766,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             newacc.setVisibility(View.GONE);
         }
 
-        sp = getActivity().getSharedPreferences("isXbox", 0);
+        sp = requireActivity().getSharedPreferences("isXbox", 0);
         boolean xb = sp.getBoolean("msAcc", true); // 这里就是开始取值了 false代表的就是如果没有得到对应数据我们默认显示为false
         // 把得到的状态设置给CheckBox组件
         xbox.setChecked(xb);
 
         xbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (xbox.isChecked()) {
-                sp = getActivity().getSharedPreferences("isXbox", 0);
+                sp = requireActivity().getSharedPreferences("isXbox", 0);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putBoolean("msAcc", true);
                 edit.apply();
             } else {
-                sp = getActivity().getSharedPreferences("isXbox", 0);
+                sp = requireActivity().getSharedPreferences("isXbox", 0);
                 SharedPreferences.Editor edit = sp.edit();
                 edit.putBoolean("msAcc", false);
                 edit.apply();
@@ -852,7 +849,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 launchFragment();
                 break;
             case R.id.home_open_help:
-                startActivity(new Intent(getActivity(), InstructionActivity.class));
+                startActivity(new Intent(requireActivity(), InstructionActivity.class));
                 break;
             default:
                 break;
@@ -946,27 +943,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public void onClick(View v) {
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
-        if (v == mLoginButton) {
-            if (swOnline.isChecked()) {
-                if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-                } else {
-                    Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                }
-            } else {
-                if (mOffline.equals("")) {
-                    Snackbar.make(requireView(), getResources().getString(R.string.home_no_username), Snackbar.LENGTH_LONG)
-                            .setAction("Action", null).show();
-                } else {
-                    if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-                        CHTools.setBoatJson("auth_player_name", mOffline.getText().toString());
-                        chooseMode();
-                    } else {
-                        Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
-                                .setAction("Action", null).show();
-                    }
-                }
-            }
+        if (v == mLaunchBoatButton) {
+            launchBoat();
         }
         if (v == mDropDown) {
             if (popView != null) {
@@ -1002,10 +980,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         final String api = mAPI.getText().toString();
         if (swOnline.isChecked()) {
             if (!userName.equals("") && !password.equals("") && !api.equals("")) {
-                //Toast.makeText(getActivity(), getResources().getString(R.string.home_login_start_toast), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireActivity(), getResources().getString(R.string.home_login_start_toast), Toast.LENGTH_SHORT).show();
                 Snackbar.make(requireView(), getResources().getString(R.string.home_login_start_toast), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
-                mLoginButton.setEnabled(false);
+                mLaunchBoatButton.setEnabled(false);
                 pb.show();
                 //登录操作为耗时操作，必须放到线程中执行
                 if (api.equals("Microsoft")) {
@@ -1037,7 +1015,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                     }).start();
                 }
             } else {
-                //Toast.makeText(getActivity(), getResources().getString(R.string.home_no_account), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(requireActivity(), getResources().getString(R.string.home_no_account), Toast.LENGTH_SHORT).show();
                 Snackbar.make(requireView(), getResources().getString(R.string.home_no_account), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -1051,47 +1029,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     /**
      * -----------------启动--------------------
      */
-    public void chooseMode() {
-        //添加"Yes"按钮
-        //添加"Yes"按钮
-        //添加"Yes"按钮
-        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(requireActivity(), R.style.AppTheme_MaterialAlertDialog)
-                .setTitle(getResources().getString(R.string.action))
-                .setIcon(R.drawable.ic_boat)
-                .setMessage(getResources().getString(R.string.choose_mode))
-                .setPositiveButton(getResources().getString(R.string.choose_mode_touch), (dialogInterface, i) -> {
-                    //TODO
-                    launchBoat();
-
-                })
-                .setNegativeButton(getResources().getString(R.string.choose_mode_mouse), (dialogInterface, i) -> {
-                    //TODO
-                    launchBoatMk();
-                })
-                .setNeutralButton(getResources().getString(R.string.choose_mode_cancel), (dialogInterface, i) -> {
-                    //TODO
-                })
-                .create();
-
-        alertDialog1.show();
-    }
 
     public void launchBoat() {
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
         if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-            startActivity(new Intent(getActivity(), LauncherActivity.class));
-        } else {
-            Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
-                    .setAction("Action", null).show();
-        }
-    }
-
-    public void launchBoatMk() {
-        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
-        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
-        if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
-            //startActivity(new Intent(getActivity(), LauncherActivityMk.class));
+            startActivity(new Intent(requireActivity(), LauncherActivity.class));
         } else {
             Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
@@ -1106,7 +1049,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             map.put("drawable", R.drawable.xicon);
             list.add(map);
         }
-        dropDownAdapter = new MyAdapter(getActivity(), list, R.layout.dropdown_item,
+        dropDownAdapter = new MyAdapter(requireActivity(), list, R.layout.dropdown_item,
                 new String[]{"name", "drawable"}, new int[]{R.id.textview,
                 R.id.delete});
         ListView listView = new ListView(getActivity());
@@ -1178,7 +1121,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         }
 
         dialog.setContentView(dialogView);
-        WindowManager windowManager = getActivity().getWindowManager();
+        WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         Window window = dialog.getWindow();
         WindowManager.LayoutParams lp = window.getAttributes();
@@ -1380,7 +1323,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     public void onResume() {
         super.onResume();
         boolean existMcConfig = FileExists(boatCfg);
-        //boolean existRuntime = FileExists("/data/data/"+getActivity().getPackageName()+"/libopenal.so.1");
+        //boolean existRuntime = FileExists("/data/data/"+requireActivity().getPackageName()+"/libopenal.so.1");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         f = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
@@ -1393,7 +1336,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 List<String> verList = Arrays.asList(Objects.requireNonNull(getVer));  //此集合无法操作添加元素
                 verList.sort(cp);
                 getVer = verList.toArray(new String[0]);
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 list.setAdapter(adapter);
@@ -1414,7 +1357,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             } else {
                 String s = "Error,  ";
                 final String[] getVer = s.split(",");
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
                 list.setAdapter(adapter);
@@ -1434,7 +1377,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         } else {
             String s = "Error,  ";
             final String[] getVer = s.split(",");
-            ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, getVer);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(requireActivity(), android.R.layout.simple_spinner_item, getVer);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
             list.setAdapter(adapter);

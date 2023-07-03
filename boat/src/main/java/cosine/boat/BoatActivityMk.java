@@ -1,8 +1,6 @@
 package cosine.boat;
 
 
-import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
-
 import android.content.res.Resources;
 import android.graphics.SurfaceTexture;
 import android.os.Build;
@@ -33,6 +31,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONObject;
 import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
+import org.koishi.h2co3.tools.CHTools;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -670,7 +669,7 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
 
     private String cp2() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -685,7 +684,7 @@ public class BoatActivityMk extends AppCompatActivity implements TextureView.Sur
 
     private String cp4() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();

@@ -25,9 +25,7 @@ public class LauncherActivityMk extends AppCompatActivity {
         //String c = intent.getStringExtra("data");
 
         Intent i = null;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            i = new Intent(LauncherActivityMk.this, BoatActivityMk.class);
-        }
+        i = new Intent(LauncherActivityMk.this, BoatActivityMk.class);
         Bundle bundle = new Bundle();
         bundle.putString("config", boatCfg);
         assert i != null;

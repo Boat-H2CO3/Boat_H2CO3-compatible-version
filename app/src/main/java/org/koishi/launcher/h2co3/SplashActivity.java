@@ -3,7 +3,6 @@ package org.koishi.launcher.h2co3;
 import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
 import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
 import static org.koishi.h2co3.tools.CHTools.boatCfg;
-import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -32,9 +31,9 @@ import java.util.List;
 public class SplashActivity extends H2CO3Activity {
 
     final boolean existMcConfig = FileExists(boatCfg);
-    final boolean existH2oConfig = FileExists(h2co3Cfg);
+    final boolean existH2oConfig = FileExists(CHTools.H2CO3CfgPath());
     //boolean existH2oMd = FileExists(LAUNCHER_FILE_DIR+"info.md");
-    final boolean existRuntime = FileExists(LAUNCHER_DATA_DIR + "app_runtime/libopenal.so");
+    final boolean existRuntime = FileExists(LAUNCHER_DATA_DIR + "/app_runtime/boat/libopenal.so.1");
     final boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
     public LinearLayout splash;
     public TextView splashCheck;
@@ -88,7 +87,7 @@ public class SplashActivity extends H2CO3Activity {
     }
 
     public void start() {
-        new Handler().postDelayed(this::startApp, 1000);
+        new Handler().postDelayed(this::startApp, 500);
     }
 
     public void updateMarkDown() {
@@ -195,7 +194,7 @@ public class SplashActivity extends H2CO3Activity {
                     i.putExtra("fragment", getResources().getString(R.string.app_name));
                     startActivity(i);
                     finish();
-                }, 3000);
+                }, 1000);
             }
         } else {
             if (existGame && existMcConfig && existH2oConfig) {
@@ -215,7 +214,7 @@ public class SplashActivity extends H2CO3Activity {
                 new Handler().postDelayed(() -> {
                     startActivity(new Intent(SplashActivity.this, InitialActivity.class));
                     finish();
-                }, 3000);
+                }, 1000);
             }
         }
 

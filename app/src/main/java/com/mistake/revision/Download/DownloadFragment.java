@@ -180,7 +180,7 @@ public class DownloadFragment extends DialogFragment {
 		API_Version_client_server_json = Source_address + "/version/";
 		API_Assets = Source_address + "/assets/";
 		API_Libraries = Source_address + "/maven/";
-		API_Manifest_Version_json = Source_address + "/mc/game/version_manifest.json";
+		API_Manifest_Version_json = Source_address + "/mc/game/version_manifest_v2.json";
 
 		assets_root = game_directory + "/assets";
 		Version_jar = game_directory + "/versions/" + Version + "/" + Version + ".jar";
@@ -196,9 +196,9 @@ public class DownloadFragment extends DialogFragment {
     @Override
     public void onStart() {
 		super.onStart();
-		Window win = getDialog().getWindow();
+		Window win = Objects.requireNonNull(getDialog()).getWindow();
 		DisplayMetrics dm = new DisplayMetrics();
-		getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+		requireActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 		WindowManager.LayoutParams params = win.getAttributes();
 		params.gravity = Gravity.CENTER;
 		// 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
@@ -279,6 +279,91 @@ public class DownloadFragment extends DialogFragment {
 		TextView a = base.findViewById(id);
 		a.setTextColor(Color.GRAY);
 		return a;
+	}
+
+	private void Download_client_Assets(String json) {
+		try {
+			JSONObject objects = JSON.parseObject(json);
+			JSONObject client = objects.getJSONObject("downloads");
+			JSONObject main = client.getJSONObject("client");
+
+			String Url = (String) main.get("url");
+			int size = (Integer) main.get("size");
+
+
+			JSONObject assetindex = objects.getJSONObject("assetIndex");
+			assets_id = (String) assetindex.get("id");
+			String url = ((String) assetindex.get("url"));
+			File version_assetindex = new File(Version_assets + "indexes/" + (String) assetindex.get("id") + ".json");
+			File version_client = new File(Version_jar);
+
+
+			if (!version_client.exists() && !version_assetindex.exists()) {
+				download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
+				download_manager_3(url, Version_assets + "indexes", (String) assetindex.get("id") + ".json", 8, "Version->" + assets_id + "->assets->json", 0);
+			} else if (!version_client.exists() && version_assetindex.exists()) {
+				download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
+				//同上
+				mpath3.setText(String.format("Version->%s->assets", assets_id));
+				mpath_progress3.setProgress(100);
+			} else if (version_client.exists() && !version_assetindex.exists()) {
+				download_manager_3(url, Version_assets + "indexes", (String) assetindex.get("id") + ".json", 8, "Version->" + assets_id + "->assets->json", 0);
+				//同上
+				mpath2.setText(String.format("Version->%s", Version));
+				mpath_progress2.setProgress(100);
+			} else if (version_client.exists() && version_assetindex.exists()) {
+				if (version_client.isDirectory()) {
+					version_client.delete();
+					//文件夹如何删除?
+					setText("Client error");
+					download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
+				} else {
+					if (version_client.length() != (int) main.get("size")) {
+
+						version_client.delete();
+						setText("Client error");
+						download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
+					} else {
+						mpath2.setText(String.format("Version->%s", Version));
+						mpath_progress2.setProgress(100);
+						mpath3.setText(String.format("Version->%s->assets", assets_id));
+						mpath_progress3.setProgress(100);
+						Message msg = new Message();
+						msg.what = 8;
+						msg.arg1 = 3;
+						mhandler.sendMessage(msg);
+
+
+					}
+				}
+			}
+		} catch (Exception e) {
+			setText(e.toString());
+
+			//此情况是解析发生错误一般null
+		}
+
+	}
+
+	public void Get_okHttp_Response_body_string(String url1, final int msg1) {
+		HttpUtil.sendOkHttpRequest(url1, new Callback() {
+			@Override
+			public void onFailure(@NonNull Call call, @NonNull final IOException e) {
+				//网络错误
+			}
+
+			@Override
+			public void onResponse(@NonNull Call p1, @NonNull Response p2) throws IOException {
+				final String url_string = p2.body().string();
+				new Thread(() -> {
+					Message msg = new Message();
+					msg.what = msg1;
+					msg.obj = url_string;
+					//获取网页?
+					mhandler.sendMessage(msg);
+				}).start();
+			}
+		});
 	}
 
 	private Handler mhandler = new Handler(new Handler.Callback() {
@@ -374,10 +459,10 @@ public class DownloadFragment extends DialogFragment {
 					mpath_progress1.setProgress(100);
 					mpath_progress2.setProgress(100);
 					mpath_progress3.setProgress(100);
-					mpath1.setText(getResources().getString(R.string.download_done) + Version);
+					/*mpath1.setText(getResources().getString(R.string.download_done) + Version);
 					mpath2.setText(getResources().getString(R.string.download_done) + Version);
 					mpath3.setText(getResources().getString(R.string.download_done) + Version);
-					append(getResources().getString(R.string.download_done) + Version, 100, 100);
+					append(getResources().getString(R.string.download_done) + Version, 100, 100);*/
 					Objects.requireNonNull(getDialog()).dismiss();
 					HomeFragment.ExsitGame();
 
@@ -602,92 +687,62 @@ public class DownloadFragment extends DialogFragment {
 		}
 	}
 
-	public void Get_okHttp_Response_body_string(String url1, final int msg1) {
-		HttpUtil.sendOkHttpRequest(url1, new Callback() {
-			@Override
-			public void onFailure(@NonNull Call call, @NonNull final IOException e) {
-				//网络错误
-			}
+	private void run_download_libraries() {
+		success_libraries = 0;
+		overall_libraries = 0;
+		Temporary = new ArrayList<>();
+		ArrayList<Object> unexists_File_Manager = new ArrayList<>();
+		for (LibrariesUtil util : libraries) {
+			if (util.get()) {
+				File file = new File(Version_libraries + util.getpath());
+				util.setpath(file.getAbsolutePath());
 
-			@Override
-			public void onResponse(@NonNull Call p1, @NonNull Response p2) throws IOException {
-				final String url_string = p2.body().string();
-				new Thread(() -> {
-					Message msg = new Message();
-					msg.what = msg1;
-					msg.obj = url_string;
-					//获取网页?
-					mhandler.sendMessage(msg);
-				}).start();
-			}
-		});
-	}
+				util.seturl(Turn_Url(API_Libraries, util.getname()));
 
-	private void Download_client_Assets(String json) {
-		try {
-			JSONObject objects = JSON.parseObject(json);
-			JSONObject client = objects.getJSONObject("downloads");
-			JSONObject main = client.getJSONObject("client");
-
-			String Url = (String) main.get("url");
-			int size = (Integer) main.get("size");
-
-
-			JSONObject assetindex = objects.getJSONObject("assetIndex");
-			assets_id = (String) assetindex.get("id");
-			String url = ((String) assetindex.get("url"));
-			File version_assetindex = new File(Version_assets + "indexes/" + (String) assetindex.get("id") + ".json");
-			File version_client = new File(Version_jar);
-
-
-			if (!version_client.exists() && !version_assetindex.exists()) {
-				download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
-				download_manager_3(url, Version_assets + "indexes", (String) assetindex.get("id") + ".json", 8, "Version->" + assets_id + "->assets->json", 0);
-			} else if (!version_client.exists() && version_assetindex.exists()) {
-				download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
-				//同上
-				mpath3.setText(String.format("Version->%s->assets->json", assets_id));
-				mpath_progress3.setProgress(100);
-			} else if (version_client.exists() && !version_assetindex.exists()) {
-				download_manager_3(url, Version_assets + "indexes", (String) assetindex.get("id") + ".json", 8, "Version->" + assets_id + "->assets->json", 0);
-				//同上
-				mpath2.setText(String.format("Version->%s->jar", Version));
-				mpath_progress2.setProgress(100);
-			} else if (version_client.exists() && version_assetindex.exists()) {
-				if (version_client.isDirectory()) {
-					version_client.delete();
-					//文件夹如何删除?
-					setText("Client error");
-					download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
-				} else {
-					if (version_client.length() != (int) main.get("size")) {
-
-						version_client.delete();
-						setText("Client error");
-						download_manager_2(Url, game_directory + "/versions/" + Version, Version + ".jar", 8, "Version->" + Version + "->jar", size);
+				if (file.exists()) {
+					if (file.isDirectory()) {
+						file.delete();
+						unexists_File_Manager.add(util);
+						overall_libraries += util.getsize();
 					} else {
-						mpath2.setText(String.format("Version->%s->jar", Version));
-						mpath_progress2.setProgress(100);
-						mpath3.setText(String.format("Version->%s->assets->json", assets_id));
-						mpath_progress3.setProgress(100);
-						Message msg = new Message();
-						msg.what = 8;
-						msg.arg1 = 3;
-						mhandler.sendMessage(msg);
-
-
+						if (file.length() != util.getsize()) {
+							file.delete();
+							unexists_File_Manager.add(util);
+							overall_libraries += util.getsize();
+						}
 					}
+				} else {
+					unexists_File_Manager.add(util);
+					overall_libraries += util.getsize();
 				}
+			} else {
+				File file = new File(Turn_Path(Version_libraries, util.getname()));
+				util.setpath(file.getAbsolutePath());
+				if (file.exists()) {
+					if (file.isDirectory()) {
+						file.delete();
+						unexists_File_Manager.add(util);
+					} else {
+						//此为数据缺失
+					}
+				} else {
+					unexists_File_Manager.add(util);
+				}
+
 			}
-		} catch (Exception e) {
-			setText(e.toString());
-
-			//此情况是解析发生错误一般null
 		}
+		if (unexists_File_Manager.size() >= 1) {
+			libraries_loader_size = unexists_File_Manager.size();
 
+			Temporary = unexists_File_Manager;
+			mhandler.sendEmptyMessageDelayed(1000, 50);
+		} else {
+			mhandler.sendEmptyMessage(5);
+		}
 	}
 
-	//https://bmclapi2.bangbang93.com/version/1.7.10/server client json 
+
+	//https://bmclapi2.bangbang93.com/version/1.7.10/server client json
 	private String Turn_Url(String api, String a) {
 		String b = a.substring(0, a.lastIndexOf(":"));
 		String c = a.substring(a.lastIndexOf(":") + 1);
@@ -807,62 +862,7 @@ public class DownloadFragment extends DialogFragment {
 		return String.format("%.2f%s", (len / (1024 * 1024 * 1024.0)), "G");
 	}
 
-	private void run_download_libraries() {
-		success_libraries = 0;
-		overall_libraries = 0;
-		Temporary = new ArrayList<>();
-		ArrayList<Object> unexists_File_Manager = new ArrayList<>();
-		for (LibrariesUtil util : libraries) {
-			if (util.get()) {
-				File file = new File(Version_libraries + util.getpath());
-				util.setpath(file.getAbsolutePath());
 
-				util.seturl(Turn_Url(API_Libraries, util.getname()));
-
-				if (file.exists()) {
-					if (file.isDirectory()) {
-						file.delete();
-						unexists_File_Manager.add(util);
-						overall_libraries += util.getsize();
-					} else {
-						if (file.length() != util.getsize()) {
-							file.delete();
-							unexists_File_Manager.add(util);
-							overall_libraries += util.getsize();
-						}
-					}
-				} else {
-					unexists_File_Manager.add(util);
-					overall_libraries += util.getsize();
-				}
-			} else {
-				File file = new File(Turn_Path(Version_libraries, util.getname()));
-				util.setpath(file.getAbsolutePath());
-				/*
-					util.seturl(Turn_Url(APILibraries,util.getname()));
-				
-				if(file.exists()){
-					if(file.isDirectory()){
-						file.delete();
-						unexists_File_Manager.add(util);
-					}else{
-						//此为数据缺失
-					}
-				}else{
-					unexists_File_Manager.add(util);
-				}*/
-
-			}
-		}
-		if (unexists_File_Manager.size() >= 1) {
-			libraries_loader_size = unexists_File_Manager.size();
-
-			Temporary = unexists_File_Manager;
-			mhandler.sendEmptyMessageDelayed(1000, 50);
-		} else {
-			mhandler.sendEmptyMessage(5);
-		}
-	}
 
 	private void download_status1(boolean status) {
 		if (status) {

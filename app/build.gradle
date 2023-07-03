@@ -28,7 +28,6 @@ android {
     }
 
     namespace 'org.koishi.launcher.h2co3'
-    buildToolsVersion '33.0.2'
     ndkVersion '25.2.9519653'
     buildFeatures {
         viewBinding true
@@ -85,7 +84,7 @@ dependencies {
     implementation project(path: ':markdown')
     implementation 'androidx.privacysandbox.tools:tools-core:+'
     implementation 'com.android.volley:volley:1.2.1'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
 
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
@@ -94,4 +93,5 @@ dependencies {
     implementation 'com.alibaba:fastjson:2.0.32'
     //implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    implementation 'com.larswerkman:HoloColorPicker:1.5'
 }

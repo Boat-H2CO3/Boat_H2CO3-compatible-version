@@ -1,13 +1,12 @@
 package cosine.boat;
 
-import static org.koishi.h2co3.tools.CHTools.h2co3Cfg;
-
 import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONObject;
+import org.koishi.h2co3.tools.CHTools;
 import org.koishi.h2co3.tools.Utils;
 
 import java.io.FileInputStream;
@@ -42,7 +41,7 @@ public class LauncherConfig extends HashMap<String, String> {
 
     public static String privateDir() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -57,7 +56,7 @@ public class LauncherConfig extends HashMap<String, String> {
 
     public static String loadgl() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -67,12 +66,12 @@ public class LauncherConfig extends HashMap<String, String> {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return "libGL115.so";
+        return "libGL112";
     }
 
     public static String loadjava() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -87,7 +86,7 @@ public class LauncherConfig extends HashMap<String, String> {
 
     public static String api() {
         try {
-            FileInputStream in = new FileInputStream(h2co3Cfg);
+            FileInputStream in = new FileInputStream(CHTools.H2CO3CfgPath());
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();

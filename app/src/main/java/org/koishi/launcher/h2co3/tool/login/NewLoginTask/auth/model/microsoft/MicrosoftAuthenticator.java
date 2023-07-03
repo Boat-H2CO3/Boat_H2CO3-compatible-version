@@ -57,7 +57,6 @@ public class MicrosoftAuthenticator extends Authenticator<XboxToken> {
      * @param password microsoft password
      * @return login code
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private String generateLoginCode(String email, String password) throws UnsupportedEncodingException {
         try {
             URL url = new URL("https://login.live.com/oauth20_authorize.srf?redirect_uri=https://login.live.com/oauth20_desktop.srf&scope=" + scopeUrl + "&display=touch&response_type=code&locale=en&client_id=" + clientId);

@@ -1,9 +1,6 @@
 package org.koishi.h2co3.mclauncher.gamecontroller.codes;
 
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key.KeyEvent.ANDROID_TO_KEYMAP;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key.KeyEvent.KEYMAP_TO_GLFW;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key.KeyEvent.KEYMAP_TO_LWJGL;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key.KeyEvent.KEYMAP_TO_X;
+import org.koishi.h2co3.mclauncher.gamecontroller.definitions.id.key.KeyEvent;
 
 public class Translation {
 
@@ -23,11 +20,11 @@ public class Translation {
 
     public int trans(String s) {
         switch (mode) {
-            case KEYMAP_TO_LWJGL:
+            case KeyEvent.KEYMAP_TO_LWJGL:
                 return (int) lwjglKeyTrans.translate(s);
-            case KEYMAP_TO_GLFW:
+            case KeyEvent.KEYMAP_TO_GLFW:
                 return (int) glfwKeyTrans.translate(s);
-            case KEYMAP_TO_X:
+            case KeyEvent.KEYMAP_TO_X:
                 return (int) xKeyMap.translate(s);
             default:
                 return -1;
@@ -36,7 +33,7 @@ public class Translation {
 
     public String trans(int i) {
         switch (mode) {
-            case ANDROID_TO_KEYMAP:
+            case KeyEvent.ANDROID_TO_KEYMAP:
                 return (String) aKeyMap.translate(i);
             default:
                 return null;

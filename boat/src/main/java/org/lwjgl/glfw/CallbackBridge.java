@@ -1,5 +1,6 @@
 package org.lwjgl.glfw;
 
+
 import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
 
 import cosine.boat.BoatInput;

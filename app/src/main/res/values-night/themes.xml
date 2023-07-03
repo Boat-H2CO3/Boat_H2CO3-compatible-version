@@ -2,17 +2,23 @@
     <!-- Base application theme. -->
 
     <style name="Theme.H2CO3" parent="AppBaseTheme">
-        <item name="fontFamily">@font/josefin_sans</item>
-        <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="fontFamily">@font/josefin_sans</item>
+        <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
+        <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
+        <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
         <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
         </item>
         <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
-        <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
-        <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
         <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <!-- Primary brand color. -->
     </style>
 

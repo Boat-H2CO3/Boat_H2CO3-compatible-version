@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <declare-styleable name="H2CO3SelectButton">
+    <declare-styleable name="SelectButton">
         <attr name="key" format="string" />
     </declare-styleable>
 

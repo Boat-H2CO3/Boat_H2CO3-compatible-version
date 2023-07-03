@@ -192,7 +192,7 @@
         </com.google.android.material.card.MaterialCardView>
 
         <com.google.android.material.card.MaterialCardView
-            android:id="@+id/login"
+            android:id="@+id/launch_boat"
             style="@style/Theme.H2CO3.CardViewStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

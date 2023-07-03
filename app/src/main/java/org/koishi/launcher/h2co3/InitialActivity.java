@@ -1,5 +1,7 @@
 package org.koishi.launcher.h2co3;
 
+import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -45,7 +47,8 @@ public class InitialActivity extends H2CO3Activity {
         initial = findViewById(R.id.initial_view);
         new Thread(() -> {
             try {
-                unZip(InitialActivity.this, "app_runtime.zip", "/data/data/org.koishi.launcher.h2co3");
+                unZip(InitialActivity.this, "boat.zip", LAUNCHER_DATA_DIR + "/app_runtime/");
+                unZip(InitialActivity.this, "app_runtime.zip", LAUNCHER_DATA_DIR + "/app_runtime/");
                 han.sendEmptyMessage(0);
             } catch (IOException e) {
                 Snackbar.make(initial, e.toString(), Snackbar.LENGTH_LONG)

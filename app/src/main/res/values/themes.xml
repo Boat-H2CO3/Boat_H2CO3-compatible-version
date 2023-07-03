@@ -1,45 +1,52 @@
 <resources>
     <!-- Base application theme. -->
     <style name="Theme.H2CO3" parent="AppBaseTheme">
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
         <item name="fontFamily">@font/josefin_sans</item>
         <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
-        <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
-        </item>
         <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
         <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
+        <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
+        </item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
         <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
-    </style>
-
-    <style name="FullScreen" parent="Theme.H2CO3">
-        <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <!-- Primary brand color. -->
     </style>
 
     <style name="Theme.H2CO3.DynamicColors" parent="Theme.Material3.DynamicColors.Light">
         <item name="android:windowBackground">?android:colorBackground</item>
-        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
         <item name="cardViewStyle">@style/Theme.H2CO3.CardViewStyle</item>
         <item name="alertDialogTheme">@style/AppTheme.MaterialAlertDialog</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="fontFamily">@font/josefin_sans</item>
+        <item name="checkboxStyle">@style/AppTheme.CheckBox</item>
+        <item name="actionOverflowButtonStyle">@style/AppTheme.Toolbar.OverflowButton</item>
+        <item name="chipStyle">@style/AppTheme.UIDesigner.WidgetGroupChip</item>
         <item name="switchPreferenceCompatStyle">@style/PreferenceThemeOverlay.Rikka.Material3
         </item>
-        <item name="fontFamily">@font/josefin_sans</item>
+        <item name="preferenceTheme">@style/PreferenceThemeOverlay.Rikka.Material3</item>
+        <item name="shapeAppearanceLargeComponent">@style/AppTheme.ShapeOverlay.Large</item>
+        <item name="bottomSheetDialogTheme">@style/AppTheme.BottomSheetDialog</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
 
-
-    <!--Custom themes-->
     <style name="AppBaseTheme" parent="Theme.Material3.Light.NoActionBar">
-        <item name="android:statusBarColor">?android:colorBackground</item>
+        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="android:windowActionBar">false</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">?android:colorBackground</item>
+        <!-- Color Theme: https://material.io/develop/android/theming/color/ -->
         <item name="colorPrimary">@color/md_theme_primary</item>
         <item name="colorOnPrimary">@color/md_theme_onPrimary</item>
         <item name="colorPrimaryContainer">@color/md_theme_primaryContainer</item>
@@ -57,7 +64,6 @@
         <item name="colorOnError">@color/md_theme_onError</item>
         <item name="colorOnErrorContainer">@color/md_theme_onErrorContainer</item>
         <item name="android:colorBackground">@color/md_theme_background</item>
-        <item name="android:windowBackground">?android:colorBackground</item>
         <item name="colorOnBackground">@color/md_theme_onBackground</item>
         <item name="colorSurface">@color/md_theme_surface</item>
         <item name="colorOnSurface">@color/md_theme_onSurface</item>
@@ -89,6 +95,10 @@
         <item name="strokeWidth">0dp</item>
     </style>
 
+    <style name="FullScreen" parent="Theme.H2CO3">
+        <item name="android:windowBackground">?android:colorBackground</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
 
     <style name="Theme.H2CO3.CardTitle">
         <item name="android:textAppearance">?textAppearanceBodyLarge</item>

@@ -25,7 +25,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <org.koishi.h2co3.mclauncher.customcontrol.ControlLayout
+                    <org.koishi.h2co3.mclauncher.view.ControlLayout
                         android:id="@+id/client_surface"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
@@ -36,6 +36,8 @@
                         android:id="@+id/mouse_cursor"
                         android:layout_width="18dp"
                         android:layout_height="27dp"
+                        android:layout_gravity="center"
+                        android:importantForAccessibility="no"
                         android:src="@drawable/cursor5" />
 
                     <com.google.android.material.button.MaterialButton
@@ -53,7 +55,7 @@
                         android:alpha="0.0"
                         android:visibility="invisible" />
 
-                    <org.koishi.h2co3.mclauncher.customcontrol.H2CO3CrossingKeyboard
+                    <org.koishi.h2co3.mclauncher.view.H2CO3CrossingKeyboard
                         android:id="@+id/h2co3_keyboard"
                         android:layout_width="160dp"
                         android:layout_height="160dp"

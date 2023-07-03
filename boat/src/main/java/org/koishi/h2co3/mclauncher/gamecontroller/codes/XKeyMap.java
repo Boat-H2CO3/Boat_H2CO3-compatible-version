@@ -7,13 +7,9 @@ import static org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatMousecodes.BO
 import static org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatMousecodes.BOAT_MOUSE_BUTTON_right;
 import static org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatMousecodes.BOAT_MOUSE_WHEEL_down;
 import static org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatMousecodes.BOAT_MOUSE_WHEEL_up;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap.MOUSEMAP_BUTTON_LEFT;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap.MOUSEMAP_BUTTON_MIDDLE;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap.MOUSEMAP_BUTTON_RIGHT;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap.MOUSEMAP_WHEEL_DOWN;
-import static org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap.MOUSEMAP_WHEEL_UP;
 
 import org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.KeyMap;
+import org.koishi.h2co3.mclauncher.gamecontroller.definitions.map.MouseMap;
 
 import java.util.HashMap;
 
@@ -133,11 +129,11 @@ public class XKeyMap implements KeyMap, CoKeyMap {
         /* missing RightK in BoatKeycodes.java */
 
         /* Mouse buttons codes */
-        xKeyMap.put(MOUSEMAP_BUTTON_LEFT, BOAT_MOUSE_BUTTON_left);
-        xKeyMap.put(MOUSEMAP_BUTTON_RIGHT, BOAT_MOUSE_BUTTON_right);
-        xKeyMap.put(MOUSEMAP_BUTTON_MIDDLE, BOAT_MOUSE_BUTTON_middle);
-        xKeyMap.put(MOUSEMAP_WHEEL_UP, BOAT_MOUSE_WHEEL_up);
-        xKeyMap.put(MOUSEMAP_WHEEL_DOWN, BOAT_MOUSE_WHEEL_down);
+        xKeyMap.put(MouseMap.MOUSEMAP_BUTTON_LEFT, BOAT_MOUSE_BUTTON_left);
+        xKeyMap.put(MouseMap.MOUSEMAP_BUTTON_RIGHT, BOAT_MOUSE_BUTTON_right);
+        xKeyMap.put(MouseMap.MOUSEMAP_BUTTON_MIDDLE, BOAT_MOUSE_BUTTON_middle);
+        xKeyMap.put(MouseMap.MOUSEMAP_WHEEL_UP, BOAT_MOUSE_WHEEL_up);
+        xKeyMap.put(MouseMap.MOUSEMAP_WHEEL_DOWN, BOAT_MOUSE_WHEEL_down);
     }
 
     @Override

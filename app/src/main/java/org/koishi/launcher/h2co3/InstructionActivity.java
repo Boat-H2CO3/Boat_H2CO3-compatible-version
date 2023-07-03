@@ -48,7 +48,7 @@ public class InstructionActivity extends H2CO3Activity {
 
     public void startBili(View v) {
         CustomTabsIntent intent = new CustomTabsIntent.Builder().build();
-        intent.launchUrl(InstructionActivity.this, Uri.parse("https://b23.tv/ea3HRj\n"));
+        intent.launchUrl(InstructionActivity.this, Uri.parse("https://114514.cn\n"));
     }
 
 }

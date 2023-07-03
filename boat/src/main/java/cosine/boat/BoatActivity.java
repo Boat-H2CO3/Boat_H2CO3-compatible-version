@@ -11,7 +11,6 @@ import android.widget.RelativeLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.koishi.h2co3.mclauncher.customcontrol.ControlLayout;
 import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
 
 import java.util.Timer;
@@ -28,7 +27,7 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
 
     public Timer timer;
     public RelativeLayout base;
-    public ControlLayout mainTextureView;
+    public TextureView mainTextureView;
     public MyHandler mHandler;
     public int initialX;
     public int initialY;
