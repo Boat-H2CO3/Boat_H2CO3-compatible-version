@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
+import cosine.boat.ui.CrashActivity;
 
 public class BoatApplication extends Application implements Application.ActivityLifecycleCallbacks {
     public static AppCompatActivity mCurrentActivity;

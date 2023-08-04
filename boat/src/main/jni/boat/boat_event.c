@@ -1,3 +1,4 @@
+#include <android/log.h>
 #include "boat_internal.h"
 
 void EventQueue_init(EventQueue* queue) {
@@ -53,11 +54,35 @@ void EventQueue_clear(EventQueue* queue) {
 }
 
 void boatSetCursorMode(int mode) {
-    if (!mBoat.has_event_pipe) {
+    if (mBoat.android_jvm == 0){
         return;
     }
-    PrepareBoatLibJNI();
-    CallBoatLibJNIFunc( , Void, setCursorMode, "(I)V", mode);
+    JNIEnv* env = 0;
+
+    jint result = (*mBoat.android_jvm)->AttachCurrentThread(mBoat.android_jvm, &env, 0);
+
+    if (result != JNI_OK || env == 0){
+        //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to attach thread to JavaVM.");
+        abort();
+    }
+
+    jclass class_BoatActivity = mBoat.class_BoatActivity;
+
+    if (class_BoatActivity == 0){
+        //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to find class: cosine/boat/BoatActivity.");
+        abort();
+    }
+
+    jmethodID BoatActivity_setCursorMode = mBoat.setCursorMode;
+
+    if (BoatActivity_setCursorMode == 0){
+        //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to find method BoatActivity::setCursorMode");
+        abort();
+    }
+    (*env)->CallVoidMethod(env, mBoat.boatActivity, BoatActivity_setCursorMode, mode);
+
+
+    (*mBoat.android_jvm)->DetachCurrentThread(mBoat.android_jvm);
 }
 
 int boatGetEventFd() {
@@ -99,7 +124,7 @@ int boatPollEvent(BoatEvent* event) {
     return ret;
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_BoatLib_pushEvent(JNIEnv* env, jclass clazz, jlong time, jint type, jint p1, jint p2) {
+JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_pushEvent(JNIEnv* env, jclass clazz, jlong time, jint type, jint p1, jint p2) {
     if (!mBoat.has_event_pipe) {
         return;
     }
@@ -143,7 +168,7 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatLib_pushEvent(JNIEnv* env, jclass cl
     }
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_BoatLib_setEventPipe(JNIEnv* env, jclass clazz) {
+JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_setEventPipe(JNIEnv* env, jclass clazz) {
     if (pipe(mBoat.event_pipe_fd) == -1) {
         BOAT_INTERNAL_LOG("Failed to create event pipe : %s", strerror(errno));
         return;

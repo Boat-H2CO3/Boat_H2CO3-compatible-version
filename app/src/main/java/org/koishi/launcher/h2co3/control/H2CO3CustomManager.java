@@ -205,10 +205,9 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         this.CustomButtonCallback = CustomButtonCallback;
     }
 
-    public void setKeyConversionType(int Type) {
-        KeyConverters.setMode(Type);
-    }
-
+    /*(public void pushEventKeyConversionType(int Type) {
+        KeyConverters.trans(Type);
+    }*/
     @SuppressLint("ClickableViewAccessibility")
     private void Deserialization() {
         GsonBuilder builder = new GsonBuilder();
@@ -897,7 +896,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         return PointerX;
     }
 
-    public void setPointerX(int PointerX) {
+    public void pushEventPointerX(int PointerX) {
         this.PointerX = PointerX;
     }
 
@@ -905,7 +904,7 @@ public class H2CO3CustomManager implements OnTouchListener, CompoundButton.OnChe
         return PointerY;
     }
 
-    public void setPointerY(int PointerY) {
+    public void pushEventPointerY(int PointerY) {
         this.PointerY = PointerY;
     }
 

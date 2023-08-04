@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:orientation="vertical"
-    tools:context="org.koishi.launcher.h2co3.ui.home.HomeFragment">
+    tools:context="org.koishi.launcher.h2co3.launcher.ui.home.HomeFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

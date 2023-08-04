@@ -3,11 +3,11 @@
 
 /*
  * from linux/input-event-codes.h
-**/ 
+**/
 
 #define BOAT_MAX_SCANCODE 240
 #define BOAT_MIN_SCANCODE 0
-            
+
 #define KEY_RESERVED     0
 
 #define KEY_ESC          1

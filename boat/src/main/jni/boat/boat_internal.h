@@ -27,6 +27,9 @@ typedef struct {
 typedef struct {
     JavaVM* android_jvm;
     jclass class_BoatLib;
+    jclass class_BoatActivity;
+    jobject boatActivity;
+    jmethodID setCursorMode;
     ANativeWindow* window;
     char* clipboard_string;
     EventQueue event_queue;

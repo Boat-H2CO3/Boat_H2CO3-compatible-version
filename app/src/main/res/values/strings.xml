@@ -23,7 +23,6 @@
     <!--extra-->
     <string name="launcher_settings_right_click_mode_summary">Some ROMs changed the mouse</string>
     <!--color-->
-
     <string name="nav_header_account_mode">Online</string>
     <string name="launcher_initial_install_check">Checking file...</string>
     <string name="launcher_initial_install_start">Initialing file...</string>

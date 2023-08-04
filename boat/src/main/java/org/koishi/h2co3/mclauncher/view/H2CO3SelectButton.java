@@ -29,7 +29,7 @@ public class H2CO3SelectButton extends androidx.appcompat.widget.AppCompatButton
     public H2CO3SelectButton(Context context, AttributeSet attrs) {
         super(context, attrs);
         @SuppressLint("CustomViewStyleable") TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.SelectButton);
-        setKey(array.getString(R.styleable.SelectButton_key));
+        pushEventKey(array.getString(R.styleable.SelectButton_key));
         array.recycle();
     }
 
@@ -37,7 +37,7 @@ public class H2CO3SelectButton extends androidx.appcompat.widget.AppCompatButton
         return key;
     }
 
-    public void setKey(String key) {
+    public void pushEventKey(String key) {
         this.key = key;
     }
 

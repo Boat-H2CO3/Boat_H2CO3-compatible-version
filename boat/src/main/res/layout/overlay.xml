@@ -8,7 +8,7 @@
     android:keepScreenOn="true">
 
     <RelativeLayout
-        android:id="@+id/r_base"
+        android:id="@+id/main_base"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -26,7 +26,7 @@
                     android:layout_height="match_parent">
 
                     <org.koishi.h2co3.mclauncher.view.ControlLayout
-                        android:id="@+id/client_surface"
+                        android:id="@+id/main_surface"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="0dp"
@@ -61,7 +61,7 @@
                         android:layout_height="160dp"
                         android:layout_gravity="bottom"
                         android:layout_margin="@dimen/app_15dp"
-                        android:visibility="invisible" />
+                        android:visibility="visible" />
 
 
                 </FrameLayout>
@@ -69,7 +69,8 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="H2CO3 debug" />
+                    android:text="H2CO3 New Boat\nPowerd by HMCLPE"
+                    android:alpha="0.4"/>
 
             </FrameLayout>
 

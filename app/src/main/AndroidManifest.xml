@@ -30,37 +30,33 @@
         android:theme="@style/Theme.H2CO3"
         tools:targetApi="r">
         <activity
-            android:name=".CustomKeyBoardActivity"
+            android:name=".launcher.ui.CustomKeyBoardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:exported="false"
             android:label="@string/title_activity_custom_key_board" />
         <activity
-            android:name=".LogcatActivity"
+            android:name=".launcher.ui.LogcatActivity"
             android:label="@string/log_title"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SettingsActivity"
+            android:name=".launcher.ui.SettingsActivity"
             android:label="@string/settings" />
         <activity
-            android:name=".ModsActivity"
+            android:name=".launcher.ui.ModsActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".launch.boat.LauncherActivity"
+            android:name=".launcher.ui.InstructionActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".InstructionActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
-            android:name=".TerminalActivity"
+            android:name=".launcher.ui.TerminalActivity"
             android:label="@string/menu_terminal"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".SplashActivity"
+            android:name=".launcher.ui.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity">
@@ -71,23 +67,23 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".launcher.ui.MainActivity"
             android:configChanges="uiMode"
             android:theme="@style/Theme.H2CO3"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".VanillaActivity"
+            android:name=".launcher.ui.VanillaActivity"
             android:label="Minecraft"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".InitialActivity"
+            android:name=".launcher.ui.InitialActivity"
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".launch.boat.BoatActivity"
+            android:name=".launcher.launch.boat.BoatClientActivity"
             android:alwaysRetainTaskState="false"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
             android:excludeFromRecents="false"

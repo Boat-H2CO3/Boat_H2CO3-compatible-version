@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.version.VersionFragment">
+    tools:context=".launcher.ui.version.VersionFragment">
 
     <LinearLayout
         android:id="@+id/dir_layout"

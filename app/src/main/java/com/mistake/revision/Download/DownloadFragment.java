@@ -36,7 +36,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.ui.home.HomeFragment;
+import org.koishi.launcher.h2co3.launcher.ui.home.HomeFragment;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -429,7 +429,7 @@ public class DownloadFragment extends DialogFragment {
 					break;
 				case 2:
 					Txt = ReadString(game_directory + "/versions/" + Version + "/" + Version + ".json");
-					//String Url=API_Version_client_server_json + Version + "/client";
+					//String Url=API_Version_client_server_json + Version + "/boat";
 					Download_client_Assets(Txt);
 					break;
 				case 3:
@@ -742,7 +742,7 @@ public class DownloadFragment extends DialogFragment {
 	}
 
 
-	//https://bmclapi2.bangbang93.com/version/1.7.10/server client json
+	//https://bmclapi2.bangbang93.com/version/1.7.10/server boat json
 	private String Turn_Url(String api, String a) {
 		String b = a.substring(0, a.lastIndexOf(":"));
 		String c = a.substring(a.lastIndexOf(":") + 1);

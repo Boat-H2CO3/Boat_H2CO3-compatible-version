@@ -4,7 +4,7 @@
     style="android:attr/buttonBarButtonStyle"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.custom.CustomFragment">
+    tools:context=".launcher.ui.custom.CustomFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

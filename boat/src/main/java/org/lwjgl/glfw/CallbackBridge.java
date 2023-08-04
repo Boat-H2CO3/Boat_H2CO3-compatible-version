@@ -52,7 +52,7 @@ public class CallbackBridge {
 */
 
         //nativeSendKeycode(keycode, keychar, scancode, isDown ? 1 : 0, modifiers);
-        BoatInput.setKey(BoatKeycodes.BOAT_KEYBOARD_Control_L, 0, true);
+        BoatInput.pushEventKey(BoatKeycodes.KEY_LEFTCTRL, 0, true);
         if (keycode != 0) nativeSendKey(keycode, scancode, isDown ? 1 : 0, modifiers);
         //else nativeSendKey(32,scancode,isDown ? 1 : 0, modifiers);
         if (isDown && keychar != '\u0000') {

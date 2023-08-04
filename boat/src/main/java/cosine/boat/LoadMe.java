@@ -1,260 +1,254 @@
 package cosine.boat;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.utils.Architecture.ARCH_ARM;
+import static cosine.boat.utils.Architecture.ARCH_ARM64;
+import static cosine.boat.utils.Architecture.ARCH_X86;
+import static cosine.boat.utils.Architecture.ARCH_X86_64;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.os.Handler;
 import android.util.Log;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.Vector;
+
+import cosine.boat.function.BoatLaunchCallback;
+import cosine.boat.utils.Architecture;
+import cosine.boat.utils.BoatUtils;
+import cosine.boat.utils.CHTools;
 
 public class LoadMe {
 
-    static {
-        System.loadLibrary("boat");
-    }
+    public static String BOAT_LIB_DIR;
 
-    public static native int chdir(String str);
-
-    public static native int jliLaunch(String[] strArr);
-
+    public static native int chdir(String path);
     public static native void redirectStdio(String file);
-
-    public static native void setenv(String str, String str2);
-
-    public static native void setupJLI();
-
+    public static native void setenv(String name, String value);
     public static native int dlopen(String name);
-
+    public static native void patchLinker();
+    public static native void setupExitTrap(Context context);
     public static native int dlexec(String[] args);
 
-    public static native void setLibraryPath(String path);
+    static {
+        System.loadLibrary("loadme");
+    }
 
-    public static native void patchLinker();
+    @SuppressLint("SuspiciousIndentation")
+    public static int launchMinecraft(Handler handler, Context context, String javaPath, String home, boolean highVersion, Vector<String> args, String renderer, String gameDir, BoatLaunchCallback callback) {
+        Log.w("LoadMe", String.valueOf(args));
+        handler.post(callback::onStart);
 
-    public static int exec(LauncherConfig config) {
+        BOAT_LIB_DIR = CHTools.getBoatCfg("runtimePath","") + "/boat";
+        System.out.println(BOAT_LIB_DIR);
+
+        boolean isJava17 = javaPath.endsWith("jre_17");
+        patchLinker();
+
+        String arch = "";
+        if (Architecture.getDeviceArchitecture() == ARCH_ARM) {
+            arch = "aarch32";
+        }
+        if (Architecture.getDeviceArchitecture() == ARCH_ARM64) {
+            arch = "aarch64";
+        }
+        if (Architecture.getDeviceArchitecture() == ARCH_X86) {
+            arch = "i386";
+        }
+        if (Architecture.getDeviceArchitecture() == ARCH_X86_64) {
+            arch = "amd64";
+        }
+
         try {
+			setenv("HOME", home);
+			setenv("JAVA_HOME" , javaPath);
+			setenv("LIBGL_MIPMAP","3");
+			setenv("LIBGL_NORMALIZE","1");
+            setenv("LIBGL_VSYNC","1");
+            setenv("LIBGL_NOINTOVLHACK", "1");
 
-            MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(config.get("currentVersion")));
-            String runtimePath = LAUNCHER_DATA_DIR + "app_runtime";
-            String lwjglPath = LAUNCHER_DATA_DIR + "app_runtime/boat";
 
-            String arch = "aarch64";
-            String vm_variant = "server";
-
-            String token = config.get("auth_access_token");
-            //setLibraryPath(libraryPath);
-            patchLinker();
-
-            String pdir = LauncherConfig.privateDir();
-
-            //String ppdir = LauncherConfig.ppdir();
-
-            String home = config.get("home");
-
-            String strd = config.get("currentVersion");
-
-            if (pdir.equals("false")) {
-                setenv("HOME", home);
-            } else {
-                setenv("HOME", strd);
+			if (renderer.equals("VirGL")) {
+                setenv("LIBGL_NAME","libGL.so.1");
+                setenv("LIBEGL_NAME","libEGL.so.1");
+                setenv("LIBGL_DRIVERS_PATH",BOAT_LIB_DIR + "/virgl/");
+                setenv("MESA_GL_VERSION_OVERRIDE","4.3");
+                setenv("MESA_GLSL_VERSION_OVERRIDE","430");
+                setenv("VIRGL_VTEST_SOCKET_NAME", context.getCacheDir().getAbsolutePath() + "/.virgl_test");
+                setenv("GALLIUM_DRIVER","virpipe");
+                setenv("MESA_GLSL_CACHE_DIR",context.getCacheDir().getAbsolutePath());
             }
-
-            // 识别表单
-            String java_v = null;
-            String java = LauncherConfig.loadjava();
-            // Java版本选择
-            if (java.equals("jre_8")) {
-                java_v = "jre_8";
-                Log.w("JRE", "当前使用JRE8");
-            } else {
-                java_v = "jre_17";
-                Log.w("JRE", "当前使用JRE17");
-            }
-            // Java 版本加载
-            dlopen(lwjglPath + "/libopenal.so.1");
-            if (java_v == "jre_8") {
-                //setenv("HOME", home);
-                setenv("JAVA_HOME", runtimePath + "/jre_8");
-                setenv("LIBGL_MIPMAP", "3");
-                setenv("LIBGL_NORMALIZE", "1");
-                // openjdk
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libfreetype.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libpng16.so.16");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libfontmanager.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libpng16.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/jli/libjli.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/" + vm_variant + "/libjvm.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libverify.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libjava.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libnet.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libnio.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libawt.so");
-                dlopen(runtimePath + "/jre_8/lib/" + arch + "/libawt_headless.so");
-            } else {
-                //setenv("HOME", home);
-                setenv("JAVA_HOME", runtimePath + "/jre_17");
-                setenv("LIBGL_MIPMAP", "3");
-                setenv("LIBGL_NORMALIZE", "1");
-                // openjdk
-                dlopen(runtimePath + "/jre_17/lib/" + vm_variant + "/libjvm.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libjava.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libjli.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libverify.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libnet.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libnio.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libawt.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libawt_headless.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libfreetype.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libfontmanager.so");
-                dlopen(runtimePath + "/jre_17/lib/" + "libawt_headless.so");
-            }
-            // 渲染器选择
-            dlopen(lwjglPath + "/libglfw.so");
-            String gl = LauncherConfig.loadgl();
-            System.out.print(gl);
-            if (gl.equals("libGL112")) {
-                dlopen(lwjglPath + "/libGL112.so.1");
-            } else if (gl.equals("libGL115")) {
-                dlopen(lwjglPath + "/libGL115.so.1");
-            }
-
-            boolean isLwjgl3 = mcVersion.minimumLauncherVersion >= 21;
-            String libraryPath;
-            String classPath;
-
-            if (!isLwjgl3) {
-                libraryPath = runtimePath + "/" + java_v + "/lib/" + arch + "/jli:" + runtimePath + "/" + java_v + "/lib/" + arch + ":" + lwjglPath + "/lwjgl-2:" + lwjglPath;
-                classPath = lwjglPath + "/lwjgl-2/lwjgl.jar:" + lwjglPath + "/lwjgl-2/lwjgl_util.jar:" + mcVersion.getClassPath(config);
-                dlopen(lwjglPath + "/lwjgl-2/liblwjgl.so");
-                setLibraryPath(libraryPath);
-            } else {
-                libraryPath = runtimePath + "/" + java_v + "/lib/aarch64/jli:" + runtimePath + "/" + java_v + "/lib/aarch64:" + lwjglPath + "/lwjgl-3:" + lwjglPath;
-                classPath = lwjglPath + "/lwjgl-3/lwjgl-jemalloc.jar:" + lwjglPath + "/lwjgl-3/lwjgl-tinyfd.jar:" + lwjglPath + "/lwjgl-3/lwjgl-opengl.jar:" + lwjglPath + "/lwjgl-3/lwjgl-openal.jar:" + lwjglPath + "/lwjgl-3/lwjgl-glfw.jar:" + lwjglPath + "/lwjgl-3/lwjgl-stb.jar:" + lwjglPath + "/lwjgl-3/lwjgl.jar:" + mcVersion.getClassPath(config);
-                dlopen(lwjglPath + "/libglfw.so");
-                dlopen(lwjglPath + "/lwjgl-3/liblwjgl.so");
-                dlopen(lwjglPath + "/lwjgl-3/liblwjgl_stb.so");
-                dlopen(lwjglPath + "/lwjgl-3/liblwjgl_tinyfd.so");
-                dlopen(lwjglPath + "/lwjgl-3/liblwjgl_opengl.so");
-                setLibraryPath(libraryPath);
-            }
-
-            setupJLI();
-
-            redirectStdio(home + "/output.log");
-
-
-            if (pdir.equals("false")) {
-                chdir(home);
-            } else {
-                chdir(strd);
-            }
-
-            Vector<String> args = new Vector<String>();
-
-            args.add(runtimePath + "/" + java_v + "/bin/java");
-            args.add("-cp");
-            args.add(classPath);
-            args.add("-Djava.library.path=" + libraryPath);
-
-            args.add("-Dorg.lwjgl.util.Debug=true");
-            args.add("-Dorg.lwjgl.util.DebugLoader=true");
-
-            args.add("-Dfml.ignoreInvalidMinecraftCertificates=true");
-            args.add("-Dfml.ignorePatchDiscrepancies=true");
-            //禁止显示加载窗口
-            args.add("-Dfml.earlyprogresswindow=false");
-            //添加tｍpdir以获得权限读取json
-            args.add("-Djava.io.tmpdir=" + home + "/cache");
-
-            if (gl.equals("libGL112")) {
-                args.add("-Dorg.lwjgl.opengl.libname=libGL112.so.1");
-            } else if (gl.equals("libGL115")) {
-                args.add("-Dorg.lwjgl.opengl.libname=libGL115.so.1");
-            }
-
-            String[] extraJavaFlags = config.get("extraJavaFlags").split(" ");
-
-            for (String flag : extraJavaFlags) {
-                args.add(flag);
-                if ("Microsoft".equals(LauncherConfig.api())) {
-                } else {
-                    args.add("-javaagent:/storage/emulated/0/games/org.koishi.launcher/h2co3/authlib/authlib-injector-1.1.39.jar=" + LauncherConfig.api());
+			else {
+                dlopen(BOAT_LIB_DIR + "/gl4es/libgl4es_114.so");
+                dlopen(BOAT_LIB_DIR + "/gl4es/libEGL_wrapper.so");
+                setenv("LIBGL_NAME","libgl4es_114.so");
+                setenv("LIBEGL_NAME","libEGL_wrapper.so");
+                if (highVersion) {
+                    setenv("LIBGL_GL", "32");
                 }
             }
 
-            args.add(mcVersion.mainClass);
-
-            String[] minecraftArgs = null;
-            if (isLwjgl3) {
-                minecraftArgs = mcVersion.getMinecraftArguments(config, true);
-            } else {
-                minecraftArgs = mcVersion.getMinecraftArguments(config, false);
+            // openjdk
+            if (isJava17) {
+                dlopen(javaPath + "/lib/" + "server" + "/libjvm.so");
+                dlopen(javaPath + "/lib/" + "libjava.so");
+                dlopen(javaPath + "/lib/" + "libjli.so");
+                dlopen(javaPath + "/lib/" + "libverify.so");
+                dlopen(javaPath + "/lib/" + "libnet.so");
+                dlopen(javaPath + "/lib/" + "libnio.so");
+                dlopen(javaPath + "/lib/" + "libawt.so");
+                dlopen(javaPath + "/lib/" + "libawt_headless.so");
+                dlopen(javaPath + "/lib/" + "libfreetype.so");
+                dlopen(javaPath + "/lib/" + "libfontmanager.so");
+                dlopen(javaPath + "/lib/" + "libawt_headless.so");
             }
-            Collections.addAll(args, minecraftArgs);
-
-            args.add("Update20230611");
-            args.add("--width");
-            args.add(Integer.toString(BoatApplication.getCurrentActivity().getResources().getDisplayMetrics().widthPixels));
-            args.add("--height");
-            args.add(Integer.toString(BoatApplication.getCurrentActivity().getResources().getDisplayMetrics().heightPixels));
-
-            if (mcVersion.minimumLauncherVersion >= 21) {
-                //判断minimumLauncherVersion是否大于21，大于的是高版本，高版本需要用方法加载不同版本的loader，这个只是其中一个
-				/*
-				 args.add("--launchTarget");
-				 args.add("fmlclient");
-				 args.add("--fml.forgeVersion");
-				 args.add("31.2.47");
-				 args.add("--fml.mcVersion");
-				 args.add("1.15.2");
-				 args.add("--fml.forgeGroup");
-				 args.add("net.minecraftforge");
-				 args.add("--fml.mcpVersion");
-				 args.add("20200515.085601");
-				 */
-                args.add("--tweakClass");
-                args.add("optifine.OptiFineTweaker");
+            else {
+                dlopen(javaPath + "/lib/" + arch + "/libfreetype.so");
+                dlopen(javaPath + "/lib/" + arch + "/libpng16.so.16");
+                dlopen(javaPath + "/lib/" + arch + "/libfontmanager.so");
+                dlopen(javaPath + "/lib/" + arch + "/libpng16.so");
+                dlopen(javaPath + "/lib/" + arch + "/jli/libjli.so");
+                dlopen(javaPath + "/lib/" + arch + "/" + "server" + "/libjvm.so");
+                dlopen(javaPath + "/lib/" + arch + "/libverify.so");
+                dlopen(javaPath + "/lib/" + arch + "/libjava.so");
+                dlopen(javaPath + "/lib/" + arch + "/libnet.so");
+                dlopen(javaPath + "/lib/" + arch + "/libnio.so");
+                dlopen(javaPath + "/lib/" + arch + "/libawt.so");
+                dlopen(javaPath + "/lib/" + arch + "/libawt_headless.so");
             }
-            //判断minimumLauncherVersion是否在14-21之间以及size的值，1.7.10forge的size为72996，需要单独加载cpw.mods.xx
-            if (mcVersion.minimumLauncherVersion >= 14 && mcVersion.minimumLauncherVersion < 21 && mcVersion.assetIndex.size != 72996) {
-                // 1.8-1.12.2
-                args.add("--tweakClass");
-                if (mcVersion.id.contains("OptiFine")) {
-                    args.add("optifine.OptiFineTweaker");
-                } else {
-                    args.add("net.minecraftforge.fml.common.launcher.FMLTweaker");
+            dlopen(BOAT_LIB_DIR + "/libopenal.so.1");
+
+            if (!renderer.equals("VirGL")) {
+                dlopen(BOAT_LIB_DIR + "/gl4es/libgl4es_114.so");
+                dlopen(BOAT_LIB_DIR + "/gl4es/libEGL_wrapper.so");
+            }
+            else {
+                dlopen(BOAT_LIB_DIR + "/virgl/libexpat.so.1");
+                dlopen(BOAT_LIB_DIR + "/virgl/libglapi.so.0");
+                dlopen(BOAT_LIB_DIR + "/virgl/libGL.so.1");
+                dlopen(BOAT_LIB_DIR + "/virgl/libEGL.so.1");
+                dlopen(BOAT_LIB_DIR + "/virgl/swrast_dri.so");
+            }
+
+            if (!highVersion) {
+                dlopen(BOAT_LIB_DIR + "/lwjgl-2/liblwjgl.so");
+            }
+            else {
+                dlopen(BOAT_LIB_DIR + "/libglfw.so");
+                dlopen(BOAT_LIB_DIR + "/lwjgl-3/liblwjgl.so");
+                dlopen(BOAT_LIB_DIR + "/lwjgl-3/liblwjgl_stb.so");
+                dlopen(BOAT_LIB_DIR + "/lwjgl-3/liblwjgl_tinyfd.so");
+                dlopen(BOAT_LIB_DIR + "/lwjgl-3/liblwjgl_opengl.so");
+            }
+
+            setupExitTrap(context);
+
+            redirectStdio(home + "/boat_latest_log.txt");
+            chdir(gameDir);
+
+			String[] finalArgs = new String[args.size()];
+            StringBuilder sb=new StringBuilder();
+			for (int i = 0; i < args.size(); i++) {
+                if (!args.get(i).equals(" ")) {
+                    finalArgs[i] = args.get(i);
+                    System.out.println("Minecraft Args:" + finalArgs[i]);
+                    sb.append(finalArgs[i]).append("\n");
                 }
+			}
+            Log.d("Debug",sb.toString());
+            BoatUtils.writeFile(new File(home+"/params.txt"),sb.toString());
+
+            int exitCode = dlexec(finalArgs);
+            System.out.println("OpenJDK exited with code : " + exitCode);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            handler.post(() -> {
+                callback.onError(e);
+            });
+			return 1;
+        }
+		return 0;
+    }
+
+    public static int startVirGLService (Context context,String home,String tmpdir) {
+
+        BOAT_LIB_DIR = context.getDir("runtime",0).getAbsolutePath() + "/boat";
+
+        patchLinker();
+
+        try {
+            redirectStdio(home + "/boat_service_log.txt");
+
+            setenv("HOME", home);
+            setenv("TMPDIR", tmpdir);
+            setenv("VIRGL_VTEST_SOCKET_NAME",context.getCacheDir().getAbsolutePath() + "/.virgl_test");
+
+            dlopen(BOAT_LIB_DIR + "/virgl/libepoxy.so.0");
+            dlopen(BOAT_LIB_DIR + "/virgl/libvirglrenderer.so");
+
+            chdir(home);
+            String[] finalArgs = new String[]{BOAT_LIB_DIR + "/virgl/libvirgl_test_server.so",
+                    "--no-loop-or-fork",
+                    "--use-gles",
+                    "--socket-name",
+                    context.getCacheDir().getAbsolutePath() + "/.virgl_test"};
+            System.out.println("Exited with code : " + dlexec(finalArgs));
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 1;
+        }
+        return 0;
+    }
+
+    public static int launchJVM (String javaPath, ArrayList<String> args, String home) {
+
+        patchLinker();
+
+        try {
+            setenv("HOME", home);
+            setenv("JAVA_HOME" , javaPath);
+
+            String arch = "";
+            if (Architecture.getDeviceArchitecture() == ARCH_ARM) {
+                arch = "aarch32";
+            }
+            if (Architecture.getDeviceArchitecture() == ARCH_ARM64) {
+                arch = "aarch64";
+            }
+            if (Architecture.getDeviceArchitecture() == ARCH_X86) {
+                arch = "i386";
+            }
+            if (Architecture.getDeviceArchitecture() == ARCH_X86_64) {
+                arch = "amd64";
             }
 
-            if (mcVersion.minimumLauncherVersion >= 14 && mcVersion.minimumLauncherVersion < 21 && mcVersion.assetIndex.size == 72996) {
-                // Below 1.7.10
-                args.add("--tweakClass");
-                if (mcVersion.id.contains("OptiFine")) {
-                    args.add("optifine.OptiFineTweaker");
-                } else {
-                    args.add("cpw.mods.fml.common.launcher.FMLTweaker");
-                }
+            dlopen(javaPath + "/lib/" + arch + "/libfreetype.so");
+            dlopen(javaPath + "/lib/" + arch + "/jli/libjli.so");
+            dlopen(javaPath + "/lib/" + arch + "/server/libjvm.so");
+            dlopen(javaPath + "/lib/" + arch + "/libverify.so");
+            dlopen(javaPath + "/lib/" + arch + "/libjava.so");
+            dlopen(javaPath + "/lib/" + arch + "/libnet.so");
+            dlopen(javaPath + "/lib/" + arch + "/libnio.so");
+            dlopen(javaPath + "/lib/" + arch + "/libawt.so");
+            dlopen(javaPath + "/lib/" + arch + "/libawt_headless.so");
+            dlopen(javaPath + "/lib/" + arch + "/libfontmanager.so");
 
-            }
-            if (token.equals("0000")) {
-                //args.add("--demo");
-            }
-
-            String[] extraMinecraftArgs = config.get("extraMinecraftFlags").split(" ");
-            args.addAll(Arrays.asList(extraMinecraftArgs));
+            redirectStdio(home + "/boat_api_installer_log.txt");
+            chdir(home);
 
             String[] finalArgs = new String[args.size()];
             for (int i = 0; i < args.size(); i++) {
-
-                finalArgs[i] = args.get(i);
-                System.out.println(finalArgs[i]);
+                if (!args.get(i).equals(" ")) {
+                    finalArgs[i] = args.get(i);
+                    System.out.println("JVM Args:" + finalArgs[i]);
+                }
             }
-
-            System.out.println("崩嘣嘣嘣嘣OpenJDK exited with code : " + jliLaunch(finalArgs));
-
-        } catch (Exception e) {
+            System.out.println("ApiInstaller exited with code : " + dlexec(finalArgs));
+        }
+        catch (Exception e) {
             e.printStackTrace();
             return 1;
         }
@@ -262,3 +256,8 @@ public class LoadMe {
     }
 
 }
+
+
+
+
+

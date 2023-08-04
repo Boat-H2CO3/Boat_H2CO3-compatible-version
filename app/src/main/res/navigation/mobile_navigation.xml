@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="org.koishi.launcher.h2co3.ui.home.HomeFragment"
+        android:name="org.koishi.launcher.h2co3.launcher.ui.home.HomeFragment"
         android:label="@string/app_name"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_version"
-        android:name="org.koishi.launcher.h2co3.ui.version.VersionFragment"
+        android:name="org.koishi.launcher.h2co3.launcher.ui.version.VersionFragment"
         android:label="@string/menu_ver"
         tools:layout="@layout/fragment_versions" />
 
     <fragment
         android:id="@+id/navigation_manager"
-        android:name="org.koishi.launcher.h2co3.ui.manager.ManagerFragment"
+        android:name="org.koishi.launcher.h2co3.launcher.ui.manager.ManagerFragment"
         android:label="@string/menu_manager"
         tools:layout="@layout/fragment_manager" />
 
     <fragment
         android:id="@+id/navigation_custom"
-        android:name="org.koishi.launcher.h2co3.ui.custom.CustomFragment"
+        android:name="org.koishi.launcher.h2co3.launcher.ui.custom.CustomFragment"
         android:label="@string/menu_custom"
         tools:layout="@layout/fragment_custom" />
 </navigation>

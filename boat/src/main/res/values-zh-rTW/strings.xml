@@ -15,7 +15,7 @@
     <string name="cfg_inputhint">运行库路径，若安装则无视</string>
     
     <string name="cfg_name">游戏ID(若需要玩服务器建议使用英文+数字)</string>
-    <string name="cfg_ram">JVM参数/内存(默认请填 -client -Xmx750M，此段文本可复制)</string>
+    <string name="cfg_ram">JVM参数/内存(默认请填 -boat -Xmx750M，此段文本可复制)</string>
     <string name="cfg_nofile">文件不全！</string>
     <string name="cfg_inputhint">运行库路径</string>
     <string name="cfg_cb">更多选项</string>

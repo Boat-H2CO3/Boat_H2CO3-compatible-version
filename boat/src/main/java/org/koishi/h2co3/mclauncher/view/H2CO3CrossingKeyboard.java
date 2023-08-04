@@ -431,7 +431,7 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 
     private void showBtn(Button b) {
         if (btnList == null) {
-            btnList = new ArrayList<Button>();
+            btnList = new ArrayList<>();
             btnList.add(btn_leftUp);
             btnList.add(btn_leftDown);
             btnList.add(btn_rightUp);
@@ -448,7 +448,7 @@ public class H2CO3CrossingKeyboard extends RelativeLayout implements OnTouchList
 
     private void hideBtn() {
         if (btnList == null) {
-            btnList = new ArrayList<Button>();
+            btnList = new ArrayList<>();
             btnList.add(btn_leftUp);
             btnList.add(btn_leftDown);
             btnList.add(btn_rightUp);

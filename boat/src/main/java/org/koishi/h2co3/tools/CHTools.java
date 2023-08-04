@@ -82,9 +82,10 @@ public class CHTools {
     }
 
     public static String H2CO3CfgPath() {
-        String h2co3Cfg = getBoatCfg("currentVersion", LAUNCHER_FILE_DIR) + "/h2co3Cfg.json";
+        String h2co3Cfg = LAUNCHER_FILE_DIR + "/h2co3Cfg.json";
         String pdir = getExtraCfg("allVerLoad", "false", h2co3Cfg);
-        String H2CO3CfgPath = getBoatCfg("currentVersion", LAUNCHER_FILE_DIR);
+        getBoatCfg("currentVersion", LAUNCHER_FILE_DIR);
+        String H2CO3CfgPath;
         if (pdir.equals("false")) {
             H2CO3CfgPath = LAUNCHER_FILE_DIR + "/h2co3Cfg.json";
         } else {

@@ -16,7 +16,7 @@
         android:id="@+id/log_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:orientation="horizontal"
         app:layout_scrollFlags="scroll|enterAlways"
         app:tabIndicatorAnimationMode="elastic"
@@ -37,12 +37,20 @@
             android:fontFamily="@font/sans"
             android:text="APP" />
 
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/log_params"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sans"
+            android:text="PARTAMS" />
+
     </com.google.android.material.tabs.TabLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:baselineAligned="false">
 
         <ListView
             android:id="@+id/view_log"
@@ -57,6 +65,17 @@
 
         <ListView
             android:id="@+id/view_log2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="clip_vertical"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:divider="@color/appBlack_35"
+            android:dividerHeight="1dp"
+            android:fastScrollEnabled="true" />
+
+        <ListView
+            android:id="@+id/view_log3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="clip_vertical"
