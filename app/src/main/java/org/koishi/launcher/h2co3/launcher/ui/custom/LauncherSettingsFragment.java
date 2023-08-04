@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.custom;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -20,7 +20,7 @@ import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.koishi.h2co3.tools.CHTools;
+import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.ui.LogcatActivity;
 import org.koishi.launcher.h2co3.launcher.ui.MainActivity;

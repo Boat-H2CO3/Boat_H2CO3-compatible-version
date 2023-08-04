@@ -1,8 +1,8 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.h2co3.tools.CHTools.boatCfg;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 
-import org.koishi.h2co3.tools.CHTools;
+import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.AssetsUtils;

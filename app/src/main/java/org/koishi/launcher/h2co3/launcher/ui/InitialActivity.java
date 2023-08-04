@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

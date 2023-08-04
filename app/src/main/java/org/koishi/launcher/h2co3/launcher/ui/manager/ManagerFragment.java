@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.manager;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.h2co3.tools.CHTools.boatCfg;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
-import org.koishi.h2co3.tools.CHTools;
+import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.data.DbDao;
 import org.koishi.launcher.h2co3.tools.file.AppExecute;

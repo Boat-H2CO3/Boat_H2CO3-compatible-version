@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.version;
 
-import static org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.h2co3.tools.CHTools.boatCfg;
+import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -40,7 +40,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
-import org.koishi.h2co3.tools.CHTools;
+import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.adapters.BaseRecycleAdapter;
 import org.koishi.launcher.h2co3.launcher.ui.ModsActivity;

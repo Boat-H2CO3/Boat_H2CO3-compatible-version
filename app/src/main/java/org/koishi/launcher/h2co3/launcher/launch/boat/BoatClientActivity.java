@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.launch.boat;
 
-import static org.koishi.h2co3.tools.CHTools.getBoatCfg;
+import static org.koishi.launcher.h2co3.tools.CHTools.getBoatCfg;
 import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
@@ -30,11 +30,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.navigation.NavigationView;
 
-import org.koishi.h2co3.mclauncher.gamecontroller.codes.BoatKeycodes;
-import org.koishi.h2co3.mclauncher.view.H2CO3CrossingKeyboard;
-import org.koishi.h2co3.mclauncher.view.H2CO3MinecraftBottomBar;
-import org.koishi.launcher.h2co3.control.H2CO3CustomButton;
-import org.koishi.launcher.h2co3.control.H2CO3CustomManager;
+import org.koishi.launcher.h2co3.launcher.control.gamecontroller.codes.BoatKeycodes;
+import org.koishi.launcher.h2co3.launcher.control.view.H2CO3CrossingKeyboard;
+import org.koishi.launcher.h2co3.launcher.control.view.H2CO3MinecraftBottomBar;
+import org.koishi.launcher.h2co3.launcher.control.H2CO3CustomButton;
+import org.koishi.launcher.h2co3.launcher.control.H2CO3CustomManager;
 import org.koishi.launcher.h2co3.launcher.ui.MainActivity;
 import org.koishi.launcher.h2co3.tools.launch.MCOptionUtils;
 import org.koishi.launcher.h2co3.tools.launch.MinecraftVersion;
@@ -305,7 +305,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
     private void InitCustomButton() {
         h2co3CustomManager = new H2CO3CustomManager();
-        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), getBoatCfg("currentVersion", org.koishi.h2co3.tools.CHTools.LAUNCHER_FILE_DIR) + "/H2CO3KeyBoard.json");
+        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), getBoatCfg("currentVersion", org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR) + "/H2CO3KeyBoard.json");
         h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
             @Override
             public void CommandReceived(String command) {
