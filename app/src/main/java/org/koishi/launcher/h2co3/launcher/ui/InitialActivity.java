@@ -1,12 +1,13 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_DATA_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -27,7 +28,7 @@ public class InitialActivity extends H2CO3Activity {
 
     @SuppressLint("HandlerLeak")
     final
-    Handler han = new Handler() {
+    Handler han = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

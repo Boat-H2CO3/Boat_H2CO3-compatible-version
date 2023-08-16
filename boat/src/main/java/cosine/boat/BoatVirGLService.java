@@ -13,25 +13,6 @@ public class BoatVirGLService extends Service {
     private static final int FOREGROUND_ID = 1000;
     private static final String CHANNEL_ID = "BOAT_CHANNEL";
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        android.os.Process.killProcess(android.os.Process.myPid());
-    }
-
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        startForeground(this,"VirGLService","VirGL service is running","Boat","VirGL service is running");
-        new Thread(() -> LoadMe.startVirGLService(this,getExternalFilesDir("debug").getAbsolutePath(),getCacheDir().getAbsolutePath())).start();
-        return Service.START_NOT_STICKY;
-    }
-
-    @Override
-    public IBinder onBind(Intent intent) {
-        // Service doesn't support to be bound.
-        return null;
-    }
-
     /**
      * onStartCommand调用
      */
@@ -58,5 +39,24 @@ public class BoatVirGLService extends Service {
                 .setContentText(contentText);
 
         return builder.build();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        startForeground(this, "VirGLService", "VirGL service is running", "Boat", "VirGL service is running");
+        new Thread(() -> LoadMe.startVirGLService(this, getExternalFilesDir("debug").getAbsolutePath(), getCacheDir().getAbsolutePath())).start();
+        return Service.START_NOT_STICKY;
+    }
+
+    @Override
+    public IBinder onBind(Intent intent) {
+        // Service doesn't support to be bound.
+        return null;
     }
 }

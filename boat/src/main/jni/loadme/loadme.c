@@ -14,18 +14,21 @@ static volatile jmethodID exitTrap_staticMethod;
 static JavaVM *exitTrap_jvm;
 
 void (*old_exit)(int code);
+
 void custom_exit(int code) {
     JNIEnv *env;
     (*exitTrap_jvm)->AttachCurrentThread(exitTrap_jvm, &env, NULL);
-    (*env)->CallStaticVoidMethod(env, exitTrap_exitClass, exitTrap_staticMethod, exitTrap_ctx, code);
+    (*env)->CallStaticVoidMethod(env, exitTrap_exitClass, exitTrap_staticMethod, exitTrap_ctx,
+                                 code);
     (*env)->DeleteGlobalRef(env, exitTrap_ctx);
     (*env)->DeleteGlobalRef(env, exitTrap_exitClass);
     (*exitTrap_jvm)->DetachCurrentThread(exitTrap_jvm);
     old_exit(code);
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_redirectStdio(JNIEnv* env, jclass clazz, jstring path) {
-    char const* file = (*env)->GetStringUTFChars(env, path, 0);
+JNIEXPORT void JNICALL
+Java_cosine_boat_LoadMe_redirectStdio(JNIEnv *env, jclass clazz, jstring path) {
+    char const *file = (*env)->GetStringUTFChars(env, path, 0);
 
     int fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0666);
     dup2(fd, 1);
@@ -34,8 +37,8 @@ JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_redirectStdio(JNIEnv* env, jclass
     (*env)->ReleaseStringUTFChars(env, path, file);
 }
 
-JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_chdir(JNIEnv* env, jclass clazz, jstring path) {
-    char const* dir = (*env)->GetStringUTFChars(env, path, 0);
+JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_chdir(JNIEnv *env, jclass clazz, jstring path) {
+    char const *dir = (*env)->GetStringUTFChars(env, path, 0);
 
     int b = chdir(dir);
 
@@ -43,9 +46,10 @@ JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_chdir(JNIEnv* env, jclass clazz, 
     return b;
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_setenv(JNIEnv* env, jclass clazz, jstring str1, jstring str2) {
-    char const* name = (*env)->GetStringUTFChars(env, str1, 0);
-    char const* value = (*env)->GetStringUTFChars(env, str2, 0);
+JNIEXPORT void JNICALL
+Java_cosine_boat_LoadMe_setenv(JNIEnv *env, jclass clazz, jstring str1, jstring str2) {
+    char const *name = (*env)->GetStringUTFChars(env, str1, 0);
+    char const *value = (*env)->GetStringUTFChars(env, str2, 0);
 
     setenv(name, value, 1);
 
@@ -53,13 +57,13 @@ JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_setenv(JNIEnv* env, jclass clazz,
     (*env)->ReleaseStringUTFChars(env, str2, value);
 }
 
-JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_dlopen(JNIEnv* env, jclass clazz, jstring str1) {
+JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_dlopen(JNIEnv *env, jclass clazz, jstring str1) {
     dlerror();
 
     int ret = 0;
-    char const* lib_name = (*env)->GetStringUTFChars(env, str1, 0);
+    char const *lib_name = (*env)->GetStringUTFChars(env, str1, 0);
 
-    void* handle;
+    void *handle;
     dlerror();
     handle = dlopen(lib_name, RTLD_GLOBAL);
     __android_log_print(ANDROID_LOG_ERROR, "Boat", "loading %s (error = %s)", lib_name, dlerror());
@@ -72,45 +76,51 @@ JNIEXPORT jint JNICALL Java_cosine_boat_LoadMe_dlopen(JNIEnv* env, jclass clazz,
     return ret;
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_setupExitTrap(JNIEnv *env, jclass clazz, jobject context) {
-    exitTrap_ctx = (*env)->NewGlobalRef(env,context);
-    (*env)->GetJavaVM(env,&exitTrap_jvm);
-    exitTrap_exitClass = (*env)->NewGlobalRef(env,(*env)->FindClass(env,"cosine/boat/BoatActivity"));
-    exitTrap_staticMethod = (*env)->GetStaticMethodID(env,exitTrap_exitClass,"onExit","(Landroid/content/Context;I)V");
+JNIEXPORT void JNICALL
+Java_cosine_boat_LoadMe_setupExitTrap(JNIEnv *env, jclass clazz, jobject context) {
+    exitTrap_ctx = (*env)->NewGlobalRef(env, context);
+    (*env)->GetJavaVM(env, &exitTrap_jvm);
+    exitTrap_exitClass = (*env)->NewGlobalRef(env,
+                                              (*env)->FindClass(env, "cosine/boat/BoatActivity"));
+    exitTrap_staticMethod = (*env)->GetStaticMethodID(env, exitTrap_exitClass, "onExit",
+                                                      "(Landroid/content/Context;I)V");
     xhook_enable_debug(1);
     xhook_register(".*\\.so$", "exit", custom_exit, (void **) &old_exit);
     xhook_refresh(1);
 }
 
-extern char** environ;
-JNIEXPORT int JNICALL Java_cosine_boat_LoadMe_dlexec(JNIEnv* env, jclass clazz, jobjectArray argsArray){
+extern char **environ;
+
+JNIEXPORT int JNICALL
+Java_cosine_boat_LoadMe_dlexec(JNIEnv *env, jclass clazz, jobjectArray argsArray) {
     dlerror();
 
     int argc = (*env)->GetArrayLength(env, argsArray);
-    char* argv[argc];
+    char *argv[argc];
     for (int i = 0; i < argc; i++) {
         jstring str = (*env)->GetObjectArrayElement(env, argsArray, i);
         int len = (*env)->GetStringUTFLength(env, str);
-        char* buf = malloc(len + 1);
+        char *buf = malloc(len + 1);
         int characterLen = (*env)->GetStringLength(env, str);
         (*env)->GetStringUTFRegion(env, str, 0, characterLen, buf);
         buf[len] = 0;
         argv[i] = buf;
     }
-    char** envp = environ;
+    char **envp = environ;
 
     jstring str0 = (*env)->GetObjectArrayElement(env, argsArray, 0);
-    char const* lib_name = (*env)->GetStringUTFChars(env, str0, 0);
+    char const *lib_name = (*env)->GetStringUTFChars(env, str0, 0);
 
-    void* handle;
+    void *handle;
     handle = dlopen(lib_name, RTLD_GLOBAL);
     __android_log_print(ANDROID_LOG_ERROR, "Boat", "loading %s (error = %s)", lib_name, dlerror());
     if (handle == NULL) {
         return -1;
     }
 
-    int (*main_func)(int, char**, char**) = (int (*)())dlsym(handle, "main");
-    __android_log_print(ANDROID_LOG_ERROR, "Boat", "getting main() in %s (error = %s)", lib_name, dlerror());
+    int (*main_func)(int, char **, char **) = (int (*)()) dlsym(handle, "main");
+    __android_log_print(ANDROID_LOG_ERROR, "Boat", "getting main() in %s (error = %s)", lib_name,
+                        dlerror());
     if (main_func == NULL) {
         return -2;
     }
@@ -139,6 +149,7 @@ unsigned gen_ldr_pc(unsigned rt, signed long off) {
 
     return result;
 }
+
 unsigned gen_ret(unsigned lr) {
     // 3322222 2 2 22 21111 1111 1 1 00000 00000
     // 1098765 4 3 21 09876 5432 1 0 98765 43210
@@ -154,6 +165,7 @@ unsigned gen_ret(unsigned lr) {
     result |= 0x0;
     return result;
 }
+
 unsigned gen_mov_reg(unsigned tr, unsigned sr) {
     // 3 32 22222 22 2 21111 111111 00000 00000
     // 1 09 87654 32 1 09876 543210 98765 43210
@@ -199,20 +211,21 @@ unsigned gen_mov_imm(unsigned tr, signed short imm) {
 void stub() {
 
 }
+
 JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_patchLinker(JNIEnv *env, jclass clazz) {
 
 #define PAGE_START(x) ((void*)((unsigned long)(x) & ~((unsigned long)getpagesize() - 1)))
 
-    void* libdl_handle = dlopen("libdl.so", RTLD_GLOBAL);
+    void *libdl_handle = dlopen("libdl.so", RTLD_GLOBAL);
 
-    unsigned* dlopen_addr = (unsigned*)dlsym(libdl_handle, "dlopen");
-    unsigned* dlsym_addr = (unsigned*)dlsym(libdl_handle, "dlsym");
-    unsigned* dlvsym_addr = (unsigned*)dlsym(libdl_handle, "dlvsym");
-    unsigned* buffer = (unsigned*)dlsym(libdl_handle, "android_get_LD_LIBRARY_PATH");
-    mprotect(PAGE_START(buffer), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC );
-    mprotect(PAGE_START(dlopen_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC );
-    mprotect(PAGE_START(dlsym_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC );
-    mprotect(PAGE_START(dlvsym_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC );
+    unsigned *dlopen_addr = (unsigned *) dlsym(libdl_handle, "dlopen");
+    unsigned *dlsym_addr = (unsigned *) dlsym(libdl_handle, "dlsym");
+    unsigned *dlvsym_addr = (unsigned *) dlsym(libdl_handle, "dlvsym");
+    unsigned *buffer = (unsigned *) dlsym(libdl_handle, "android_get_LD_LIBRARY_PATH");
+    mprotect(PAGE_START(buffer), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    mprotect(PAGE_START(dlopen_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    mprotect(PAGE_START(dlsym_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
+    mprotect(PAGE_START(dlvsym_addr), getpagesize(), PROT_READ | PROT_WRITE | PROT_EXEC);
 
     unsigned ins_ret = gen_ret(30);
     unsigned ins_mov_x0_0 = gen_mov_imm(0, 0);
@@ -220,7 +233,7 @@ JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_patchLinker(JNIEnv *env, jclass c
     buffer[0] = ins_mov_x0_0;
     buffer[1] = ins_ret;
 
-    void** tmp_addr = (void**)(buffer + 2);
+    void **tmp_addr = (void **) (buffer + 2);
     *tmp_addr = stub;
 
     unsigned ins_mov_x2_x30 = gen_mov_reg(2, 30);
@@ -229,23 +242,26 @@ JNIEXPORT void JNICALL Java_cosine_boat_LoadMe_patchLinker(JNIEnv *env, jclass c
     int dlopen_hooked = 0;
     int dlsym_hooked = 0;
     int dlvsym_hooked = 0;
-    for (int i = 0; dlopen_addr[i] != ins_ret; i++){
+    for (int i = 0; dlopen_addr[i] != ins_ret; i++) {
         if (dlopen_addr[i] == ins_mov_x2_x30) {
-            dlopen_addr[i] = gen_ldr_pc(2, (unsigned long)tmp_addr - (unsigned long)&dlopen_addr[i]);
+            dlopen_addr[i] = gen_ldr_pc(2,
+                                        (unsigned long) tmp_addr - (unsigned long) &dlopen_addr[i]);
             dlopen_hooked = 1;
             break;
         }
     }
-    for (int i = 0; dlsym_addr[i] != ins_ret; i++){
+    for (int i = 0; dlsym_addr[i] != ins_ret; i++) {
         if (dlsym_addr[i] == ins_mov_x2_x30) {
-            dlsym_addr[i] = gen_ldr_pc(2, (unsigned long)tmp_addr - (unsigned long)&dlsym_addr[i]);
+            dlsym_addr[i] = gen_ldr_pc(2,
+                                       (unsigned long) tmp_addr - (unsigned long) &dlsym_addr[i]);
             dlsym_hooked = 1;
             break;
         }
     }
-    for (int i = 0; dlvsym_addr[i] != ins_ret; i++){
+    for (int i = 0; dlvsym_addr[i] != ins_ret; i++) {
         if (dlvsym_addr[i] == ins_mov_x3_x30) {
-            dlvsym_addr[i] = gen_ldr_pc(3, (unsigned long)tmp_addr - (unsigned long)&dlvsym_addr[i]);
+            dlvsym_addr[i] = gen_ldr_pc(3,
+                                        (unsigned long) tmp_addr - (unsigned long) &dlvsym_addr[i]);
             dlvsym_hooked = 1;
             break;
         }

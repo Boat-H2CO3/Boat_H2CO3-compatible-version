@@ -3,8 +3,6 @@
     <string name="app_name">Boat_H2CO3</string>
     <string name="install">安装</string>
 
-    <string name="touch_mode_2">建筑模式</string>
-
     <string name="app_restart">重新启动</string>
 
     <string name="crash_test">崩溃测试</string>

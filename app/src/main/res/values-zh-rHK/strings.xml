@@ -2,7 +2,6 @@
 <resources>
 
 
-    <string name="menu_install">Install</string>
     <string name="menu_custom">Config</string>
     <string name="menu_manager">Dir</string>
     <string name="launcher_check_file_msg_ver">遊戲版本</string>
@@ -16,7 +15,6 @@
     <!--basic-->
     <!--func-->
     <!--extra-->
-    <string name="launcher_settings_right_click_mode_summary">依照設備廠商ROM的設定</string>
     <!--color-->
 
     <string name="nav_header_account_mode">在線</string>
@@ -41,27 +39,15 @@
     <string name="delete">刪除</string>
 
     <string name="log_refresh">刷新</string>
-    <string name="custom_jvm">JVM參數</string>
     <string name="custom_basic">基本設定</string>
-    <string name="custom_more">進階設定</string>
-    <string name="custom_gl">LibGL</string>
-    <string name="custom_right_click">右鍵輸出覆蓋設備返回鍵</string>
-    <string name="custom_isolate">單獨版本運行</string>
-    <string name="custom_control">十字操縱鍵中心鍵值</string>
     <string name="custom_reset_runtime">重置核心</string>
-    <string name="custom_back">後台保持運行不暫停</string>
 
     <string name="dialog_about">編寫: <a href='http://www.coolapk.com/u/1996447'>酷安@東風谷早喵</a>, 查看代碼在: <a href='https://github.com/NaCln4c1/Boat_H2CO3'>GitHub開源地址</a></string>
     <string name="nav_title_3">關於</string>
     <string name="menu_ver">版本列表</string>
-    <string name="menu_title_game">遊戲</string>
     <string name="home_sw_online">在線模式</string>
     <string name="login_offline_id">離線ID</string>
     <string name="settings">設定</string>
-    <string name="choose_mode">選擇操控模式</string>
-    <string name="choose_mode_mouse">鍵盤與滑鼠(有Bug)</string>
-    <string name="choose_mode_touch">觸摸</string>
-    <string name="choose_mode_cancel">取消</string>
     <string name="bc_wait">從伺服器獲取公告...</string>
     <string name="install_title_1">遊戲</string>
     <string name="device_info">裝置訊息</string>
@@ -82,7 +68,6 @@
     <string name="total">進度</string>
     <string name="download_page_title">安裝文件中</string>
     <string name="exit">關閉</string>
-    <string name="download_done">下載結束</string>
     <string name="download_tip">下載緩慢請刷新。</string>
     <string name="cancel">取消</string>
     <string name="refresh">刷新</string>
@@ -108,8 +93,6 @@
     <string name="api_title">選擇登錄模式</string>
     <string name="home_login_start_toast">連線中...</string>
     <string name="home_no_account">沒有帳號數據或者填寫內容有空白</string>
-    <string name="home_no_username">用戶名不能空</string>
-    <string name="custom_mcf">額外遊戲參數</string>
     <string name="custom_web_go">訪問</string>
     <string name="custom_web_url">非官方接口登錄網址</string>
     <string name="custom_web_url_title">輸入網址</string>
@@ -133,15 +116,11 @@
     <string name="add_file">添加</string>
     <string name="start_add_mod">導入中，請稍後，導入過程會自動刷新。 </string>
     <string name="launcher_main_save_acc">保存當前賬號</string>
-    <string name="single_ver">在單獨路徑中運行Minecraft。</string>
-    <string name="custom_pause">AFK</string>
     <string name="log_title">查看日誌</string>
-    <string name="launcher_check_file_summary">不檢查資料完整性-重啟app生效</string>
     <string name="set_launguage_title">語言</string>
     <string name="set_language_summary">切換語言</string>
     <string name="set_language_help_title">翻譯</string>
     <string name="set_language_help_summary">參與翻譯到您的語言</string>
-    <string name="app">啟動器</string>
     <string name="theme_summary">使用Android12 Material You主題。</string>
     <string name="remove">移除列表</string>
     <string name="spinner_official">官方源</string>

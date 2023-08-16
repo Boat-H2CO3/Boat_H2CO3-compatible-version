@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.home;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -46,6 +47,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -57,7 +59,6 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.mistake.revision.Download.DownloadFragment;
 
 import org.json.JSONObject;
-import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.launch.boat.BoatClientActivity;
 import org.koishi.launcher.h2co3.launcher.ui.InstructionActivity;
@@ -92,7 +93,7 @@ import java.util.Objects;
 
 public class HomeFragment extends Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
-    private final Handler handler = new Handler();
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
     public NestedScrollView layout1, layout2;
 
@@ -127,7 +128,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     @SuppressLint("HandlerLeak")
     final
-    Handler xboxHandler = new Handler() {
+    Handler xboxHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -217,7 +218,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     String[] UserMsg;
     @SuppressLint("HandlerLeak")
     final
-    Handler CheckMsg = new Handler() {
+    Handler CheckMsg = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -393,7 +394,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         }
     };
     @SuppressLint("HandlerLeak")
-    Handler han = new Handler() {
+    Handler han = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -444,6 +445,10 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         reader.close();
         in.close();
         return "";
+    }
+
+    public static void ExsitGame() {
+
     }
 
     @SuppressLint({"SetTextI18n", "UseCompatLoadingForDrawables"})
@@ -1034,6 +1039,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
         boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
         if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
+            BoatClientActivity.attachControllerInterface();
             startActivity(new Intent(requireActivity(), BoatClientActivity.class));
         } else {
             Snackbar.make(requireView(), getResources().getString(R.string.no_ver), Snackbar.LENGTH_LONG)
@@ -1478,10 +1484,6 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             });
             return convertView;
         }
-    }
-
-    public static void ExsitGame() {
-
     }
 
 }

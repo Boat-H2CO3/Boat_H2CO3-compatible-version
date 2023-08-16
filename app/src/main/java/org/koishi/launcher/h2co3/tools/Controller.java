@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.tools;
 
-import org.koishi.launcher.h2co3.launcher.control.gamecontroller.event.BaseKeyEvent;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.event.BaseKeyEvent;
 
 public interface Controller {
 

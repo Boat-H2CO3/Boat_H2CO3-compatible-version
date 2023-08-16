@@ -25,23 +25,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
-                    <org.koishi.h2co3.mclauncher.view.ControlLayout
+                    <cosine.boat.view.ControlLayout
                         android:id="@+id/main_surface"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginStart="0dp"
                         android:layout_marginBottom="0dp" />
 
-                    <ImageView
-                        android:id="@+id/mouse_cursor"
-                        android:layout_width="18dp"
-                        android:layout_height="27dp"
-                        android:layout_gravity="center"
-                        android:importantForAccessibility="no"
-                        android:src="@drawable/cursor5" />
-
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/touch_pad"
                         android:layout_width="fill_parent"
                         android:layout_height="fill_parent"
                         android:layout_marginStart="0dp"
@@ -49,19 +40,10 @@
                         android:alpha="0.0" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/touch_pad2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:alpha="0.0"
                         android:visibility="invisible" />
-
-                    <org.koishi.h2co3.mclauncher.view.H2CO3CrossingKeyboard
-                        android:id="@+id/h2co3_keyboard"
-                        android:layout_width="160dp"
-                        android:layout_height="160dp"
-                        android:layout_gravity="bottom"
-                        android:layout_margin="@dimen/app_15dp"
-                        android:visibility="visible" />
 
 
                 </FrameLayout>
@@ -69,8 +51,8 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="H2CO3 New Boat\nPowerd by HMCLPE"
-                    android:alpha="0.4"/>
+                    android:alpha="0.15"
+                    android:text="H2CO3 Boat\nPowerd by HMCLPE-Boat" />
 
             </FrameLayout>
 

@@ -20,82 +20,50 @@ import java.util.Objects;
 import cosine.boat.utils.CHTools;
 
 public class MinecraftVersion {
-public static class AssetsIndex {
-        public String id;
-        public String sha1;
-        public int size;
-        public int totalSize;
-        public String url;
-    }
-
-    public class Download {
-        public String path;
-        public String sha1;
-        public int size;
-        public String url;
-    }
-
     public AssetsIndex assetIndex;
     public String assets;
-
     public HashMap<String, Download> downloads;
     public String id;
-
-    public class Library {
-        public String name;
-        public HashMap<String, Download> downloads;
-    }
-
     public Library libraries[];
-
     public String mainClass;
     public String minecraftArguments;
     public int minimumLauncherVersion;
     public String releaseTime;
     public String time;
     public String type;
-
-    public class Arguments {
-        private Object[] game;
-        private Object[] jvm;
-    }
-
     public Arguments arguments;
-
     // forge
     public String inheritsFrom;
-
     public String minecraftPath;
+    private Map<String, String> SHAs;
 
     public static MinecraftVersion fromDirectory(File file) {
-        try
-        {
+        try {
 
             String json = new String(Utils.readFile(new File(file, file.getName() + ".json")), "UTF-8");
             MinecraftVersion result = new Gson().fromJson(json, MinecraftVersion.class);
-            if (new File(file, file.getName() + ".jar").exists()){
+            if (new File(file, file.getName() + ".jar").exists()) {
                 result.minecraftPath = new File(file, file.getName() + ".jar").getAbsolutePath();
-            }
-            else{
+            } else {
                 result.minecraftPath = "";
             }
 
-            if (result.inheritsFrom != null && !result.inheritsFrom.equals("") ){
+            if (result.inheritsFrom != null && !result.inheritsFrom.equals("")) {
 
                 MinecraftVersion self = result;
                 result = MinecraftVersion.fromDirectory(new File(file.getParentFile(), self.inheritsFrom));
 
-                if (self.assetIndex != null){
+                if (self.assetIndex != null) {
                     if (result != null) {
                         result.assetIndex = self.assetIndex;
                     }
                 }
-                if (self.assets != null && !self.assets.equals("")){
+                if (self.assets != null && !self.assets.equals("")) {
                     if (result != null) {
                         result.assets = self.assets;
                     }
                 }
-                if (self.downloads != null && !self.downloads.isEmpty()){
+                if (self.downloads != null && !self.downloads.isEmpty()) {
 
                     if (result != null && result.downloads == null) {
                         result.downloads = new HashMap<String, Download>();
@@ -103,14 +71,14 @@ public static class AssetsIndex {
 
                     result.downloads.putAll(self.downloads);
                 }
-                if (self.libraries != null && self.libraries.length > 0){
+                if (self.libraries != null && self.libraries.length > 0) {
                     Library newLibs[] = new Library[result.libraries.length + self.libraries.length];
                     int i = 0;
-                    for (Library lib : self.libraries){
+                    for (Library lib : self.libraries) {
                         newLibs[i] = lib;
                         i++;
                     }
-                    for (Library lib : result.libraries){
+                    for (Library lib : result.libraries) {
                         newLibs[i] = lib;
                         i++;
                     }
@@ -119,29 +87,29 @@ public static class AssetsIndex {
                     result.libraries = newLibs;
                 }
 
-                if (self.mainClass != null && !self.mainClass.equals("")){
+                if (self.mainClass != null && !self.mainClass.equals("")) {
                     if (result != null) {
                         result.mainClass = self.mainClass;
                     }
                 }
-                if (self.minecraftArguments != null && !self.minecraftArguments.equals("")){
+                if (self.minecraftArguments != null && !self.minecraftArguments.equals("")) {
                     result.minecraftArguments = self.minecraftArguments;
                 }
 
-                if (self.minimumLauncherVersion > result.minimumLauncherVersion){
+                if (self.minimumLauncherVersion > result.minimumLauncherVersion) {
                     result.minimumLauncherVersion = self.minimumLauncherVersion;
                 }
-                if (self.releaseTime != null && !self.releaseTime.equals("")){
+                if (self.releaseTime != null && !self.releaseTime.equals("")) {
                     result.releaseTime = self.releaseTime;
                 }
-                if (self.time != null && !self.time.equals("")){
+                if (self.time != null && !self.time.equals("")) {
                     result.time = self.time;
                 }
-                if (self.type != null && !self.type.equals("")){
+                if (self.type != null && !self.type.equals("")) {
                     result.type = self.type;
                 }
 
-                if (self.minecraftPath != null && !self.minecraftPath.equals("")){
+                if (self.minecraftPath != null && !self.minecraftPath.equals("")) {
                     result.minecraftPath = self.minecraftPath;
                 }
 
@@ -150,9 +118,7 @@ public static class AssetsIndex {
 
             return result;
 
-        }
-        catch (UnsupportedEncodingException e)
-        {
+        } catch (UnsupportedEncodingException e) {
             return null;
         }
     }
@@ -161,9 +127,9 @@ public static class AssetsIndex {
         StringBuilder cp = new StringBuilder();
         int count = 0;
 
-        String libraries_path = CHTools.getBoatCfg("game_directory","") + "/libraries/";
+        String libraries_path = CHTools.getBoatCfg("game_directory", "") + "/libraries/";
 
-        for (Library lib : this.libraries){
+        for (Library lib : this.libraries) {
             if (lib.name == null || lib.name.equals("") || lib.name.contains("org.lwjgl") || lib.name.contains("natives") || (isJava17 && lib.name.contains("java-objc-bridge"))) {
                 continue;
             }
@@ -188,10 +154,10 @@ public static class AssetsIndex {
             path = path + versionName;
 
             path = path + "/" + mainName + "-" + versionName + ".jar";
-            Log.e("路径",path);
+            Log.e("路径", path);
 
 
-            if (count > 0){
+            if (count > 0) {
                 cp.append(":");
             }
             cp.append(path);
@@ -200,8 +166,7 @@ public static class AssetsIndex {
         String split = count > 0 ? ":" : "";
         if (high) {
             cp.append(split).append(minecraftPath);
-        }
-        else {
+        } else {
             cp.insert(0, minecraftPath + split);
         }
         cp.insert(0, minecraftPath);
@@ -218,8 +183,7 @@ public static class AssetsIndex {
                     test.append(obj).append(" ");
                 }
             }
-        }
-        else {
+        } else {
             return new String[0];
         }
         String result = "";
@@ -251,58 +215,41 @@ public static class AssetsIndex {
 
                     if (key.equals("version_name")) {
                         value = id;
-                    }
-                    else if (key.equals("launcher_name")) {
+                    } else if (key.equals("launcher_name")) {
                         value = "Boat";
-                    }
-                    else if (key.equals("launcher_version")) {
+                    } else if (key.equals("launcher_version")) {
                         value = "1.0.0";
-                    }
-                    else if (key.equals("version_type")) {
+                    } else if (key.equals("version_type")) {
                         value = type;
-                    }
-                    else if (key.equals("assets_index_name")) {
+                    } else if (key.equals("assets_index_name")) {
                         if (assetIndex != null) {
                             value = assetIndex.id;
-                        }
-                        else {
+                        } else {
                             value = assets;
                         }
-                    }
-                    else if (key.equals("game_directory")) {
+                    } else if (key.equals("game_directory")) {
                         value = CHTools.getBoatCfg("game_directory", "Null");
-                    }
-                    else if (key.equals("assets_root")) {
+                    } else if (key.equals("assets_root")) {
                         value = CHTools.getBoatCfg("assets_root", "Null");
-                    }
-                    else if (key.equals("user_properties")) {
+                    } else if (key.equals("user_properties")) {
                         value = "{}";
-                    }
-                    else if (key.equals("auth_player_name")) {
+                    } else if (key.equals("auth_player_name")) {
                         value = CHTools.getBoatCfg("auth_player_name", "Null");
-                    }
-                    else if (key.equals("auth_session")) {
+                    } else if (key.equals("auth_session")) {
                         value = CHTools.getBoatCfg("auth_session", "Null");
-                    }
-                    else if (key.equals("auth_uuid")) {
+                    } else if (key.equals("auth_uuid")) {
                         value = CHTools.getBoatCfg("auth_uuid", "Null");
-                    }
-                    else if (key.equals("auth_access_token")) {
+                    } else if (key.equals("auth_access_token")) {
                         value = CHTools.getBoatCfg("auth_access_token", "Null");
-                    }
-                    else if (key.equals("user_type")) {
+                    } else if (key.equals("user_type")) {
                         value = CHTools.getBoatCfg("user_type", "Null");
-                    }
-                    else if (key.equals("primary_jar_name")) {
-                        value = CHTools.getBoatCfg("currentVersion", "Null")+ CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
-                    }
-                    else if (key.equals("library_directory")) {
+                    } else if (key.equals("primary_jar_name")) {
+                        value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
+                    } else if (key.equals("library_directory")) {
                         value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
-                    }
-                    else if (key.equals("classpath_separator")) {
+                    } else if (key.equals("classpath_separator")) {
                         value = ":";
-                    }
-                    else {
+                    } else {
                         value = "";
                     }
                     result = result + value;
@@ -324,8 +271,7 @@ public static class AssetsIndex {
                     test.append(obj.toString()).append(" ");
                 }
             }
-        }
-        else {
+        } else {
             test = new StringBuilder(this.minecraftArguments);
         }
         String result = "";
@@ -357,58 +303,41 @@ public static class AssetsIndex {
 
                     if (key.equals("version_name")) {
                         value = id;
-                    }
-                    else if (key.equals("launcher_name")) {
+                    } else if (key.equals("launcher_name")) {
                         value = "Boat";
-                    }
-                    else if (key.equals("launcher_version")) {
+                    } else if (key.equals("launcher_version")) {
                         value = "1.0.0";
-                    }
-                    else if (key.equals("version_type")) {
+                    } else if (key.equals("version_type")) {
                         value = type;
-                    }
-                    else if (key.equals("assets_index_name")) {
+                    } else if (key.equals("assets_index_name")) {
                         if (assetIndex != null) {
                             value = assetIndex.id;
-                        }
-                        else {
+                        } else {
                             value = assets;
                         }
-                    }
-                    else if (key.equals("game_directory")) {
+                    } else if (key.equals("game_directory")) {
                         value = CHTools.getBoatCfg("game_directory", "Null");
-                    }
-                    else if (key.equals("assets_root")) {
+                    } else if (key.equals("assets_root")) {
                         value = CHTools.getBoatCfg("assets_root", "Null");
-                    }
-                    else if (key.equals("user_properties")) {
+                    } else if (key.equals("user_properties")) {
                         value = "{}";
-                    }
-                    else if (key.equals("auth_player_name")) {
+                    } else if (key.equals("auth_player_name")) {
                         value = CHTools.getBoatCfg("auth_player_name", "Null");
-                    }
-                    else if (key.equals("auth_session")) {
+                    } else if (key.equals("auth_session")) {
                         value = CHTools.getBoatCfg("auth_session", "Null");
-                    }
-                    else if (key.equals("auth_uuid")) {
+                    } else if (key.equals("auth_uuid")) {
                         value = CHTools.getBoatCfg("auth_uuid", "Null");
-                    }
-                    else if (key.equals("auth_access_token")) {
+                    } else if (key.equals("auth_access_token")) {
                         value = CHTools.getBoatCfg("auth_access_token", "Null");
-                    }
-                    else if (key.equals("user_type")) {
+                    } else if (key.equals("user_type")) {
                         value = CHTools.getBoatCfg("user_type", "Null");
-                    }
-                    else if (key.equals("primary_jar_name")) {
-                        value = CHTools.getBoatCfg("currentVersion", "Null")+ CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
-                    }
-                    else if (key.equals("library_directory")) {
+                    } else if (key.equals("primary_jar_name")) {
+                        value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
+                    } else if (key.equals("library_directory")) {
                         value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
-                    }
-                    else if (key.equals("classpath_separator")) {
+                    } else if (key.equals("classpath_separator")) {
                         value = ":";
-                    }
-                    else {
+                    } else {
                         value = "";
                     }
                     result = result + value;
@@ -427,38 +356,64 @@ public static class AssetsIndex {
         }
         return result.split(" ");
     }
+
     public List<String> getLibraries() {
-        List<String> libs=new ArrayList<>();
+        List<String> libs = new ArrayList<>();
         for (Library lib : this.libraries) {
-            if (lib.name == null || lib.name.equals("") || lib.name.contains("net.java.jinput") || lib.name.contains("org.lwjgl")||lib.name.contains("platform")) {
+            if (lib.name == null || lib.name.equals("") || lib.name.contains("net.java.jinput") || lib.name.contains("org.lwjgl") || lib.name.contains("platform")) {
                 continue;
             }
             libs.add(parseLibNameToPath(lib.name));
         }
         return libs;
     }
-    private Map<String,String> SHAs;
-    public String getSHA1(String libName){
-        if (SHAs==null){
-            SHAs=new ArrayMap<>();
+
+    public String getSHA1(String libName) {
+        if (SHAs == null) {
+            SHAs = new ArrayMap<>();
             for (Library lib : this.libraries) {
-                if (lib.name == null || lib.name.equals("") || lib.name.contains("net.java.jinput") || lib.name.contains("org.lwjgl")||lib.name.contains("platform")) {
+                if (lib.name == null || lib.name.equals("") || lib.name.contains("net.java.jinput") || lib.name.contains("org.lwjgl") || lib.name.contains("platform")) {
                     continue;
                 }
                 String sha1;
                 try {
-                    sha1= Objects.requireNonNull(lib.downloads.get("artifact")).sha1;
-                }catch (Exception e){
+                    sha1 = Objects.requireNonNull(lib.downloads.get("artifact")).sha1;
+                } catch (Exception e) {
                     continue;
                 }
-                SHAs.put(parseLibNameToPath(lib.name),sha1);
+                SHAs.put(parseLibNameToPath(lib.name), sha1);
             }
         }
         return SHAs.get(libName);
     }
 
-    public String parseLibNameToPath(String libName){
-        String[] tmp=libName.split(":");
-        return tmp[0].replace(".","/")+"/"+tmp[1]+"/"+tmp[2]+"/"+tmp[1]+"-"+tmp[2]+".jar";
+    public String parseLibNameToPath(String libName) {
+        String[] tmp = libName.split(":");
+        return tmp[0].replace(".", "/") + "/" + tmp[1] + "/" + tmp[2] + "/" + tmp[1] + "-" + tmp[2] + ".jar";
+    }
+
+    public static class AssetsIndex {
+        public String id;
+        public String sha1;
+        public int size;
+        public int totalSize;
+        public String url;
+    }
+
+    public class Download {
+        public String path;
+        public String sha1;
+        public int size;
+        public String url;
+    }
+
+    public class Library {
+        public String name;
+        public HashMap<String, Download> downloads;
+    }
+
+    public class Arguments {
+        private Object[] game;
+        private Object[] jvm;
     }
 }

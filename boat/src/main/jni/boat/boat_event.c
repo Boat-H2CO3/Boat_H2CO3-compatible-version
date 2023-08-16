@@ -1,22 +1,21 @@
 #include <android/log.h>
 #include "boat_internal.h"
 
-void EventQueue_init(EventQueue* queue) {
+void EventQueue_init(EventQueue *queue) {
     queue->count = 0;
     queue->head = NULL;
     queue->tail = NULL;
 }
 
-BoatEvent* EventQueue_add(EventQueue* queue) {
-    BoatEvent* ret = NULL;
-    QueueElement* e = malloc(sizeof(QueueElement));
+BoatEvent *EventQueue_add(EventQueue *queue) {
+    BoatEvent *ret = NULL;
+    QueueElement *e = malloc(sizeof(QueueElement));
     if (e != NULL) {
         e->next = NULL;
         if (queue->count > 0) {
             queue->tail->next = e;
             queue->tail = e;
-        }
-        else { // count == 0
+        } else { // count == 0
             queue->head = e;
             queue->tail = e;
         }
@@ -26,15 +25,14 @@ BoatEvent* EventQueue_add(EventQueue* queue) {
     return ret;
 }
 
-int EventQueue_take(EventQueue* queue, BoatEvent* event) {
+int EventQueue_take(EventQueue *queue, BoatEvent *event) {
     int ret = 0;
     if (queue->count > 0) {
-        QueueElement* e = queue->head;
+        QueueElement *e = queue->head;
         if (queue->count == 1) {
             queue->head = NULL;
             queue->tail = NULL;
-        }
-        else {
+        } else {
             queue->head = e->next;
         }
         queue->count--;
@@ -47,41 +45,40 @@ int EventQueue_take(EventQueue* queue, BoatEvent* event) {
     return ret;
 }
 
-void EventQueue_clear(EventQueue* queue) {
+void EventQueue_clear(EventQueue *queue) {
     while (queue->count > 0) {
         EventQueue_take(queue, NULL);
     }
 }
 
 void boatSetCursorMode(int mode) {
-    if (mBoat.android_jvm == 0){
+    if (mBoat.android_jvm == 0) {
         return;
     }
-    JNIEnv* env = 0;
+    JNIEnv *env = 0;
 
     jint result = (*mBoat.android_jvm)->AttachCurrentThread(mBoat.android_jvm, &env, 0);
 
-    if (result != JNI_OK || env == 0){
+    if (result != JNI_OK || env == 0) {
         //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to attach thread to JavaVM.");
         abort();
     }
 
     jclass class_BoatActivity = mBoat.class_BoatActivity;
 
-    if (class_BoatActivity == 0){
+    if (class_BoatActivity == 0) {
         //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to find class: cosine/boat/BoatActivity.");
         abort();
     }
 
     jmethodID BoatActivity_setCursorMode = mBoat.setCursorMode;
 
-    if (BoatActivity_setCursorMode == 0){
+    if (BoatActivity_setCursorMode == 0) {
         //__android_log_print(ANDROID_LOG_ERROR, "Boat", "Failed to find method BoatActivity::setCursorMode");
         abort();
     }
     (*env)->CallVoidMethod(env, mBoat.boatActivity, BoatActivity_setCursorMode, mode);
-
-
+    (*env)->CallVoidMethod(env, mBoat.class_BoatActivity, mBoat.setGrabCursorId, mode == CursorDisabled ? JNI_TRUE : JNI_FALSE);
     (*mBoat.android_jvm)->DetachCurrentThread(mBoat.android_jvm);
 }
 
@@ -104,7 +101,7 @@ int boatWaitForEvent(int timeout) {
     return 0;
 }
 
-int boatPollEvent(BoatEvent* event) {
+int boatPollEvent(BoatEvent *event) {
     if (!mBoat.has_event_pipe) {
         return 0;
     }
@@ -124,7 +121,9 @@ int boatPollEvent(BoatEvent* event) {
     return ret;
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_pushEvent(JNIEnv* env, jclass clazz, jlong time, jint type, jint p1, jint p2) {
+JNIEXPORT void JNICALL
+Java_cosine_boat_BoatInput_pushEvent(JNIEnv *env, jclass clazz, jlong time, jint type, jint p1,
+                                     jint p2) {
     if (!mBoat.has_event_pipe) {
         return;
     }
@@ -132,7 +131,7 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_pushEvent(JNIEnv* env, jclass 
         BOAT_INTERNAL_LOG("Failed to acquire mutex");
         return;
     }
-    BoatEvent* event = EventQueue_add(&mBoat.event_queue);
+    BoatEvent *event = EventQueue_add(&mBoat.event_queue);
     if (event == NULL) {
         BOAT_INTERNAL_LOG("Failed to add event to event queue");
         return;
@@ -168,7 +167,7 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_pushEvent(JNIEnv* env, jclass 
     }
 }
 
-JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_setEventPipe(JNIEnv* env, jclass clazz) {
+JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_setEventPipe(JNIEnv *env, jclass clazz) {
     if (pipe(mBoat.event_pipe_fd) == -1) {
         BOAT_INTERNAL_LOG("Failed to create event pipe : %s", strerror(errno));
         return;
@@ -189,4 +188,14 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_setEventPipe(JNIEnv* env, jcla
     pthread_mutex_init(&mBoat.event_queue_mutex, NULL);
     mBoat.has_event_pipe = 1;
     BOAT_INTERNAL_LOG("Succeeded to set event pipe");
+}
+
+BoatEvent current_event;
+
+JNIEXPORT jintArray JNICALL
+Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
+    jintArray ja = (*env)->NewIntArray(env, 2);
+    int arr[2] = {current_event.x, current_event.y};
+    (*env)->SetIntArrayRegion(env, ja, 0, 2, arr);
+    return ja;
 }

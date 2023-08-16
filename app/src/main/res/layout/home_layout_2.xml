@@ -56,7 +56,6 @@
                     android:layout_height="match_parent">
 
                     <com.google.android.material.circularreveal.CircularRevealLinearLayout
-                        android:id="@+id/activitymainLinearLayout1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:animateLayoutChanges="true"
@@ -66,7 +65,6 @@
 
 
                         <com.google.android.material.circularreveal.CircularRevealFrameLayout
-                            android:id="@+id/username_layout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginBottom="@dimen/app_10dp">

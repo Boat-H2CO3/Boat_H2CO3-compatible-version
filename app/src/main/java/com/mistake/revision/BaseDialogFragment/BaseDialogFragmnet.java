@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import java.util.Objects;
 
 public class BaseDialogFragmnet extends DialogFragment {
 
-    public static final Handler HANDLER = new Handler();
+    public static final Handler HANDLER = new Handler(Looper.getMainLooper());
     private final Object mView;
     private final float mAlpha;
     private final boolean mAutoDismiss;

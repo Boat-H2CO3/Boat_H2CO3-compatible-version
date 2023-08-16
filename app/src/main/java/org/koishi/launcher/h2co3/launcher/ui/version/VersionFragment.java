@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.version;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.app.Dialog;
@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -30,6 +31,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -40,7 +42,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONObject;
-import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.adapters.BaseRecycleAdapter;
 import org.koishi.launcher.h2co3.launcher.ui.ModsActivity;
@@ -82,7 +83,7 @@ public class VersionFragment extends Fragment {
     private DbDao mDbDao;
     @SuppressLint("HandlerLeak")
     final
-    Handler han = new Handler() {
+    Handler han = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

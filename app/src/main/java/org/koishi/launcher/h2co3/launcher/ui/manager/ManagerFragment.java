@@ -1,11 +1,12 @@
 package org.koishi.launcher.h2co3.launcher.ui.manager;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,11 +19,11 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
-import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.data.DbDao;
 import org.koishi.launcher.h2co3.tools.file.AppExecute;
@@ -45,7 +46,7 @@ public class ManagerFragment extends Fragment {
     public DbDao mDbDao;
     @SuppressLint("HandlerLeak")
     final
-    Handler han = new Handler() {
+    Handler han = new Handler(Looper.getMainLooper()) {
         @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {

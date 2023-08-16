@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_dialog_noalpha"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/tips_stand_keyboard_buttons"
+                android:textColor="@color/text_info"
+                android:textSize="@dimen/text_small" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/dialog_keymap_selecter_keyboard_layout"
+                layout="@layout/selecter_keyboard"
+                android:layout_width="460dp"
+                android:layout_height="130dp"
+                android:layout_gravity="center" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/tips_stand_mouse_button"
+                android:textColor="@color/text_info"
+                android:textSize="@dimen/text_small" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_keymap_selecter_mouse_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.QwertButton
+                style="@style/selecterButtonStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/title_mouse_lb"
+                custom:button_name="MOUSE_BUTTON_LEFT" />
+
+            <com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.QwertButton
+                style="@style/selecterButtonStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/title_mouse_cb"
+                custom:button_name="MOUSE_BUTTON_MIDDLE" />
+
+            <com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.QwertButton
+                style="@style/selecterButtonStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/title_mouse_rb"
+                custom:button_name="MOUSE_BUTTON_RIGHT" />
+
+            <com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.QwertButton
+                style="@style/selecterButtonStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/title_wheel_up"
+                custom:button_name="MOUSE_WHEEL_UP" />
+
+            <com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.QwertButton
+                style="@style/selecterButtonStyle"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center"
+                android:layout_margin="5dp"
+                android:text="@string/title_wheel_down"
+                custom:button_name="MOUSE_WHEEL_DOWN" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_gray_corner"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@string/tips_selected"
+            android:textColor="@color/text_info"
+            android:textSize="@dimen/text_small" />
+
+        <TextView
+            android:id="@+id/dialog_keymap_selecter_text_keyname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:textColor="@color/text_title_main"
+            android:textSize="@dimen/text_small" />
+
+        <Button
+            android:id="@+id/dialog_keymap_selecter_button_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/title_ok" />
+
+        <Button
+            android:id="@+id/dialog_keymap_selecter_button_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/title_cancel" />
+
+        <Button
+            android:id="@+id/dialog_keymap_selecter_button_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:text="@string/title_clear" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

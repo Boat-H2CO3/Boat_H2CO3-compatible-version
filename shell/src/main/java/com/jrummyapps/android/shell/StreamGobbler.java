@@ -31,6 +31,7 @@ public class StreamGobbler extends Thread {
     private final BufferedReader reader;
     private List<String> writer;
     private OnLineListener listener;
+
     /**
      * <p>StreamGobbler constructor</p>
      *

@@ -955,7 +955,7 @@ public class Shell {
             // If a looper is available, we offload the callbacks from the gobbling threads to whichever thread created us.
             // Would normally do this in open(), but then we could not declare handler as final
             if ((Looper.myLooper() != null) && (builder.handler == null) && autoHandler) {
-                handler = new Handler();
+                handler = new Handler(Looper.getMainLooper());
             } else {
                 handler = builder.handler;
             }

@@ -24,15 +24,12 @@ public class TouchInjector {
                             // arg doesn't seem to be a value
                             // maybe the previous argument is a value, but we wrongly recognized it as an option
                             hit = false;
-                        }
-                        else {
+                        } else {
                             if (arg.startsWith("1.17")) {
                                 version = "1.17";
-                            }
-                            else if (arg.startsWith("1.18")) {
+                            } else if (arg.startsWith("1.18")) {
                                 version = "1.18";
-                            }
-                            else if (arg.startsWith("1.19")) {
+                            } else if (arg.startsWith("1.19")) {
                                 version = "1.19";
                             }
                             break;
@@ -45,85 +42,71 @@ public class TouchInjector {
                 hit = false;
                 for (int i = 0; i < args.size(); i++) {
                     if (hit) {
-                        newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector-forge.jar");
+                        newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector-forge.jar");
                         hit = false;
-                    }
-                    else if (args.get(i).startsWith("-Xms")) {
+                    } else if (args.get(i).startsWith("-Xms")) {
                         newArgs.add("-Dtouchinjector.version=" + version);
                         newArgs.add(args.get(i));
-                    }
-                    else if (args.get(i).equals("-cp")) {
+                    } else if (args.get(i).equals("-cp")) {
                         hit = true;
                         newArgs.add(args.get(i));
-                    }
-                    else {
+                    } else {
                         newArgs.add(args.get(i));
                     }
                 }
-            }
-            else {
+            } else {
                 for (int i = 0; i < args.size(); i++) {
                     if (args.get(i).startsWith("-Xms")) {
-                        newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector.jar=forge");
+                        newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector.jar=forge");
                     }
                     newArgs.add(args.get(i));
                 }
             }
             return newArgs;
-        }
-        else if (args.contains("optifine.OptiFineTweaker") || args.contains("com.mumfrey.liteloader.launch.LiteLoaderTweaker")) {
+        } else if (args.contains("optifine.OptiFineTweaker") || args.contains("com.mumfrey.liteloader.launch.LiteLoaderTweaker")) {
             for (int i = 0; i < args.size(); i++) {
                 if (args.get(i).startsWith("-Xms")) {
-                    newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector.jar=optifine");
+                    newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector.jar=optifine");
                 }
                 newArgs.add(args.get(i));
             }
             return newArgs;
-        }
-        else if (args.contains("net.fabricmc.loader.impl.launch.knot.KnotClient")) {
+        } else if (args.contains("net.fabricmc.loader.impl.launch.knot.KnotClient")) {
             boolean hit = false;
             for (int i = 0; i < args.size(); i++) {
                 if (hit) {
-                    newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector.jar");
+                    newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector.jar");
                     hit = false;
-                }
-                else if (args.get(i).equals("net.fabricmc.loader.impl.launch.knot.KnotClient")) {
+                } else if (args.get(i).equals("net.fabricmc.loader.impl.launch.knot.KnotClient")) {
                     newArgs.add("com.tungsten.touchinjector.launch.FabricKnotClient");
-                }
-                else if (args.get(i).equals("-cp")) {
+                } else if (args.get(i).equals("-cp")) {
                     hit = true;
                     newArgs.add(args.get(i));
-                }
-                else {
+                } else {
                     newArgs.add(args.get(i));
                 }
             }
             return newArgs;
-        }
-        else if (args.contains("org.quiltmc.loader.impl.launch.knot.KnotClient")) {
+        } else if (args.contains("org.quiltmc.loader.impl.launch.knot.KnotClient")) {
             boolean hit = false;
             for (int i = 0; i < args.size(); i++) {
                 if (hit) {
-                    newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector.jar");
+                    newArgs.add(args.get(i) + ":" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector.jar");
                     hit = false;
-                }
-                else if (args.get(i).equals("org.quiltmc.loader.impl.launch.knot.KnotClient")) {
+                } else if (args.get(i).equals("org.quiltmc.loader.impl.launch.knot.KnotClient")) {
                     newArgs.add("com.tungsten.touchinjector.launch.QuiltKnotClient");
-                }
-                else if (args.get(i).equals("-cp")) {
+                } else if (args.get(i).equals("-cp")) {
                     hit = true;
                     newArgs.add(args.get(i));
-                }
-                else {
+                } else {
                     newArgs.add(args.get(i));
                 }
             }
             return newArgs;
-        }
-        else {
+        } else {
             for (int i = 0; i < args.size(); i++) {
                 if (args.get(i).startsWith("-Xms")) {
-                    newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath","") + "/boat" + "/plugin/touch/TouchInjector.jar=vanilla");
+                    newArgs.add("-javaagent:" + CHTools.getBoatCfg("runtimePath", "") + "/boat" + "/plugin/touch/TouchInjector.jar=vanilla");
                 }
                 newArgs.add(args.get(i));
             }

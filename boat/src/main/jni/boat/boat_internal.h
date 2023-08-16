@@ -13,25 +13,27 @@
 #include <boat_keycodes.h>
 
 typedef struct _QueueElement {
-    struct _QueueElement* next;
+    struct _QueueElement *next;
     BoatEvent event;
 } QueueElement;
 
 typedef struct {
     int count;
     int capacity;
-    QueueElement* head;
-    QueueElement* tail;
+    QueueElement *head;
+    QueueElement *tail;
 } EventQueue;
 
 typedef struct {
-    JavaVM* android_jvm;
+    uint8_t isLoaded;
+    JavaVM *android_jvm;
+    jmethodID setGrabCursorId;
     jclass class_BoatLib;
     jclass class_BoatActivity;
     jobject boatActivity;
     jmethodID setCursorMode;
-    ANativeWindow* window;
-    char* clipboard_string;
+    ANativeWindow *window;
+    char *clipboard_string;
     EventQueue event_queue;
     pthread_mutex_t event_queue_mutex;
     int has_event_pipe;

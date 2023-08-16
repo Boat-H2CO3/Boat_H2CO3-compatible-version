@@ -53,7 +53,7 @@ public final class Tools {
 
             StringBuilder cacioClasspath = new StringBuilder();
             cacioClasspath.append("-Xbootclasspath/" + (isJava8 ? "p" : "a"));
-            File cacioDir = new File(context.getDir("runtime",0).getAbsolutePath() + "/caciocavallo" + (isJava8 ? "" : "17"));
+            File cacioDir = new File(context.getDir("runtime", 0).getAbsolutePath() + "/caciocavallo" + (isJava8 ? "" : "17"));
             if (cacioDir.exists() && cacioDir.isDirectory()) {
                 for (File file : cacioDir.listFiles()) {
                     if (file.getName().endsWith(".jar")) {
@@ -69,8 +69,8 @@ public final class Tools {
         String out = "";
         int len;
         byte[] buf = new byte[512];
-        while((len = is.read(buf))!=-1) {
-            out += new String(buf,0,len);
+        while ((len = is.read(buf)) != -1) {
+            out += new String(buf, 0, len);
         }
         return out;
     }
@@ -79,8 +79,7 @@ public final class Tools {
         return read(new FileInputStream(path));
     }
 
-    public static void write(String path, byte[] content) throws IOException
-    {
+    public static void write(String path, byte[] content) throws IOException {
         File outPath = new File(path);
         outPath.getParentFile().mkdirs();
         outPath.createNewFile();

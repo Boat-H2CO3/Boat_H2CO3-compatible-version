@@ -1,18 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <include
-        android:id="@+id/include"
         layout="@layout/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <Spinner
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/sp_download_source_mode"
         style="@style/TextStyleMain"
         android:layout_width="match_parent"
@@ -20,7 +18,8 @@
         android:layout_marginLeft="@dimen/app_10dp"
         android:layout_marginRight="100dp"
         android:spinnerMode="dropdown"
-        android:textSize="@dimen/text_mid" />
+        android:textSize="@dimen/text_mid"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <RadioGroup
         android:id="@+id/rg_select"

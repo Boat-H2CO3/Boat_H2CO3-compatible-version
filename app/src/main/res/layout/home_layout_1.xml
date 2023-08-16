@@ -549,7 +549,6 @@
                 android:orientation="horizontal">
 
                 <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/home_check_icon"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_launcher_check_file_blue_true" />
@@ -570,7 +569,6 @@
                         android:textSize="16sp" />
 
                     <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/home_"
                         style="@style/TextStyleSummary"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -720,7 +718,6 @@
                         android:layout_height="150dp">
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/home_bc"
                             style="@style/TextStyleSummary"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

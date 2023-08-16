@@ -69,8 +69,8 @@
         <activity
             android:name=".launcher.ui.MainActivity"
             android:configChanges="uiMode"
-            android:theme="@style/Theme.H2CO3"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.H2CO3"
             android:windowSoftInputMode="stateHidden"
             tools:ignore="LockedOrientationActivity" />
         <activity
@@ -104,6 +104,10 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+        <activity
+            android:name="com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.CustomizeKeyboardEditorActivity"
+            android:configChanges="screenSize|keyboard|navigation|orientation|keyboardHidden"
+            android:screenOrientation="userLandscape" />
     </application>
 
 </manifest>

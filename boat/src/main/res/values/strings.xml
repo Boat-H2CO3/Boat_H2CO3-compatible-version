@@ -4,8 +4,6 @@
     <string name="app_version" translatable="false">Boat_H2CO3 DEV</string>
     <string name="install">Install</string>
 
-    <string name="touch_mode_2">Build</string>
-
     <string name="app_restart">Restart</string>
 
     <string name="crash_test">Crash test</string>

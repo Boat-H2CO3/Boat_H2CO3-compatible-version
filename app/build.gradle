@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "org.koishi.launcher.h2co3"
-        minSdk 26
+        minSdk 28
         targetSdk 33
         versionCode 1025
         versionName "0.0.5"
@@ -34,7 +34,7 @@ android {
     }
 }
 
-configurations.all {
+configurations.configureEach {
     exclude group: 'androidx.appcompat', module: 'appcompat'
 }
 
@@ -97,14 +97,16 @@ dependencies {
     implementation project(path: ':boat')
     implementation project(path: ':shell')
     implementation project(path: ':markdown')
-    implementation 'androidx.privacysandbox.tools:tools-core:+'
+    implementation project(path: ':H2CO3CustomKeyBoard')
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'androidx.appcompat:appcompat:1.6.1'
 
     testImplementation 'junit:junit:4.13.2'
 
-    implementation 'com.alibaba:fastjson:2.0.32'
+    implementation 'com.alibaba:fastjson:2.0.36'
     //implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     implementation 'com.larswerkman:HoloColorPicker:1.5'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }

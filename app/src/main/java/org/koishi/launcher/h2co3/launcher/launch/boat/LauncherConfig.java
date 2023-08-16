@@ -28,6 +28,13 @@ public class LauncherConfig extends HashMap<String, String> {
 
 
     public boolean touchInjector = false;
+    public String extraJavaFlags;
+    public String extraMinecraftFlags;
+
+    public LauncherConfig() {
+        this.extraJavaFlags = "";
+        this.extraMinecraftFlags = "";
+    }
 
     public static void toFile(String filePath, LauncherConfig config) {
         try {
@@ -111,28 +118,11 @@ public class LauncherConfig extends HashMap<String, String> {
         return "Microsoft";
     }
 
-    public String get(String key) {
-        String value;
-
-        if (super.get(key) == null) {
-            value = "";
-            Log.w("Boat", "Value required can not found: key=" + key);
-        } else {
-            value = super.get(key);
-        }
-        return value;
-    }
-    public String extraJavaFlags;
-    public String extraMinecraftFlags;
-    public LauncherConfig(){
-        this.extraJavaFlags = "";
-        this.extraMinecraftFlags = "";
-    }
-    public static Vector<String> getMcArgs(LauncherConfig config,Context context,int width,int height,String server){
+    public static Vector<String> getMcArgs(LauncherConfig config, Context context, int width, int height, String server) {
         try {
             MinecraftVersion version = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "Null")));
-            String runtimePath = CHTools.getBoatCfg("runtimePath","");
-            String lwjglPath = CHTools.getBoatCfg("runtimePath","") + "/boat";
+            String runtimePath = CHTools.getBoatCfg("runtimePath", "");
+            String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
             server = "server";
             // 识别表单
             String javaPath = null;
@@ -150,20 +140,18 @@ public class LauncherConfig extends HashMap<String, String> {
             String classPath = null;
             String r = loadgl().equals("VirGL") ? "virgl" : "gl4es";
             boolean isJava17 = javaPath.endsWith("jre_17");
-            if (!highVersion){
+            if (!highVersion) {
                 libraryPath = javaPath + "/lib/aarch64/jli:" + javaPath + "/lib/aarch64:" + lwjglPath + ":" + lwjglPath + "/lwjgl-2:" + lwjglPath + "/" + r;
                 if (version != null) {
-                    classPath = lwjglPath + "/lwjgl-2/lwjgl.jar:" + lwjglPath + "/lwjgl-2/lwjgl_util.jar:" + version.getClassPath(config,false,false);
+                    classPath = lwjglPath + "/lwjgl-2/lwjgl.jar:" + lwjglPath + "/lwjgl-2/lwjgl_util.jar:" + version.getClassPath(config, false, false);
                 }
-            }
-            else {
+            } else {
                 if (isJava17) {
                     libraryPath = javaPath + "/lib:" + lwjglPath + ":" + lwjglPath + "/lwjgl-3:" + lwjglPath + "/" + r;
-                }
-                else {
+                } else {
                     libraryPath = javaPath + "/lib/jli:" + javaPath + "/lib:" + lwjglPath + ":" + lwjglPath + "/lwjgl-3:" + lwjglPath + "/" + r;
                 }
-                classPath = lwjglPath + "/lwjgl-3/lwjgl-jemalloc.jar:" + lwjglPath + "/lwjgl-3/lwjgl-tinyfd.jar:" + lwjglPath + "/lwjgl-3/lwjgl-opengl.jar:" + lwjglPath + "/lwjgl-3/lwjgl-openal.jar:" + lwjglPath + "/lwjgl-3/lwjgl-glfw.jar:" + lwjglPath + "/lwjgl-3/lwjgl-stb.jar:" + lwjglPath + "/lwjgl-3/lwjgl.jar:" + version.getClassPath(config,true,isJava17);
+                classPath = lwjglPath + "/lwjgl-3/lwjgl-jemalloc.jar:" + lwjglPath + "/lwjgl-3/lwjgl-tinyfd.jar:" + lwjglPath + "/lwjgl-3/lwjgl-opengl.jar:" + lwjglPath + "/lwjgl-3/lwjgl-openal.jar:" + lwjglPath + "/lwjgl-3/lwjgl-glfw.jar:" + lwjglPath + "/lwjgl-3/lwjgl-stb.jar:" + lwjglPath + "/lwjgl-3/lwjgl.jar:" + version.getClassPath(config, true, isJava17);
             }
             Vector<String> args = new Vector<>();
             args.add(javaPath + "/bin/java");
@@ -216,7 +204,7 @@ public class LauncherConfig extends HashMap<String, String> {
                 args.add(cacioClasspath.toString());
             }
             args.add("-cp");
-            Log.e("aaaaaaa",version.getClassPath(config,true,isJava17));
+            Log.e("aaaaaaa", version.getClassPath(config, true, isJava17));
             args.add(classPath);
             args.add("-Djava.library.path=" + libraryPath);
             args.add("-Dfml.earlyprogresswindow=false");
@@ -226,8 +214,7 @@ public class LauncherConfig extends HashMap<String, String> {
             args.add("-Dlwjgl.platform=Boat");
             if (loadgl().equals("VirGL")) {
                 args.add("-Dorg.lwjgl.opengl.libname=libGL.so.1");
-            }
-            else {
+            } else {
                 args.add("-Dorg.lwjgl.opengl.libname=libgl4es_114.so");
             }
             args.add("-Dlwjgl.platform=Boat");
@@ -235,10 +222,10 @@ public class LauncherConfig extends HashMap<String, String> {
             args.add("-Djava.io.tmpdir=" + LAUNCHER_DATA_USER_DIR);
             String[] accountArgs;
             accountArgs = new String[0];
-            Collections.addAll(args,accountArgs);
+            Collections.addAll(args, accountArgs);
             String[] JVMArgs;
             JVMArgs = version.getJVMArguments(config);
-            for (int i = 0;i < JVMArgs.length;i++) {
+            for (int i = 0; i < JVMArgs.length; i++) {
                 if (JVMArgs[i].startsWith("-DignoreList") && !JVMArgs[i].endsWith("," + new File(CHTools.getBoatCfg("currentVersion", "Null")).getName() + ".jar")) {
                     JVMArgs[i] = JVMArgs[i] + "," + new File(CHTools.getBoatCfg("currentVersion", "Null")).getName() + ".jar";
                 }
@@ -268,11 +255,22 @@ public class LauncherConfig extends HashMap<String, String> {
             String[] extraMinecraftArgs = config.extraMinecraftFlags.split(" ");
             Collections.addAll(args, extraMinecraftArgs);
             return TouchInjector.rebaseArguments(config, args);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public String get(String key) {
+        String value;
+
+        if (super.get(key) == null) {
+            value = "";
+            Log.w("Boat", "Value required can not found: key=" + key);
+        } else {
+            value = super.get(key);
+        }
+        return value;
     }
 
 }

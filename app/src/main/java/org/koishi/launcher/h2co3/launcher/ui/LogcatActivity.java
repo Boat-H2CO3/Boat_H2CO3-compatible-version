@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -32,7 +32,7 @@ import java.util.Objects;
 public class LogcatActivity extends H2CO3Activity {
 
     public LinearLayout logLay;
-    public ListView log, log2 ,log3;
+    public ListView log, log2, log3;
     public TabLayout tab;
 
     //public TextView textList, li;

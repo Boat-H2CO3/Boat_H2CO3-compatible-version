@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.custom;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_DATA_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.widget.Toast;
 
@@ -18,9 +19,9 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
-import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.ui.LogcatActivity;
 import org.koishi.launcher.h2co3.launcher.ui.MainActivity;
@@ -35,7 +36,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
 
     @SuppressLint("HandlerLeak")
     final
-    Handler han = new Handler() {
+    Handler han = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);

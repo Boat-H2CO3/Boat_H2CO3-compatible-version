@@ -61,7 +61,6 @@
                             android:textSize="18sp" />
 
                         <com.google.android.material.textview.MaterialTextView
-                            android:id="@+id/ver_info"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:textSize="13.5sp"

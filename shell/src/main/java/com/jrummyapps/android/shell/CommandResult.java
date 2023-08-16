@@ -31,6 +31,7 @@ public class CommandResult implements ShellExitCode {
     @NonNull
     public final List<String> stderr;
     public final int exitCode;
+
     public CommandResult(@NonNull List<String> stdout, @NonNull List<String> stderr, int exitCode) {
         this.stdout = stdout;
         this.stderr = stderr;

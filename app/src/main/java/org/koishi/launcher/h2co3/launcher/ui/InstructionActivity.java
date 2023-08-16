@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
 
 import android.net.Uri;
 import android.os.Bundle;

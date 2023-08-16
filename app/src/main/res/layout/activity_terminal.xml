@@ -8,13 +8,11 @@
     tools:context=".launcher.ui.TerminalActivity">
 
     <include
-        android:id="@+id/include"
         layout="@layout/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <com.google.android.material.circularreveal.CircularRevealFrameLayout
-        android:id="@+id/username_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/app_15dp"

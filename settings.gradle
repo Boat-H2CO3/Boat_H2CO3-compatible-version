@@ -34,3 +34,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Boat_H2CO3"
 include ':app', ':boat', 'shell', 'markdown'
+include ':H2CO3CustomKeyBoard'

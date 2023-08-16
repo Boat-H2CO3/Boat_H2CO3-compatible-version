@@ -8,6 +8,7 @@
 ## 分支更改
 
 增加了新JRE版本支持，精简了一些页面
+
 ## 更多
 
 [![Android CI](https://github.com/bilicainiaohh/Boat_H2CO3/actions/workflows/android.yml/badge.svg?branch=Material-You)](https://github.com/bilicainiaohh/Boat_H2CO3/actions/workflows/android.yml)

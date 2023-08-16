@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
@@ -41,9 +42,8 @@ public class CHTools {
     public static String h2co3Cfg = LAUNCHER_FILE_DIR + "h2co3cfg.json";
     public static String INNER_FILE_DIR;
     ZipListener zipListener;
-    int lastProgress = 0;
     @SuppressLint("HandlerLeak")
-    private final Handler zipHandler = new Handler() {
+    private final Handler zipHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
@@ -58,6 +58,7 @@ public class CHTools {
             }
         }
     };
+    int lastProgress = 0;
 
     //---------------------获取json的值---------------------
 

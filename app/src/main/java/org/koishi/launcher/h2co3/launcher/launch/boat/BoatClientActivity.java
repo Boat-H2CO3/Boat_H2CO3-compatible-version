@@ -1,46 +1,42 @@
 package org.koishi.launcher.h2co3.launcher.launch.boat;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.getBoatCfg;
 import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.client.Client;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.HardwareController;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.VirtualController;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.id.key.KeyEvent;
+import com.cainiaohh.module.h2co3customkeyboard.utils.DisplayUtils;
 import com.google.android.material.navigation.NavigationView;
 
-import org.koishi.launcher.h2co3.launcher.control.gamecontroller.codes.BoatKeycodes;
-import org.koishi.launcher.h2co3.launcher.control.view.H2CO3CrossingKeyboard;
-import org.koishi.launcher.h2co3.launcher.control.view.H2CO3MinecraftBottomBar;
-import org.koishi.launcher.h2co3.launcher.control.H2CO3CustomButton;
-import org.koishi.launcher.h2co3.launcher.control.H2CO3CustomManager;
-import org.koishi.launcher.h2co3.launcher.ui.MainActivity;
+import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.launch.MCOptionUtils;
 import org.koishi.launcher.h2co3.tools.launch.MinecraftVersion;
-import org.lwjgl.glfw.CallbackBridge;
 
 import java.io.File;
+import java.util.Timer;
 import java.util.Vector;
 
 import cosine.boat.BoatActivity;
@@ -48,24 +44,25 @@ import cosine.boat.BoatInput;
 import cosine.boat.function.BoatCallback;
 import cosine.boat.utils.CHTools;
 
-public class BoatClientActivity extends BoatActivity implements View.OnClickListener, View.OnTouchListener, TextWatcher, TextView.OnEditorActionListener{
+public class BoatClientActivity extends BoatActivity implements View.OnClickListener,Client {
 
-    private LauncherConfig gameLaunchSetting;
+    private final static int CURSOR_SIZE = 16; //dp
+    private final int[] grabbedPointer = new int[]{0, 0};
 
     public FrameLayout mControlLayout;
-    public ImageView mouseCursor;
-    public H2CO3CustomManager h2co3CustomManager;
-    public H2CO3CrossingKeyboard h2CO3CrossingKeyboard;
-    public H2CO3MinecraftBottomBar h2CO3MinecraftBottombar;
     public SharedPreferences msh;
     public SharedPreferences.Editor mshe;
     public int cursorMode = BoatInput.CursorEnabled;
-    MyHandler mHandler;
-    Button touchPad2, touchPad;
+    public ImageView mouseCursor;
+    int height;
+    int width;
+    private LauncherConfig gameLaunchSetting;
+    private VirtualController virtualController;
+    private HardwareController hardwareController;
     private DrawerLayout drawerLayout;
     private NavigationView navDrawer;
     private NavigationView.OnNavigationItemSelectedListener gameActionListener;
-
+    private boolean grabbed = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,24 +76,24 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         msh = getSharedPreferences("Boat_H2CO3", MODE_PRIVATE);
         mshe = msh.edit();
         base = findViewById(cosine.boat.R.id.main_base);
-        mouseCursor = base.findViewById(cosine.boat.R.id.mouse_cursor);
         mControlLayout = findViewById(cosine.boat.R.id.content_frame);
-        touchPad = this.findButton(cosine.boat.R.id.touch_pad);
         drawerLayout = findViewById(cosine.boat.R.id.overlay_drawer_options);
-
         navDrawer = findViewById(cosine.boat.R.id.main_navigation_view);
+        virtualController = new VirtualController(this, KeyEvent.KEYMAP_TO_X) {
+            @Override
+            public void init() {
+                super.init();
+            }
+        };
+        hardwareController = new HardwareController(this, KeyEvent.KEYMAP_TO_X);
         init();
         initUI();
     }
 
     @SuppressLint("ClickableViewAccessibility")
     private void initUI() {
-
-        InitCustomButton();
-
         gameActionListener = menuItem -> {
             if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_custom) {
-                openH2CO3CustomControls();
             }/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
                 //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
                 openH2CO3CustomControls();
@@ -110,123 +107,19 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
         //Control the 2/3 screen
 
-        touchPad2 = this.findButton(cosine.boat.R.id.touch_pad2);
-        touchPad2.setOnTouchListener(new View.OnTouchListener() {
-            private long currentMS;
-            private float itialY, itialX;
-            private int moveX, moveY;
-
-            @SuppressLint("SetTextI18n")
-            @Override
-            public boolean onTouch(View p1, MotionEvent p2) {
-                if (cursorMode == BoatInput.CursorDisabled) {
-                    if (getResources().getString(cosine.boat.R.string.touch_mode_2).equals(getResources().getString(cosine.boat.R.string.touch_mode_2))) {
-                        switch (p2.getActionMasked()) {
-                            case MotionEvent.ACTION_DOWN:
-                                moveX = 0;
-                                moveY = 0;
-                                initialX = (int) p2.getX();
-                                initialY = (int) p2.getY();
-                                itialX = p2.getX();
-                                itialY = p2.getY();
-                                currentMS = System.currentTimeMillis();
-                            case MotionEvent.ACTION_MOVE:
-                                moveX += Math.abs(p2.getX() - itialX);
-                                moveY += Math.abs(p2.getY() - itialY);
-                                long movesTime = System.currentTimeMillis() - currentMS;//移动时间
-                                if (movesTime > 400 && moveX < 3 && moveY < 3) {
-                                    BoatInput.pushEventMouseButton(BoatInput.Button1, true);
-                                    BoatInput.pushEventPointer(baseX + (int) p2.getX() - initialX, baseY + (int) p2.getY() - initialY);
-                                    return false;
-                                }
-                                BoatInput.pushEventPointer(baseX + (int) p2.getX() - initialX, baseY + (int) p2.getY() - initialY);
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                baseX += ((int) p2.getX() - initialX);
-                                baseY += ((int) p2.getY() - initialY);
-                                BoatInput.pushEventMouseButton(BoatInput.Button1, false);
-                                BoatInput.pushEventMouseButton(BoatInput.Button3, false);
-                                BoatInput.pushEventPointer(baseX, baseY);
-                                long moveTime = System.currentTimeMillis() - currentMS;
-                                if (moveTime < 200 && (moveX < 2 || moveY < 2)) {
-                                    BoatInput.pushEventMouseButton(BoatInput.Button3, true);
-                                    BoatInput.pushEventMouseButton(BoatInput.Button3, false);
-                                    return false;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                    } else {
-                        switch (p2.getActionMasked()) {
-                            case MotionEvent.ACTION_DOWN:
-                                moveX = 0;
-                                moveY = 0;
-                                initialX = (int) p2.getX();
-                                initialY = (int) p2.getY();
-                                itialX = p2.getX();
-                                itialY = p2.getY();
-                                currentMS = System.currentTimeMillis();
-                            case MotionEvent.ACTION_MOVE:
-                                moveX += Math.abs(p2.getX() - itialX);
-                                moveY += Math.abs(p2.getY() - itialY);
-                                long movesTime = System.currentTimeMillis() - currentMS;//移动时间
-                                if (movesTime > 400 && moveX < 3 && moveY < 3) {
-                                    BoatInput.pushEventMouseButton(BoatInput.Button3, true);
-                                    BoatInput.pushEventPointer(baseX + (int) p2.getX() - initialX, baseY + (int) p2.getY() - initialY);
-                                    return false;
-                                }
-                                BoatInput.pushEventPointer(baseX + (int) p2.getX() - initialX, baseY + (int) p2.getY() - initialY);
-                                break;
-                            case MotionEvent.ACTION_UP:
-                                baseX += ((int) p2.getX() - initialX);
-                                baseY += ((int) p2.getY() - initialY);
-                                BoatInput.pushEventMouseButton(BoatInput.Button3, false);
-                                BoatInput.pushEventMouseButton(BoatInput.Button1, false);
-                                BoatInput.pushEventPointer(baseX, baseY);
-                                long moveTime = System.currentTimeMillis() - currentMS;
-                                if (moveTime < 200 && (moveX < 2 || moveY < 2)) {
-                                    BoatInput.pushEventMouseButton(BoatInput.Button1, true);
-                                    BoatInput.pushEventMouseButton(BoatInput.Button1, false);
-                                    return false;
-                                }
-
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                } else if (cursorMode == BoatInput.CursorEnabled) {
-                    baseX = (int) p2.getX();
-                    baseY = (int) p2.getY();
-                    BoatInput.pushEventPointer(baseX, baseY);
-                    if (p2.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                        BoatInput.pushEventMouseButton(BoatInput.Button1, true);
-
-                    }
-                    if (p2.getActionMasked() == MotionEvent.ACTION_UP) {
-                        BoatInput.pushEventMouseButton(BoatInput.Button1, false);
-                    }
-                }
-
-
-                mouseCursor.setX(p2.getX());
-                mouseCursor.setY(p2.getY());
-                return true;
-            }
+        getWindow().getDecorView().findViewById(android.R.id.content).post(() -> {
+            width = getSurfaceLayerView().getWidth();
+            height = getResources().getDisplayMetrics().heightPixels;
         });
-
-        int height = getWindowManager().getDefaultDisplay().getHeight();
-        int width = getWindowManager().getDefaultDisplay().getWidth();
-        int scale = 1;
-        while (width / (scale + 1) >= 320 && height / (scale + 1) >= 240) {
-            scale++;
-        }
+        mouseCursor = new ImageView(this);
+        mouseCursor.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(this, CURSOR_SIZE), DisplayUtils.getPxFromDp(this, CURSOR_SIZE)));
+        mouseCursor.setImageResource(cosine.boat.R.drawable.cursor5);
+        this.addView(mouseCursor);
         //popupWindow.setContentView(base);
 
-        mHandler = new MyHandler();
 
         drawerLayout.closeDrawers();
+        BoatInput.pushEventWindow(width, height);
     }
 
     private void handleCallback() {
@@ -234,11 +127,11 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
             @Override
             public void onSurfaceTextureAvailable(SurfaceTexture surface, int width, int height) {
                 surface.setDefaultBufferSize((int) (width * scaleFactor), (int) (height * scaleFactor));
-                MCOptionUtils.load(CHTools.getBoatCfg("game_directory",""));
+                MCOptionUtils.load(CHTools.getBoatCfg("game_directory", ""));
                 MCOptionUtils.set("overrideWidth", String.valueOf((int) (width * scaleFactor)));
                 MCOptionUtils.set("overrideHeight", String.valueOf((int) (height * scaleFactor)));
                 MCOptionUtils.set("fullscreen", "false");
-                MCOptionUtils.save(CHTools.getBoatCfg("game_directory",""));
+                MCOptionUtils.save(CHTools.getBoatCfg("game_directory", ""));
                 new Thread(() -> {
 
                     Vector<String> args = LauncherConfig.getMcArgs(gameLaunchSetting, BoatClientActivity.this, (int) (width * scaleFactor), (int) (height * scaleFactor), "server");
@@ -246,7 +139,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         BoatActivity.setBoatNativeWindow(new Surface(surface));
                         BoatInput.setEventPipe();
 
-                        String runtimePath = CHTools.getBoatCfg("runtimePath","");
+                        String runtimePath = CHTools.getBoatCfg("runtimePath", "");
                         String javaPath = null;
                         String java = LauncherConfig.loadjava();
                         // Java版本选择
@@ -258,10 +151,11 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         String gl = LauncherConfig.loadgl();
                         System.out.print(gl);
                         String boatRenderer;
-                        String lwjglPath = CHTools.getBoatCfg("runtimePath","") + "/boat";
+                        String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
                         boatRenderer = "libGL114";
                         System.out.println(args);
-                        MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion","")));;
+                        MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "")));
+                        ;
                         boolean isHighVersion = mcVersion.minimumLauncherVersion >= 21;
                         startGame(javaPath,
                                 LAUNCHER_FILE_DIR,
@@ -303,373 +197,9 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         });
     }
 
-    private void InitCustomButton() {
-        h2co3CustomManager = new H2CO3CustomManager();
-        h2co3CustomManager.InitCustomButton(this, (this.mControlLayout), getBoatCfg("currentVersion", org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR) + "/H2CO3KeyBoard.json");
-        h2co3CustomManager.setCustomButtonCallback(new H2CO3CustomManager.CustomButtonCallback() {
-            @Override
-            public void CommandReceived(String command) {
-
-            }
-
-            @Override
-            public void KeyReceived(int Key, boolean Pressed) {
-                sendKeyPress(Key, 0, Pressed);
-            }
-
-            @Override
-            public void ControlsMousePointerMovement(int x, int y) {
-                if (cursorMode == BoatInput.CursorDisabled) {
-                    baseX = x;
-                    baseY = y;
-                    BoatInput.pushEventPointer(baseX, baseY);
-                }
-            }
-
-            @Override
-            public void MouseCallback(int Key, boolean Pressed) {
-                sendMouseButton(Key, Pressed);
-            }
-
-            @Override
-            public void Pressed() {
-
-            }
-
-            @Override
-            public void unPressed() {
-
-            }
-        });
-
-        h2CO3CrossingKeyboard = findViewById(cosine.boat.R.id.h2co3_keyboard);
-        float xxx = msh.getFloat("CrossingKeyBoardX", (float) 0.09 * (CallbackBridge.windowWidth));
-        float yyy = msh.getFloat("CrossingKeyBoardY", (float) 0.49 * (CallbackBridge.windowHeight));
-        if (xxx != 0 && yyy != 0) {
-            h2CO3CrossingKeyboard.setX(xxx);
-            h2CO3CrossingKeyboard.setY(yyy);
-        }
-        h2CO3CrossingKeyboard.setScale(msh.getFloat("CrossingKeyBoardResize", 1.0f));
-        h2CO3CrossingKeyboard.setListener(new H2CO3CrossingKeyboard.H2CO3Listener() {
-            private boolean upFromCenter = false;
-            private boolean upToCenter = false;
-            private boolean isShift = false;
-
-            @Override
-            public void onLeftUp() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onUp() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onRightUp() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onLeft() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onCenter(boolean direct) {
-                if (direct) {
-                    isShift = !isShift;
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_LEFTSHIFT, 0, true);
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-                } else {
-                    upFromCenter = true;
-                }
-            }
-
-            @Override
-            public void onRight() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onLeftDown() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onDown() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onRightDown() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-            }
-
-            @Override
-            public void onSlipLeftUp() {
-                System.out.println("左上");
-            }
-
-            @Override
-            public void onSlipUp() {
-                System.out.println("上");
-            }
-
-            @Override
-            public void onSlipRightUp() {
-                System.out.println("右上");
-                BoatInput.pushEventKey(BoatKeycodes.KEY_E, 0, true);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_E, 0, false);
-            }
-
-            @Override
-            public void onSlipLeft() {
-                System.out.println("左");
-            }
-
-            @Override
-            public void onSlipRight() {
-                System.out.println("右");
-            }
-
-            @Override
-            public void onSlipLeftDown() {
-                System.out.println("左下");
-                showKeyboard();
-            }
-
-            @Override
-            public void onSlipDown() {
-                System.out.println("下");
-            }
-
-            @Override
-            public void onSlipRightDown() {
-                System.out.println("右下");
-            }
-
-            @Override
-            public void onUpToCenter() {
-//            if (!禁用手势){
-//
-//            }
-                upToCenter = true;
-                BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, true);
-            }
-
-            @Override
-            public void onFingerUp() {
-                BoatInput.pushEventKey(BoatKeycodes.KEY_W, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_A, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_S, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_D, 0, false);
-                BoatInput.pushEventKey(BoatKeycodes.KEY_LEFTSHIFT, 0, false);
-                if (upToCenter) {
-                    BoatInput.pushEventKey(BoatKeycodes.KEY_SPACE, 0, false);
-                    upToCenter = false;
-                }
-
-            }
-        });
-    }
-
-    public void showKeyboard() {
-        ((InputMethodManager) getSystemService(INPUT_METHOD_SERVICE)).toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
-        mainTextureView.requestFocusFromTouch();
-        mainTextureView.requestFocus();
-    }
-
-    private void openH2CO3CustomControls() {
-        h2co3CustomManager.isEditCustomButton();
-        h2CO3CrossingKeyboard.Custom();
-        navDrawer.getMenu().clear();
-        navDrawer.inflateMenu(cosine.boat.R.menu.menu_h2co3);
-        navDrawer.setNavigationItemSelectedListener(item -> {
-            if (item.getItemId() == cosine.boat.R.id.menu_h2co3_add) {
-                if (h2co3CustomManager.getSelectCustomButtonMode()) {
-                    h2co3CustomManager.setSelectCustomButtonMode(false);
-                    if (h2co3CustomManager.getEditCustomButtonMode()) {
-                        h2co3CustomManager.CustomButtonDialog(false);
-                        if (h2co3CustomManager.getCurrentKeyPress().getButtonKeyType().equals("显隐控制按键")) {
-                            for (String ID : h2co3CustomManager.getCurrentKeyPress().getTargetKeyID()) {
-                                H2CO3CustomButton b = h2co3CustomManager.getButton(ID);
-                                b.setTextColor(Color.parseColor(b.getButtonTextColor()));
-                                b.setVisibility(View.VISIBLE);
-                            }
-                        }
-                    } else {
-                        h2co3CustomManager.CustomButtonDialog(true);
-                    }
-                } else {
-                    h2co3CustomManager.CustomButtonDialog(true);
-                }
-            } else if (item.getItemId() == cosine.boat.R.id.menu_h2co3_save) {
-                h2co3CustomManager.isEditCustomButton();
-                h2CO3CrossingKeyboard.Custom();
-                mshe.putFloat("CrossingKeyBoardX", h2CO3CrossingKeyboard.getX());
-                mshe.putFloat("CrossingKeyBoardY", h2CO3CrossingKeyboard.getY());
-                mshe.putFloat("CrossingKeyBoardResize", h2CO3CrossingKeyboard.mScale);
-                mshe.commit();
-                navDrawer.getMenu().clear();
-                navDrawer.inflateMenu(cosine.boat.R.menu.menu_boat_overlay);
-                navDrawer.setNavigationItemSelectedListener(gameActionListener);
-            }
-            return true;
-        });
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    public Button findButton(int id) {
-        Button b = (Button) findViewById(id);
-        b.setOnTouchListener(this);
-        return b;
-    }
-
-    @SuppressLint("ClickableViewAccessibility")
-    @Override
-    public boolean onTouch(View p1, MotionEvent p2) {
-        if (p1 == touchPad) {
-            if (cursorMode == BoatInput.CursorDisabled) {
-                switch (p2.getActionMasked()) {
-                    case MotionEvent.ACTION_DOWN:
-                        initialX = (int) p2.getX();
-                        initialY = (int) p2.getY();
-                    case MotionEvent.ACTION_MOVE:
-                        BoatInput.pushEventPointer(baseX + (int) p2.getX() - initialX, baseY + (int) p2.getY() - initialY);
-                        break;
-                    case MotionEvent.ACTION_UP:
-                        baseX += ((int) p2.getX() - initialX);
-                        baseY += ((int) p2.getY() - initialY);
-                        BoatInput.pushEventPointer(baseX, baseY);
-                        break;
-                    default:
-                        break;
-                }
-            } else if (cursorMode == BoatInput.CursorEnabled) {
-                baseX = (int) p2.getX();
-                baseY = (int) p2.getY();
-                BoatInput.pushEventPointer(baseX, baseY);
-                if (p2.getActionMasked() == MotionEvent.ACTION_DOWN) {
-                    BoatInput.pushEventMouseButton(BoatInput.Button1, true);
-                }
-                if (p2.getActionMasked() == MotionEvent.ACTION_UP) {
-                    BoatInput.pushEventMouseButton(BoatInput.Button1, false);
-                }
-            }
-            mouseCursor.setX(p2.getX());
-            mouseCursor.setY(p2.getY());
-            return true;
-        }
-        return false;
-
-    }
-
-    @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-    }
-
-    @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-    }
-
-    @Override
-    public void afterTextChanged(Editable s) {
-
-    }
-
-    @Override
-    public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-        return false;
-    }
-
-
-    @SuppressLint("HandlerLeak")
-    private final Handler cursorModeHandler = new Handler() {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == BoatInput.CursorDisabled) {
-                BoatClientActivity.this.h2CO3CrossingKeyboard.setVisibility(View.VISIBLE);
-                BoatClientActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
-                BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
-                BoatClientActivity.this.touchPad.setVisibility(View.INVISIBLE);
-                BoatClientActivity.this.touchPad2.setVisibility(View.VISIBLE);
-            }
-            if (msg.what == BoatInput.CursorEnabled) {
-                BoatClientActivity.this.h2CO3CrossingKeyboard.setVisibility(View.INVISIBLE);
-                BoatClientActivity.this.mouseCursor.setVisibility(View.VISIBLE);
-                BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
-                BoatClientActivity.this.touchPad.setVisibility(View.VISIBLE);
-                BoatClientActivity.this.touchPad2.setVisibility(View.INVISIBLE);
-            }
-        }
-    };
-    @SuppressLint("HandlerLeak")
-    private class MyHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                default:
-                    BoatClientActivity.this.finish();
-                    startActivity(new Intent(BoatClientActivity.this, MainActivity.class));
-                    break;
-            }
-        }
-    }
-
     @Override
     public void onClick(View p1) {
         // TODO: Implement this method
-    }
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
-        return super.onKeyUp(keyCode, event);
     }
 
     @Override
@@ -678,7 +208,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
 
@@ -699,10 +229,162 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
     @Override
     protected void onDestroy() {
-        Intent virGLService = new Intent(this, VirGLService.class);
-        stopService(virGLService);
         super.onDestroy();
     }
 
-}
+    @Override
+    public void setKey(int keyCode, boolean pressed) {
+        this.setKey(keyCode, 0, pressed);
+    }
 
+    @Override
+    public void setPointerInc(int xInc, int yInc) {
+        if (!grabbed) {
+            int x, y;
+            x = grabbedPointer[0] + xInc;
+            y = grabbedPointer[1] + yInc;
+            if (x >= 0 && x <= width)
+                grabbedPointer[0] += xInc;
+            if (y >= 0 && y <= height)
+                grabbedPointer[1] += yInc;
+            setPointer(grabbedPointer[0], grabbedPointer[1]);
+            this.mouseCursor.post(() -> {
+                mouseCursor.setX(grabbedPointer[0]);
+                mouseCursor.setY(grabbedPointer[1]);
+            });
+        } else {
+            setPointer(getPointer()[0] + xInc, getPointer()[1] + yInc);
+        }
+    }
+
+    @Override
+    public void setPointer(int x, int y) {
+        super.setPointer(x, y);
+        if (!grabbed) {
+            this.mouseCursor.post(() -> {
+                mouseCursor.setX(x);
+                mouseCursor.setY(y);
+            });
+            grabbedPointer[0] = x;
+            grabbedPointer[1] = y;
+        }
+    }
+
+    @Override
+    public Activity getActivity() {
+        return this;
+    }
+
+    @Override
+    public void addView(View v) {
+        this.addContentView(v, v.getLayoutParams());
+    }
+
+    @Override
+    public void typeWords(String str) {
+        if (str == null) return;
+        for (int i = 0; i < str.length(); i++) {
+            setKey(0, str.charAt(i), true);
+            setKey(0, str.charAt(i), false);
+        }
+    }
+
+    @Override
+    public int[] getGrabbedPointer() {
+        return this.grabbedPointer;
+    }
+
+    @Override
+    public int[] getLoosenPointer() {
+        return this.getPointer();
+    }
+
+    @Override
+    public ViewGroup getViewsParent() {
+        return (ViewGroup) mControlLayout.getRootView();
+    }
+
+    @Override
+    public View getSurfaceLayerView() {
+        return findViewById(cosine.boat.R.id.main_surface);
+    }
+
+    @Override
+    public boolean isGrabbed() {
+        return this.grabbed;
+    }
+
+    @Override
+    public void setGrabCursor(boolean isGrabbed) {
+        boolean Grabbed = this.cursorMode == BoatInput.CursorDisabled;
+        super.setGrabCursor(Grabbed);
+        this.grabbed = Grabbed;
+        if (!Grabbed) {
+            setPointer(grabbedPointer[0], grabbedPointer[1]);
+            mouseCursor.post(() -> mouseCursor.setVisibility(View.VISIBLE));
+        } else if (mouseCursor.getVisibility() == View.VISIBLE) {
+            mouseCursor.post(() -> mouseCursor.setVisibility(View.INVISIBLE));
+        }
+    }
+    @SuppressLint("HandlerLeak")
+    public final Handler cursorModeHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == BoatInput.CursorDisabled) {
+                BoatClientActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
+                BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
+            }
+            if (msg.what == BoatInput.CursorEnabled) {
+                BoatClientActivity.this.mouseCursor.setVisibility(View.VISIBLE);
+                BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
+            }
+        }
+    };
+    public static void attachControllerInterface() {
+        BoatClientActivity.boatInterface = new BoatClientActivity.IBoat() {
+            private VirtualController virtualController;
+            private HardwareController hardwareController;
+            private Timer timer;
+
+            public void onActivityCreate(BoatActivity boatActivity) {
+                virtualController = new VirtualController((Client) boatActivity, KEYMAP_TO_X);
+                hardwareController = new HardwareController((Client) boatActivity, KEYMAP_TO_X);
+            }
+
+            @Override
+            public void setGrabCursor(boolean isGrabbed) {
+                virtualController.setGrabCursor(isGrabbed);
+                hardwareController.setGrabCursor(isGrabbed);
+            }
+
+            @Override
+            public void onStop() {
+                virtualController.onStop();
+                hardwareController.onStop();
+            }
+
+            @Override
+            public void onResume() {
+                virtualController.onResumed();
+                hardwareController.onResumed();
+            }
+
+            @Override
+            public void onPause() {
+                virtualController.onPaused();
+                hardwareController.onPaused();
+            }
+
+            @Override
+            public boolean dispatchKeyEvent(android.view.KeyEvent event) {
+                return hardwareController.dispatchKeyEvent(event);
+            }
+
+            @Override
+            public boolean dispatchGenericMotionEvent(MotionEvent event) {
+                return hardwareController.dispatchMotionKeyEvent(event);
+            }
+        };
+    }
+}

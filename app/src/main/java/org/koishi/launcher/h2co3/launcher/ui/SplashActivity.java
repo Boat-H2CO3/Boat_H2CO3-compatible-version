@@ -1,23 +1,24 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_DATA_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.LAUNCHER_FILE_DIR;
-import static org.koishi.launcher.h2co3.tools.CHTools.boatCfg;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_DATA_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
+import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
 import com.google.android.material.snackbar.Snackbar;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
 import com.hjq.permissions.XXPermissions;
 
-import org.koishi.launcher.h2co3.tools.CHTools;
 import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.AssetsUtils;
@@ -88,7 +89,7 @@ public class SplashActivity extends H2CO3Activity {
     }
 
     public void start() {
-        new Handler().postDelayed(this::startApp, 500);
+        new Handler(Looper.getMainLooper()).postDelayed(this::startApp, 500);
     }
 
     public void updateMarkDown() {
@@ -190,7 +191,7 @@ public class SplashActivity extends H2CO3Activity {
                     }
                 }).start();
                 splashCheck.setText(getResources().getString(R.string.launcher_initial_install_start));
-                new Handler().postDelayed(() -> {
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     Intent i = new Intent(SplashActivity.this, MainActivity.class);
                     i.putExtra("fragment", getResources().getString(R.string.app_name));
                     startActivity(i);
@@ -212,7 +213,7 @@ public class SplashActivity extends H2CO3Activity {
                 }).start();
                 updateMarkDown();
                 splashCheck.setText(getResources().getString(R.string.launcher_initial_install_start));
-                new Handler().postDelayed(() -> {
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
                     startActivity(new Intent(SplashActivity.this, InitialActivity.class));
                     finish();
                 }, 1000);

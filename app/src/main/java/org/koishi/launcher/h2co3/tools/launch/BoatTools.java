@@ -49,7 +49,7 @@ public class BoatTools {
 
             StringBuilder cacioClasspath = new StringBuilder();
             cacioClasspath.append("-Xbootclasspath/").append(isJava8 ? "p" : "a");
-            File cacioDir = new File(context.getDir("runtime",0).getAbsolutePath() + "/boat" + "/plugin/caciocavallo" + (isJava8 ? "" : "17"));
+            File cacioDir = new File(context.getDir("runtime", 0).getAbsolutePath() + "/boat" + "/plugin/caciocavallo" + (isJava8 ? "" : "17"));
             if (cacioDir.exists() && cacioDir.isDirectory()) {
                 for (File file : Objects.requireNonNull(cacioDir.listFiles())) {
                     if (file.getName().endsWith(".jar")) {
@@ -57,7 +57,7 @@ public class BoatTools {
                     }
                 }
             }
-            Log.d("AAAAAAA",cacioClasspath.toString());
+            Log.d("AAAAAAA", cacioClasspath.toString());
             javaArgList.add(cacioClasspath.toString());
         }
     }

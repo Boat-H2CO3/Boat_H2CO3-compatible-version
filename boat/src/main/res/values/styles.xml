@@ -8,9 +8,4 @@
         <item name="android:textColor">#FFFFFFFF</item>
     </style>
 
-    <style name="FullDialog">
-        <!-- 是否没有标题 -->
-        <item name="windowNoTitle">true</item>
-        <item name="android:windowFullscreen">true</item>
-    </style>
 </resources>

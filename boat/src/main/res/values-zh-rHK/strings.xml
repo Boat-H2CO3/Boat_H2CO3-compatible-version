@@ -42,8 +42,6 @@
     <string name="downtip">如果你在下载过程中不小心关闭了这个软件的进程，需要点击Delete键来进行清除缓存，然后重新进行下载。</string>
     -->
 
-    <string name="touch_mode_2">建築模式</string>
-
     <string name="app_restart">重新启动</string>
 
     <string name="crash_test">崩潰測試</string>

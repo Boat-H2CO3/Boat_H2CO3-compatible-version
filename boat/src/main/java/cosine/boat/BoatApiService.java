@@ -15,6 +15,11 @@ public class BoatApiService extends Service {
 
     public ApiInstallerCallback callback;
 
+    public static void onExit(Context context, int exitCode) {
+        ((BoatApiService) context).callback.onExit(exitCode);
+        ((BoatApiService) context).stopSelf();
+    }
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -24,14 +29,9 @@ public class BoatApiService extends Service {
     public void startApiInstaller(String javaPath, ArrayList<String> commands, String debugDir, ApiInstallerCallback callback) {
         this.callback = callback;
         new Thread(() -> {
-            int exitCode = LoadMe.launchJVM(javaPath,commands,debugDir);
-            onExit(BoatApiService.this,exitCode);
+            int exitCode = LoadMe.launchJVM(javaPath, commands, debugDir);
+            onExit(BoatApiService.this, exitCode);
         }).start();
-    }
-
-    public static void onExit(Context context, int exitCode) {
-        ((BoatApiService) context).callback.onExit(exitCode);
-        ((BoatApiService) context).stopSelf();
     }
 
     @Override

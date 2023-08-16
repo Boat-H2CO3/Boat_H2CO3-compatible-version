@@ -13,29 +13,27 @@
         android:orientation="vertical">
 
         <com.google.android.material.tabs.TabLayout
-            android:background="@null"
             android:id="@+id/ver_tab"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@null"
             android:orientation="horizontal"
             app:layout_scrollFlags="scroll|enterAlways"
             app:tabIndicatorAnimationMode="elastic"
             app:tabIndicatorFullWidth="false">
 
             <com.google.android.material.tabs.TabItem
-                android:background="@null"
-                android:id="@+id/ver_title_dir"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:checked="true"
                 android:fontFamily="@font/sans"
                 android:text="@string/manager_set_directory" />
 
             <com.google.android.material.tabs.TabItem
-                android:background="@null"
-                android:id="@+id/ver_title_ver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@null"
                 android:fontFamily="@font/sans"
                 android:text="@string/menu_ver" />
 

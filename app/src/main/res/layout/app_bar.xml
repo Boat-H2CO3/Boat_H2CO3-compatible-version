@@ -5,21 +5,20 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:fitsSystemWindows="true"
         android:background="@null"
+        android:fitsSystemWindows="true"
+        app:elevation="0dp"
         app:layout_behavior="ScrollingViewBehavior"
-        app:liftOnScroll="true"
-        app:elevation="0dp">
+        app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
-            android:background="@null"
-            app:layout_collapseMode="pin"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@null"
+            app:layout_collapseMode="pin" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
