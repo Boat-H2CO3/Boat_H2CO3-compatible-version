@@ -317,7 +317,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
     @Override
     public void setGrabCursor(boolean isGrabbed) {
         boolean Grabbed = this.cursorMode == BoatInput.CursorDisabled;
-        super.setGrabCursor(Grabbed);
         this.grabbed = Grabbed;
         if (!Grabbed) {
             setPointer(grabbedPointer[0], grabbedPointer[1]);
@@ -332,10 +331,12 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == BoatInput.CursorDisabled) {
+                BoatClientActivity.this.setGrabCursor(true);
                 BoatClientActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
             }
             if (msg.what == BoatInput.CursorEnabled) {
+                BoatClientActivity.this.setGrabCursor(false);
                 BoatClientActivity.this.mouseCursor.setVisibility(View.VISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
             }
