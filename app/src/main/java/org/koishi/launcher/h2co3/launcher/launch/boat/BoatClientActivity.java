@@ -332,11 +332,15 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
             super.handleMessage(msg);
             if (msg.what == BoatInput.CursorDisabled) {
                 BoatClientActivity.this.setGrabCursor(true);
+                virtualController.setGrabCursor(true);
+                hardwareController.setGrabCursor(true);
                 BoatClientActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
             }
             if (msg.what == BoatInput.CursorEnabled) {
                 BoatClientActivity.this.setGrabCursor(false);
+                virtualController.setGrabCursor(false);
+                hardwareController.setGrabCursor(false);
                 BoatClientActivity.this.mouseCursor.setVisibility(View.VISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
             }
