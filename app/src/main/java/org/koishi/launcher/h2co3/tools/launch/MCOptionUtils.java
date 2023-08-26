@@ -39,7 +39,7 @@ public class MCOptionUtils {
             }
             reader.close();
         } catch (IOException e) {
-
+            throw new RuntimeException(e);
         }
     }
 
@@ -85,7 +85,7 @@ public class MCOptionUtils {
         try {
             Tools.write(gameDir + "/options.txt", result.toString());
         } catch (IOException e) {
-
+            throw new RuntimeException(e);
         }
     }
 
@@ -97,7 +97,7 @@ public class MCOptionUtils {
         String str = MCOptionUtils.get("guiScale");
         int guiScale = (str == null ? 0 : Integer.parseInt(str));
 
-        int scale = Math.max(Math.min(1920 / 320, 1080 / 240), 1);
+        int scale = Math.min(1920 / 320, 1080 / 240);
         if (scale < guiScale || guiScale == 0) {
             guiScale = scale;
         }

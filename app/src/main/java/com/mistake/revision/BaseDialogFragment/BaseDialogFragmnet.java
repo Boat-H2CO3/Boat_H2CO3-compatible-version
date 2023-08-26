@@ -52,7 +52,7 @@ public class BaseDialogFragmnet extends DialogFragment {
         return new BaseDialogFragmnet(view, alpha, mAutoDismiss, cancelable, animation, gravity);
     }
 
-    public static DialogBuilder Builder() {
+    public static DialogBuilder<?> Builder() {
         return new DialogBuilder<>();
     }
 

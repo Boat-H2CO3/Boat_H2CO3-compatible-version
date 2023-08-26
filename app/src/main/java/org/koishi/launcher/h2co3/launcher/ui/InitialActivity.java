@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -30,7 +31,7 @@ public class InitialActivity extends H2CO3Activity {
     final
     Handler han = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             Intent intent1 = new Intent(InitialActivity.this, MainActivity.class);
             intent1.putExtra("fragment", getResources().getString(R.string.app_name));
@@ -66,12 +67,12 @@ public class InitialActivity extends H2CO3Activity {
             file.mkdirs();
         }
 
-        InputStream inputStream = null;
+        InputStream inputStream;
         inputStream = context.getAssets().open(assetName);
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         ZipEntry zipEntry = zipInputStream.getNextEntry();
         byte[] buffer = new byte[1024 * 1024];
-        int count = 0;
+        int count;
         while (zipEntry != null) {
             //如果是一个目录
             if (zipEntry.isDirectory()) {

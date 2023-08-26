@@ -39,7 +39,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
     private boolean moveable;
     private OnscreenJoystickConfigDialog configDialog;
 
-    private Context mContext;
     private Controller mController;
 
     private int screenWidth;
@@ -170,13 +169,12 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
         screenWidth = mController.getConfig().getScreenWidth();
         screenHeight = mController.getConfig().getScreenHeight();
 
-        onscreenJoystick = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_joystick, null);
-        mController.addContentView(onscreenJoystick, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        onscreenJoystick = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.virtual_joystick, null);
+        mController.addContentView(onscreenJoystick, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(context, widthDp), DisplayUtils.getPxFromDp(context, heightDp)));
 
         joystick = onscreenJoystick.findViewById(R.id.joystick_rocker);
         buttonMove = onscreenJoystick.findViewById(R.id.joystick_move);
@@ -186,7 +184,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         joystick.setOnShakeListener(RockerView.DirectionMode.DIRECTION_8, this);
 
         //设定配置器
-        configDialog = new OnscreenJoystickConfigDialog(mContext, this);
+        configDialog = new OnscreenJoystickConfigDialog(context, this);
 
         return true;
     }

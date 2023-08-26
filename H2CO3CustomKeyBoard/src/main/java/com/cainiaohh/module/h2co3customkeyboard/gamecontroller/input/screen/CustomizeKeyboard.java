@@ -18,7 +18,6 @@ import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.input.OnscreenInp
 
 public class CustomizeKeyboard implements OnscreenInput, Controller, CallCustomizeKeyboard {
 
-    private Context mContext;
     private Controller mController;
     private final String TAG = "CustomKeyboard";
     private final int type = KEYBOARD_BUTTON;
@@ -28,11 +27,10 @@ public class CustomizeKeyboard implements OnscreenInput, Controller, CallCustomi
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
 
-        mManager = new CkbManager(mContext, this, this);
-        mDialog = new CkbManagerDialog(mContext, mManager);
+        mManager = new CkbManager(context, this, this);
+        mDialog = new CkbManagerDialog(context, mManager);
 
         return true;
     }

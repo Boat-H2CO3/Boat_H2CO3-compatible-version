@@ -14,7 +14,6 @@ import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.input.HwInput;
 
 public class Keyboard implements HwInput {
 
-    private Context mContext;
     private Controller mController;
     private AndroidKeyMap androidKeyMap;
 
@@ -31,7 +30,6 @@ public class Keyboard implements HwInput {
     @Override
     public boolean load(Context context, Controller controller) {
 
-        this.mContext = context;
         this.mController = controller;
         this.androidKeyMap = new AndroidKeyMap();
 

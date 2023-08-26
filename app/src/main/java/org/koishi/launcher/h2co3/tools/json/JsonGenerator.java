@@ -46,7 +46,7 @@ public class JsonGenerator {
             return jsonValue;
         }
 
-        JsonHandler jsonHandler = getHandler(value.getClass());
+        JsonHandler<T> jsonHandler = (JsonHandler<T>) getHandler(value.getClass());
 
         if (jsonHandler != null) {
             return jsonHandler.deserialize(value);

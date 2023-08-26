@@ -52,7 +52,9 @@ public class CrashActivity extends AppCompatActivity {
     public void restart() {
         Intent i = getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(getBaseContext().getPackageName());
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        if (i != null) {
+            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        }
         startActivity(i);
         this.finish();
     }

@@ -2,10 +2,6 @@ package cosine.boat.logcat;
 
 import android.content.Context;
 import android.content.Intent;
-/*
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-*/
 
 /**
  * Main binding class for NDCrash functionality.

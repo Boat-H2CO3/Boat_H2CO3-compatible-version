@@ -23,7 +23,9 @@ public class DialogFragmentDownloadMinecraft extends DialogFragment {
         setCancelable(false);
 
         String version = requireArguments().getString("version");
-        String homepath = getArguments().getString("game");
+        if (getArguments() != null) {
+            String homepath = getArguments().getString("game");
+        }
         String address = getArguments().getString("address");
 
         //loading_config(version, homepath, address);

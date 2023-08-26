@@ -66,9 +66,7 @@ public class InstallFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_install, container, false);
         cardMc = root.findViewById(R.id.install_mc);
 
-        cardMc.setOnClickListener(v -> {
-            startActivity(new Intent(getActivity(), VanillaActivity.class));
-        });
+        cardMc.setOnClickListener(v -> startActivity(new Intent(getActivity(), VanillaActivity.class)));
 
         return root;
     }

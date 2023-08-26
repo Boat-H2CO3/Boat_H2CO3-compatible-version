@@ -15,8 +15,8 @@ import java.util.TimerTask;
 public abstract class BaseController implements Controller {
     private final static String TAG = "BaseController";
     public ArrayList<Input> inputs;
-    public Client client;
-    public Context context;
+    public final Client client;
+    public final Context context;
     private Timer mTimer;
     private final static int DEFAULT_INTERVAL_TIME = 5000;
     private final int internalTime;

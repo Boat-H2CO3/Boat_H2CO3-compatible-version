@@ -108,14 +108,10 @@ public class VanillaActivity extends H2CO3Activity {
         setSupportActionBar(toolbar);
 
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        toolbar.setNavigationOnClickListener(v -> {
-            finish();
-        });
+        toolbar.setNavigationOnClickListener(v -> finish());
 
         verifyStoragePermissions(this);//读写权限获取
         requestOverlayPermission();//悬浮窗权限获取
-        //buildJsonData();
-        //user();
 
         spDownloadSourceMode = (Spinner) findViewById(R.id.sp_download_source_mode);
 
@@ -329,20 +325,12 @@ public class VanillaActivity extends H2CO3Activity {
     }
 
     private void requestOverlayPermission() {
-        //if (Build.VERSION.SDK_INT >= 23) {
-        //if (!Settings.canDrawOverlays(VanillaActivity.this)) {
-        //Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-        //Uri.parse("package:" + getPackageName()));
-        //startActivityForResult(intent, REQUEST_OVERLAY);
-        //} else {
 
-        //}
-        //}
     }
 
     private String ReadString(String sourcePath) {
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = null;
+        BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(sourcePath));
             String str;
@@ -357,15 +345,6 @@ public class VanillaActivity extends H2CO3Activity {
         }
         return sb.toString();
     }
-
-	/*
-	private void user(){
-		LauncherSettingModel a = Read(ReadString(boatCfg).toString());
-		if(a!=null){
-		settingModel.getMinecraftParameter().setauth_player_name("aaa");
-		}
-	}
-	 */
 
     private LauncherSettingModel Read(String json) {
         try {

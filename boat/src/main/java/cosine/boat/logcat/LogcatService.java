@@ -78,7 +78,7 @@ public class LogcatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         final SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-        String reportPath = null;
+        String reportPath;
         if (intent != null) {
             reportPath = intent.getStringExtra(EXTRA_REPORT_FILE);
             // Using the same keys as extras.
@@ -98,8 +98,6 @@ public class LogcatService extends Service {
             if (initResult != 0) {
                 //Log.e(TAG, "Couldn't start NDCrash out-of-process daemon with unwinder: " + unwinder + ", error: " + initResult);
             } else {
-                //Log.i(TAG, "Out-of-process unwinding daemon is started with unwinder: " + unwinder + " report path: " +
-                //	  (reportPath != null ? reportPath : "null"));
 
             }
         }  //Log.i(TAG, "NDCrash out-of-process daemon is already started.");

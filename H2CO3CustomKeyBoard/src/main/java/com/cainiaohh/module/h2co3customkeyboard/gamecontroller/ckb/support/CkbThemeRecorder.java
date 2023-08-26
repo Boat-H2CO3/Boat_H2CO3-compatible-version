@@ -8,16 +8,14 @@ public class CkbThemeRecorder {
     private int designIndex;
     private int textColor;
 
-    public CkbThemeRecorder setColors(int index, int color) {
+    public void setColors(int index, int color) {
         if (index >= 0 && index < COLOR_INDEX_LENGTH) {
             this.themeColors[index] = color;
         }
-        return this;
     }
 
-    public CkbThemeRecorder setCornerRadiusPt(int radius) {
+    public void setCornerRadiusPt(int radius) {
         this.cornerRadiusPt = radius;
-        return this;
     }
 
     public int getCornerRadius() {

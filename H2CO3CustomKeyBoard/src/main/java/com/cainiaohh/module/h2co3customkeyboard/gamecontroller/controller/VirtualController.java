@@ -78,7 +78,6 @@ public class VirtualController extends BaseController implements View.OnClickLis
     public OnscreenInput inputBox;
     public OnscreenInput onscreenJoystick;
     public Input debugInfo;
-    private DragFloatActionButton dButton;
     private VirtualControllerSetting settingDialog;
     private ImageButton buttonCustomizeKeyboard;
     private SwitchCompat switchCustomizeKeyboard;
@@ -153,7 +152,7 @@ public class VirtualController extends BaseController implements View.OnClickLis
         }
 
         //添加悬浮配置按钮
-        dButton = new DragFloatActionButton(context);
+        DragFloatActionButton dButton = new DragFloatActionButton(context);
         dButton.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(context, 30), DisplayUtils.getPxFromDp(context, 30)));
         dButton.setBackground(ContextCompat.getDrawable(context, R.drawable.background_floatbutton));
         dButton.setTodo(new ArrangeRule() {
@@ -455,7 +454,6 @@ public class VirtualController extends BaseController implements View.OnClickLis
         private int lastY;
 
         private boolean isDrag;
-        private ViewGroup parent;
 
         private ArrangeRule aRule;
 
@@ -490,7 +488,7 @@ public class VirtualController extends BaseController implements View.OnClickLis
                     lastX = rawX;
                     lastY = rawY;
                     if (getParent() != null) {
-                        parent = (ViewGroup) getParent();
+                        ViewGroup parent = (ViewGroup) getParent();
                         parentHeight = parent.getHeight();
                         parentWidth = parent.getWidth();
                     }

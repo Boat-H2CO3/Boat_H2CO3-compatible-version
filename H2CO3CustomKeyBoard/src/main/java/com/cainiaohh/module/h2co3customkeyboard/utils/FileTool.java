@@ -15,7 +15,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class FileTool {
 
@@ -37,19 +40,19 @@ public class FileTool {
     /**
      * 【删除文件】
      **/
-    public static boolean deleteFile(File file) {
+    public static void deleteFile(File file) {
         if (file.exists()) {
             if (file.isFile()) {
-                return file.delete();
+                file.delete();
+                return;
             }
             //Folder then
             File[] files = file.listFiles();
-            for (File value : files) {
+            for (File value : Objects.requireNonNull(files)) {
                 deleteFile(value);
             }
-            return file.delete();
+            file.delete();
         }
-        return true; //Since there is no file, we consider it as deleted
     }
 
     /**
@@ -160,7 +163,7 @@ public class FileTool {
         File file = new File(folderPath);
         if (file.exists()) {
             File[] files = file.listFiles();
-            return files.length > 0;
+            return Objects.requireNonNull(files).length > 0;
         }
         return false;
     }
@@ -168,19 +171,17 @@ public class FileTool {
     /**
      * 【复制文件】参数为：String
      **/
-    public static int copyFile(String fromFile, String toFile) {
-        try (InputStream fisfrom = new FileInputStream(fromFile);
-             OutputStream outto = new FileOutputStream(toFile)) {
+    public static void copyFile(String fromFile, String toFile) {
+        try (InputStream fisfrom = Files.newInputStream(Paths.get(fromFile));
+             OutputStream outto = Files.newOutputStream(Paths.get(toFile))) {
             byte[] bt = new byte[1024];
             int len = fisfrom.read(bt);
             if (len > 0) {
                 outto.write(bt, 0, len);
             }
-            return 0;
         } catch (Exception e) {
             e.printStackTrace();
             Log.e("FileTool", "Copy Failed");
-            return -1;
         }
     }
 
@@ -197,7 +198,7 @@ public class FileTool {
         if (!fromFile.canRead()) {
             return;
         }
-        if (!toFile.getParentFile().exists()) {
+        if (!Objects.requireNonNull(toFile.getParentFile()).exists()) {
             toFile.getParentFile().mkdirs();
         }
         if (toFile.exists() && rewrite) {
@@ -213,7 +214,7 @@ public class FileTool {
                 fosto.write(bt, 0, c);
             }
         } catch (Exception ex) {
-            Log.e("readfile", ex.getMessage());
+            Log.e("readfile", Objects.requireNonNull(ex.getMessage()));
         }
 
     }
@@ -221,25 +222,24 @@ public class FileTool {
     /**
      * 【复制文件夹】
      **/
-    public static int copyDir(String fromFolder, String toFolder) {
+    public static void copyDir(String fromFolder, String toFolder) {
         File[] currentFiles;
         File root = new File(fromFolder);
         if (!root.exists()) {
-            return -1;
+            return;
         }
         currentFiles = root.listFiles();
         File targetDir = new File(toFolder);
         if (!targetDir.exists()) {
             targetDir.mkdirs();
         }
-        for (File currentFile : currentFiles) {
+        for (File currentFile : Objects.requireNonNull(currentFiles)) {
             if (currentFile.isDirectory()) {
                 copyDir(currentFile.getPath() + "/", currentFile.getName() + "/");
             } else {
                 copyFile(currentFile.getPath(), toFolder + currentFile.getName());
             }
         }
-        return 0;
     }
 
     /**
@@ -252,7 +252,7 @@ public class FileTool {
         }
         ArrayList<String> dirsname = new ArrayList<>();
         File[] dirs = folder.listFiles();
-        for (File file : dirs) {
+        for (File file : Objects.requireNonNull(dirs)) {
             if (file.isDirectory()) {
                 dirsname.add(file.getName());
             }
@@ -267,7 +267,7 @@ public class FileTool {
         File folder = new File(targetFolder);
         ArrayList<String> filesname = new ArrayList<>();
         File[] files = folder.listFiles();
-        for (File file : files) {
+        for (File file : Objects.requireNonNull(files)) {
             if (file.isFile()) {
                 filesname.add(file.getName());
             }
@@ -324,7 +324,7 @@ public class FileTool {
 
     public static String readToString(String filePath) throws IOException {
         StringBuilder sb = new StringBuilder();
-        try (InputStream is = new FileInputStream(filePath);
+        try (InputStream is = Files.newInputStream(Paths.get(filePath));
              BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
             String line;
             while ((line = reader.readLine()) != null) {

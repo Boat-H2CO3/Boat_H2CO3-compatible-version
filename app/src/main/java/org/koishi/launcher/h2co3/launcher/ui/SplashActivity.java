@@ -99,20 +99,6 @@ public class SplashActivity extends H2CO3Activity {
             md.mkdir();
         }
         copyData();
-        /*
-        AssetsUtils.getInstance(SplashActivity.this).copyAssetsToSD("markdown", "games/org.koishi.launcher/h2co3/markdown").setFileOperateCallback(new AssetsUtils.FileOperateCallback() {
-            @Override
-            public void onSuccess() {
-                // TODO: 文件复制成功时，主线程回调
-            }
-
-            @Override
-            public void onFailed(String error) {
-                // TODO: 文件复制失败时，主线程回调
-            }
-        });
-
-         */
     }
 
     public void copyData() {
@@ -120,16 +106,13 @@ public class SplashActivity extends H2CO3Activity {
 
         FileOutputStream out = null;
 
-        //String path = this.getApplicationContext().getFilesDir()
-
-        //.getAbsolutePath() + "/mydb.db3"; // data/data目录
         String path = LAUNCHER_FILE_DIR + "markdown/info.md";
 
         File file = new File(path);
         try {
             in = this.getAssets().open("markdown/info.md"); // 从assets目录下复制
             out = new FileOutputStream(file);
-            int length = -1;
+            int length;
             byte[] buf = new byte[1024];
             while ((length = in.read(buf)) != -1) {
                 out.write(buf, 0, length);

@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public final class Utils {
 
@@ -27,7 +28,7 @@ public final class Utils {
         if (file.exists()) {
             file.delete();
         }
-        file.getParentFile().mkdirs();
+        Objects.requireNonNull(file.getParentFile()).mkdirs();
 
         try {
             file.createNewFile();
@@ -97,13 +98,13 @@ public final class Utils {
 
     public static boolean writeFile(File file, String str) {
 
-        boolean retval = false;
+        boolean retval;
         retval = Utils.writeFile(file, str.getBytes(StandardCharsets.UTF_8));
         return retval;
     }
 
-    public static boolean writeFile(String outFile, String str) {
-        return writeFile(new File(outFile), str);
+    public static void writeFile(String outFile, String str) {
+        writeFile(new File(outFile), str);
     }
 
     public static boolean extractAsset(AssetManager am, String src, File targetFile) {
@@ -117,7 +118,7 @@ public final class Utils {
 
             is = am.open(src);
             byte[] buf = new byte[1024];
-            int count = 0;
+            int count;
 
             while ((count = is.read(buf)) != -1) {
                 fos.write(buf, 0, count);
@@ -229,7 +230,7 @@ public final class Utils {
         boolean retval = true;
         if (file.isDirectory()) {
             File[] subFiles = file.listFiles();
-            for (File subFile : subFiles) {
+            for (File subFile : Objects.requireNonNull(subFiles)) {
                 retval = retval && setExecutable(subFile);
             }
         }

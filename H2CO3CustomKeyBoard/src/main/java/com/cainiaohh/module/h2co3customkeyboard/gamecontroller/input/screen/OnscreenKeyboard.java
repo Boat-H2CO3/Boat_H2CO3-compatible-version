@@ -43,7 +43,6 @@ public class OnscreenKeyboard implements OnscreenInput {
     private final static int heightDp = 130;
     private final static String colorHexEnable = "#149CFF";
     private final static String colorHexDisable = "#000000";
-    private Context mContext;
     private Controller mController;
     private LinearLayout onscreenKeyboard;
     private boolean moveable = false;
@@ -66,13 +65,12 @@ public class OnscreenKeyboard implements OnscreenInput {
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
         screenWidth = mController.getConfig().getScreenWidth();
         screenHeight = mController.getConfig().getScreenHeight();
 
-        onscreenKeyboard = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_keyboard, null);
-        mController.addContentView(onscreenKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, widthDp), DisplayUtils.getPxFromDp(mContext, heightDp)));
+        onscreenKeyboard = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.virtual_keyboard, null);
+        mController.addContentView(onscreenKeyboard, new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(context, widthDp), DisplayUtils.getPxFromDp(context, heightDp)));
 
         //设置监听器
         for (int a = 0; a < onscreenKeyboard.getChildCount(); a++) {
@@ -84,7 +82,7 @@ public class OnscreenKeyboard implements OnscreenInput {
         }
 
         //设定配置器
-        configDialog = new OnscreenKeyboardConfigDialog(mContext, this);
+        configDialog = new OnscreenKeyboardConfigDialog(context, this);
 
         //信号
         qButtonCaps = onscreenKeyboard.findViewById(R.id.virtual_keyboard_button_caps);

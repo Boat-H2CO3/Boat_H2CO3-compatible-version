@@ -30,12 +30,9 @@ public class ItemBar implements OnscreenInput {
 
     private final static String TAG = "ItemBar";
     private final static int type = KEYBOARD_BUTTON;
-    private Context mContext;
     private Controller mController;
     private LinearLayout itemBar;
     private final boolean moveable = false;
-    private int screenWidth;
-    private int screenHeight;
     private final ItemButton[] itemButtons = new ItemButton[9];
     private boolean enable;
     private ItembarConfigDialog configDialog;
@@ -44,11 +41,10 @@ public class ItemBar implements OnscreenInput {
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
-        screenWidth = mController.getConfig().getScreenWidth();
-        screenHeight = mController.getConfig().getScreenHeight();
-        itemBar = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_itembar, null);
+        int screenWidth = mController.getConfig().getScreenWidth();
+        int screenHeight = mController.getConfig().getScreenHeight();
+        itemBar = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.virtual_itembar, null);
         mController.addContentView(itemBar, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         itemButtons[0] = itemBar.findViewById(R.id.itembutton_1);
@@ -67,8 +63,8 @@ public class ItemBar implements OnscreenInput {
         }
 
         //计算并设定物品栏大小
-        int height = mContext.getResources().getDisplayMetrics().heightPixels;
-        int width = mContext.getResources().getDisplayMetrics().widthPixels;
+        int height = context.getResources().getDisplayMetrics().heightPixels;
+        int width = context.getResources().getDisplayMetrics().widthPixels;
         int scale = 1;
         while (width / (scale + 1) >= 320 && height / (scale + 1) >= 240) {
             scale++;
@@ -82,7 +78,7 @@ public class ItemBar implements OnscreenInput {
         this.setUiVisibility(View.INVISIBLE);
 
         //设定配置器
-        this.configDialog = new ItembarConfigDialog(mContext, this);
+        this.configDialog = new ItembarConfigDialog(context, this);
 
         return true;
     }

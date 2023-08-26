@@ -49,7 +49,7 @@ public class ManagerFragment extends Fragment {
     Handler han = new Handler(Looper.getMainLooper()) {
         @SuppressLint("HandlerLeak")
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 Snackbar.make(requireView(), getResources().getString(R.string.install_done), Snackbar.LENGTH_LONG)
@@ -64,8 +64,6 @@ public class ManagerFragment extends Fragment {
                 if (!hasData) {
                     mDbDao.insertData(mOutput.getText().toString());
                 }
-                //setDir(mOutput.getText().toString());
-                //mDirectory.setText(mOutput.getText().toString());
                 pbM.setVisibility(View.GONE);
                 mDirectory.setEnabled(true);
                 mSetButton.setEnabled(true);
@@ -138,8 +136,6 @@ public class ManagerFragment extends Fragment {
             new Thread(() -> {
                 try {
                     AppExecute.output(getActivity(), "pack.zip", file);
-                    //Snackbar.make(getView(), getResources().getString(R.string.install_done), Snackbar.LENGTH_LONG)
-                    //.setAction("Action", null).show();
                     han.sendEmptyMessage(0);
                 } catch (IOException e) {
                     Snackbar.make(requireView(), e.toString(), Snackbar.LENGTH_LONG)
@@ -168,8 +164,6 @@ public class ManagerFragment extends Fragment {
         new Thread(() -> {
             try {
                 AppExecute.output(getActivity(), "pack.zip", file);
-                //Snackbar.make(getView(), getResources().getString(R.string.install_done), Snackbar.LENGTH_LONG)
-                //.setAction("Action", null).show();
                 han.sendEmptyMessage(1);
             } catch (IOException e) {
                 Snackbar.make(requireView(), e.toString(), Snackbar.LENGTH_LONG)

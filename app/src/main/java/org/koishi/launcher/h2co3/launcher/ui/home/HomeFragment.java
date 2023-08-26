@@ -130,7 +130,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     final
     Handler xboxHandler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 1) {
                 final String resultAc = mUserName.getText().toString();
@@ -220,7 +220,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     final
     Handler CheckMsg = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 if (UserMsg == null) {
@@ -396,7 +396,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     @SuppressLint("HandlerLeak")
     Handler han = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
         }
     };
@@ -431,7 +431,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         FileReader in = new FileReader(file);
         LineNumberReader reader = new LineNumberReader(in);
         String s = reader.readLine();
-        String str = null;
+        String str;
         while (s != null) {
             if (s.contains("Hardware")) {
                 str = s.replaceAll("Hardware", "");
@@ -473,7 +473,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                 con.setConnectTimeout(5000);
                 InputStream in = con.getInputStream();
                 BufferedReader bfr = new BufferedReader(new InputStreamReader(in));
-                String temp = null;
+                String temp;
                 StringBuilder str = new StringBuilder();
                 while ((temp = bfr.readLine()) != null) {
                     str.append(temp).append("\n");
@@ -653,9 +653,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         mainCheck.setOnClickListener(v -> {
         });
         mainInfo.setOnClickListener(v -> showInfoDialog());
-        mainHelp.setOnClickListener(v -> {
-            startActivity(new Intent(requireActivity(), InstructionActivity.class));
-        });
+        mainHelp.setOnClickListener(v -> startActivity(new Intent(requireActivity(), InstructionActivity.class)));
         mainFix.setOnClickListener(v -> launchFragment());
 
         /*-----------------登录界面UI--------------------*/
@@ -830,9 +828,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             CustomTabsIntent intent = new CustomTabsIntent.Builder().build();
             intent.launchUrl(requireActivity(), Uri.parse("https://www.minecraft.net/store/minecraft-java-edition/buy\n"));
         });
-        homeNew.setOnClickListener(v -> {
-            startActivity(new Intent(requireActivity(), VanillaActivity.class));
-        });
+        homeNew.setOnClickListener(v -> startActivity(new Intent(requireActivity(), VanillaActivity.class)));
         homeQQ.setOnClickListener(v -> joinQQGroup("-c3oG3cfXX-v6W8MbEl9_Fl2JjuuvpC6"));
 
         nav = root.findViewById(R.id.nav_view);
@@ -1050,7 +1046,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     private void initPopView(String[] usernames) {
         List<HashMap<String, Object>> list = new ArrayList<>();
         for (String username : usernames) {
-            HashMap<String, Object> map = new HashMap<String, Object>();
+            HashMap<String, Object> map = new HashMap<>();
             map.put("name", username);
             map.put("drawable", R.drawable.xicon);
             list.add(map);
@@ -1097,7 +1093,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     @SuppressLint("SetTextI18n")
     public void showInfoDialog() {
-        Dialog dialog = new Dialog(getContext());
+        Dialog dialog = new Dialog(requireContext());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.dialog_info, null);
         String cpu, cpuInfo;
         //Initial
@@ -1130,14 +1126,14 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
         Window window = dialog.getWindow();
-        WindowManager.LayoutParams lp = window.getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(window).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9);
         dialog.show();
         //onClick
     }
 
     private boolean CheckRootPathSU() {
-        File f = null;
+        File f;
         final String[] kSuSearchPaths = {"/system/bin/", "/system/xbin/", "/system/sbin/", "/sbin/", "/vendor/bin/"};
         try {
             for (String kSuSearchPath : kSuSearchPaths) {
@@ -1256,7 +1252,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -1308,7 +1304,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }

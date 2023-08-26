@@ -85,7 +85,7 @@ public class VersionFragment extends Fragment {
     final
     Handler han = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 mDialog.dismiss();
@@ -98,8 +98,6 @@ public class VersionFragment extends Fragment {
                         .setAction("Action", null).show();
             }
             if (msg.what == 2) {
-                //mVerRecyclerView.setAdapter(null);
-                //initVers();
                 Snackbar.make(page, getResources().getString(R.string.ver_add_done), Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
@@ -131,13 +129,9 @@ public class VersionFragment extends Fragment {
         page = root.findViewById(R.id.dir_layout);
 
         dir = root.findViewById(R.id.ver_new_dir);
-        dir.setOnClickListener(v -> {
-            showDirDialog();
-        });
+        dir.setOnClickListener(v -> showDirDialog());
         ver = root.findViewById(R.id.ver_new_ver);
-        ver.setOnClickListener(v -> {
-            startActivity(new Intent(requireActivity(), VanillaActivity.class));
-        });
+        ver.setOnClickListener(v -> startActivity(new Intent(requireActivity(), VanillaActivity.class)));
         mRecyclerView = root.findViewById(R.id.mRecyclerView);
         mVerRecyclerView = root.findViewById(R.id.mVerRecyclerView);
         ver.hide();
@@ -277,7 +271,7 @@ public class VersionFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -286,8 +280,6 @@ public class VersionFragment extends Fragment {
         new Thread(() -> {
             try {
                 AppExecute.output(requireActivity(), "pack.zip", getBoatDir);
-                //Snackbar.make(getView(), getResources().getString(R.string.install_done), Snackbar.LENGTH_LONG)
-                //.setAction("Action", null).show();
                 han.sendEmptyMessage(1);
             } catch (IOException e) {
                 Snackbar.make(page, getResources().getString(R.string.ver_not_right_dir) + e, Snackbar.LENGTH_LONG)
@@ -300,23 +292,9 @@ public class VersionFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        //updateDirList();
-        //initViews();
-        //mRecyclerView.post(() -> updateDirList());
 
         String currentDir = CHTools.getBoatCfg("game_directory", "Null");
         File f = new File(currentDir);
-        //if (mRecyclerView.isComputingLayout()) {
-        //updateDirList();
-        //if (f.exists()&&f.isDirectory()){
-        //if (mDbDao.hasData(dir.trim())){
-        //mDbDao.delete(dir);
-        //updateDirList();
-        //}else{
-//
-        // }
-        //}
-        // }
         if (f.exists() && f.isDirectory()) {
             initVers();
         } else {
@@ -370,14 +348,10 @@ public class VersionFragment extends Fragment {
             MaterialButton delDir = (MaterialButton) holder.getView(R.id.tv_del_dir);
             textView.setText(datas.get(position));
             if (datas.get(position).equals(CHTools.getBoatCfg("game_directory", "null"))) {
-                //lay.setSelected(true);
-                //check.setImageDrawable(getResources().getDrawable(R.drawable.ic_launcher_check_file_blue_true));
                 lay.setStrokeWidth(15);
                 lay.setStrokeColor(getResources().getColor(android.R.color.darker_gray));
                 lay.setElevation(5);
             } else {
-                //lay.setSelected(false);
-                //check.setImageDrawable(getResources().getDrawable(R.drawable.cv_shape));
                 lay.setStrokeWidth(0);
             }
             String sd3 = LAUNCHER_FILE_DIR + ".minecraft";
@@ -406,8 +380,6 @@ public class VersionFragment extends Fragment {
             lay.setOnClickListener(v -> {
                 if (f.exists() && f.isDirectory()) {
                     setDir(textView.getText().toString());
-                    //finish();
-                    //startActivity(new Intent(VersionFragment.this,VersionFragment.class));
                     mAdapter.updata(mDbDao.queryData(""));
                     mVerRecyclerView.setAdapter(null);
                     initVers();
@@ -424,13 +396,7 @@ public class VersionFragment extends Fragment {
             });
             //
             del.setOnClickListener(view -> {
-                //if (null != mRvItemOnclickListener) {
-                //if (datas.get(position).equals(CHTools.getBoatCfg("game_directory", "null"))) {
-                //setDir(sd1);
-                //} else {
 
-                //}
-                // }
                 if (null != mRvItemOnclickListener) {
                     mRvItemOnclickListener.RvItemOnclick(position);
                 }
@@ -451,21 +417,10 @@ public class VersionFragment extends Fragment {
                                 File f1 = new File(datas.get(position));
                                 //TODO
                                 mRvItemOnclickListener.RvItemOnclick(position);
-                                //finish();
-                                //startActivity(new Intent(VersionFragment.this,VersionFragment.class));
                                 mAdapter.updata(mDbDao.queryData(""));
                                 new Thread(() -> {
                                     //String file2= "/data/data/org.koishi.launcher.h2co3/app_runtime";
                                     deleteDirWihtFile(f1);
-                        /*
-                         File file = new File(file2);
-                         if(file.isDirectory()){
-                         deleteDirectory(file2);
-                         }
-                         if(file.isFile()){
-                         deleteFile(file2);
-                         }
-                         */
                                 }).start();
 
                             })
@@ -576,15 +531,6 @@ public class VersionFragment extends Fragment {
                                 } else {
                                     deleteFile(CHTools.getBoatCfg("game_directory", "Null") + "/versions/" + datas.get(position));
                                 }
-                        /*
-                         File file = new File(file2);
-                         if(file.isDirectory()){
-                         deleteDirectory(file2);
-                         }
-                         if(file.isFile()){
-                         deleteFile(file2);
-                         }
-                         */
                                 han.sendEmptyMessage(2);
                             }).start();
 
@@ -623,7 +569,7 @@ public class VersionFragment extends Fragment {
             mDialog.setContentView(dialogView);
             WindowManager windowManager = requireActivity().getWindowManager();
             Display display = windowManager.getDefaultDisplay();
-            WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+            WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
             lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
             mDialog.show();
         }

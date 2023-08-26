@@ -47,7 +47,7 @@ public class LogcatActivity extends H2CO3Activity {
             if (file.isFile() && file.exists()) {//文件存在
                 InputStreamReader isr = new InputStreamReader(new FileInputStream(file));
                 BufferedReader br = new BufferedReader(isr);
-                String lineTxt = null;
+                String lineTxt;
                 while ((lineTxt = br.readLine()) != null) {
                     if (!"".equals(lineTxt)) {
                         String reds = lineTxt.split("\\+")[0]; //java 正则表达式
@@ -278,10 +278,10 @@ public class LogcatActivity extends H2CO3Activity {
         ArrayAdapter<? extends String> adapter = new ArrayAdapter<>(this, R.layout.log_list_item, clientTxt());
         log.setAdapter(adapter);
         log2 = findViewById(R.id.view_log2);
-        ArrayAdapter<? extends String> adapter2 = new ArrayAdapter<String>(this, R.layout.log_list_item, appTxt());
+        ArrayAdapter<? extends String> adapter2 = new ArrayAdapter<>(this, R.layout.log_list_item, appTxt());
         log2.setAdapter(adapter2);
         log3 = findViewById(R.id.view_log3);
-        ArrayAdapter<? extends String> adapter3 = new ArrayAdapter<String>(this, R.layout.log_list_item, paramsTxt());
+        ArrayAdapter<? extends String> adapter3 = new ArrayAdapter<>(this, R.layout.log_list_item, paramsTxt());
         log3.setAdapter(adapter3);
     }
 

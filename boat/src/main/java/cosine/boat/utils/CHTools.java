@@ -10,6 +10,8 @@ import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -28,24 +30,25 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipInputStream;
 
 public class CHTools {
 
-    public static String LAUNCHER_FILE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/org.koishi.launcher/h2co3/";
+    public static final String LAUNCHER_FILE_DIR = Environment.getExternalStorageDirectory().getAbsolutePath() + "/games/org.koishi.launcher/h2co3/";
     @SuppressLint("SdCardPath")
     public static String LAUNCHER_DATA_DIR = "/data/data/org.koishi.launcher.h2co3/";
-    public static String LAUNCHER_DATA_USER_DIR = "/data/user/0/org.koishi.launcher.h2co3/";
-    public static String boatCfg = LAUNCHER_FILE_DIR + "config.txt";
+    public static final String LAUNCHER_DATA_USER_DIR = "/data/user/0/org.koishi.launcher.h2co3/";
+    public static final String boatCfg = LAUNCHER_FILE_DIR + "config.txt";
     public static String h2co3Cfg = LAUNCHER_FILE_DIR + "h2co3cfg.json";
     public static String INNER_FILE_DIR;
-    ZipListener zipListener;
+    final ZipListener zipListener;
     @SuppressLint("HandlerLeak")
     private final Handler zipHandler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 zipListener.onStart();
@@ -276,23 +279,22 @@ public class CHTools {
 
     }
 
-    public static boolean moveFile(String src, String dest) {
+    public static void moveFile(String src, String dest) {
         File fs = new File(src);
         if (!fs.exists()) {
-            return false;
+            return;
         }
         if (fs.isDirectory()) {
             File fss = new File(dest, fs.getName());
             fss.mkdir();
-            for (File f : fs.listFiles()) {
+            for (File f : Objects.requireNonNull(fs.listFiles())) {
                 moveFile(f.getAbsolutePath(), dest + fss.getName());
             }
         } else {
             fs.renameTo(new File(dest, fs.getName()));
-            return true;
+            return;
         }
         fs.renameTo(new File(dest, fs.getName()));
-        return true;
     }
 
     public static boolean unzip(String srcPath, String destPath) throws Exception {
@@ -355,17 +357,17 @@ public class CHTools {
     }
 
     public static String readTxt(String filePath) {
-        String str = "";
+        StringBuilder str = new StringBuilder();
         try {
             BufferedReader bfr = new BufferedReader(new FileReader(filePath));
             String temp;
             while ((temp = bfr.readLine()) != null) {
-                str += temp + "\n";
+                str.append(temp).append("\n");
             }
         } catch (IOException e) {
-            str += "错误：" + e;
+            str.append("错误：").append(e);
         }
-        return str;
+        return str.toString();
     }
 
     public static String getStoragePath() {
@@ -373,7 +375,7 @@ public class CHTools {
     }
 
     public static String getExternalFilesDir(Context context) {
-        return context.getExternalFilesDir(null).getParentFile().getAbsolutePath();
+        return Objects.requireNonNull(context.getExternalFilesDir(null).getParentFile()).getAbsolutePath();
     }
 
     public static void copyFromAssets(Context context, String source,
@@ -405,102 +407,95 @@ public class CHTools {
         output.close();
     }
 
-    public static boolean deleteFile(String src) {
+    public static void deleteFile(String src) {
         File fs = new File(src);
         if (!fs.exists()) {
-            return false;
+            return;
         }
         if (fs.isDirectory()) {
-            for (File f : fs.listFiles()) {
+            for (File f : Objects.requireNonNull(fs.listFiles())) {
                 deleteFile(f.getAbsolutePath());
             }
         } else {
             fs.delete();
-            return true;
+            return;
         }
         fs.delete();
-        return true;
     }
 
-    public static boolean dirCopy(String srcPath, String destPath) {
+    public static void dirCopy(String srcPath, String destPath) {
         File src = new File(srcPath);
         if (!new File(destPath).exists()) {
             new File(destPath).mkdirs();
         }
-        for (File s : src.listFiles()) {
+        for (File s : Objects.requireNonNull(src.listFiles())) {
             if (s.isFile()) {
                 fileCopy(s.getPath(), destPath + File.separator + s.getName());
             } else {
                 dirCopy(s.getPath(), destPath + File.separator + s.getName());
             }
         }
-        return true;
     }
 
-    public static boolean fileCopy(String srcPath, String destPath) {
+    public static void fileCopy(String srcPath, String destPath) {
         File src = new File(srcPath);
         File dest = new File(destPath);
         try {
             InputStream is = new BufferedInputStream(new FileInputStream(src));
             OutputStream out = new BufferedOutputStream(new FileOutputStream(dest));
             byte[] flush = new byte[2 * 1024];
-            int len = -1;
+            int len;
             while ((len = is.read(flush)) != -1) {
                 out.write(flush, 0, len);
             }
             out.flush();
             out.close();
             is.close();
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
     public void unzipWithProgress(final String srcPath, final String destPath) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    zipHandler.sendEmptyMessage(0);
-                    if (!new File(srcPath).exists()) {
-                        zipListener.onError("文件不存在");
-                        return;
-                    }
-                    FileInputStream in = new FileInputStream(srcPath);
-                    ZipInputStream zin = new ZipInputStream(in);
-                    ZipEntry ze;
-                    long zipCurrentLen = 0;
-                    long zipLen = getZipFileSize(srcPath);
-                    while ((ze = zin.getNextEntry()) != null) {
-                        if (ze.isDirectory()) {
-                            new File(destPath, ze.getName()).mkdirs();
-                        } else {
-                            File f = new File(destPath, ze.getName());
-                            f.createNewFile();
-                            FileOutputStream out = new FileOutputStream(f);
-                            int len;
-                            byte[] buf = new byte[2048];
-                            while ((len = zin.read(buf)) != -1) {
-                                zipCurrentLen += len;
-                                updateProgress((int) (zipCurrentLen * 100 / zipLen));
-                                out.write(buf, 0, len);
-                                out.flush();
-                            }
-                            out.close();
-                        }
-                    }
-                    zin.closeEntry();
-                    zin.close();
-                    in.close();
-                    zipHandler.sendEmptyMessage(2);
-                } catch (IOException e) {
-                    Message msg = new Message();
-                    msg.what = 3;
-                    msg.obj = e.toString();
-                    zipHandler.sendMessage(msg);
+        new Thread(() -> {
+            try {
+                zipHandler.sendEmptyMessage(0);
+                if (!new File(srcPath).exists()) {
+                    zipListener.onError("文件不存在");
+                    return;
                 }
+                FileInputStream in = new FileInputStream(srcPath);
+                ZipInputStream zin = new ZipInputStream(in);
+                ZipEntry ze;
+                long zipCurrentLen = 0;
+                long zipLen = getZipFileSize(srcPath);
+                while ((ze = zin.getNextEntry()) != null) {
+                    if (ze.isDirectory()) {
+                        new File(destPath, ze.getName()).mkdirs();
+                    } else {
+                        File f = new File(destPath, ze.getName());
+                        f.createNewFile();
+                        FileOutputStream out = new FileOutputStream(f);
+                        int len;
+                        byte[] buf = new byte[2048];
+                        while ((len = zin.read(buf)) != -1) {
+                            zipCurrentLen += len;
+                            updateProgress((int) (zipCurrentLen * 100 / zipLen));
+                            out.write(buf, 0, len);
+                            out.flush();
+                        }
+                        out.close();
+                    }
+                }
+                zin.closeEntry();
+                zin.close();
+                in.close();
+                zipHandler.sendEmptyMessage(2);
+            } catch (IOException e) {
+                Message msg = new Message();
+                msg.what = 3;
+                msg.obj = e.toString();
+                zipHandler.sendMessage(msg);
             }
         }).start();
 

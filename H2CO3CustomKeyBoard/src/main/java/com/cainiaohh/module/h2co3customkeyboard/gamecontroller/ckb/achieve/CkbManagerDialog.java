@@ -21,7 +21,6 @@ import androidx.annotation.Nullable;
 import com.cainiaohh.module.h2co3customkeyboard.R;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.button.GameButton;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.CustomizeKeyboardMaker;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.AppManifest;
 import com.cainiaohh.module.h2co3customkeyboard.utils.FileTool;
 import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.DialogUtils;
 import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.support.DialogSupports;
@@ -87,10 +86,6 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
         this.setOnCancelListener(this);
 
         //是否显示模式选项
-        /*if (mManager.getController() == null) {
-            findViewById(R.id.input_customize_keyboard_dialog_layout_mode).setVisibility(View.GONE);
-        }
-         */
 
         //当进入游戏的时候自动设定客制化键盘模式为生效，如果是编辑界面，则不自动设置
         radioGame.setChecked(mManager.getController() != null);

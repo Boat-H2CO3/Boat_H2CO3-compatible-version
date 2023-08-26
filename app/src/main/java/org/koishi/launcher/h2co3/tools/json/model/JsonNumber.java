@@ -144,7 +144,7 @@ public class JsonNumber extends JsonValue {
      * @param clazz the clazz used to use correct number.
      * @return the number object of type {@link Number}
      */
-    public <T> Object getNumber(Class<T> clazz) {
+    public <T> Number getNumber(Class<T> clazz) {
 
         if (clazz.equals(Byte.class) || clazz.equals(byte.class)) {
             return byteValue();

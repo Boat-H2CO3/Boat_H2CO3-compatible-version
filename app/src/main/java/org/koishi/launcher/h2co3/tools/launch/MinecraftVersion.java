@@ -9,7 +9,7 @@ import org.koishi.launcher.h2co3.launcher.launch.boat.LauncherConfig;
 import org.koishi.launcher.h2co3.tools.Utils;
 
 import java.io.File;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -24,7 +24,7 @@ public class MinecraftVersion {
     public String assets;
     public HashMap<String, Download> downloads;
     public String id;
-    public Library libraries[];
+    public Library[] libraries;
     public String mainClass;
     public String minecraftArguments;
     public int minimumLauncherVersion;
@@ -38,89 +38,78 @@ public class MinecraftVersion {
     private Map<String, String> SHAs;
 
     public static MinecraftVersion fromDirectory(File file) {
-        try {
 
-            String json = new String(Utils.readFile(new File(file, file.getName() + ".json")), "UTF-8");
-            MinecraftVersion result = new Gson().fromJson(json, MinecraftVersion.class);
-            if (new File(file, file.getName() + ".jar").exists()) {
-                result.minecraftPath = new File(file, file.getName() + ".jar").getAbsolutePath();
-            } else {
-                result.minecraftPath = "";
-            }
-
-            if (result.inheritsFrom != null && !result.inheritsFrom.equals("")) {
-
-                MinecraftVersion self = result;
-                result = MinecraftVersion.fromDirectory(new File(file.getParentFile(), self.inheritsFrom));
-
-                if (self.assetIndex != null) {
-                    if (result != null) {
-                        result.assetIndex = self.assetIndex;
-                    }
-                }
-                if (self.assets != null && !self.assets.equals("")) {
-                    if (result != null) {
-                        result.assets = self.assets;
-                    }
-                }
-                if (self.downloads != null && !self.downloads.isEmpty()) {
-
-                    if (result != null && result.downloads == null) {
-                        result.downloads = new HashMap<String, Download>();
-                    }
-
-                    result.downloads.putAll(self.downloads);
-                }
-                if (self.libraries != null && self.libraries.length > 0) {
-                    Library newLibs[] = new Library[result.libraries.length + self.libraries.length];
-                    int i = 0;
-                    for (Library lib : self.libraries) {
-                        newLibs[i] = lib;
-                        i++;
-                    }
-                    for (Library lib : result.libraries) {
-                        newLibs[i] = lib;
-                        i++;
-                    }
-
-
-                    result.libraries = newLibs;
-                }
-
-                if (self.mainClass != null && !self.mainClass.equals("")) {
-                    if (result != null) {
-                        result.mainClass = self.mainClass;
-                    }
-                }
-                if (self.minecraftArguments != null && !self.minecraftArguments.equals("")) {
-                    result.minecraftArguments = self.minecraftArguments;
-                }
-
-                if (self.minimumLauncherVersion > result.minimumLauncherVersion) {
-                    result.minimumLauncherVersion = self.minimumLauncherVersion;
-                }
-                if (self.releaseTime != null && !self.releaseTime.equals("")) {
-                    result.releaseTime = self.releaseTime;
-                }
-                if (self.time != null && !self.time.equals("")) {
-                    result.time = self.time;
-                }
-                if (self.type != null && !self.type.equals("")) {
-                    result.type = self.type;
-                }
-
-                if (self.minecraftPath != null && !self.minecraftPath.equals("")) {
-                    result.minecraftPath = self.minecraftPath;
-                }
-
-            }
-            result.minecraftArguments = "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userProperties ${user_properties} --userType ${user_type} --versionType ${version_type}";
-
-            return result;
-
-        } catch (UnsupportedEncodingException e) {
-            return null;
+        String json = new String(Utils.readFile(new File(file, file.getName() + ".json")), StandardCharsets.UTF_8);
+        MinecraftVersion result = new Gson().fromJson(json, MinecraftVersion.class);
+        if (new File(file, file.getName() + ".jar").exists()) {
+            result.minecraftPath = new File(file, file.getName() + ".jar").getAbsolutePath();
+        } else {
+            result.minecraftPath = "";
         }
+
+        if (result.inheritsFrom != null && !result.inheritsFrom.equals("")) {
+
+            MinecraftVersion self = result;
+            result = MinecraftVersion.fromDirectory(new File(file.getParentFile(), self.inheritsFrom));
+
+            if (self.assetIndex != null) {
+                result.assetIndex = self.assetIndex;
+            }
+            if (self.assets != null && !self.assets.equals("")) {
+                result.assets = self.assets;
+            }
+            if (self.downloads != null && !self.downloads.isEmpty()) {
+
+                if (result.downloads == null) {
+                    result.downloads = new HashMap<>();
+                }
+
+                result.downloads.putAll(self.downloads);
+            }
+            if (self.libraries != null && self.libraries.length > 0) {
+                Library[] newLibs = new Library[result.libraries.length + self.libraries.length];
+                int i = 0;
+                for (Library lib : self.libraries) {
+                    newLibs[i] = lib;
+                    i++;
+                }
+                for (Library lib : result.libraries) {
+                    newLibs[i] = lib;
+                    i++;
+                }
+
+
+                result.libraries = newLibs;
+            }
+
+            if (self.mainClass != null && !self.mainClass.equals("")) {
+                result.mainClass = self.mainClass;
+            }
+            if (self.minecraftArguments != null && !self.minecraftArguments.equals("")) {
+            }
+
+            if (self.minimumLauncherVersion > result.minimumLauncherVersion) {
+                result.minimumLauncherVersion = self.minimumLauncherVersion;
+            }
+            if (self.releaseTime != null && !self.releaseTime.equals("")) {
+                result.releaseTime = self.releaseTime;
+            }
+            if (self.time != null && !self.time.equals("")) {
+                result.time = self.time;
+            }
+            if (self.type != null && !self.type.equals("")) {
+                result.type = self.type;
+            }
+
+            if (self.minecraftPath != null && !self.minecraftPath.equals("")) {
+                result.minecraftPath = self.minecraftPath;
+            }
+
+        }
+        result.minecraftArguments = "--username ${auth_player_name} --version ${version_name} --gameDir ${game_directory} --assetsDir ${assets_root} --assetIndex ${assets_index_name} --uuid ${auth_uuid} --accessToken ${auth_access_token} --userProperties ${user_properties} --userType ${user_type} --versionType ${version_type}";
+
+        return result;
+
     }
 
     public String getClassPath(LauncherConfig config, boolean high, boolean isJava17) {
@@ -134,7 +123,7 @@ public class MinecraftVersion {
                 continue;
             }
 
-            String names[] = lib.name.split(":");
+            String[] names = lib.name.split(":");
             String packageName = names[0];
             String mainName = names[1];
             String versionName = names[2];
@@ -186,22 +175,22 @@ public class MinecraftVersion {
         } else {
             return new String[0];
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         int state = 0;
         int start = 0;
-        int stop = 0;
+        int stop;
         for (int i = 0; i < test.length(); i++) {
             if (state == 0) {
                 if (test.charAt(i) != '$') {
-                    result = result + test.charAt(i);
+                    result.append(test.charAt(i));
 
                 } else {
                     if (i + 1 < test.length() && test.charAt(i + 1) == '{') {
                         state = 1;
                         start = i;
                     } else {
-                        result = result + test.charAt(i);
+                        result.append(test.charAt(i));
                     }
                 }
             } else {
@@ -210,56 +199,73 @@ public class MinecraftVersion {
 
                     String key = test.substring(start + 2, stop);
 
-                    String value = "";
+                    String value;
 
 
-                    if (key.equals("version_name")) {
-                        value = id;
-                    } else if (key.equals("launcher_name")) {
-                        value = "Boat";
-                    } else if (key.equals("launcher_version")) {
-                        value = "1.0.0";
-                    } else if (key.equals("version_type")) {
-                        value = type;
-                    } else if (key.equals("assets_index_name")) {
-                        if (assetIndex != null) {
-                            value = assetIndex.id;
-                        } else {
-                            value = assets;
-                        }
-                    } else if (key.equals("game_directory")) {
-                        value = CHTools.getBoatCfg("game_directory", "Null");
-                    } else if (key.equals("assets_root")) {
-                        value = CHTools.getBoatCfg("assets_root", "Null");
-                    } else if (key.equals("user_properties")) {
-                        value = "{}";
-                    } else if (key.equals("auth_player_name")) {
-                        value = CHTools.getBoatCfg("auth_player_name", "Null");
-                    } else if (key.equals("auth_session")) {
-                        value = CHTools.getBoatCfg("auth_session", "Null");
-                    } else if (key.equals("auth_uuid")) {
-                        value = CHTools.getBoatCfg("auth_uuid", "Null");
-                    } else if (key.equals("auth_access_token")) {
-                        value = CHTools.getBoatCfg("auth_access_token", "Null");
-                    } else if (key.equals("user_type")) {
-                        value = CHTools.getBoatCfg("user_type", "Null");
-                    } else if (key.equals("primary_jar_name")) {
-                        value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
-                    } else if (key.equals("library_directory")) {
-                        value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
-                    } else if (key.equals("classpath_separator")) {
-                        value = ":";
-                    } else {
-                        value = "";
+                    switch (key) {
+                        case "version_name":
+                            value = id;
+                            break;
+                        case "launcher_name":
+                            value = "Boat";
+                            break;
+                        case "launcher_version":
+                            value = "1.0.0";
+                            break;
+                        case "version_type":
+                            value = type;
+                            break;
+                        case "assets_index_name":
+                            if (assetIndex != null) {
+                                value = assetIndex.id;
+                            } else {
+                                value = assets;
+                            }
+                            break;
+                        case "game_directory":
+                            value = CHTools.getBoatCfg("game_directory", "Null");
+                            break;
+                        case "assets_root":
+                            value = CHTools.getBoatCfg("assets_root", "Null");
+                            break;
+                        case "user_properties":
+                            value = "{}";
+                            break;
+                        case "auth_player_name":
+                            value = CHTools.getBoatCfg("auth_player_name", "Null");
+                            break;
+                        case "auth_session":
+                            value = CHTools.getBoatCfg("auth_session", "Null");
+                            break;
+                        case "auth_uuid":
+                            value = CHTools.getBoatCfg("auth_uuid", "Null");
+                            break;
+                        case "auth_access_token":
+                            value = CHTools.getBoatCfg("auth_access_token", "Null");
+                            break;
+                        case "user_type":
+                            value = CHTools.getBoatCfg("user_type", "Null");
+                            break;
+                        case "primary_jar_name":
+                            value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
+                            break;
+                        case "library_directory":
+                            value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
+                            break;
+                        case "classpath_separator":
+                            value = ":";
+                            break;
+                        default:
+                            value = "";
+                            break;
                     }
-                    result = result + value;
-                    i = stop;
+                    result.append(value);
                     state = 0;
                 }
             }
         }
-        Log.e("路径", Arrays.toString(result.split(" ")));
-        return result.split(" ");
+        Log.e("路径", Arrays.toString(result.toString().split(" ")));
+        return result.toString().split(" ");
     }
 
     public String[] getMinecraftArguments(LauncherConfig gameLaunchSetting, boolean isHighVer) {
@@ -268,80 +274,96 @@ public class MinecraftVersion {
             Object[] objs = this.arguments.game;
             for (Object obj : objs) {
                 if (obj instanceof String) {
-                    test.append(obj.toString()).append(" ");
+                    test.append(obj).append(" ");
                 }
             }
         } else {
             test = new StringBuilder(this.minecraftArguments);
         }
-        String result = "";
+        StringBuilder result = new StringBuilder();
 
         int state = 0;
         int start = 0;
-        int stop = 0;
+        int stop;
         for (int i = 0; i < test.length(); i++) {
             if (state == 0) {
                 if (test.charAt(i) != '$') {
-                    result = result + test.charAt(i);
+                    result.append(test.charAt(i));
 
                 } else {
                     if (i + 1 < test.length() && test.charAt(i + 1) == '{') {
                         state = 1;
                         start = i;
                     } else {
-                        result = result + test.charAt(i);
+                        result.append(test.charAt(i));
                     }
                 }
-                continue;
             } else {
                 if (test.charAt(i) == '}') {
                     stop = i;
 
                     String key = test.substring(start + 2, stop);
 
-                    String value = "";
+                    String value;
 
-                    if (key.equals("version_name")) {
-                        value = id;
-                    } else if (key.equals("launcher_name")) {
-                        value = "Boat";
-                    } else if (key.equals("launcher_version")) {
-                        value = "1.0.0";
-                    } else if (key.equals("version_type")) {
-                        value = type;
-                    } else if (key.equals("assets_index_name")) {
-                        if (assetIndex != null) {
-                            value = assetIndex.id;
-                        } else {
-                            value = assets;
-                        }
-                    } else if (key.equals("game_directory")) {
-                        value = CHTools.getBoatCfg("game_directory", "Null");
-                    } else if (key.equals("assets_root")) {
-                        value = CHTools.getBoatCfg("assets_root", "Null");
-                    } else if (key.equals("user_properties")) {
-                        value = "{}";
-                    } else if (key.equals("auth_player_name")) {
-                        value = CHTools.getBoatCfg("auth_player_name", "Null");
-                    } else if (key.equals("auth_session")) {
-                        value = CHTools.getBoatCfg("auth_session", "Null");
-                    } else if (key.equals("auth_uuid")) {
-                        value = CHTools.getBoatCfg("auth_uuid", "Null");
-                    } else if (key.equals("auth_access_token")) {
-                        value = CHTools.getBoatCfg("auth_access_token", "Null");
-                    } else if (key.equals("user_type")) {
-                        value = CHTools.getBoatCfg("user_type", "Null");
-                    } else if (key.equals("primary_jar_name")) {
-                        value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
-                    } else if (key.equals("library_directory")) {
-                        value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
-                    } else if (key.equals("classpath_separator")) {
-                        value = ":";
-                    } else {
-                        value = "";
+                    switch (key) {
+                        case "version_name":
+                            value = id;
+                            break;
+                        case "launcher_name":
+                            value = "Boat";
+                            break;
+                        case "launcher_version":
+                            value = "1.0.0";
+                            break;
+                        case "version_type":
+                            value = type;
+                            break;
+                        case "assets_index_name":
+                            if (assetIndex != null) {
+                                value = assetIndex.id;
+                            } else {
+                                value = assets;
+                            }
+                            break;
+                        case "game_directory":
+                            value = CHTools.getBoatCfg("game_directory", "Null");
+                            break;
+                        case "assets_root":
+                            value = CHTools.getBoatCfg("assets_root", "Null");
+                            break;
+                        case "user_properties":
+                            value = "{}";
+                            break;
+                        case "auth_player_name":
+                            value = CHTools.getBoatCfg("auth_player_name", "Null");
+                            break;
+                        case "auth_session":
+                            value = CHTools.getBoatCfg("auth_session", "Null");
+                            break;
+                        case "auth_uuid":
+                            value = CHTools.getBoatCfg("auth_uuid", "Null");
+                            break;
+                        case "auth_access_token":
+                            value = CHTools.getBoatCfg("auth_access_token", "Null");
+                            break;
+                        case "user_type":
+                            value = CHTools.getBoatCfg("user_type", "Null");
+                            break;
+                        case "primary_jar_name":
+                            value = CHTools.getBoatCfg("currentVersion", "Null") + CHTools.getBoatCfg("MinecraftVersion", "Null") + ".jar";
+                            break;
+                        case "library_directory":
+                            value = CHTools.getBoatCfg("game_directory", "Null") + "/libraries";
+                            break;
+                        case "classpath_separator":
+                            value = ":";
+                            break;
+                        default:
+                            value = "";
+                            break;
                     }
-                    result = result + value;
-                    i = stop;
+                    result.append(value);
                     state = 0;
                 }
             }
@@ -350,11 +372,11 @@ public class MinecraftVersion {
             Object[] objs = this.arguments.game;
             for (Object obj : objs) {
                 if (obj instanceof String) {
-                    result = result + " " + obj.toString();
+                    result.append(" ").append(obj);
                 }
             }
         }
-        return result.split(" ");
+        return result.toString().split(" ");
     }
 
     public List<String> getLibraries() {
@@ -400,7 +422,7 @@ public class MinecraftVersion {
         public String url;
     }
 
-    public class Download {
+    public static class Download {
         public String path;
         public String sha1;
         public int size;
@@ -412,7 +434,7 @@ public class MinecraftVersion {
         public HashMap<String, Download> downloads;
     }
 
-    public class Arguments {
+    public static class Arguments {
         private Object[] game;
         private Object[] jvm;
     }

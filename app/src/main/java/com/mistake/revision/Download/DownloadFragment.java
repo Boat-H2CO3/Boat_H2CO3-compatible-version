@@ -53,16 +53,12 @@ import okhttp3.Response;
 public class DownloadFragment extends DialogFragment {
 
 
-    //
-    private static String Source_address;
     private static String
-            API_Version_client_server_json,
-            API_Assets,
-            API_Libraries,
-            API_Manifest_Version_json;
+            API_Version_client_server_json;
+    private static String API_Assets;
+    private static String API_Libraries;
     private static String
-            game_directory,
-            assets_root;
+            game_directory;
     private static String
             Version,
             Version_assets,
@@ -76,9 +72,8 @@ public class DownloadFragment extends DialogFragment {
     private TextView mlist;
     private TextView mpath1, mpath2, mpath3;
     private ProgressBar mpath_progress1, mpath_progress2, mpath_progress3;
-    private TextView overall_progress, stages_progress;
+    private TextView stages_progress;
     private TextView title;
-    private ImageButton close;
     private ImageButton pause_start1, pause_start2, pause_start3;
     private Button btnCancel;
     private String assets_id;
@@ -95,16 +90,13 @@ public class DownloadFragment extends DialogFragment {
     private boolean download2 = false;
     private boolean download3 = false;
 
-    private String version;
-    private String homepath;
-    private String address;
     private long overall_libraries;
     private long success_libraries;//同上-assets共用-迷惑行为
 
     private String ReadString(String sourcePath) {
 
         StringBuilder sb = new StringBuilder();
-        BufferedReader br = null;
+        BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(sourcePath));
             String str;
@@ -133,11 +125,11 @@ public class DownloadFragment extends DialogFragment {
         mpath_progress1 = (ProgressBar) base.findViewById(R.id.downloadProgressBar1);
         mpath_progress2 = (ProgressBar) base.findViewById(R.id.downloadProgressBar2);
         mpath_progress3 = (ProgressBar) base.findViewById(R.id.downloadProgressBar3);
-        overall_progress = (TextView) basefindViewById(base, R.id.downloadTextView4);
+        TextView overall_progress = (TextView) basefindViewById(base, R.id.downloadTextView4);
         stages_progress = (TextView) basefindViewById(base, R.id.downloadTextView5);
         mlist = (TextView) basefindViewById(base, R.id.downloadTextView6);
         //title=(TextView)basefindViewById(base,R.id.downloadTextView7);
-        close = (ImageButton) base.findViewById(R.id.downloadImageButton1);
+        ImageButton close = (ImageButton) base.findViewById(R.id.downloadImageButton1);
         pause_start1 = (ImageButton) base.findViewById(R.id.downloadImageButton2);
         pause_start2 = (ImageButton) base.findViewById(R.id.downloadImageButton3);
         pause_start3 = (ImageButton) base.findViewById(R.id.downloadImageButton4);
@@ -156,9 +148,9 @@ public class DownloadFragment extends DialogFragment {
         mpath2.setText("");
         mpath3.setText("");
 
-        version = requireArguments().getString("version");
-        homepath = getArguments().getString("game");
-        address = getArguments().getString("address");
+        String version = requireArguments().getString("version");
+        String homepath = requireArguments().getString("game");
+        String address = getArguments().getString("address");
 
         loading_config(version, homepath, address);
 
@@ -170,19 +162,16 @@ public class DownloadFragment extends DialogFragment {
 
         mDownloadManager = DownloadManager.getInstance();//必须的
 
-        //Version = "1.7.10";//下载版本--->manifest_version_json
-        //game_directory = "/storage/emulated/0/boat/gamedir";//主游戏目录->结尾不带"/"
-        //Source_address = "https://download.mcbbs.net";//需要提供的源->结尾不带"/"
         Version = version;//下载版本--->manifest_version_json
         game_directory = homepath;//主游戏目录->结尾不带"/"
-        Source_address = address;//需要提供的源->结尾不带"/"
-//一个都不能有误-传入前检测下
-        API_Version_client_server_json = Source_address + "/version/";
-        API_Assets = Source_address + "/assets/";
-        API_Libraries = Source_address + "/maven/";
-        API_Manifest_Version_json = Source_address + "/mc/game/version_manifest_v2.json";
+        //
+        //一个都不能有误-传入前检测下
+        API_Version_client_server_json = address + "/version/";
+        API_Assets = address + "/assets/";
+        API_Libraries = address + "/maven/";
+        String API_Manifest_Version_json = address + "/mc/game/version_manifest_v2.json";
 
-        assets_root = game_directory + "/assets";
+        String assets_root = game_directory + "/assets";
         Version_jar = game_directory + "/versions/" + Version + "/" + Version + ".jar";
         Version_json = game_directory + "/versions/" + Version + "/" + Version + ".json";
         //
@@ -199,7 +188,7 @@ public class DownloadFragment extends DialogFragment {
         Window win = Objects.requireNonNull(getDialog()).getWindow();
         DisplayMetrics dm = new DisplayMetrics();
         requireActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
-        WindowManager.LayoutParams params = win.getAttributes();
+        WindowManager.LayoutParams params = Objects.requireNonNull(win).getAttributes();
         params.gravity = Gravity.CENTER;
         // 使用ViewGroup.LayoutParams，以便Dialog 宽度充满整个屏幕
         params.width = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -215,7 +204,7 @@ public class DownloadFragment extends DialogFragment {
         // 横屏时取高度为宽度，高度为为 warp_content
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-        WindowManager.LayoutParams params = Objects.requireNonNull(getDialog()).getWindow().getAttributes();
+        WindowManager.LayoutParams params = Objects.requireNonNull(Objects.requireNonNull(getDialog()).getWindow()).getAttributes();
 
         if (screenWidth > screenHeight) {
             params.width = (int) (screenHeight * 1.1f);
@@ -237,7 +226,7 @@ public class DownloadFragment extends DialogFragment {
         // 横屏时取高度为宽度，高度为为 warp_content
         int screenWidth = displayMetrics.widthPixels;
         int screenHeight = displayMetrics.heightPixels;
-        WindowManager.LayoutParams params = Objects.requireNonNull(getDialog()).getWindow().getAttributes();
+        WindowManager.LayoutParams params = Objects.requireNonNull(Objects.requireNonNull(getDialog()).getWindow()).getAttributes();
 
         if (screenWidth > screenHeight) {
             params.width = (int) (screenHeight * 0.9f);
@@ -535,10 +524,10 @@ public class DownloadFragment extends DialogFragment {
         } catch (Exception e) {
             setText(e.toString());
         }
-    }    private Handler mhandler = new Handler(new Handler.Callback() {
+    }    private final Handler mhandler = new Handler(new Handler.Callback() {
         @SuppressLint("SetTextI18n")
         @Override
-        public boolean handleMessage(Message msg) {
+        public boolean handleMessage(@NonNull Message msg) {
             switch (msg.what) {
                 case 1000:
                     if (Temporary.size() >= 1) {
@@ -628,10 +617,6 @@ public class DownloadFragment extends DialogFragment {
                     mpath_progress1.setProgress(100);
                     mpath_progress2.setProgress(100);
                     mpath_progress3.setProgress(100);
-					/*mpath1.setText(getResources().getString(R.string.download_done) + Version);
-					mpath2.setText(getResources().getString(R.string.download_done) + Version);
-					mpath3.setText(getResources().getString(R.string.download_done) + Version);
-					append(getResources().getString(R.string.download_done) + Version, 100, 100);*/
                     Objects.requireNonNull(getDialog()).dismiss();
                     HomeFragment.ExsitGame();
 
@@ -655,11 +640,6 @@ public class DownloadFragment extends DialogFragment {
 					 }*/
                     break;
                 case 10:
-					/*notif.contentView.setTextViewText(R.id.noticeTextView1,(String)msg.obj); 
-					notif.contentView.setTextViewText(R.id.noticeTextView2,overall_progress.getText().toString()); 
-					notif.contentView.setTextViewText(R.id.noticeTextView3,stages_progress.getText().toString()); 
-					notif.contentView.setProgressBar(R.id.noticeProgressBar1,msg.arg2,msg.arg1 , false); 
-					manager.notify(1, notif); */
                     break;
             }
             return false;
@@ -976,7 +956,7 @@ public class DownloadFragment extends DialogFragment {
                                     final String path,//路径
                                     final String name,//文件名
                                     final int a,
-                                    final Object object,
+                                    final String object,
                                     final int size
     ) {
         mDownloadManager.add1(url, path, name, a, object, size, new DownloadListener() {
@@ -987,11 +967,11 @@ public class DownloadFragment extends DialogFragment {
                 download1 = false;
                 if (a == 2000) {
                     assets_loading_size += 1;
-                    append((String) object, assets_loading_size, assets_loader_size);
+                    append(object, assets_loading_size, assets_loader_size);
                 } else if (a == 1000) {
                     libraries_loading_size += 1;
 
-                    append((String) object, libraries_loading_size, libraries_loader_size);
+                    append(object, libraries_loading_size, libraries_loader_size);
                 }
 
                 success_libraries += size;//共用-针对下载成功的不起作用
@@ -1028,7 +1008,7 @@ public class DownloadFragment extends DialogFragment {
                                     final String path,//路径
                                     final String name,//文件名
                                     final int a,
-                                    final Object object,
+                                    final String object,
                                     final int size
 
     ) {
@@ -1041,10 +1021,10 @@ public class DownloadFragment extends DialogFragment {
                 if (a == 2000) {
                     assets_loading_size += 1;
 
-                    append((String) object, assets_loading_size, assets_loader_size);
+                    append(object, assets_loading_size, assets_loader_size);
                 } else if (a == 1000) {
                     libraries_loading_size += 1;
-                    append((String) object, libraries_loading_size, libraries_loader_size);
+                    append(object, libraries_loading_size, libraries_loader_size);
                 }
                 success_libraries += size;
 
@@ -1080,7 +1060,7 @@ public class DownloadFragment extends DialogFragment {
                                     final String path,//路径
                                     final String name,//文件名
                                     final int a,
-                                    final Object object,
+                                    final String object,
                                     final int size
     ) {
         mDownloadManager.add3(url, path, name, a, object, size, new DownloadListener() {
@@ -1092,10 +1072,10 @@ public class DownloadFragment extends DialogFragment {
                 if (a == 2000) {
                     assets_loading_size += 1;
 
-                    append((String) object, assets_loading_size, assets_loader_size);
+                    append(object, assets_loading_size, assets_loader_size);
                 } else if (a == 1000) {
                     libraries_loading_size += 1;
-                    append((String) object, libraries_loading_size, libraries_loader_size);
+                    append(object, libraries_loading_size, libraries_loader_size);
                 }
                 success_libraries += size;
 

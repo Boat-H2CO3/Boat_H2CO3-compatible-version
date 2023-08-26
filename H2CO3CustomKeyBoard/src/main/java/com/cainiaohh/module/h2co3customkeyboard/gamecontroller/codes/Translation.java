@@ -7,6 +7,6 @@ public class Translation {
     }
 
     public int trans(String str) {
-        return ((Integer) this.xKeyMap.translate(str)).intValue();
+        return (Integer) this.xKeyMap.translate(str);
     }
 }

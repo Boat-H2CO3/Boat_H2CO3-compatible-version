@@ -113,7 +113,7 @@ public class DownloadManager {
         return url.substring(url.lastIndexOf("/") + 1);
     }
 
-    public void add1(String url, String filePath, String fileName, int a, Object object, int size, DownloadListener l) {
+    public void add1(String url, String filePath, String fileName, int a, String object, int size, DownloadListener l) {
 
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);
@@ -125,7 +125,7 @@ public class DownloadManager {
 
     //mDownloadTasks.pause();
 
-    public void add2(String url, String filePath, String fileName, int a, Object object, int size, DownloadListener l) {
+    public void add2(String url, String filePath, String fileName, int a, String object, int size, DownloadListener l) {
 
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);
@@ -135,7 +135,7 @@ public class DownloadManager {
 
     }
 
-    public void add3(String url, String filePath, String fileName, int a, Object object, int size, DownloadListener l) {
+    public void add3(String url, String filePath, String fileName, int a, String object, int size, DownloadListener l) {
 
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);
@@ -145,7 +145,7 @@ public class DownloadManager {
 
     }
 
-    public void add4(String url, String filePath, String fileName, int a, Object object, int size, DownloadListener l) {
+    public void add4(String url, String filePath, String fileName, int a, String object, int size, DownloadListener l) {
 
         if (TextUtils.isEmpty(fileName)) {
             fileName = getFileName(url);

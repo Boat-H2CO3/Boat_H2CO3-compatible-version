@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
@@ -16,7 +17,7 @@ import cosine.boat.ui.CrashActivity;
 
 public class BoatApplication extends Application implements Application.ActivityLifecycleCallbacks {
     public static AppCompatActivity mCurrentActivity;
-    public static BoatApplication mInstance = null;
+    public static final BoatApplication mInstance = null;
     public SharedPreferences mPref;
     private boolean is_OTG = false;
 
@@ -37,42 +38,42 @@ public class BoatApplication extends Application implements Application.Activity
     }
 
     @Override
-    public void onActivityCreated(Activity p1, Bundle p2) {
+    public void onActivityCreated(@NonNull Activity p1, Bundle p2) {
         // TODO: Implement this method
 
     }
 
     @Override
-    public void onActivityStarted(Activity p1) {
+    public void onActivityStarted(@NonNull Activity p1) {
         // TODO: Implement this method
         BoatApplication.mCurrentActivity = (AppCompatActivity) p1;
         System.out.println(BoatApplication.mCurrentActivity);
     }
 
     @Override
-    public void onActivityResumed(Activity p1) {
+    public void onActivityResumed(@NonNull Activity p1) {
         // TODO: Implement this method
 
     }
 
     @Override
-    public void onActivityPaused(Activity p1) {
+    public void onActivityPaused(@NonNull Activity p1) {
         // TODO: Implement this method
 
     }
 
     @Override
-    public void onActivityStopped(Activity p1) {
+    public void onActivityStopped(@NonNull Activity p1) {
         // TODO: Implement this method
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity p1, Bundle p2) {
+    public void onActivitySaveInstanceState(@NonNull Activity p1, @NonNull Bundle p2) {
         // TODO: Implement this method
     }
 
     @Override
-    public void onActivityDestroyed(Activity p1) {
+    public void onActivityDestroyed(@NonNull Activity p1) {
         // TODO: Implement this method
     }
 

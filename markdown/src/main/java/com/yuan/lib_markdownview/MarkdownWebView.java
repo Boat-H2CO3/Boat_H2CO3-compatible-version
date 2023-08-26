@@ -147,7 +147,7 @@ public class MarkdownWebView extends WebView {
                 public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                     Uri uri = request.getUrl();
                     String scheme = uri.getScheme();
-                    if (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https")) {
+                    if (scheme != null && (scheme.equalsIgnoreCase("http") || scheme.equalsIgnoreCase("https"))) {
                         open(view.getContext(), uri);
 
                         return true;

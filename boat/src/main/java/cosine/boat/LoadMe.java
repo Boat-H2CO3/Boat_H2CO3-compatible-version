@@ -44,7 +44,7 @@ public class LoadMe {
     public static native int dlexec(String[] args);
 
     @SuppressLint("SuspiciousIndentation")
-    public static int launchMinecraft(Handler handler, Context context, String javaPath, String home, boolean highVersion, Vector<String> args, String renderer, String gameDir, BoatLaunchCallback callback) {
+    public static void launchMinecraft(Handler handler, Context context, String javaPath, String home, boolean highVersion, Vector<String> args, String renderer, String gameDir, BoatLaunchCallback callback) {
         Log.w("LoadMe", String.valueOf(args));
         handler.post(callback::onStart);
 
@@ -167,15 +167,11 @@ public class LoadMe {
             System.out.println("OpenJDK exited with code : " + exitCode);
         } catch (Exception e) {
             e.printStackTrace();
-            handler.post(() -> {
-                callback.onError(e);
-            });
-            return 1;
+            handler.post(() -> callback.onError(e));
         }
-        return 0;
     }
 
-    public static int startVirGLService(Context context, String home, String tmpdir) {
+    public static void startVirGLService(Context context, String home, String tmpdir) {
 
         BOAT_LIB_DIR = context.getDir("runtime", 0).getAbsolutePath() + "/boat";
 
@@ -200,9 +196,7 @@ public class LoadMe {
             System.out.println("Exited with code : " + dlexec(finalArgs));
         } catch (Exception e) {
             e.printStackTrace();
-            return 1;
         }
-        return 0;
     }
 
     public static int launchJVM(String javaPath, ArrayList<String> args, String home) {

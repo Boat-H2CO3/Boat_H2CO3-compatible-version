@@ -310,7 +310,6 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
     class InputDialog extends Dialog implements View.OnClickListener {
 
-        private final Context mContext;
         private final Controller mController;
 
         private final EditText editBox;
@@ -327,7 +326,6 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
             setContentView(R.layout.dialog_input);
             setCanceledOnTouchOutside(true);
             Objects.requireNonNull(getWindow()).getAttributes().dimAmount = 0f;
-            this.mContext = context;
             this.mController = controller;
 
             this.editBox = findViewById(R.id.dialog_input_edit_box);
@@ -335,19 +333,15 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
             this.buttonEnter = findViewById(R.id.dialog_input_button_enter);
             this.buttonTEnter = findViewById(R.id.dialog_input_button_t_enter);
             this.buttonCancel = findViewById(R.id.dialog_input_button_cancel);
-            this.multi_line = mContext.getSharedPreferences(InputBoxConfigDialog.spFileName, InputBoxConfigDialog.spMode).getBoolean(InputBoxConfigDialog.sp_multi_line_name, true);
+            this.multi_line = context.getSharedPreferences(InputBoxConfigDialog.spFileName, InputBoxConfigDialog.spMode).getBoolean(InputBoxConfigDialog.sp_multi_line_name, true);
 
-            editBox.setOnKeyListener(new View.OnKeyListener() {
-
-                @Override
-                public boolean onKey(View v, int keyCode, android.view.KeyEvent event) {
-                    //当输入框为空的时候，拦截Backspace的按键事件，然后向控制器发送退格事件
-                    if (event.getAction() == android.view.KeyEvent.ACTION_DOWN && keyCode == android.view.KeyEvent.KEYCODE_BACK && editBox.getText().toString().equals("")) {
-                        sendKey(KeyMap.KEYMAP_KEY_BACKSPACE);
-                        return true;
-                    }
-                    return false;
+            editBox.setOnKeyListener((v, keyCode, event) -> {
+                //当输入框为空的时候，拦截Backspace的按键事件，然后向控制器发送退格事件
+                if (event.getAction() == android.view.KeyEvent.ACTION_DOWN && keyCode == android.view.KeyEvent.KEYCODE_BACK && editBox.getText().toString().equals("")) {
+                    sendKey(KeyMap.KEYMAP_KEY_BACKSPACE);
+                    return true;
                 }
+                return false;
             });
 
             for (View v : new View[]{buttonNone, buttonCancel, buttonTEnter, buttonEnter}) {

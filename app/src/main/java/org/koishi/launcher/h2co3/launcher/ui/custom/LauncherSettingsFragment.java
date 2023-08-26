@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.preference.EditTextPreference;
@@ -38,7 +39,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
     final
     Handler han = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 Intent intent1 = new Intent(getActivity(), MainActivity.class);
@@ -106,7 +107,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
 
     public void reset() {
         //添加"Yes"按钮
-        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(getActivity())
+        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(getResources().getString(R.string.action))//标题
                 .setIcon(R.drawable.ic_boat)//图标
                 .setMessage(getResources().getString(R.string.resetwarn))
@@ -135,7 +136,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
     public void del() {
         //添加"Yes"按钮
         //添加"Yes"按钮
-        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(getActivity())
+        AlertDialog alertDialog1 = new MaterialAlertDialogBuilder(requireActivity())
                 .setTitle(getResources().getString(R.string.action))//标题
                 .setIcon(R.drawable.ic_boat)//图标
                 .setMessage(getResources().getString(R.string.resetwarn))

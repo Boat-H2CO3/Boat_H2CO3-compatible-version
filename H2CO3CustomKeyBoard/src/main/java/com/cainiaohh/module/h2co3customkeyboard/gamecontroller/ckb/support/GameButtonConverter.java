@@ -34,7 +34,7 @@ public class GameButtonConverter {
             fileName.append(file.getName().charAt(i));
         }
         try {
-            CkbManager.outputFile(getNewKeyboardFromOldKeyboard(getOldKeyboardFormJson(file)), fileName.toString() + "-new");
+            CkbManager.outputFile(getNewKeyboardFromOldKeyboard(getOldKeyboardFormJson(file)), fileName + "-new");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -45,12 +45,11 @@ public class GameButtonConverter {
     public GameButtonOld[] getOldKeyboardFormJson(File file) {
         InputStream inputStream;
         Gson gson = new Gson();
-        File jsonFile = file;
-        if (!jsonFile.exists()) {
+        if (!file.exists()) {
             return null;
         }
         try {
-            inputStream = new FileInputStream(jsonFile);
+            inputStream = new FileInputStream(file);
             Reader reader = new InputStreamReader(inputStream);
             GameButtonOld[] jsonArray = new Gson().fromJson(reader, GameButtonOld[].class);
             List<GameButtonOld> tempList1 = Arrays.asList(jsonArray);

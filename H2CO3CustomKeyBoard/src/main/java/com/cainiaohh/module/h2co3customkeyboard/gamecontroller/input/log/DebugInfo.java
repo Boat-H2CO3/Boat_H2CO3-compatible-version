@@ -37,7 +37,6 @@ public class DebugInfo implements Input, View.OnClickListener {
 
     //private Button switchButton;
     private LogView mLogView;
-    private LoadMe.LogReceiver mReceiver;
     //private boolean isShowInfo = true;
 
     @Override
@@ -46,14 +45,6 @@ public class DebugInfo implements Input, View.OnClickListener {
         this.mController = controller;
         //this.switchButton = new Button(mContext);
 
-        /*switchButton.setBackground(ContextCompat.getDrawable(mContext, R.drawable.background_floatbutton));
-        switchButton.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(mContext, 30), DisplayUtils.getPxFromDp(mContext, 30)));
-        mController.addView(switchButton);
-        switchButton.setX(mController.getConfig().getScreenWidth() - switchButton.getLayoutParams().width - DisplayUtils.getPxFromDp(mContext, 30));
-        switchButton.setY(0);
-        switchButton.setOnClickListener(this);
-         */
-
         mLogView = new LogView(mContext);
         mLogView.setLayoutParams(new ViewGroup.LayoutParams(mController.getConfig().getScreenWidth() - DisplayUtils.getPxFromDp(mContext, 10), mController.getConfig().getScreenHeight() / 2 - DisplayUtils.getPxFromDp(mContext, 30)));
         mController.addView(mLogView);
@@ -61,7 +52,7 @@ public class DebugInfo implements Input, View.OnClickListener {
         mLogView.setY(mController.getConfig().getScreenHeight() - mLogView.getLayoutParams().height);
 
         if (LoadMe.mReceiver == null || LoadMe.mReceiver.get() == null) {
-            mReceiver = new LoadMe.LogReceiver() {
+            LoadMe.LogReceiver mReceiver = new LoadMe.LogReceiver() {
                 final StringBuilder stringBuilder = new StringBuilder();
 
                 @Override
@@ -119,17 +110,6 @@ public class DebugInfo implements Input, View.OnClickListener {
         } else {
             mLogView.setVisibility(View.GONE);
         }
-        /*
-        if (enabled && isShowInfo) {
-            switchButton.setVisibility(View.VISIBLE);
-            mLogView.setVisibility(View.VISIBLE);
-        } else if (!enabled) {
-            switchButton.setVisibility(View.GONE);
-            mLogView.setVisibility(View.GONE);
-        } else {
-            switchButton.setVisibility(View.VISIBLE);
-        }
-         */
 
     }
 
@@ -150,16 +130,6 @@ public class DebugInfo implements Input, View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        /*if (v == switchButton) {
-            if (!isShowInfo) {
-                mLogView.setVisibility(View.VISIBLE);
-                isShowInfo = true;
-            } else {
-                mLogView.setVisibility(View.GONE);
-                isShowInfo = false;
-            }
-        }
-         */
     }
 
     private boolean firstWrite = true;
@@ -206,13 +176,10 @@ public class DebugInfo implements Input, View.OnClickListener {
         }
 
         public void appendLog(String str) {
-            this.post(new Runnable() {
-                @Override
-                public void run() {
-                    if (mTextView != null) {
-                        LogView.this.mTextView.append(str);
-                        new Handler(Looper.getMainLooper()).postDelayed(() -> toBottom(LogView.this, mTextView), 50);
-                    }
+            this.post(() -> {
+                if (mTextView != null) {
+                    LogView.this.mTextView.append(str);
+                    new Handler(Looper.getMainLooper()).postDelayed(() -> toBottom(LogView.this, mTextView), 50);
                 }
             });
         }

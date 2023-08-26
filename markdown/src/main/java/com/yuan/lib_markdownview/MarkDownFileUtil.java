@@ -15,7 +15,7 @@ import java.util.Objects;
 public class MarkDownFileUtil {
 
     public static String getString(Context context) throws IOException {
-        return getString(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS).getParent(), "test.md");
+        return getString(Objects.requireNonNull(context.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)).getParent(), "test.md");
     }
 
     public static String getString(String parentPath, String fileName) throws UnsupportedEncodingException {
@@ -30,7 +30,7 @@ public class MarkDownFileUtil {
         length = Math.min(Objects.requireNonNull(stream).size(), length);
         String charset = CharsetUtils.getCharset(stream.getData(), length, "utf-8");
 
-        String str = "";
+        String str;
         str = new String(stream.getData(), 0, stream.size(), charset);
 
         return str;

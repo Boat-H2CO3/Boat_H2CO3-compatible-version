@@ -18,7 +18,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -31,7 +30,6 @@ import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.id.ke
 import com.cainiaohh.module.h2co3customkeyboard.utils.DisplayUtils;
 import com.google.android.material.navigation.NavigationView;
 
-import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.launch.MCOptionUtils;
 import org.koishi.launcher.h2co3.tools.launch.MinecraftVersion;
 
@@ -47,7 +45,7 @@ import cosine.boat.utils.CHTools;
 public class BoatClientActivity extends BoatActivity implements View.OnClickListener,Client {
 
     private final static int CURSOR_SIZE = 16; //dp
-    private final int[] grabbedPointer = new int[]{0, 0};
+    private final int[] grabbedPointer = new int[]{100, 100};
 
     public FrameLayout mControlLayout;
     public SharedPreferences msh;
@@ -61,7 +59,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
     private HardwareController hardwareController;
     private DrawerLayout drawerLayout;
     private NavigationView navDrawer;
-    private NavigationView.OnNavigationItemSelectedListener gameActionListener;
     private boolean grabbed = false;
 
     @Override
@@ -92,7 +89,11 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
     @SuppressLint("ClickableViewAccessibility")
     private void initUI() {
-        gameActionListener = menuItem -> {
+        /* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
+                //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
+                openH2CO3CustomControls();
+            }*/
+        NavigationView.OnNavigationItemSelectedListener gameActionListener = menuItem -> {
             if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_custom) {
             }/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
                 //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
@@ -134,13 +135,13 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 MCOptionUtils.save(CHTools.getBoatCfg("game_directory", ""));
                 new Thread(() -> {
 
-                    Vector<String> args = LauncherConfig.getMcArgs(gameLaunchSetting, BoatClientActivity.this, (int) (width * scaleFactor), (int) (height * scaleFactor), "server");
+                    Vector<String> args = LauncherConfig.getMcArgs(gameLaunchSetting, BoatClientActivity.this, (int) (width * scaleFactor), (int) (height * scaleFactor));
                     runOnUiThread(() -> {
                         BoatActivity.setBoatNativeWindow(new Surface(surface));
                         BoatInput.setEventPipe();
 
                         String runtimePath = CHTools.getBoatCfg("runtimePath", "");
-                        String javaPath = null;
+                        String javaPath;
                         String java = LauncherConfig.loadjava();
                         // Java版本选择
                         if (java.equals("jre_8")) {
@@ -155,7 +156,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         boatRenderer = "libGL114";
                         System.out.println(args);
                         MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "")));
-                        ;
                         boolean isHighVersion = mcVersion.minimumLauncherVersion >= 21;
                         startGame(javaPath,
                                 LAUNCHER_FILE_DIR,
@@ -316,9 +316,8 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
     @Override
     public void setGrabCursor(boolean isGrabbed) {
-        boolean Grabbed = this.cursorMode == BoatInput.CursorDisabled;
-        this.grabbed = Grabbed;
-        if (!Grabbed) {
+        this.grabbed = isGrabbed;
+        if (!isGrabbed) {
             setPointer(grabbedPointer[0], grabbedPointer[1]);
             mouseCursor.post(() -> mouseCursor.setVisibility(View.VISIBLE));
         } else if (mouseCursor.getVisibility() == View.VISIBLE) {
@@ -334,14 +333,12 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 BoatClientActivity.this.setGrabCursor(true);
                 virtualController.setGrabCursor(true);
                 hardwareController.setGrabCursor(true);
-                BoatClientActivity.this.mouseCursor.setVisibility(View.INVISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
             }
             if (msg.what == BoatInput.CursorEnabled) {
                 BoatClientActivity.this.setGrabCursor(false);
                 virtualController.setGrabCursor(false);
                 hardwareController.setGrabCursor(false);
-                BoatClientActivity.this.mouseCursor.setVisibility(View.VISIBLE);
                 BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
             }
         }

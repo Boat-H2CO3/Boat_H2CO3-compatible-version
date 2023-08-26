@@ -1,14 +1,13 @@
 package org.koishi.launcher.h2co3.tools;
 
 import android.content.Context;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 
+import androidx.annotation.NonNull;
+
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
 
 /**
  * Created by shenhua on 1/17/2017.
@@ -23,7 +22,7 @@ public class AssetsUtils {
     private FileOperateCallback callback;
     private final Handler handler = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (callback != null) {
                 if (msg.what == SUCCESS) {
@@ -66,7 +65,7 @@ public class AssetsUtils {
     private void copyAssetsToDst(Context context, String srcPath, String dstPath) {
         try {
             String[] fileNames = context.getAssets().list(srcPath);
-            if (fileNames.length > 0) {
+            if (fileNames != null && fileNames.length > 0) {
                 File file = new File(dstPath);
                 if (!file.exists()) file.mkdirs();
                 for (String fileName : fileNames) {
@@ -76,18 +75,6 @@ public class AssetsUtils {
                         copyAssetsToDst(context, fileName, dstPath + File.separator + fileName);
                     }
                 }
-            } else {
-                File outFile = new File(Environment.getExternalStorageDirectory(), dstPath);
-                InputStream is = context.getAssets().open(srcPath);
-                FileOutputStream fos = new FileOutputStream(outFile);
-                byte[] buffer = new byte[1024];
-                int byteCount;
-                while ((byteCount = is.read(buffer)) != -1) {
-                    fos.write(buffer, 0, byteCount);
-                }
-                fos.flush();
-                is.close();
-                fos.close();
             }
             isSuccess = true;
         } catch (Exception e) {

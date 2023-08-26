@@ -27,9 +27,9 @@ import cosine.boat.utils.CHTools;
 public class LauncherConfig extends HashMap<String, String> {
 
 
-    public boolean touchInjector = false;
-    public String extraJavaFlags;
-    public String extraMinecraftFlags;
+    public final boolean touchInjector = false;
+    public final String extraJavaFlags;
+    public final String extraMinecraftFlags;
 
     public LauncherConfig() {
         this.extraJavaFlags = "";
@@ -118,14 +118,14 @@ public class LauncherConfig extends HashMap<String, String> {
         return "Microsoft";
     }
 
-    public static Vector<String> getMcArgs(LauncherConfig config, Context context, int width, int height, String server) {
+    public static Vector<String> getMcArgs(LauncherConfig config, Context context, int width, int height) {
         try {
             MinecraftVersion version = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "Null")));
             String runtimePath = CHTools.getBoatCfg("runtimePath", "");
             String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
-            server = "server";
+            String server = "server";
             // 识别表单
-            String javaPath = null;
+            String javaPath;
             String java = LauncherConfig.loadjava();
             // Java版本选择
             if (java.equals("jre_8")) {
@@ -135,16 +135,14 @@ public class LauncherConfig extends HashMap<String, String> {
                 javaPath = runtimePath + "/jre_17";
                 Log.w("JRE", "当前使用JRE17");
             }
-            boolean highVersion = version != null && version.minimumLauncherVersion >= 21;
+            boolean highVersion = version.minimumLauncherVersion >= 21;
             String libraryPath;
             String classPath = null;
             String r = loadgl().equals("VirGL") ? "virgl" : "gl4es";
             boolean isJava17 = javaPath.endsWith("jre_17");
             if (!highVersion) {
                 libraryPath = javaPath + "/lib/aarch64/jli:" + javaPath + "/lib/aarch64:" + lwjglPath + ":" + lwjglPath + "/lwjgl-2:" + lwjglPath + "/" + r;
-                if (version != null) {
-                    classPath = lwjglPath + "/lwjgl-2/lwjgl.jar:" + lwjglPath + "/lwjgl-2/lwjgl_util.jar:" + version.getClassPath(config, false, false);
-                }
+                classPath = lwjglPath + "/lwjgl-2/lwjgl.jar:" + lwjglPath + "/lwjgl-2/lwjgl_util.jar:" + version.getClassPath(config, false, false);
             } else {
                 if (isJava17) {
                     libraryPath = javaPath + "/lib:" + lwjglPath + ":" + lwjglPath + "/lwjgl-3:" + lwjglPath + "/" + r;
@@ -162,38 +160,12 @@ public class LauncherConfig extends HashMap<String, String> {
                 // args.add("-Dcacio.font.fontmanager=net.java.openjdk.cacio.ctc.CTCFontManager");
                 args.add("-Dcacio.font.fontscaler=sun.font.FreetypeFontScaler");
                 args.add("-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel");
-                if (!isJava17) {
-                    args.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
-                    args.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
-                    args.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
-                } else {
-                    args.add("-Dcacio.font.fontmanager=com.github.caciocavallosilano.cacio.ctc.CTCFontManager");
-                    args.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
-                    args.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
-                    args.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
-
-                    args.add("--add-exports=java.desktop/java.awt=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/java.awt.peer=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.awt.image=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.java2d=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/java.awt.dnd.peer=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.awt=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.awt.event=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.awt.datatransfer=ALL-UNNAMED");
-                    args.add("--add-exports=java.desktop/sun.font=ALL-UNNAMED");
-                    args.add("--add-exports=java.base/sun.security.action=ALL-UNNAMED");
-                    args.add("--add-opens=java.base/java.util=ALL-UNNAMED");
-                    args.add("--add-opens=java.desktop/java.awt=ALL-UNNAMED");
-                    args.add("--add-opens=java.desktop/sun.font=ALL-UNNAMED");
-                    args.add("--add-opens=java.desktop/sun.java2d=ALL-UNNAMED");
-                    args.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
-
-                    // Opens the java.net package to Arc DNS injector on Java 9+
-                    args.add("--add-opens=java.base/java.net=ALL-UNNAMED");
-                }
+                args.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
+                args.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
+                args.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
                 StringBuilder cacioClasspath = new StringBuilder();
-                cacioClasspath.append("-Xbootclasspath/").append(!isJava17 ? "p" : "a");
-                File cacioDir = new File(lwjglPath + "/public/caciocavallo" + (!isJava17 ? "" : "17"));
+                cacioClasspath.append("-Xbootclasspath/").append("p");
+                File cacioDir = new File(lwjglPath + "/public/caciocavallo" + "");
                 if (cacioDir.exists() && cacioDir.isDirectory()) {
                     for (File file : Objects.requireNonNull(cacioDir.listFiles())) {
                         if (file.getName().endsWith(".jar")) {

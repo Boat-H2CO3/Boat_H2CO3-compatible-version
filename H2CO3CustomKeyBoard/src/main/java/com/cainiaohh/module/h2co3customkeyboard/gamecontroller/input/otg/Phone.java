@@ -19,15 +19,13 @@ import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.input.HwInput;
 public class Phone implements HwInput {
 
     private final static String TAG = "Phone";
-    private Translation mTrans;
     private Controller mController;
-    private final int type = KEYBOARD_BUTTON;
     private Context mContext;
     private boolean isEnabled = false;
 
     @Override
     public boolean load(Context context, Controller controller) {
-        mTrans = new Translation(ANDROID_TO_KEYMAP);
+        Translation mTrans = new Translation(ANDROID_TO_KEYMAP);
         this.mContext = context;
         this.mController = controller;
         return true;
@@ -65,13 +63,11 @@ public class Phone implements HwInput {
 
     @Override
     public boolean onKey(KeyEvent event) {
-        switch (event.getKeyCode()) {
-            case KeyEvent.KEYCODE_BACK:
-                sendKeyEvent(KeyMap.KEYMAP_KEY_ESC, event);
-                return true;
-            default:
-                return false;
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            sendKeyEvent(event);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -84,7 +80,7 @@ public class Phone implements HwInput {
         return InputDevice.SOURCE_KEYBOARD;
     }
 
-    private void sendKeyEvent(String keyName, KeyEvent event) {
+    private void sendKeyEvent(KeyEvent event) {
         boolean pressed;
         switch (event.getAction()) {
             case KeyEvent.ACTION_UP:
@@ -97,7 +93,7 @@ public class Phone implements HwInput {
                 return;
 
         }
-        mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
+        mController.sendKey(new BaseKeyEvent(TAG, KeyMap.KEYMAP_KEY_ESC, pressed, KEYBOARD_BUTTON, null));
     }
 
     private void adjustAudio(int direction) {

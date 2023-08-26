@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
+import java.util.Objects;
+
 public class BoatVirGLService extends Service {
 
     private static final int FOREGROUND_ID = 1000;
@@ -50,7 +52,7 @@ public class BoatVirGLService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         startForeground(this, "VirGLService", "VirGL service is running", "Boat", "VirGL service is running");
-        new Thread(() -> LoadMe.startVirGLService(this, getExternalFilesDir("debug").getAbsolutePath(), getCacheDir().getAbsolutePath())).start();
+        new Thread(() -> LoadMe.startVirGLService(this, Objects.requireNonNull(getExternalFilesDir("debug")).getAbsolutePath(), getCacheDir().getAbsolutePath())).start();
         return Service.START_NOT_STICKY;
     }
 

@@ -25,6 +25,8 @@ import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.ui.SettingsActivity;
 import org.koishi.launcher.h2co3.launcher.ui.TerminalActivity;
 
+import java.util.Objects;
+
 public class CustomFragment extends Fragment {
 
 
@@ -105,7 +107,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -121,7 +123,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -154,7 +156,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -229,7 +231,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }
@@ -274,7 +276,7 @@ public class CustomFragment extends Fragment {
         mDialog.setContentView(dialogView);
         WindowManager windowManager = requireActivity().getWindowManager();
         Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = mDialog.getWindow().getAttributes();
+        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
         lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
         mDialog.show();
     }

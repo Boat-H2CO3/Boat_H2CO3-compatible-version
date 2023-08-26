@@ -13,7 +13,6 @@ import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.GameB
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.GameButtonRecorder;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.support.KeyboardRecorder;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.Controller;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.AppManifest;
 import com.cainiaohh.module.h2co3customkeyboard.utils.DisplayUtils;
 import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.DialogUtils;
 import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.support.DialogSupports;
@@ -22,12 +21,12 @@ import com.google.gson.GsonBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.nio.file.Files;
 
 import cosine.boat.utils.CHTools;
 
@@ -80,10 +79,9 @@ public class CkbManager {
         return mController;
     }
 
-    public boolean addGameButton(GameButton button) {
+    public void addGameButton(GameButton button) {
         if (this.containGameButton(button) || this.buttonList.size() >= MAX_KEYBOARD_SIZE) {
             button.unsetFirstAdded();
-            return false;
         } else {
             if (button == null) {
                 button = new GameButton(mContext, mCall, mController, this).setButtonMode(this.buttonMode).setFirstAdded();
@@ -91,7 +89,6 @@ public class CkbManager {
             }
             this.buttonList.add(button);
             this.addView(button);
-            return true;
         }
     }
 
@@ -99,7 +96,7 @@ public class CkbManager {
         return buttonList.contains(g);
     }
 
-    public boolean removeGameButton(GameButton g) {
+    public void removeGameButton(GameButton g) {
         if (this.containGameButton(g)) {
             GameButtonArray<GameButton> gl = new GameButtonArray<>();
             for (GameButton gb : buttonList) {
@@ -109,31 +106,25 @@ public class CkbManager {
             }
             this.removeView(g);
             this.buttonList = gl;
-            return true;
         } else {
-            return false;
         }
     }
 
-    private boolean addView(GameButton g) {
+    private void addView(GameButton g) {
 
         if (g != null && g.getParent() == null) {
             mCall.addView(g);
-            return true;
         } else {
-            return false;
         }
 
     }
 
-    private boolean removeView(GameButton g) {
+    private void removeView(GameButton g) {
 
         if (g != null && g.getParent() != null) {
             ViewGroup vg = (ViewGroup) g.getParent();
             vg.removeView(g);
-            return true;
         } else {
-            return false;
         }
 
     }
@@ -142,15 +133,13 @@ public class CkbManager {
         return buttonList.size();
     }
 
-    public boolean setButtonsMode(int mode) {
+    public void setButtonsMode(int mode) {
         if (mode == GameButton.MODE_GAME || mode == GameButton.MODE_MOVEABLE_EDITABLE || mode == GameButton.MODE_PREVIEW) {
             for (GameButton g : buttonList) {
                 g.setButtonMode(mode);
             }
             this.buttonMode = mode;
-            return true;
         } else {
-            return false;
         }
     }
 
@@ -180,7 +169,7 @@ public class CkbManager {
         }
     }
 
-    public boolean exportKeyboard(String fileName) {
+    public void exportKeyboard(String fileName) {
         GameButtonRecorder[] gbrs = new GameButtonRecorder[buttonList.size()];
         for (int a = 0; a < buttonList.size(); a++) {
             GameButtonRecorder gbr = new GameButtonRecorder();
@@ -192,7 +181,7 @@ public class CkbManager {
         kr.setRecorderDatas(gbrs);
         kr.setVersionCode(KeyboardRecorder.VERSION_THIS);
 
-        return outputFile(kr, fileName);
+        outputFile(kr, fileName);
     }
 
     public static boolean outputFile(KeyboardRecorder kr, String fileName) {
@@ -200,7 +189,7 @@ public class CkbManager {
         StringBuilder jsonString = new StringBuilder(gson.toJson(kr));
         jsonString.insert(0, "/*\n *This file is craeted by MCinaBox\n *Please DON'T edit the file if you don't know how it works.\n*/\n");
         try {
-            FileWriter jsonWriter = new FileWriter(new File(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards" + "/" + fileName + ".json"));
+            FileWriter jsonWriter = new FileWriter(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards" + "/" + fileName + ".json");
             BufferedWriter out = new BufferedWriter(jsonWriter);
             out.write(jsonString.toString());
             out.close();
@@ -225,7 +214,7 @@ public class CkbManager {
         }
         KeyboardRecorder kr;
         try {
-            InputStream inputStream = new FileInputStream(file);
+            InputStream inputStream = Files.newInputStream(file.toPath());
             Reader reader = new InputStreamReader(inputStream);
             Gson gson = new Gson();
             kr = gson.fromJson(reader, KeyboardRecorder.class);
@@ -254,21 +243,19 @@ public class CkbManager {
         return loadKeyboard(file);
     }
 
-    public boolean loadKeyboard(KeyboardRecorder kr) {
+    public void loadKeyboard(KeyboardRecorder kr) {
         GameButtonRecorder[] gbr;
         if (kr != null) {
             gbr = kr.getRecorderDatas();
         } else {
-            return false;
+            return;
         }
 
-        switch (kr.getVersionCode()) {
-            case KeyboardRecorder.VERSION_UNKNOWN:
-                for (GameButtonRecorder tgbr : gbr) {
-                    tgbr.keyPos[0] = DisplayUtils.getDpFromPx(mContext, tgbr.keyPos[0]);
-                    tgbr.keyPos[1] = DisplayUtils.getDpFromPx(mContext, tgbr.keyPos[1]);
-                }
-                break;
+        if (kr.getVersionCode() == KeyboardRecorder.VERSION_UNKNOWN) {
+            for (GameButtonRecorder tgbr : gbr) {
+                tgbr.keyPos[0] = DisplayUtils.getDpFromPx(mContext, tgbr.keyPos[0]);
+                tgbr.keyPos[1] = DisplayUtils.getDpFromPx(mContext, tgbr.keyPos[1]);
+            }
         }
         //清除全部按键
         clearKeyboard();
@@ -276,7 +263,6 @@ public class CkbManager {
         for (GameButtonRecorder tgbr : gbr) {
             addGameButton(tgbr.recoverData(mContext, mCall, mController, this));
         }
-        return true;
     }
 
     public void clearKeyboard() {

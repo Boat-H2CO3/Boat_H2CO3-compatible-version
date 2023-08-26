@@ -29,9 +29,8 @@ public class KeyboardRecorder {
         return new int[]{screenWidth, screenHeight};
     }
 
-    public KeyboardRecorder setVersionCode(int version) {
+    public void setVersionCode(int version) {
         this.versionCode = version;
-        return this;
     }
 
     public int getVersionCode() {

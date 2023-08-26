@@ -41,14 +41,14 @@ public class PerformEdit {
     private boolean flag = false;
 
     public PerformEdit(@NonNull EditText editText) {
-        CheckNull(editText, "EditText不能为空");
+        CheckNull(editText);
         this.editable = editText.getText();
         this.editText = editText;
         editText.addTextChangedListener(new Watcher());
     }
 
-    private static void CheckNull(Object o, String message) {
-        if (o == null) throw new IllegalStateException(message);
+    private static void CheckNull(EditText o) {
+        if (o == null) throw new IllegalStateException("EditText不能为空");
     }
 
     protected void onEditableChanged(Editable s) {

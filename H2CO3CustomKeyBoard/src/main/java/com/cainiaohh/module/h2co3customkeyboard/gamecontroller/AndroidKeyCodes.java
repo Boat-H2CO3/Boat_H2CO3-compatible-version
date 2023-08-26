@@ -11,7 +11,7 @@ import java.util.Map;
 
 @SuppressLint("SuspiciousIndentation")
 public class AndroidKeyCodes {
-    public static Map<Integer, Integer> keyCodeMap = new HashMap<Integer, Integer>();
+    public static final Map<Integer, Integer> keyCodeMap = new HashMap<>();
 
     static {
 

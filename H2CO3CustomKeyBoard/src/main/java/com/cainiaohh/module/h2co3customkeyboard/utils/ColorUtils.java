@@ -34,13 +34,13 @@ public class ColorUtils {
 
     public static String int2Hex3(int colorInt) {
         return "#" +
-                intToHex(Color.alpha(colorInt), 2) +
-                intToHex(Color.red(colorInt), 2) +
-                intToHex(Color.green(colorInt), 2) +
-                intToHex(Color.blue(colorInt), 2);
+                intToHex(Color.alpha(colorInt)) +
+                intToHex(Color.red(colorInt)) +
+                intToHex(Color.green(colorInt)) +
+                intToHex(Color.blue(colorInt));
     }
 
-    private static String intToHex(int n, int size) {
+    private static String intToHex(int n) {
         StringBuffer s = new StringBuffer();
         String a;
         char[] b = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
@@ -49,7 +49,7 @@ public class ColorUtils {
             n = n / 16;
         }
         a = s.reverse().toString();
-        a = add_zore(a, size);
+        a = add_zore(a, 2);
         return a;
     }
 

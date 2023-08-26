@@ -17,40 +17,40 @@ import java.io.Writer;
 
 public class BUG extends Application implements Application.ActivityLifecycleCallbacks {
     @Override
-    public void onActivityCreated(Activity p1, Bundle p2) {
+    public void onActivityCreated(@NonNull Activity p1, Bundle p2) {
         // TODO: Implement this method
 
     }
 
     @Override
-    public void onActivityStarted(Activity p1) {
+    public void onActivityStarted(@NonNull Activity p1) {
         // TODO: Implement this method
     }
 
     @Override
-    public void onActivityResumed(Activity p1) {
-        // TODO: Implement this method
-
-    }
-
-    @Override
-    public void onActivityPaused(Activity p1) {
+    public void onActivityResumed(@NonNull Activity p1) {
         // TODO: Implement this method
 
     }
 
     @Override
-    public void onActivityStopped(Activity p1) {
+    public void onActivityPaused(@NonNull Activity p1) {
+        // TODO: Implement this method
+
+    }
+
+    @Override
+    public void onActivityStopped(@NonNull Activity p1) {
         // TODO: Implement this method
     }
 
     @Override
-    public void onActivitySaveInstanceState(Activity p1, Bundle p2) {
+    public void onActivitySaveInstanceState(@NonNull Activity p1, @NonNull Bundle p2) {
         // TODO: Implement this method
     }
 
     @Override
-    public void onActivityDestroyed(Activity p1) {
+    public void onActivityDestroyed(@NonNull Activity p1) {
         // TODO: Implement this method
     }
 
@@ -62,37 +62,32 @@ public class BUG extends Application implements Application.ActivityLifecycleCal
 
 
         this.registerActivityLifecycleCallbacks(this);
-        Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
-
-            //设置默认的未捕获的异常处理程序
-            @Override
-            public void uncaughtException(@NonNull Thread p1, @NonNull Throwable p2) {
+        //设置默认的未捕获的异常处理程序
+        Thread.setDefaultUncaughtExceptionHandler((p1, p2) -> {
 
 
-                Writer i = new StringWriter();
-                p2.printStackTrace(new PrintWriter(i));
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            Writer i = new StringWriter();
+            p2.printStackTrace(new PrintWriter(i));
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
-                p2.printStackTrace(new PrintStream(baos));
-                byte[] bug = baos.toByteArray();
+            p2.printStackTrace(new PrintStream(baos));
+            byte[] bug = baos.toByteArray();
 
-                try {
-                    FileOutputStream f = new FileOutputStream("/sdcard/boat/error.log");
+            try {
+                FileOutputStream f = new FileOutputStream("/sdcard/boat/error.log");
 
-                    //f.write(i.toString().getBytes());
-
-
-                    f.write(bug);
+                //f.write(i.toString().getBytes());
 
 
-                    f.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                f.write(bug);
 
-                //Utils.writeFile("/sdcard/boat/err.log",i.toString());
-                // TODO: Implement this method
+
+                f.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+
+            //Utils.writeFile("/sdcard/boat/err.log",i.toString());
         });
 
         //instance = this;

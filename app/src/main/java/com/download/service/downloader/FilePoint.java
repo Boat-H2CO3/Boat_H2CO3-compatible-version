@@ -10,7 +10,7 @@ public class FilePoint {
 
     private int a;
 
-    private Object object;
+    private String object;
 
     private int size;//下载目录
 
@@ -29,7 +29,7 @@ public class FilePoint {
         this.fileName = fileName;
     }
 
-    public FilePoint(String url, String filePath, String fileName, int a, Object object, int size) {
+    public FilePoint(String url, String filePath, String fileName, int a, String object, int size) {
         this.url = url;
         this.filePath = filePath;
         this.fileName = fileName;
@@ -66,7 +66,7 @@ public class FilePoint {
         return a;
     }
 
-    public Object getObject() {
+    public String getObject() {
         return object;
     }
 

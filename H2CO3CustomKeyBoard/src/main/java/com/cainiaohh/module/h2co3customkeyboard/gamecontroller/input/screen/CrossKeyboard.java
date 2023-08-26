@@ -21,7 +21,6 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.widget.SwitchCompat;
 
 import com.cainiaohh.module.h2co3customkeyboard.R;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.Controller;

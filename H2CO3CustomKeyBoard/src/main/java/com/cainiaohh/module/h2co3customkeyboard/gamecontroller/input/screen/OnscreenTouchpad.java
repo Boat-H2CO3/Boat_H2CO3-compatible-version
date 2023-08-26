@@ -41,7 +41,6 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
     private final static int type_3 = MOUSE_POINTER_INC;
     private final static int MAX_MOVE_DISTANCE = 5;
     private final static long MIN_SHLDING_TIME = 100;
-    private Context mContext;
     private Controller mController;
     private LinearLayout onscreenTouchpad;
     private Button touchpad;
@@ -61,17 +60,16 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
     @Override
     public boolean load(Context context, Controller controller) {
 
-        this.mContext = context;
         this.mController = controller;
 
-        onscreenTouchpad = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.virtual_touchpad, null);
+        onscreenTouchpad = (LinearLayout) LayoutInflater.from(context).inflate(R.layout.virtual_touchpad, null);
         mController.addContentView(onscreenTouchpad, new ViewGroup.LayoutParams(mController.getConfig().getScreenWidth(), mController.getConfig().getScreenHeight()));
         touchpad = onscreenTouchpad.findViewById(R.id.touchpad_button);
 
         touchpad.setOnTouchListener(this);
 
         //设定配置器
-        configDialog = new OnscreenTouchpadConfigDialog(mContext, this);
+        configDialog = new OnscreenTouchpadConfigDialog(context, this);
 
         return true;
     }
@@ -351,7 +349,6 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         private Button buttonCancel;
         private Button buttonRestore;
         private int originalSpeedProgress;
-        private int originalTouchpadMode;
         private int originalDelayProgress;
 
         public OnscreenTouchpadConfigDialog(@NonNull Context context, OnscreenInput input) {
@@ -492,6 +489,7 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
             super.show();
             originalSpeedProgress = seekbarSpeed.getProgress();
             originalDelayProgress = seekbarDelay.getProgress();
+            int originalTouchpadMode;
             if (radioSlide.isChecked()) {
                 originalTouchpadMode = OnscreenTouchpad.TOUCHPAD_MODE_SLIDE;
             } else if (radioPoint.isChecked()) {

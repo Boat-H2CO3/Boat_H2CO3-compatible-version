@@ -62,7 +62,7 @@ public class DownloadTask extends Handler {
      * 任务回调消息
      */
     @Override
-    public void handleMessage(Message msg) {
+    public void handleMessage(@NonNull Message msg) {
         if (null == mListner) {
             return;
         }
@@ -187,9 +187,9 @@ public class DownloadTask extends Handler {
                 tmpAccessFile.seek(finalStartIndex);// 文件写入的开始位置.
                 /*  将网络流中的文件写入本地*/
                 byte[] buffer = new byte[1024 << 2];
-                int length = -1;
+                int length;
                 int total = 0;// 记录本次下载文件的大小
-                long progress = 0;
+                long progress;
                 while ((length = is.read(buffer)) > 0) {
                     if (cancel) {
                         //关闭资源

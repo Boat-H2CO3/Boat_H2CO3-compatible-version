@@ -62,15 +62,11 @@ public class ModsActivity extends H2CO3Activity {
     final
     Handler han = new Handler(Looper.getMainLooper()) {
         @Override
-        public void handleMessage(Message msg) {
+        public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 initMods();
             }
-            //mModRecyclerView.setAdapter(null);
-            //initMods();
-            //Snackbar.make(page, getResources().getString(R.string.ver_add_done), Snackbar.LENGTH_LONG)
-            //.setAction("Action", null).show();
 
         }
     };
@@ -122,7 +118,9 @@ public class ModsActivity extends H2CO3Activity {
                     //String path = getPath(getApplicationContext(),uri);
                     //TODO 对转换得到的真实路径path做相关处理
                     String path = uri.getPath();
-                    path = path.replace("/document/primary:", "/storage/emulated/0/");
+                    if (path != null) {
+                        path = path.replace("/document/primary:", "/storage/emulated/0/");
+                    }
                     System.out.println(path);
                     String str1 = path;
                     str1 = str1.substring(str1.lastIndexOf("/") + 1);
@@ -145,7 +143,9 @@ public class ModsActivity extends H2CO3Activity {
                         Uri uri = item.getUri();
                         //TODO 对获得的uri做解析
                         String path = uri.getPath();
-                        path = path.replace("/document/primary:", "/storage/emulated/0/");
+                        if (path != null) {
+                            path = path.replace("/document/primary:", "/storage/emulated/0/");
+                        }
                         String str1 = path;
                         str1 = str1.substring(str1.lastIndexOf("/") + 1);
                         final String s1 = path;
@@ -316,9 +316,7 @@ public class ModsActivity extends H2CO3Activity {
 
             });
 
-            holder.rl.setOnClickListener(v -> {
-                holder.tog.setChecked(!holder.tog.isChecked());
-            });
+            holder.rl.setOnClickListener(v -> holder.tog.setChecked(!holder.tog.isChecked()));
             holder.btn.setOnClickListener(v -> {
                 //添加"Yes"按钮
                 //添加"Yes"按钮

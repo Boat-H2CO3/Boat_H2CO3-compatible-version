@@ -35,10 +35,10 @@ public class HardwareController extends BaseController implements HwController {
 
     private final static String TAG = "HardwareController";
     private final AndroidKeyMap androidKeyMap = new AndroidKeyMap();
-    public HwInput keyboard;
-    public HwInput phone;
-    public HwInput mouse;
-    public HwInput gamepad;
+    public final HwInput keyboard;
+    public final HwInput phone;
+    public final HwInput mouse;
+    public final HwInput gamepad;
     private final Translation mTranslation;
     private USBDeviceReceiver mUsbReceiver;
 
@@ -186,7 +186,7 @@ public class HardwareController extends BaseController implements HwController {
         }
         StringBuilder stb = new StringBuilder("Devices:\n");
         for (InputDevice i : inputDevices) {
-            stb.append(String.format("name: %s \n information: %s \n", i.getName(), i.toString()));
+            stb.append(String.format("name: %s \n information: %s \n", i.getName(), i));
         }
         Log.e(TAG, stb.toString());
     }
@@ -233,7 +233,7 @@ public class HardwareController extends BaseController implements HwController {
                 info = "Type: " + event.getType() + " IncX: " + event.getPointer()[0] + " IncY: " + event.getPointer()[1];
                 break;
             default:
-                info = "Unknown: " + event.toString();
+                info = "Unknown: " + event;
         }
         Log.e(event.getTag(), info);
     }

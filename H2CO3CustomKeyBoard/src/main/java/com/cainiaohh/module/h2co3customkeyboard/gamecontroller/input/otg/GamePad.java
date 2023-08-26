@@ -22,7 +22,6 @@ public class GamePad implements HwInput {
     private final static int EVENT_DEAL_LAG = 5;
 
     private Controller mController;
-    private Context mContext;
     private boolean isEnabled;
 
     private final static int type_1 = KEYBOARD_BUTTON;
@@ -448,7 +447,6 @@ public class GamePad implements HwInput {
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
         //启动右摇杆的输入线程
         this.mGamePadThread = new GamePadThread();

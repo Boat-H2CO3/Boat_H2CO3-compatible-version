@@ -30,7 +30,7 @@ public class ContentUtils {
 
     public static String getExtension(Uri data) {
         String name = data.getLastPathSegment();
-        int pos = name.lastIndexOf('.');
+        int pos = Objects.requireNonNull(name).lastIndexOf('.');
         if (pos < 0) {
             return "";
         }
@@ -53,7 +53,7 @@ public class ContentUtils {
 
             byte[] buffer = new byte[500 * 1024];
             int length;
-            while ((length = is.read(buffer)) >= 0) {
+            while ((length = Objects.requireNonNull(is).read(buffer)) >= 0) {
                 os.write(buffer, 0, length);
             }
 
@@ -117,7 +117,7 @@ public class ContentUtils {
 
         HashMap<String, String> columns = new HashMap<>();
 
-        if (!data.getScheme().equalsIgnoreCase("content")) {
+        if (!Objects.requireNonNull(data.getScheme()).equalsIgnoreCase("content")) {
             return columns;
         }
 

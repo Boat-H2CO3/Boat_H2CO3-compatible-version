@@ -29,11 +29,12 @@ import androidx.annotation.WorkerThread;
 import java.io.Closeable;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Method;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -548,7 +549,7 @@ public class Shell {
                     // Detect enforcing through sysfs, not always present
                     File f = new File("/sys/fs/selinux/enforce");
                     if (f.exists()) {
-                        try (InputStream is = new FileInputStream("/sys/fs/selinux/enforce")) {
+                        try (InputStream is = Files.newInputStream(Paths.get("/sys/fs/selinux/enforce"))) {
                             enforcing = (is.read() == '1');
                         } catch (Exception e) {
                             // we might not be allowed to read, thanks SELinux
@@ -1140,7 +1141,7 @@ public class Shell {
             }
             watchdogCount = 0;
             watchdog = new ScheduledThreadPoolExecutor(1);
-            watchdog.scheduleAtFixedRate(() -> handleWatchdog(), 1, 1, TimeUnit.SECONDS);
+            watchdog.scheduleAtFixedRate(this::handleWatchdog, 1, 1, TimeUnit.SECONDS);
         }
 
         /**
@@ -1543,20 +1544,21 @@ public class Shell {
                     }
                 }
 
-                if ((handler != null) &&
-                        (handler.getLooper() != null) &&
-                        (handler.getLooper() != Looper.myLooper())) {
-                    // If the callbacks are posted to a different thread than this one, we can wait until all callbacks have
-                    // called before returning. If we don't use a Handler at all, the callbacks are already called before we
-                    // get here. If we do use a Handler but we use the same Looper, waiting here would actually block the
-                    // callbacks from being called
+                if ((handler != null)) {
+                    handler.getLooper();
+                    if (handler.getLooper() != Looper.myLooper()) {
+                        // If the callbacks are posted to a different thread than this one, we can wait until all callbacks have
+                        // called before returning. If we don't use a Handler at all, the callbacks are already called before we
+                        // get here. If we do use a Handler but we use the same Looper, waiting here would actually block the
+                        // callbacks from being called
 
-                    synchronized (callbackSync) {
-                        while (callbacks > 0) {
-                            try {
-                                callbackSync.wait();
-                            } catch (InterruptedException e) {
-                                return false;
+                        synchronized (callbackSync) {
+                            while (callbacks > 0) {
+                                try {
+                                    callbackSync.wait();
+                                } catch (InterruptedException e) {
+                                    return false;
+                                }
                             }
                         }
                     }

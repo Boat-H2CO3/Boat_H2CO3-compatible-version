@@ -16,12 +16,12 @@ public class AppExecute {
             file.mkdirs();
         }
 
-        InputStream inputStream = null;
+        InputStream inputStream;
         inputStream = context.getAssets().open(assetName);
         ZipInputStream zipInputStream = new ZipInputStream(inputStream);
         ZipEntry zipEntry = zipInputStream.getNextEntry();
         byte[] buffer = new byte[1024 * 1024];
-        int count = 0;
+        int count;
         while (zipEntry != null) {
             //如果是一个目录
             if (zipEntry.isDirectory()) {

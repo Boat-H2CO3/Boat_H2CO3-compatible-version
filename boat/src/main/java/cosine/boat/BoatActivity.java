@@ -31,7 +31,7 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
 
     public TextureView mainTextureView;
     public BoatCallback boatCallback;
-    public float scaleFactor = 1.0F;
+    public final float scaleFactor = 1.0F;
     public Timer timer;
     public RelativeLayout base;
     public int initialX;
@@ -149,9 +149,7 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
     protected void onPostResume() {
         super.onPostResume();
         if (mainTextureView != null && mainTextureView.getSurfaceTexture() != null) {
-            mainTextureView.post(() -> {
-                boatCallback.onSurfaceTextureSizeChanged(mainTextureView.getSurfaceTexture(), mainTextureView.getWidth(), mainTextureView.getHeight());
-            });
+            mainTextureView.post(() -> boatCallback.onSurfaceTextureSizeChanged(mainTextureView.getSurfaceTexture(), mainTextureView.getWidth(), mainTextureView.getHeight()));
         }
     }
 

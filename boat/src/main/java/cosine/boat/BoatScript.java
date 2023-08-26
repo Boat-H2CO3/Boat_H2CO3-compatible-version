@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.charset.StandardCharsets;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,14 +30,14 @@ public class BoatScript {
     public static final String BOAT_ENV_WINDOW_HEIGHT = "window_height";
     public static final String BOAT_ENV_TMPDIR = "tmpdir";
 
-    private static Pattern variablePattern;
+    private static final Pattern variablePattern;
 
     static {
         variablePattern = Pattern.compile("\\$\\{[a-zA-Z_]+\\}");
     }
 
-    private Map<String, String> variables;
-    private List<String[]> commands;
+    private final Map<String, String> variables;
+    private final List<String[]> commands;
     private String scriptFile;
 
     public BoatScript(Map<String, String> envvars, boolean priv, List<String[]> cmds, String file) {
@@ -60,7 +61,7 @@ public class BoatScript {
         byte[] buffer = new byte[(int) fis.available()];
         fis.read(buffer);
         fis.close();
-        String json = new String(buffer, "UTF-8");
+        String json = new String(buffer, StandardCharsets.UTF_8);
 
         Type type = new TypeToken<LinkedList<String[]>>() {
         }.getType();

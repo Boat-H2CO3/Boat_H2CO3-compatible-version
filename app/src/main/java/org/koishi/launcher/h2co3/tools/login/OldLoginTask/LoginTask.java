@@ -122,7 +122,7 @@ public class LoginTask {
                 // 请求返回的数据
                 InputStream in1 = conn.getInputStream();
                 try {
-                    String readLine = "";
+                    String readLine;
                     BufferedReader responseReader = new BufferedReader(new InputStreamReader(in1, StandardCharsets.UTF_8));
                     while ((readLine = responseReader.readLine()) != null) {
                         sb.append(readLine).append("\n");

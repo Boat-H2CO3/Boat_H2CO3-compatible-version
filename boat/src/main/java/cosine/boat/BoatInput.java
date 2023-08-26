@@ -55,35 +55,12 @@ public class BoatInput {
     public static void pushEventWindow(int width, int height) {
         BoatInput.pushEvent(System.nanoTime(), ConfigureNotify, width, height);
     }
-	/*
-	public static void pushEventMessage(int msg) {
-		BoatInput.pushEvent(System.nanoTime(), BoatMessage, msg, 0);
-	}
-
-	 */
 
     public static String getPrimaryClipString() {
-		/*
-		BoatActivity boat_activity = BoatActivity.getCurrentInstance();
-		ClipboardManager clipboard = (ClipboardManager)boat_activity.getSystemService(Context.CLIPBOARD_SERVICE);
-		if (!clipboard.hasPrimaryClip()) {
-			return null;
-		}
-		ClipData.Item item = clipboard.getPrimaryClip().getItemAt(0);
-		return item.getText().toString();
-
-		 */
         return null;
     }
 
     public static void setPrimaryClipString(String string) {
-		/*
-		BoatActivity boat_activity = BoatActivity.getCurrentInstance();
-		ClipboardManager clipboard = (ClipboardManager)boat_activity.getSystemService(Context.CLIPBOARD_SERVICE);
-		ClipData clip = ClipData.newPlainText("Boat Clipboard", string);
-		clipboard.setPrimaryClip(clip);
-
-		 */
     }
 
     public static native int[] getPointer();

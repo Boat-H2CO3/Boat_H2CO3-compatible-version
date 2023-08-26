@@ -17,9 +17,9 @@ import com.cainiaohh.module.h2co3customkeyboard.filechooser.model.MarginItemDeco
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 
 public class FileChooserDialog implements FileAdapter.OnClickListener {
     private static final String TAG = "FileChooserDialog";
@@ -30,7 +30,6 @@ public class FileChooserDialog implements FileAdapter.OnClickListener {
     private final AlertDialog alertDialog;
     private final FileAdapter fileAdapter;
 
-    private final View root;
     private final RecyclerView recyclerView;
 
     private FileChooserDialog(Context context, String title, String startPath, String extension, OnFileChosenListener listener) {
@@ -42,7 +41,7 @@ public class FileChooserDialog implements FileAdapter.OnClickListener {
         }
         this.extension = extension;
         this.listener = listener;
-        this.root = LayoutInflater.from(context).inflate(R.layout.file_chooser_dialog, null);
+        View root = LayoutInflater.from(context).inflate(R.layout.file_chooser_dialog, null);
         this.recyclerView = root.findViewById(R.id.recycler_view);
 
 
@@ -77,7 +76,7 @@ public class FileChooserDialog implements FileAdapter.OnClickListener {
         List<ChooserFile> directories = new ArrayList<>();
         List<ChooserFile> files = new ArrayList<>();
 
-        for (File f : directoryStack.getLast().getFile().listFiles()) {
+        for (File f : Objects.requireNonNull(directoryStack.getLast().getFile().listFiles())) {
             if (f.isDirectory()) {
                 directories.add(getChooserFile(f, false));
             } else if (extension == null || f.getName().endsWith(extension)) {
@@ -85,8 +84,8 @@ public class FileChooserDialog implements FileAdapter.OnClickListener {
             }
         }
 
-        Collections.sort(directories, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
-        Collections.sort(files, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        directories.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+        files.sort((o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
 
         if (directoryStack.size() > 1) {
             directories.add(0, getChooserFile(directoryStack.get(directoryStack.size() - 2).getFile(), true));

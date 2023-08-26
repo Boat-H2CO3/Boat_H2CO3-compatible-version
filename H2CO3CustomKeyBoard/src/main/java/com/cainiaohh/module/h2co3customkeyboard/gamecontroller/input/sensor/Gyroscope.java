@@ -13,20 +13,16 @@ public class Gyroscope implements Input, SensorEventListener {
 
     private final static String TAG = "Gyroscope";
 
-    private Context mContext;
     private Controller mController;
-    private Sensor mSensor;
-    private SensorManager mSensorManager;
     private boolean isEnabled;
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
 
         //选取传感器
-        this.mSensorManager = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
-        this.mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
+        SensorManager mSensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+        Sensor mSensor = mSensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE);
 
         //设置监听器
         mSensorManager.registerListener(this, mSensor, SensorManager.SENSOR_DELAY_NORMAL);

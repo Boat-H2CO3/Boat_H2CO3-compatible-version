@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
@@ -35,11 +34,6 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
 
     private Toolbar mToolbar;
     private ViewGroup mLayout_main;
-    private DrawerLayout mDrawerLayout;
-    private AppCompatToggleButton toggleButtonMode;
-
-    private int screenWidth;
-    private int screenHeight;
 
     private final int[] pointer = new int[]{0, 0};
     private Controller mController;
@@ -56,17 +50,14 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         setContentView(R.layout.activity_ckbe);
 
         //初始化
-        screenWidth = this.getResources().getDisplayMetrics().widthPixels;
-        screenHeight = this.getResources().getDisplayMetrics().heightPixels;
+        int screenWidth = this.getResources().getDisplayMetrics().widthPixels;
+        int screenHeight = this.getResources().getDisplayMetrics().heightPixels;
         initUI();
 
         //窗口
-        getWindow().getDecorView().post(new Runnable() {
-            @Override
-            public void run() {
-                hideSystemUI(getWindow().getDecorView());
-                mTimer = new Timer();
-            }
+        getWindow().getDecorView().post(() -> {
+            hideSystemUI(getWindow().getDecorView());
+            mTimer = new Timer();
         });
     }
 
@@ -103,8 +94,8 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
 
         mToolbar = findViewById(R.id.ckbe_toolbar);
         mLayout_main = findViewById(R.id.ckbe_layout_main);
-        mDrawerLayout = findViewById(R.id.ckbe_drawerlayout);
-        toggleButtonMode = findViewById(R.id.activity_ckbe_toggle_mode);
+        DrawerLayout mDrawerLayout = findViewById(R.id.ckbe_drawerlayout);
+        AppCompatToggleButton toggleButtonMode = findViewById(R.id.activity_ckbe_toggle_mode);
 
         //设定工具栏
         setSupportActionBar(mToolbar);
@@ -112,13 +103,10 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         //设定监听
         mLayout_main.setOnClickListener(this);
         mDrawerLayout.addDrawerListener(this);
-        toggleButtonMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (mController != null) {
-                    mController.setGrabCursor(isChecked);
-                    CustomizeKeyboardEditorActivity.this.isGrabbed = isChecked;
-                }
+        toggleButtonMode.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (mController != null) {
+                mController.setGrabCursor(isChecked);
+                CustomizeKeyboardEditorActivity.this.isGrabbed = isChecked;
             }
         });
 

@@ -26,10 +26,8 @@ public class Mouse implements HwInput {
     private final static int CURSOR_EXTRA_RELEASE = 3; //times
     private final static int CURSOR_EXTRA_GRABBED = 2; //times
 
-    private Context mContext;
     private Controller mController;
     private boolean isEnabled = false;
-    private Object mCapturedPointerListener;
     private int screenWidth;
     private int screenHeight;
 
@@ -40,15 +38,14 @@ public class Mouse implements HwInput {
 
     @Override
     public boolean load(Context context, Controller controller) {
-        this.mContext = context;
         this.mController = controller;
         //设定鼠标监听器（SDK >= 26）
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            mCapturedPointerListener = (View.OnCapturedPointerListener) (view, event) -> {
+            View.OnCapturedPointerListener mCapturedPointerListener = (View.OnCapturedPointerListener) (view, event) -> {
                 Mouse.this.onMotionKey(event);
                 return true;
             };
-            mController.getClient().getViewsParent().setOnCapturedPointerListener((View.OnCapturedPointerListener) mCapturedPointerListener);
+            mController.getClient().getViewsParent().setOnCapturedPointerListener(mCapturedPointerListener);
         }
         //创建定时器
         createTimer();
@@ -81,9 +78,9 @@ public class Mouse implements HwInput {
         mController.sendKey(new BaseKeyEvent(TAG, null, false, type1, new int[]{x, y}));
     }
 
-    private void sendKeyEvent(String keyName, boolean pressed, int type) {
+    private void sendKeyEvent(String keyName, boolean pressed) {
         if (keyName == null) return;
-        mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
+        mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, Mouse.type2, null));
     }
 
     //配置信息处理
@@ -119,10 +116,10 @@ public class Mouse implements HwInput {
 
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_BUTTON_PRESS:
-                sendKeyEvent(mapCovert(event.getActionButton()), true, type2);
+                sendKeyEvent(mapCovert(event.getActionButton()), true);
                 break;
             case MotionEvent.ACTION_BUTTON_RELEASE:
-                sendKeyEvent(mapCovert(event.getActionButton()), false, type2);
+                sendKeyEvent(mapCovert(event.getActionButton()), false);
                 break;
             case MotionEvent.ACTION_SCROLL:
                 String keyName;
@@ -131,8 +128,8 @@ public class Mouse implements HwInput {
                 } else {
                     keyName = MouseMap.MOUSEMAP_WHEEL_DOWN;
                 }
-                sendKeyEvent(keyName, true, type2);
-                sendKeyEvent(keyName, false, type2);
+                sendKeyEvent(keyName, true);
+                sendKeyEvent(keyName, false);
                 break;
             case MotionEvent.ACTION_HOVER_ENTER:
             case MotionEvent.ACTION_HOVER_MOVE:

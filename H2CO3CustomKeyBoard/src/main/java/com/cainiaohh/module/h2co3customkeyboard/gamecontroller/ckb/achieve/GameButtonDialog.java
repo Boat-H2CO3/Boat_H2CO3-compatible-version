@@ -651,10 +651,8 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
     private static class CkbKeyMapSelecterDialog extends Dialog implements View.OnClickListener, OnCancelListener {
 
         private final static String TAG = "CkbKMSDialog";
-        private final Context mContext;
         private final GameButtonDialog mDialog;
         private final int index;
-        private LinearLayout keyboardLayer;
         private LinearLayout mouseLayer;
         private TextView textKeyName;
         private Button buttonOK;
@@ -665,7 +663,6 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
 
         public CkbKeyMapSelecterDialog(@NonNull Context context, GameButtonDialog dialog, int index, String data) {
             super(context);
-            this.mContext = context;
             this.mDialog = dialog;
             this.index = index;
             selectedData = data;
@@ -676,7 +673,7 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         private void init() {
             this.setOnCancelListener(this);
 
-            keyboardLayer = findViewById(R.id.dialog_keymap_selecter_keyboard_layout);
+            LinearLayout keyboardLayer = findViewById(R.id.dialog_keymap_selecter_keyboard_layout);
             mouseLayer = findViewById(R.id.dialog_keymap_selecter_mouse_layout);
             textKeyName = findViewById(R.id.dialog_keymap_selecter_text_keyname);
             buttonOK = findViewById(R.id.dialog_keymap_selecter_button_ok);

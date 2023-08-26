@@ -12,14 +12,12 @@ public class TaskDialog extends Dialog {
 
     private final TextView textTotalTaskName;
     private final TextView textCurrentTaskName;
-    private final Context mContext;
 
     public TaskDialog(@NonNull Context context, boolean cancelable) {
         super(context);
         setContentView(R.layout.dialog_task);
         textTotalTaskName = findViewById(R.id.dialog_task_text_total_task_name);
         textCurrentTaskName = findViewById(R.id.dialog_task_text_current_task_name);
-        this.mContext = context;
         setCancelable(cancelable);
     }
 

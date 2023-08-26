@@ -4,7 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 public class BoatUtils {
 
@@ -17,7 +18,7 @@ public class BoatUtils {
         if (file.exists()) {
             file.delete();
         }
-        file.getParentFile().mkdirs();
+        Objects.requireNonNull(file.getParentFile()).mkdirs();
 
         try {
             file.createNewFile();
@@ -37,7 +38,7 @@ public class BoatUtils {
         try {
 
             fis = new FileInputStream(file);
-            byte result[] = new byte[(int) file.length()];
+            byte[] result = new byte[(int) file.length()];
             fis.read(result);
             fis.close();
             return result;
@@ -86,12 +87,8 @@ public class BoatUtils {
 
     public static boolean writeFile(File file, String str) {
 
-        boolean retval = false;
-        try {
-            retval = BoatUtils.writeFile(file, str.getBytes("UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        boolean retval;
+        retval = BoatUtils.writeFile(file, str.getBytes(StandardCharsets.UTF_8));
         return retval;
     }
 

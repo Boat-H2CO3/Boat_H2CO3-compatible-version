@@ -137,15 +137,13 @@ public class CustomizeKeyboardMaker {
         return defKR;
     }
 
-    public class GameButtonBuilder {
+    public static class GameButtonBuilder {
         private final GameButtonRecorder gbr;
-        private final Context mContext;
         private final float[] sizeDp;
 
         public GameButtonBuilder(Context context) {
-            this.mContext = context;
             gbr = new GameButtonRecorder();
-            sizeDp = new float[]{DisplayUtils.getDpFromPx(mContext, DisplayUtils.getDisplayWindowSize(mContext)[0]), DisplayUtils.getDpFromPx(mContext, DisplayUtils.getDisplayWindowSize(mContext)[1])};
+            sizeDp = new float[]{DisplayUtils.getDpFromPx(context, DisplayUtils.getDisplayWindowSize(context)[0]), DisplayUtils.getDpFromPx(context, DisplayUtils.getDisplayWindowSize(context)[1])};
         }
 
         public GameButtonRecorder build() {
@@ -186,7 +184,6 @@ public class CustomizeKeyboardMaker {
         public GameButtonBuilder setKeyMap(String... maps) {
             String[] KeyMap = new String[GameButton.MAX_KEYMAP_SIZE];
             for (String str : KeyMap) {
-                str = "";
             }
             System.arraycopy(maps, 0, KeyMap, 0, maps.length);
             gbr.keyMaps = KeyMap;
@@ -208,7 +205,6 @@ public class CustomizeKeyboardMaker {
             gbr.textColor = textColor;
             String[] Colors = new String[CkbThemeRecorder.COLOR_INDEX_LENGTH];
             for (String str : Colors) {
-                str = "";
             }
             System.arraycopy(colors, 0, Colors, 0, colors.length);
             gbr.themeColors = Colors;

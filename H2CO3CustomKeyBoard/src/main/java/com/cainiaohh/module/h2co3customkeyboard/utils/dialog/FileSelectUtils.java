@@ -11,11 +11,8 @@ import androidx.annotation.Nullable;
  */
 public class FileSelectUtils {
 
-    private static Callback callback = new Callback() {
-        @Override
-        public void onResult(int requestCode, int resultCode, @Nullable Intent data) {
+    private static Callback callback = (requestCode, resultCode, data) -> {
 
-        }
     };
 
     public static Callback getCallback() {
@@ -34,7 +31,7 @@ public class FileSelectUtils {
         FileSelectUtils.callback = callback;
     }
 
-    public static interface Callback {
+    public interface Callback {
         void onResult(int requestCode, int resultCode, @Nullable Intent data);
     }
 }

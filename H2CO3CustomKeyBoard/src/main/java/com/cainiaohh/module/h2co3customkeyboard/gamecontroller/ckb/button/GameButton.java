@@ -40,7 +40,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private final Controller mController;
     private final Context mContext;
     private final CkbManager mManager;
-    private final AppCompatActivity mActivity;
 
     private int buttonMode;
     private int screenWidth;
@@ -109,8 +108,9 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.mCall = call;
         this.mController = controller;
         this.mManager = manager;
+        AppCompatActivity mActivity;
         if (mContext instanceof AppCompatActivity) {
-            this.mActivity = (AppCompatActivity) mContext;
+            mActivity = (AppCompatActivity) mContext;
 
         } else {
             mActivity = null;
@@ -165,9 +165,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
 
     }
 
-    public GameButton setInputChars(boolean b) {
+    public void setInputChars(boolean b) {
         this.isChars = b;
-        return this;
     }
 
     public boolean isInputChars() {
@@ -187,25 +186,21 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return this.keyChars;
     }
 
-    public boolean setKeyMaps(String[] map) {
+    public void setKeyMaps(String[] map) {
         if (map.length == MAX_KEYMAP_SIZE) {
             String[] tmp = new String[MAX_KEYMAP_SIZE];
             System.arraycopy(map, 0, tmp, 0, MAX_KEYMAP_SIZE);
             this.keyMaps = tmp;
-            return true;
         } else {
-            return false;
         }
     }
 
-    public boolean setKeyTypes(int[] types) {
+    public void setKeyTypes(int[] types) {
         if (types.length == MAX_KEYMAP_SIZE) {
             int[] tmp = new int[MAX_KEYMAP_SIZE];
             System.arraycopy(types, 0, tmp, 0, MAX_KEYMAP_SIZE);
             this.keyTypes = tmp;
-            return true;
         } else {
-            return false;
         }
     }
 
@@ -324,16 +319,14 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.textSize = spValue;
     }
 
-    public GameButton setShow(int s) {
+    public void setShow(int s) {
         this.show = s;
         updateUI();
-        return this;
     }
 
-    public GameButton setDesignIndex(int index) {
+    public void setDesignIndex(int index) {
         this.mRecorder.setDesignIndex(index);
         updateUI();
-        return this;
     }
 
     public String[] getColorHexs() {
@@ -387,24 +380,24 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         //该算法可以保证CustomizeKeyboard不会造成clientinput的setkey()方法堵塞;
         if (pressed) {
 
-            if (stateMap.containsKey(keyName) && stateMap.get(keyName)) {
+            if (stateMap.containsKey(keyName) && Boolean.TRUE.equals(stateMap.get(keyName))) {
                 return;
             }
             if (!stateMap.containsKey(keyName)) {
-                stateMap.put(keyName, pressed);
+                stateMap.put(keyName, true);
             }
-            if (stateMap.containsKey(keyName) && !stateMap.get(keyName)) {
+            if (stateMap.containsKey(keyName) && Boolean.FALSE.equals(stateMap.get(keyName))) {
                 stateMap.remove(keyName);
-                stateMap.put(keyName, pressed);
+                stateMap.put(keyName, true);
             }
-            mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
+            mController.sendKey(new BaseKeyEvent(TAG, keyName, true, type, null));
 
         } else {
 
-            if (stateMap.containsKey(keyName) && stateMap.get(keyName)) {
+            if (stateMap.containsKey(keyName) && Boolean.TRUE.equals(stateMap.get(keyName))) {
                 stateMap.remove(keyName);
-                stateMap.put(keyName, pressed);
-                mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
+                stateMap.put(keyName, false);
+                mController.sendKey(new BaseKeyEvent(TAG, keyName, false, type, null));
             }
 
         }
@@ -416,9 +409,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return this;
     }
 
-    public GameButton unsetFirstAdded() {
+    public void unsetFirstAdded() {
         this.isFirstAdded = false;
-        return this;
     }
 
     private boolean isBeingPressed = false;
