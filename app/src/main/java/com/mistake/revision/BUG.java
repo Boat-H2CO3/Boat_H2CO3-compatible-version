@@ -1,5 +1,7 @@
 package com.mistake.revision;
 
+import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
+
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -15,7 +17,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public class BUG extends Application implements Application.ActivityLifecycleCallbacks {
+import cosine.boat.BoatApplication;
+
+public class BUG extends BoatApplication implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(@NonNull Activity p1, Bundle p2) {
         // TODO: Implement this method
@@ -74,9 +78,9 @@ public class BUG extends Application implements Application.ActivityLifecycleCal
             byte[] bug = baos.toByteArray();
 
             try {
-                FileOutputStream f = new FileOutputStream("/sdcard/boat/error.log");
+                FileOutputStream f = new FileOutputStream(LAUNCHER_FILE_DIR+"/log.txt");
 
-                //f.write(i.toString().getBytes());
+                f.write(i.toString().getBytes());
 
 
                 f.write(bug);
