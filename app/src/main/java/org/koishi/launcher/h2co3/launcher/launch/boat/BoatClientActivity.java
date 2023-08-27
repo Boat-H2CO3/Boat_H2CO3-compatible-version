@@ -8,10 +8,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.SurfaceTexture;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.view.InputDevice;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.View;
@@ -24,6 +26,7 @@ import androidx.annotation.Nullable;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.client.Client;
+import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.codes.BoatKeycodes;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.HardwareController;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.VirtualController;
 import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.id.key.KeyEvent;
@@ -114,7 +117,14 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         mouseCursor = new ImageView(this);
         mouseCursor.setLayoutParams(new ViewGroup.LayoutParams(DisplayUtils.getPxFromDp(this, CURSOR_SIZE), DisplayUtils.getPxFromDp(this, CURSOR_SIZE)));
         mouseCursor.setImageResource(cosine.boat.R.drawable.cursor5);
+        mouseCursor.post(() -> {
+            mouseCursor.setX(width / 2);
+            grabbedPointer[0] = width / 2;
+            mouseCursor.setY(height / 2);
+            grabbedPointer[1] = height / 2;
+        });
         this.addView(mouseCursor);
+
         //popupWindow.setContentView(base);
 
 
@@ -207,11 +217,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
     }
 
     @Override
-    public void onBackPressed() {
-    }
-
-
-    @Override
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
@@ -257,12 +262,10 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 mouseCursor.setY(grabbedPointer[1]);
             });
         } else {
-            int x, y;
-            x = grabbedPointer[0] + xInc;
-            y = grabbedPointer[1] + yInc;
-            grabbedPointer[0] += xInc;
-            grabbedPointer[1] += yInc;
-            setPointer(grabbedPointer[0], grabbedPointer[1]);
+            int[] touchPointer = grabbedPointer;
+            touchPointer[0] += xInc;
+            touchPointer[1] += yInc;
+            setPointer(touchPointer[0], touchPointer[1]);
         }
     }
 
@@ -271,11 +274,23 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         super.setPointer(x, y);
         if (!grabbed) {
             this.mouseCursor.post(() -> {
-                mouseCursor.setX(x);
-                mouseCursor.setY(y);
+                if (x >= 0 && x <= width){
+                    mouseCursor.setX(x);
+                    grabbedPointer[0] = x;
+                }else {
+                    mouseCursor.setX(width/2);
+                    grabbedPointer[0] = width/2;
+                }
+                if (y >= 0 && y <= height){
+                    mouseCursor.setY(y);
+                    grabbedPointer[1] = y;
+                }else {
+                    mouseCursor.setY(height/2);
+                    grabbedPointer[1] = height/2;
+                }
             });
-            grabbedPointer[0] = x;
-            grabbedPointer[1] = y;
+
+
         }
     }
 
@@ -392,5 +407,29 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 return hardwareController.dispatchMotionKeyEvent(event);
             }
         };
+    }
+    @Override
+    public void onBackPressed() {
+        boolean mouse = false;
+        final int[] devices = InputDevice.getDeviceIds();
+        for (int j : devices) {
+            InputDevice device = InputDevice.getDevice(j);
+            if (device != null && !device.isVirtual()) {
+                if (device.getName().contains("Mouse")) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && device.isExternal()) {
+                        mouse = true;
+                        break;
+                    }
+                    else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                        mouse = true;
+                        break;
+                    }
+                }
+            }
+        }
+        if (!mouse) {
+            BoatInput.setKey(BoatKeycodes.KEY_ESC, 0, true);
+            BoatInput.setKey(BoatKeycodes.KEY_ESC, 0, false);
+        }
     }
 }

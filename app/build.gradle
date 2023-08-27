@@ -4,12 +4,12 @@ plugins {
 }
 
 android {
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "org.koishi.launcher.h2co3"
         minSdk 28
-        targetSdk 33
+        targetSdk 34
         versionCode 1025
         versionName "0.1.0.20230827"
 

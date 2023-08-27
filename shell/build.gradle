@@ -1,12 +1,13 @@
 apply plugin: 'com.android.library'
 
 android {
+    compileSdk 34
+
     //noinspection GrDeprecatedAPIUsage
-    compileSdkVersion 33
 
     defaultConfig {
         minSdkVersion 28
-        targetSdkVersion 33
+        targetSdkVersion 34
     }
     namespace 'com.jrummyapps.android.shell'
 }
