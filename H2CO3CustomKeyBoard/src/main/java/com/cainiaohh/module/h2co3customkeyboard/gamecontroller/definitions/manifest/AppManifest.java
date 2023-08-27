@@ -1,5 +1,8 @@
 package com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest;
 
+import static cosine.boat.utils.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
+
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Environment;
@@ -21,13 +24,13 @@ public class AppManifest {
     public static String APP_NAME;
     public static String DATA_HOME;
     public static String SDCARD_HOME;
-    public static String MCINABOX_HOME;
-    public static String MCINABOX_TEMP;
-    public static String MCINABOX_KEYBOARD;
-    public static String MCINABOX_SETTING_JSON;
-    public static String MCINABOX_VERSION_NAME;
-    public static String MCINABOX_RUNTIME;
-    public static String MCINABOX_BACKGROUND;
+    public static String Boat_H2CO3_HOME;
+    public static String Boat_H2CO3_TEMP;
+    public static String Boat_H2CO3_KEYBOARD;
+    public static String Boat_H2CO3_SETTING_JSON;
+    public static String Boat_H2CO3_VERSION_NAME;
+    public static String Boat_H2CO3_RUNTIME;
+    public static String Boat_H2CO3_BACKGROUND;
     public static String BOAT_CACHE_HOME;
     public static String BOAT_LOG_FILE;
     public static String RUNTIME_HOME;
@@ -46,28 +49,27 @@ public class AppManifest {
     public static String MINECRAFT_RESOURCEPACKS;
 
     public static void initManifest(Context context, String mchome) {
-        APP_NAME = "MCinaBox";
+        APP_NAME = "Boat_H2CO3";
         DATA_HOME = context.getFilesDir().getAbsolutePath();
         SDCARD_HOME = Environment.getExternalStorageDirectory().getAbsolutePath();
-        MCINABOX_HOME = Objects.requireNonNull(context.getExternalFilesDir("mcinabox")).getAbsolutePath();
-        MCINABOX_TEMP = MCINABOX_HOME + "/temp";
-        MCINABOX_KEYBOARD = MCINABOX_HOME + "/keyboards";
-        MCINABOX_SETTING_JSON = MCINABOX_HOME + "/mcinabox.json";
-        MCINABOX_RUNTIME = MCINABOX_HOME + "/runtime";
-        MCINABOX_BACKGROUND = MCINABOX_HOME + "/backgrounds";
+        Boat_H2CO3_HOME = LAUNCHER_FILE_DIR;
+        Boat_H2CO3_TEMP = LAUNCHER_DATA_DIR + "/temp";
+        Boat_H2CO3_KEYBOARD = LAUNCHER_DATA_DIR + "/Keyboards";
+        Boat_H2CO3_SETTING_JSON = Boat_H2CO3_HOME + "/h2o3cfg.json";
+        Boat_H2CO3_RUNTIME = LAUNCHER_DATA_DIR + "/app_runtime";
+        Boat_H2CO3_BACKGROUND = LAUNCHER_DATA_DIR + "/backgrounds";
         try {
-            MCINABOX_VERSION_NAME = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
+            Boat_H2CO3_VERSION_NAME = context.getPackageManager().getPackageInfo(context.getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
-            MCINABOX_VERSION_NAME = "Unknown";
+            Boat_H2CO3_VERSION_NAME = "Unknown";
         }
-        BOAT_CACHE_HOME = MCINABOX_HOME + "/boatapp";
+        BOAT_CACHE_HOME = Boat_H2CO3_HOME + "/boat";
         BOAT_LOG_FILE = BOAT_CACHE_HOME + "/boat_output.txt";
         RUNTIME_HOME = DATA_HOME + "/runtime";
-        BOAT_RUNTIME_HOME = RUNTIME_HOME + "/boat";
         BOAT_RUNTIME_INFO_JSON = BOAT_RUNTIME_HOME + "/packinfo.json";
-        FORGE_HOME = MCINABOX_HOME + "/forge";
-        AUTHLIB_HOME = MCINABOX_HOME + "/authlib-injector";
+        FORGE_HOME = Boat_H2CO3_HOME + "/forge";
+        AUTHLIB_HOME = Boat_H2CO3_HOME + "/authlib-injector";
         AUTHLIB_INJETOR_JAR = AUTHLIB_HOME + "/authlib-injector.jar";
 
         MINECRAFT_HOME = mchome;
@@ -85,6 +87,6 @@ public class AppManifest {
      * 【一个全局目录的数组】
      **/
     public static String[] getAllPath() {
-        return new String[]{MCINABOX_RUNTIME, MCINABOX_HOME, MCINABOX_KEYBOARD, MCINABOX_TEMP, BOAT_CACHE_HOME, RUNTIME_HOME, MCINABOX_BACKGROUND, AUTHLIB_HOME};
+        return new String[]{Boat_H2CO3_RUNTIME, Boat_H2CO3_HOME, Boat_H2CO3_KEYBOARD, Boat_H2CO3_TEMP, BOAT_CACHE_HOME, RUNTIME_HOME, Boat_H2CO3_BACKGROUND, AUTHLIB_HOME};
     }
 }

@@ -187,9 +187,9 @@ public class CkbManager {
     public static boolean outputFile(KeyboardRecorder kr, String fileName) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         StringBuilder jsonString = new StringBuilder(gson.toJson(kr));
-        jsonString.insert(0, "/*\n *This file is craeted by MCinaBox\n *Please DON'T edit the file if you don't know how it works.\n*/\n");
+        jsonString.insert(0, "/*\n *This file is craeted by Boat_H2CO3\n *Please DON'T edit the file if you don't know how it works.\n*/\n");
         try {
-            FileWriter jsonWriter = new FileWriter(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards" + "/" + fileName + ".json");
+            FileWriter jsonWriter = new FileWriter(CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + fileName + ".json");
             BufferedWriter out = new BufferedWriter(jsonWriter);
             out.write(jsonString.toString());
             out.close();
@@ -239,7 +239,7 @@ public class CkbManager {
     }
 
     public boolean loadKeyboard(String fileName) {
-        File file = new File(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards" + "/" + fileName);
+        File file = new File(CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + fileName);
         return loadKeyboard(file);
     }
 

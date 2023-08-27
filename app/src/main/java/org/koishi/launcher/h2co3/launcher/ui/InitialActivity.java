@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.utils.CHTools.LAUNCHER_DATA_DIR;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

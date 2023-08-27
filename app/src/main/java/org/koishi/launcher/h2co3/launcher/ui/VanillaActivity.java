@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
+import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.utils.CHTools.boatCfg;
 
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
@@ -113,15 +113,15 @@ public class VanillaActivity extends H2CO3Activity {
         verifyStoragePermissions(this);//读写权限获取
         requestOverlayPermission();//悬浮窗权限获取
 
-        spDownloadSourceMode = (Spinner) findViewById(R.id.sp_download_source_mode);
+        spDownloadSourceMode = findViewById(R.id.sp_download_source_mode);
 
-        RadioGroup rgSelect = (RadioGroup) findViewById(R.id.rg_select);
+        RadioGroup rgSelect = findViewById(R.id.rg_select);
 
-        rbRelease = (RadioButton) findViewById(R.id.rb_release);
-        rbSnapshot = (RadioButton) findViewById(R.id.rb_snapshot);
-        rbOldbeta = (RadioButton) findViewById(R.id.rb_old_beta);
+        rbRelease = findViewById(R.id.rb_release);
+        rbSnapshot = findViewById(R.id.rb_snapshot);
+        rbOldbeta = findViewById(R.id.rb_old_beta);
 
-        list = (PullListView) findViewById(R.id.loadingversionFileListView1);
+        list = findViewById(R.id.loadingversionFileListView1);
 
         get("https://launchermeta.mojang.com/mc/game/version_manifest.json");
         rbRelease.setEnabled(false);

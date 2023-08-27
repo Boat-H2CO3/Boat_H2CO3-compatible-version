@@ -118,7 +118,7 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
     }
 
     private void removeSelectedFile() {
-        String filePath = CHTools.LAUNCHER_FILE_DIR + "/KeyBoards" + "/" + spinnerSelected.getSelectedItem().toString();
+        String filePath = CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + spinnerSelected.getSelectedItem().toString();
         FileTool.deleteFile(new File(filePath));
     }
 
@@ -156,7 +156,7 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
 
             //检查文件是否存在重复，如果重复，提示是否覆盖。
             boolean run = true;
-            for (String str : FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards")) {
+            for (String str : FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards")) {
                 if (str.equals(fn + ".json")) {
                     run = false;
                     DialogUtils.createBothChoicesDialog(mContext, mContext.getString(R.string.title_warn), mContext.getString(R.string.tips_filename_has_been_used), mContext.getString(R.string.title_over_write), mContext.getString(R.string.title_cancel), new DialogSupports() {
@@ -243,11 +243,11 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
     public void updataUI() {
         if (data == null) {
             data = new ArrayList<>();
-            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards"));
+            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards"));
             spinnerSelected.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, data));
         } else {
             data.clear();
-            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards"));
+            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards"));
             ((BaseAdapter) spinnerSelected.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -279,7 +279,7 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
         private final CkbManagerDialog mDialog;
 
         public KeyboardFileListener(CkbManagerDialog dialog) {
-            super(CHTools.LAUNCHER_FILE_DIR + "/KeyBoards");
+            super(CHTools.LAUNCHER_DATA_DIR + "/Keyboards");
             this.mDialog = dialog;
         }
 

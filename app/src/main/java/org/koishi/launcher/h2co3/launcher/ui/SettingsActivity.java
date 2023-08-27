@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
+import cosine.boat.utils.CHTools;
 
 import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;

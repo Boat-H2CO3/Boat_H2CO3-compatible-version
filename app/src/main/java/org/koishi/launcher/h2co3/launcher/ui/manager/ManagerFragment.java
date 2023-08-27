@@ -1,7 +1,7 @@
 package org.koishi.launcher.h2co3.launcher.ui.manager;
 
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
+import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.utils.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
+import cosine.boat.utils.CHTools;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 

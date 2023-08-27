@@ -1,8 +1,8 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_DATA_DIR;
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.LAUNCHER_FILE_DIR;
-import static com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools.boatCfg;
+import static cosine.boat.utils.CHTools.LAUNCHER_DATA_DIR;
+import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
+import static cosine.boat.utils.CHTools.boatCfg;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,7 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.manifest.CHTools;
+import cosine.boat.utils.CHTools;
 import com.google.android.material.snackbar.Snackbar;
 import com.hjq.permissions.OnPermissionCallback;
 import com.hjq.permissions.Permission;
@@ -189,6 +189,7 @@ public class SplashActivity extends H2CO3Activity {
                 new Thread(() -> {
                     try {
                         AppExecute.output(SplashActivity.this, "h2co3.zip", LAUNCHER_FILE_DIR);
+                        AppExecute.output(SplashActivity.this, "Keyboards.zip", LAUNCHER_DATA_DIR);
                     } catch (IOException e) {
                         Snackbar.make(splash, e.toString(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();
