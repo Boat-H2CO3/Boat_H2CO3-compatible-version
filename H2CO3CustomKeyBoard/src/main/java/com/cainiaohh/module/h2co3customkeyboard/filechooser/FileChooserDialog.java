@@ -14,6 +14,7 @@ import com.cainiaohh.module.h2co3customkeyboard.filechooser.adapter.FileAdapter;
 import com.cainiaohh.module.h2co3customkeyboard.filechooser.model.ChooserFile;
 import com.cainiaohh.module.h2co3customkeyboard.filechooser.model.ChooserStackDirectory;
 import com.cainiaohh.module.h2co3customkeyboard.filechooser.model.MarginItemDecoration;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class FileChooserDialog implements FileAdapter.OnClickListener {
         this.recyclerView = root.findViewById(R.id.recycler_view);
 
 
-        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context)
+        final MaterialAlertDialogBuilder alertDialogBuilder = new MaterialAlertDialogBuilder(context)
                 .setView(root)
                 .setNegativeButton("Cancel", null);
         if (title == null) {

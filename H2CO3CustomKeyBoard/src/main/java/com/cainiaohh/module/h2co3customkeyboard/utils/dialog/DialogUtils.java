@@ -11,6 +11,7 @@ import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.support.DialogSuppo
 import com.cainiaohh.module.h2co3customkeyboard.utils.dialog.support.TaskDialog;
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 public class DialogUtils {
 
@@ -19,7 +20,7 @@ public class DialogUtils {
     public final static int COLORPICKER_ALL = 2;
 
     public static void createBothChoicesDialog(Context context, String title, String message, String positiveButtonName, String negativeButtonName, final DialogSupports support) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setPositiveButton(positiveButtonName, (dialog, which) -> {
@@ -39,7 +40,7 @@ public class DialogUtils {
     }
 
     public static void createSingleChoiceDialog(Context context, String title, String message, String buttonName, final DialogSupports support) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         builder.setTitle(title);
         builder.setMessage(message);
         builder.setPositiveButton(buttonName, (dialog, which) -> {
@@ -53,7 +54,7 @@ public class DialogUtils {
     }
 
     public static void createItemsChoiceDialog(Context context, String title, String positiveButtonName, String negativeButtonName, String neutralButtonName, boolean cancelable, @NonNull String[] items, final DialogSupports support) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(context);
         if (title != null) {
             builder.setTitle(title);
         }

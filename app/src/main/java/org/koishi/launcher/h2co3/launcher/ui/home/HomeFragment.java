@@ -1093,7 +1093,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     @SuppressLint("SetTextI18n")
     public void showInfoDialog() {
-        Dialog dialog = new Dialog(requireContext());
+        MaterialAlertDialogBuilder dialog = new MaterialAlertDialogBuilder(requireContext());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.dialog_info, null);
         String cpu, cpuInfo;
         //Initial
@@ -1114,7 +1114,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         cpuInfo = cpu;
         cpuInfo = cpuInfo.trim();
 
-        tv3.setText(cpuInfo);
+        tv3.setText(Build.HARDWARE + "(" + Build.MANUFACTURER + ")");
 
         if (!CheckRootPathSU()) {
             tv4.setText(getResources().getString(R.string.info_root_false));
@@ -1122,12 +1122,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             tv4.setText(getResources().getString(R.string.info_root_true));
         }
 
-        dialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        Window window = dialog.getWindow();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(window).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9);
+        dialog.setView(dialogView);
         dialog.show();
         //onClick
     }
