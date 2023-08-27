@@ -32,7 +32,6 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/bgTint"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:padding="@dimen/app_15dp">
@@ -86,7 +85,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_margin="5dp"
-                                android:background="@drawable/ic_btn_cyan"
+                                android:background="@drawable/ic_btn_green"
                                 android:src="@drawable/ic_info_qq" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -110,7 +109,7 @@
                                 android:layout_width="50dp"
                                 android:layout_height="50dp"
                                 android:layout_margin="5dp"
-                                android:background="@drawable/ic_btn_purple"
+                                android:background="@drawable/ic_btn_green"
                                 android:src="@drawable/ic_info_discord" />
 
                             <com.google.android.material.textview.MaterialTextView

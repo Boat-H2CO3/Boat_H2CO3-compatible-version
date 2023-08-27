@@ -20,6 +20,7 @@ import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.ui.SettingsActivity;
@@ -83,9 +84,9 @@ public class CustomFragment extends Fragment {
     //----------Menu点击----------
 
     public void openDonate() {
-        Dialog mDialog = new Dialog(requireActivity(), R.style.AppTheme_MaterialAlertDialog);
+        MaterialAlertDialogBuilder mDialog = new MaterialAlertDialogBuilder(requireActivity(), R.style.AppTheme_MaterialAlertDialog);
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_donate_layout, null);
-        mDialog.setContentView(dialogView);
+        mDialog.setView(dialogView);
 
         vx = dialogView.findViewById(R.id.donate_wc);
         afd = dialogView.findViewById(R.id.donate_afd);
@@ -104,34 +105,25 @@ public class CustomFragment extends Fragment {
             intent.launchUrl(requireActivity(), Uri.parse("https://www.patreon.com/boatapp_h2o"));
         });
 
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
+        mDialog.setView(dialogView);
         mDialog.show();
     }
 
     public void showDonateDialog() {
-        Dialog mDialog = new Dialog(requireActivity());
+        MaterialAlertDialogBuilder mDialog = new MaterialAlertDialogBuilder(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_dialog_donate, null);
-        mDialog.setContentView(dialogView);
+        mDialog.setView(dialogView);
         MaterialButton cancel = dialogView.findViewById(R.id.custom_donate_cancel);
         MaterialButton start = dialogView.findViewById(R.id.custom_donate_ok);
-        cancel.setOnClickListener(v -> mDialog.dismiss());
         start.setOnClickListener(v -> joinQQGroup("-c3oG3cfXX-v6W8MbEl9_Fl2JjuuvpC6"));
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
+        mDialog.setView(dialogView);
         mDialog.show();
     }
 
     public void showAboutDialog() {
-        Dialog mDialog = new Dialog(requireActivity());
+        MaterialAlertDialogBuilder mDialog = new MaterialAlertDialogBuilder(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_about_layout, null);
-        mDialog.setContentView(dialogView);
+        mDialog.setView(dialogView);
 
         ab = dialogView.findViewById(R.id.ab);
         ab.setMovementMethod(LinkMovementMethod.getInstance());
@@ -142,7 +134,6 @@ public class CustomFragment extends Fragment {
 
         qq.setOnClickListener(v -> {
             showDonateDialog();
-            mDialog.dismiss();
         });
         dis.setOnClickListener(v -> {
             CustomTabsIntent intent = new CustomTabsIntent.Builder().build();
@@ -153,18 +144,14 @@ public class CustomFragment extends Fragment {
             intent.launchUrl(requireActivity(), Uri.parse("https://github.com/NaCln4c1"));
         });
 
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
+        mDialog.setView(dialogView);
         mDialog.show();
     }
 
     public void openLibDialog() {
-        Dialog mDialog = new Dialog(requireActivity());
+        MaterialAlertDialogBuilder mDialog = new MaterialAlertDialogBuilder(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_lib_layout, null);
-        mDialog.setContentView(dialogView);
+        mDialog.setView(dialogView);
 
         libBoat = dialogView.findViewById(R.id.lib_boat);
         libMio = dialogView.findViewById(R.id.lib_h2co3);
@@ -228,18 +215,14 @@ public class CustomFragment extends Fragment {
             intent.launchUrl(requireActivity(), Uri.parse("https://github.com/alibaba/fastjson\n"));
         });
 
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
+        mDialog.setView(dialogView);
         mDialog.show();
     }
 
     public void openThkDialog() {
-        Dialog mDialog = new Dialog(requireActivity());
+        MaterialAlertDialogBuilder mDialog = new MaterialAlertDialogBuilder(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_thank_layout, null);
-        mDialog.setContentView(dialogView);
+        mDialog.setView(dialogView);
 
         thkBoat = dialogView.findViewById(R.id.thk_boat);
         thkMio = dialogView.findViewById(R.id.thk_h2co3);
@@ -273,11 +256,7 @@ public class CustomFragment extends Fragment {
             intent.launchUrl(requireActivity(), Uri.parse("https://github.com/ShulkerSakura\n"));
         });
 
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
+        mDialog.setView(dialogView);
         mDialog.show();
     }
 

@@ -39,7 +39,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/ic_btn_cyan"
+                        android:background="@drawable/ic_btn_green"
                         android:src="@drawable/ic_donate_wechat" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -63,7 +63,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/ic_btn_red"
+                        android:background="@drawable/ic_btn_green"
                         android:src="@drawable/ic_donate_afd" />
 
                     <com.google.android.material.textview.MaterialTextView
@@ -87,7 +87,7 @@
                         android:layout_width="50dp"
                         android:layout_height="50dp"
                         android:layout_margin="5dp"
-                        android:background="@drawable/ic_btn_purple"
+                        android:background="@drawable/ic_btn_green"
                         android:src="@drawable/ic_donate_patreon" />
 
                     <com.google.android.material.textview.MaterialTextView
