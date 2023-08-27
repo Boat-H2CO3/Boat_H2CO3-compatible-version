@@ -189,7 +189,6 @@ public class SplashActivity extends H2CO3Activity {
                 new Thread(() -> {
                     try {
                         AppExecute.output(SplashActivity.this, "h2co3.zip", LAUNCHER_FILE_DIR);
-                        AppExecute.output(SplashActivity.this, "Keyboards.zip", LAUNCHER_DATA_DIR);
                     } catch (IOException e) {
                         Snackbar.make(splash, e.toString(), Snackbar.LENGTH_LONG)
                                 .setAction("Action", null).show();

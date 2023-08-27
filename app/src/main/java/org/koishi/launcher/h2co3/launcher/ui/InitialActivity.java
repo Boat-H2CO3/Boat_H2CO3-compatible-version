@@ -17,6 +17,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.tools.file.AppExecute;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -50,6 +51,7 @@ public class InitialActivity extends H2CO3Activity {
         initial = findViewById(R.id.initial_view);
         new Thread(() -> {
             try {
+                unZip(InitialActivity.this, "Keyboards.zip", LAUNCHER_DATA_DIR);
                 unZip(InitialActivity.this, "boat.zip", LAUNCHER_DATA_DIR + "/app_runtime/");
                 unZip(InitialActivity.this, "app_runtime.zip", LAUNCHER_DATA_DIR + "/app_runtime/");
                 han.sendEmptyMessage(0);
