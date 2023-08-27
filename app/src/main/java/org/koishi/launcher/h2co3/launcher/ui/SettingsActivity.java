@@ -64,8 +64,8 @@ public class SettingsActivity extends H2CO3Activity {
             String set_control = sp.getString("set_control", "None");
             String set_jvm = sp.getString("set_jvm", "-boat -Xmx4000M");
             String set_mcf = sp.getString("set_mcf", "");
-            String set_gl = sp.getString("set_gl", "libGL112.so");
-            String set_java = sp.getString("set_java", "jre_8");
+            String set_gl = sp.getString("set_gl", "gl14es");
+            String set_java = sp.getString("set_java", "jre_17");
             String set_source = sp.getString("set_source", "https://download.mcbbs.net");
             boolean set_click_b = sp.getBoolean("set_click", false);
             boolean set_pause_b = sp.getBoolean("set_pause", false);

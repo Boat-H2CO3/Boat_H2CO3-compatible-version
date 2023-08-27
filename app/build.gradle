@@ -107,6 +107,4 @@ dependencies {
     //implementation 'com.google.code.gson:gson:2.8.2'
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     implementation 'com.larswerkman:HoloColorPicker:1.5'
-
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.7'
 }

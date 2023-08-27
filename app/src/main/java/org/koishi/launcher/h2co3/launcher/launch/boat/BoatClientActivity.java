@@ -45,7 +45,7 @@ import cosine.boat.utils.CHTools;
 public class BoatClientActivity extends BoatActivity implements View.OnClickListener,Client {
 
     private final static int CURSOR_SIZE = 16; //dp
-    private final int[] grabbedPointer = new int[]{100, 100};
+    private final int[] grabbedPointer = new int[]{0, 0};
 
     public FrameLayout mControlLayout;
     public SharedPreferences msh;
@@ -94,8 +94,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 openH2CO3CustomControls();
             }*/
         NavigationView.OnNavigationItemSelectedListener gameActionListener = menuItem -> {
-            if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_custom) {
-            }/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
+            menuItem.getItemId();/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
                 //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
                 openH2CO3CustomControls();
             }*/
@@ -153,7 +152,12 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         System.out.print(gl);
                         String boatRenderer;
                         String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
-                        boatRenderer = "libGL114";
+                        if (LauncherConfig.loadgl().equals("VirGL")) {
+                            boatRenderer = "VirGL";
+                        } else {
+                            boatRenderer = "libGL114";
+                        }
+
                         System.out.println(args);
                         MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "")));
                         boolean isHighVersion = mcVersion.minimumLauncherVersion >= 21;
@@ -253,7 +257,12 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 mouseCursor.setY(grabbedPointer[1]);
             });
         } else {
-            setPointer(getPointer()[0] + xInc, getPointer()[1] + yInc);
+            int x, y;
+            x = grabbedPointer[0] + xInc;
+            y = grabbedPointer[1] + yInc;
+            grabbedPointer[0] += xInc;
+            grabbedPointer[1] += yInc;
+            setPointer(grabbedPointer[0], grabbedPointer[1]);
         }
     }
 
@@ -376,11 +385,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
             public void onPause() {
                 virtualController.onPaused();
                 hardwareController.onPaused();
-            }
-
-            @Override
-            public boolean dispatchKeyEvent(android.view.KeyEvent event) {
-                return hardwareController.dispatchKeyEvent(event);
             }
 
             @Override

@@ -157,39 +157,65 @@ public class LauncherConfig extends HashMap<String, String> {
                 // Caciocavallo config AWT-enabled version
                 args.add("-Djava.awt.headless=false");
                 args.add("-Dcacio.managed.screensize=" + width + "x" + height);
-                // args.add("-Dcacio.font.fontmanager=net.java.openjdk.cacio.ctc.CTCFontManager");
+                //args.add("-Dcacio.font.fontmanager=net.java.openjdk.cacio.ctc.CTCFontManager");
                 args.add("-Dcacio.font.fontscaler=sun.font.FreetypeFontScaler");
                 args.add("-Dswing.defaultlaf=javax.swing.plaf.metal.MetalLookAndFeel");
-                args.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
-                args.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
-                args.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
+                if (!isJava17) {
+                    args.add("-Dcacio.font.fontmanager=sun.awt.X11FontManager");
+                    args.add("-Dawt.toolkit=net.java.openjdk.cacio.ctc.CTCToolkit");
+                    args.add("-Djava.awt.graphicsenv=net.java.openjdk.cacio.ctc.CTCGraphicsEnvironment");
+                } else {
+                    args.add("-Dcacio.font.fontmanager=com.github.caciocavallosilano.cacio.ctc.CTCFontManager");
+                    args.add("-Dawt.toolkit=com.github.caciocavallosilano.cacio.ctc.CTCToolkit");
+                    args.add("-Djava.awt.graphicsenv=com.github.caciocavallosilano.cacio.ctc.CTCGraphicsEnvironment");
+                    args.add("-Djava.system.class.loader=com.github.caciocavallosilano.cacio.ctc.CTCPreloadClassLoader");
+                    args.add("--add-exports=java.desktop/java.awt=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/java.awt.peer=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.awt.image=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.java2d=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/java.awt.dnd.peer=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.awt=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.awt.event=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.awt.datatransfer=ALL-UNNAMED");
+                    args.add("--add-exports=java.desktop/sun.font=ALL-UNNAMED");
+                    args.add("--add-exports=java.base/sun.security.action=ALL-UNNAMED");
+                    args.add("--add-opens=java.base/java.util=ALL-UNNAMED");
+                    args.add("--add-opens=java.desktop/java.awt=ALL-UNNAMED");
+                    args.add("--add-opens=java.desktop/sun.font=ALL-UNNAMED");
+                    args.add("--add-opens=java.desktop/sun.java2d=ALL-UNNAMED");
+                    args.add("--add-opens=java.base/java.lang.reflect=ALL-UNNAMED");
+
+                    // Opens the java.net package to Arc DNS injector on Java 9+
+                    args.add("--add-opens=java.base/java.net=ALL-UNNAMED");
+                }
+
                 StringBuilder cacioClasspath = new StringBuilder();
-                cacioClasspath.append("-Xbootclasspath/").append("p");
-                File cacioDir = new File(lwjglPath + "/public/caciocavallo" + "");
+                cacioClasspath.append("-Xbootclasspath/" + (!isJava17 ? "p" : "a"));
+                File cacioDir = new File(lwjglPath + "/plugin" + "/caciocavallo" + (!isJava17 ? "" : "17"));
                 if (cacioDir.exists() && cacioDir.isDirectory()) {
-                    for (File file : Objects.requireNonNull(cacioDir.listFiles())) {
+                    for (File file : cacioDir.listFiles()) {
                         if (file.getName().endsWith(".jar")) {
-                            cacioClasspath.append(":").append(file.getAbsolutePath());
+                            cacioClasspath.append(":" + file.getAbsolutePath());
                         }
                     }
                 }
                 args.add(cacioClasspath.toString());
             }
             args.add("-cp");
-            Log.e("aaaaaaa", version.getClassPath(config, true, isJava17));
             args.add(classPath);
             args.add("-Djava.library.path=" + libraryPath);
             args.add("-Dfml.earlyprogresswindow=false");
             args.add("-Dorg.lwjgl.util.DebugLoader=true");
             args.add("-Dorg.lwjgl.util.Debug=true");
             args.add("-Dos.name=Linux");
-            args.add("-Dlwjgl.platform=Boat");
+            args.add("-Dlwjgl.platform=Boat_H2CO3");
+            args.add("-Duser.language=" + System.getProperty("user.language"));
             if (loadgl().equals("VirGL")) {
                 args.add("-Dorg.lwjgl.opengl.libname=libGL.so.1");
             } else {
                 args.add("-Dorg.lwjgl.opengl.libname=libgl4es_114.so");
             }
-            args.add("-Dlwjgl.platform=Boat");
+            args.add("-Dlwjgl.platform=Boat_H2CO3");
             args.add("-Dos.name=Linux");
             args.add("-Djava.io.tmpdir=" + LAUNCHER_DATA_USER_DIR);
             String[] accountArgs;
@@ -206,7 +232,7 @@ public class LauncherConfig extends HashMap<String, String> {
                 }
             }
             args.add("-Xms" + "1024" + "M");
-            args.add("-Xmx" + "4000" + "M");
+            args.add("-Xmx" + "6000" + "M");
             if (!config.extraJavaFlags.equals("")) {
                 String[] extraJavaFlags = config.extraJavaFlags.split(" ");
                 Collections.addAll(args, extraJavaFlags);
@@ -219,11 +245,6 @@ public class LauncherConfig extends HashMap<String, String> {
             args.add(Integer.toString(width));
             args.add("--height");
             args.add(Integer.toString(height));
-            String[] ser = server.split(":");
-            args.add("--server");
-            args.add(ser[0]);
-            args.add("--port");
-            args.add(ser.length > 1 ? ser[1] : "25565");
             String[] extraMinecraftArgs = config.extraMinecraftFlags.split(" ");
             Collections.addAll(args, extraMinecraftArgs);
             return TouchInjector.rebaseArguments(config, args);

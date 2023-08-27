@@ -9,23 +9,22 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash;
 import cat.ereza.customactivityoncrash.config.CaocConfig;
 import cosine.boat.ui.CrashActivity;
 
-public class BoatApplication extends Application implements Application.ActivityLifecycleCallbacks {
-    public static AppCompatActivity mCurrentActivity;
-    public static final BoatApplication mInstance = null;
+public class H2CO3Application extends Application implements Application.ActivityLifecycleCallbacks {
+    public static Activity mCurrentActivity;
+    public static final H2CO3Application mInstance = null;
     public SharedPreferences mPref;
     private boolean is_OTG = false;
 
-    public static AppCompatActivity getCurrentActivity() {
-        return BoatApplication.mCurrentActivity;
+    public static Activity getCurrentActivity() {
+        return H2CO3Application.mCurrentActivity;
     }
 
-    public static BoatApplication getInstance() {
+    public static H2CO3Application getInstance() {
         return mInstance;
     }
 
@@ -46,8 +45,8 @@ public class BoatApplication extends Application implements Application.Activity
     @Override
     public void onActivityStarted(@NonNull Activity p1) {
         // TODO: Implement this method
-        BoatApplication.mCurrentActivity = (AppCompatActivity) p1;
-        System.out.println(BoatApplication.mCurrentActivity);
+        H2CO3Application.mCurrentActivity = (Activity) p1;
+        System.out.println(H2CO3Application.mCurrentActivity);
     }
 
     @Override

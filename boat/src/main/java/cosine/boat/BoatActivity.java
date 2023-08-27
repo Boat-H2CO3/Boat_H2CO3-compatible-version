@@ -168,16 +168,6 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
         }
     }
 
-    // Override the dispatchKeyEvent method to redirect events to Boat
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if (boatInterface.dispatchKeyEvent(event)) {
-            return true;
-        }
-
-        return super.dispatchKeyEvent(event);
-    }
-
     // Override the dispatchGenericMotionEvent method to redirect events to Boat
     @Override
     public boolean dispatchGenericMotionEvent(MotionEvent event) {
@@ -215,8 +205,6 @@ public class BoatActivity extends AppCompatActivity implements TextureView.Surfa
         void onResume();
 
         void onPause();
-
-        boolean dispatchKeyEvent(KeyEvent event);
 
         boolean dispatchGenericMotionEvent(MotionEvent event);
     }

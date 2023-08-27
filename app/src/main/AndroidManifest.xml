@@ -17,7 +17,7 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
-        android:name="cosine.boat.BoatApplication"
+        android:name="cosine.boat.H2CO3Application"
         android:allowBackup="true"
         android:allowNativeHeapPointerTagging="false"
         android:appCategory="game"

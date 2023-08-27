@@ -17,9 +17,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-import cosine.boat.BoatApplication;
+import cosine.boat.H2CO3Application;
 
-public class BUG extends BoatApplication implements Application.ActivityLifecycleCallbacks {
+public class BUG extends H2CO3Application implements Application.ActivityLifecycleCallbacks {
     @Override
     public void onActivityCreated(@NonNull Activity p1, Bundle p2) {
         // TODO: Implement this method
