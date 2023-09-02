@@ -23,16 +23,12 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.client.Client;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.codes.BoatKeycodes;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.HardwareController;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.controller.VirtualController;
-import com.cainiaohh.module.h2co3customkeyboard.gamecontroller.definitions.id.key.KeyEvent;
-import com.cainiaohh.module.h2co3customkeyboard.utils.DisplayUtils;
-import com.google.android.material.navigation.NavigationView;
-
+import org.koishi.launcher.h2co3.control.client.Client;
+import org.koishi.launcher.h2co3.control.controller.HardwareController;
+import org.koishi.launcher.h2co3.control.controller.VirtualController;
+import org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent;
+import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.launch.MCOptionUtils;
 import org.koishi.launcher.h2co3.tools.launch.MinecraftVersion;
 
@@ -43,6 +39,7 @@ import java.util.Vector;
 import cosine.boat.BoatActivity;
 import cosine.boat.BoatInput;
 import cosine.boat.function.BoatCallback;
+import cosine.boat.keycodes.BoatKeycodes;
 import cosine.boat.utils.CHTools;
 
 public class BoatClientActivity extends BoatActivity implements View.OnClickListener,Client {
@@ -60,8 +57,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
     private LauncherConfig gameLaunchSetting;
     private VirtualController virtualController;
     private HardwareController hardwareController;
-    private DrawerLayout drawerLayout;
-    private NavigationView navDrawer;
     private boolean grabbed = false;
 
     @Override
@@ -77,8 +72,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         mshe = msh.edit();
         base = findViewById(cosine.boat.R.id.main_base);
         mControlLayout = findViewById(cosine.boat.R.id.content_frame);
-        drawerLayout = findViewById(cosine.boat.R.id.overlay_drawer_options);
-        navDrawer = findViewById(cosine.boat.R.id.main_navigation_view);
         virtualController = new VirtualController(this, KeyEvent.KEYMAP_TO_X) {
             @Override
             public void init() {
@@ -92,23 +85,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
 
     @SuppressLint("ClickableViewAccessibility")
     private void initUI() {
-        /* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
-                //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
-                openH2CO3CustomControls();
-            }*/
-        NavigationView.OnNavigationItemSelectedListener gameActionListener = menuItem -> {
-            menuItem.getItemId();/* else if (menuItem.getItemId() == cosine.boat.R.id.menu_ctrl_vi) {
-                //h2co3CustomManager.HideCustomButton(h2CO3CrossingKeyboard);
-                openH2CO3CustomControls();
-            }*/
-            drawerLayout.closeDrawers();
-            return true;
-        };
-        navDrawer.setNavigationItemSelectedListener(gameActionListener);
-
-        //cv1=(CardView)base.findViewById(R.id.cv1);
-
-        //Control the 2/3 screen
 
         getWindow().getDecorView().findViewById(android.R.id.content).post(() -> {
             width = getSurfaceLayerView().getWidth();
@@ -123,12 +99,10 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
             mouseCursor.setY(height / 2);
             grabbedPointer[1] = height / 2;
         });
-        this.addView(mouseCursor);
+        mControlLayout.addView(mouseCursor);
 
         //popupWindow.setContentView(base);
 
-
-        drawerLayout.closeDrawers();
         BoatInput.pushEventWindow(width, height);
     }
 

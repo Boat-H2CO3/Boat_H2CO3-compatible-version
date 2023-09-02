@@ -105,7 +105,7 @@
                 android:resource="@xml/filepaths" />
         </provider>
         <activity
-            android:name="com.cainiaohh.module.h2co3customkeyboard.gamecontroller.ckb.CustomizeKeyboardEditorActivity"
+            android:name=".control.ckb.CustomizeKeyboardEditorActivity"
             android:configChanges="screenSize|keyboard|navigation|orientation|keyboardHidden"
             android:screenOrientation="userLandscape" />
     </application>

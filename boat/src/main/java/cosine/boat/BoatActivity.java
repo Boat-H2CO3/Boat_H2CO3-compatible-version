@@ -20,8 +20,9 @@ import java.util.Vector;
 
 import cosine.boat.function.BoatCallback;
 import cosine.boat.function.BoatLaunchCallback;
+import rikka.material.app.MaterialActivity;
 
-public class BoatActivity extends AppCompatActivity implements TextureView.SurfaceTextureListener {
+public class BoatActivity extends MaterialActivity implements TextureView.SurfaceTextureListener {
 
     public static IBoat boatInterface;
 
