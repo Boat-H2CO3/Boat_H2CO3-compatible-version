@@ -262,10 +262,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                 mouseCursor.setY(grabbedPointer[1]);
             });
         } else {
-            int[] touchPointer = grabbedPointer;
-            touchPointer[0] += xInc;
-            touchPointer[1] += yInc;
-            setPointer(touchPointer[0], touchPointer[1]);
+            setPointer(getPointer()[0] + xInc, getPointer()[1] + yInc);
         }
     }
 
@@ -289,8 +286,6 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                     grabbedPointer[1] = height/2;
                 }
             });
-
-
         }
     }
 

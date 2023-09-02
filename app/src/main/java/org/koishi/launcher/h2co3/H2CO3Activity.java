@@ -12,10 +12,10 @@ public class H2CO3Activity extends MaterialActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             //这里做你想做的事
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            boolean spIsAuth = sharedPreferences.getBoolean("material", false);
+            boolean spIsAuth = sharedPreferences.getBoolean("material", true);
             if (spIsAuth) {
                 setTheme(R.style.Theme_H2CO3_DynamicColors);
             } else {

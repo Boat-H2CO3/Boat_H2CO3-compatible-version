@@ -1,6 +1,6 @@
 #include <android/log.h>
 #include "boat_internal.h"
-
+BoatEvent current_event;
 void EventQueue_init(EventQueue *queue) {
     queue->count = 0;
     queue->head = NULL;
@@ -120,7 +120,13 @@ int boatPollEvent(BoatEvent *event) {
     }
     return ret;
 }
-
+JNIEXPORT jintArray JNICALL
+Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
+    jintArray ja = (*env)->NewIntArray(env, 2);
+    int arr[2] = {current_event.x, current_event.y};
+    (*env)->SetIntArrayRegion(env, ja, 0, 2, arr);
+    return ja;
+}
 JNIEXPORT void JNICALL
 Java_cosine_boat_BoatInput_pushEvent(JNIEnv *env, jclass clazz, jlong time, jint type, jint p1,
                                      jint p2) {
@@ -143,6 +149,9 @@ Java_cosine_boat_BoatInput_pushEvent(JNIEnv *env, jclass clazz, jlong time, jint
         case MotionNotify:
             event->x = p1;
             event->y = p2;
+            current_event.time = time;
+            current_event.x = p1;
+            current_event.y = p2;
             break;
         case ButtonPress:
         case ButtonRelease:
@@ -190,12 +199,4 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatInput_setEventPipe(JNIEnv *env, jcla
     BOAT_INTERNAL_LOG("Succeeded to set event pipe");
 }
 
-BoatEvent current_event;
 
-JNIEXPORT jintArray JNICALL
-Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
-    jintArray ja = (*env)->NewIntArray(env, 2);
-    int arr[2] = {current_event.x, current_event.y};
-    (*env)->SetIntArrayRegion(env, ja, 0, 2, arr);
-    return ja;
-}
