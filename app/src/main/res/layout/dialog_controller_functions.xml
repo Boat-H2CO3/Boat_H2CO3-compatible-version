@@ -4,16 +4,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="230dp"
     android:layout_height="250dp"
-    android:background="@drawable/background_dialog_noalpha"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/title_virtual_controller"
-        android:textColor="@color/text_title_main"
         android:textSize="@dimen/text_big" />
 
     <LinearLayout
@@ -21,16 +19,15 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="5dp"
             android:text="@string/title_global_setting"
-            android:textColor="@color/text_info"
             android:textSize="@dimen/text_mid" />
 
-        <TextView
+        <com.google.android.material.textview.MaterialTextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,8 +38,7 @@
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_refresh_black_24dp" />
+            android:layout_margin="5dp" />
 
         <CheckBox
             android:id="@+id/virtual_controller_dialog_checkbox_lock"
@@ -50,7 +46,6 @@
             android:layout_height="20dp"
             android:layout_gravity="center"
             android:layout_margin="5dp"
-            android:background="@drawable/checkbox_lock"
             android:button="@null"
             android:checked="false" />
 
@@ -60,8 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginLeft="3dp"
-        android:layout_marginRight="3dp"
-        android:background="@drawable/background_gray_corner">
+        android:layout_marginRight="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -73,16 +67,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_custom_keyboard"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -109,16 +102,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_pc_keyboard"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -145,16 +137,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_pe_keyboard"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -181,16 +172,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_pe_itembar"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -217,16 +207,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_pe_joystick"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1" />
@@ -253,13 +242,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_touchpad"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
                 <TextView
@@ -295,7 +283,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_inputbox"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
                 <TextView
@@ -331,7 +318,6 @@
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_console"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
                 <TextView

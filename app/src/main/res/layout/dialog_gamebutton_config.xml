@@ -3,25 +3,22 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="250dp"
-    android:background="@drawable/background_dialog_noalpha"
     android:orientation="vertical"
     tools:ignore="LabelFor">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="5dp"
         android:text="@string/title_custom_button_editor"
-        android:textColor="@color/text_title_main"
         android:textSize="@dimen/text_big" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_margin="5dp"
-        android:layout_weight="6"
-        android:background="@drawable/background_gray_corner">
+        android:layout_weight="6">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -35,13 +32,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_name"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <EditText
@@ -61,13 +57,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_width"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <Button
@@ -112,13 +107,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_height"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <Button
@@ -163,7 +157,7 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -214,13 +208,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_margin_top"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <Button
@@ -265,13 +258,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_mapping"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <LinearLayout
@@ -288,14 +280,13 @@
                         android:layout_weight="3"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/gamebutton_config_dialog_text_map_1"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="3"
-                            android:textColor="@color/text_title_main"
                             android:textSize="@dimen/text_small" />
 
                         <View
@@ -304,14 +295,13 @@
                             android:background="@android:color/background_dark" />
                     </LinearLayout>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="+"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                     <LinearLayout
@@ -321,14 +311,13 @@
                         android:layout_weight="3"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/gamebutton_config_dialog_text_map_2"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="3"
-                            android:textColor="@color/text_title_main"
                             android:textSize="@dimen/text_small" />
 
                         <View
@@ -337,7 +326,7 @@
                             android:background="@android:color/background_dark" />
                     </LinearLayout>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -354,14 +343,13 @@
                         android:layout_weight="3"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/gamebutton_config_dialog_text_map_3"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="3"
-                            android:textColor="@color/text_title_main"
                             android:textSize="@dimen/text_small" />
 
                         <View
@@ -370,7 +358,7 @@
                             android:background="@android:color/background_dark" />
                     </LinearLayout>
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -387,14 +375,13 @@
                         android:layout_weight="3"
                         android:orientation="vertical">
 
-                        <TextView
+                        <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/gamebutton_config_dialog_text_map_4"
                             android:layout_width="match_parent"
                             android:layout_height="35dp"
                             android:layout_gravity="center"
                             android:gravity="center"
                             android:text="3"
-                            android:textColor="@color/text_title_main"
                             android:textSize="@dimen/text_small" />
 
                         <View
@@ -413,13 +400,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_theme"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <Spinner
@@ -438,13 +424,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_back_color"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <EditText
@@ -460,8 +445,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/text_info" />
+                    android:layout_weight="1" />
 
 
             </LinearLayout>
@@ -472,13 +456,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_text_color"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <EditText
@@ -494,8 +477,7 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_margin="10dp"
-                    android:layout_weight="1"
-                    android:background="@color/text_info" />
+                    android:layout_weight="1" />
 
 
             </LinearLayout>
@@ -506,13 +488,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_text_size"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <SeekBar
@@ -521,7 +502,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/gamebutton_config_dialog_text_textsize"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -529,7 +510,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
             </LinearLayout>
@@ -541,13 +521,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_corner"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <SeekBar
@@ -556,7 +535,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/gamebutton_config_dialog_text_cornersize"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -564,7 +543,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
             </LinearLayout>
@@ -575,13 +553,12 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_weight="2"
                     android:text="@string/title_un_alpha_size"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <SeekBar
@@ -590,7 +567,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="4" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/gamebutton_config_dialog_text_alpha"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -598,7 +575,6 @@
                     android:layout_weight="1"
                     android:gravity="center"
                     android:text="0"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
             </LinearLayout>
@@ -609,15 +585,14 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/title_keep"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -639,12 +614,11 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/title_hide"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <TextView
@@ -674,7 +648,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/title_sight_follow"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <TextView
@@ -703,7 +676,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/title_input_chars"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <EditText
@@ -737,7 +709,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/title_show"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_big" />
 
                 <TextView
@@ -756,7 +727,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_all"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                     <RadioButton
@@ -764,7 +734,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_in_game"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                     <RadioButton
@@ -772,7 +741,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/title_out_game"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
 

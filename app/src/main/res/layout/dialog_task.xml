@@ -25,7 +25,7 @@
             android:layout_margin="5dp"
             android:orientation="vertical">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dialog_task_text_total_task_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
                 android:textColor="@color/text_hint"
                 android:textSize="@dimen/text_mid" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/dialog_task_text_current_task_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -171,7 +171,7 @@
             android:layout_weight="4"
             android:orientation="horizontal">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/virtual_keyboard_signal_text_caps"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -181,13 +181,13 @@
                 android:textColor="@color/text_title_main"
                 android:textSize="6sp" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_weight="1" />
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/virtual_keyboard_signal_enable_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

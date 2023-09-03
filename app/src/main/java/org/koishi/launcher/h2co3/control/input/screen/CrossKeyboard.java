@@ -21,6 +21,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
@@ -517,13 +520,12 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         return this.mController;
     }
 
-    private static class CrossKeyboardConfigDialog extends Dialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Dialog.OnCancelListener, CompoundButton.OnCheckedChangeListener {
-
+   private static class CrossKeyboardConfigDialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, DialogInterface.OnCancelListener, CompoundButton.OnCheckedChangeListener {
         private final static String TAG = "CrossKeyboardConfigDialog";
         private final static int DEFAULT_ALPHA_PROCESS = 40;
-        private final static int DEFAULT_SIZE_PROGRESS = 50;
-        private final static int MIN_SIZE_PROGRESS = -50;
-        private final static int MAX_SIZE_PROGRESS = 100;
+        private final static int DEFAULT_SIZE_PROGRESS = 0;
+        private final static int MIN_SIZE_PROGRESS = -0;
+        private final static int MAX_SIZE_PROGRESS = 150;
         private final static int MAX_ALPHA_PROGRESS = 100;
         private final static int MIN_ALPHA_PROGRESS = 0;
         private final static String spFileName = "input_crosskeyboard_config";
@@ -535,9 +537,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         private final static String sp_show_name = "show";
         private final OnscreenInput mInput;
         private final Context mContext;
-        private Button buttonOK;
-        private Button buttonCancel;
-        private Button buttonRestore;
+        private AlertDialog dialog;
         private SeekBar seekbarAlpha;
         private SeekBar seekbarSize;
         private TextView textAlpha;
@@ -556,80 +556,72 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         private int screenHeight;
 
         public CrossKeyboardConfigDialog(@NonNull Context context, OnscreenInput i) {
-            super(context);
-            setContentView(R.layout.dialog_onscreen_crosskeyboard_config);
             mInput = i;
             mContext = context;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_onscreen_crosskeyboard_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            buttonOK = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_ok);
-            buttonCancel = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_cancel);
-            buttonRestore = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_restore);
-            seekbarAlpha = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_seekbar_alpha);
-            seekbarSize = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_seekbar_size);
-            textAlpha = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_text_alpha);
-            textSize = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_text_size);
-            rbtAll = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_all);
-            rbtInGame = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_in_game);
-            rbtOutGame = this.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_out_game);
+            Button buttonOK = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_ok);
+            Button buttonCancel = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_cancel);
+            Button buttonRestore = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_button_restore);
+            seekbarAlpha = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_seekbar_alpha);
+            seekbarSize = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_seekbar_size);
+            textAlpha = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_text_alpha);
+            textSize = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_text_size);
+            rbtAll = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_all);
+            rbtInGame = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_in_game);
+            rbtOutGame = view.findViewById(R.id.input_onscreen_crosskeyboard_dialog_rbt_out_game);
 
-            for (View v : new View[]{buttonOK, buttonCancel, buttonRestore}) {
-                v.setOnClickListener(this);
-            }
-            for (SeekBar s : new SeekBar[]{seekbarSize, seekbarAlpha}) {
-                s.setOnSeekBarChangeListener(this);
-            }
-            for (RadioButton rbt : new RadioButton[]{rbtAll, rbtInGame, rbtOutGame}) {
-                rbt.setOnCheckedChangeListener(this);
-            }
+            buttonOK.setOnClickListener(this);
+            buttonCancel.setOnClickListener(this);
+            buttonRestore.setOnClickListener(this);
+            seekbarAlpha.setOnSeekBarChangeListener(this);
+            seekbarSize.setOnSeekBarChangeListener(this);
+            rbtAll.setOnCheckedChangeListener(this);
+            rbtInGame.setOnCheckedChangeListener(this);
+            rbtOutGame.setOnCheckedChangeListener(this);
 
             originalInputSize = mInput.getSize()[0];
             screenWidth = mInput.getController().getConfig().getScreenWidth();
             screenHeight = mInput.getController().getConfig().getScreenHeight();
 
             //初始化控件属性
-            this.seekbarAlpha.setMax(MAX_ALPHA_PROGRESS);
-            this.seekbarSize.setMax(MAX_SIZE_PROGRESS);
+            seekbarAlpha.setMax(MAX_ALPHA_PROGRESS);
+            seekbarSize.setMax(MAX_SIZE_PROGRESS);
 
             loadConfigFromFile();
         }
 
         @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
-
-
-        @Override
         public void onClick(View v) {
-            if (v == buttonOK) {
-                this.dismiss();
+            if (v.getId() == R.id.input_onscreen_crosskeyboard_dialog_button_ok) {
+                dialog.dismiss();
             }
-            if (v == buttonCancel) {
-                this.cancel();
+            if (v.getId() == R.id.input_onscreen_crosskeyboard_dialog_button_cancel) {
+                dialog.cancel();
             }
-            if (v == buttonRestore) {
-
+            if (v.getId() == R.id.input_onscreen_crosskeyboard_dialog_button_restore) {
                 DialogUtils.createBothChoicesDialog(mContext, mContext.getString(R.string.title_warn), mContext.getString(R.string.tips_are_you_sure_to_restore_setting), mContext.getString(R.string.title_ok), mContext.getString(R.string.title_cancel), new DialogSupports() {
                     @Override
                     public void runWhenPositive() {
                         restoreConfig();
                     }
                 });
-
             }
         }
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
             if (seekBar == seekbarAlpha) {
-                int p = progress + MIN_ALPHA_PROGRESS;
+                int p = progress - MIN_ALPHA_PROGRESS;
                 String str = p + "%";
                 textAlpha.setText(str);
                 //调整透明度
@@ -637,7 +629,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
                 ((CrossKeyboard) mInput).setAlpha(alpha);
             }
             if (seekBar == seekbarSize) {
-                int p = progress + MIN_SIZE_PROGRESS;
+                int p = progress - MIN_SIZE_PROGRESS;
                 textSize.setText(String.valueOf(p));
                 //调整大小
                 int centerX = (int) (mInput.getPos()[0] + mInput.getSize()[0] / 2);
@@ -661,7 +653,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
 
         @Override
         public void onCancel(DialogInterface dialog) {
-            if (dialog == this) {
+            if (dialog == this.dialog) {
                 seekbarAlpha.setProgress(originalAlphaProgress);
                 seekbarSize.setProgress(originalSizeProgress);
                 mInput.setMargins(originalMarginLeft, originalMarginTop, 0, 0);
@@ -679,9 +671,8 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
             }
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalAlphaProgress = seekbarAlpha.getProgress();
             originalSizeProgress = seekbarSize.getProgress();
             originalMarginLeft = (int) mInput.getPos()[0];
@@ -689,16 +680,14 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
             originalShow = ((CrossKeyboard) mInput).getShowStat();
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 
         private void adjustPos(int originalCenterX, int originalCenterY) {
-            int viewWidth = mInput.getSize()[0];
+            int Width = mInput.getSize()[0];
             int viewHeight = mInput.getSize()[1];
-            int marginLeft = originalCenterX - viewWidth / 2;
+            int marginLeft = originalCenterX - Width / 2;
             int margeinTop = originalCenterY - viewHeight / 2;
 
             //左边界检测
@@ -710,8 +699,8 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
                 margeinTop = 0;
             }
             //右边界检测
-            if (marginLeft + viewWidth > screenWidth) {
-                marginLeft = screenWidth - viewWidth;
+            if (marginLeft + Width > screenWidth) {
+                marginLeft = screenWidth - Width;
             }
             //下边界检测
             if (margeinTop + viewHeight > screenHeight) {

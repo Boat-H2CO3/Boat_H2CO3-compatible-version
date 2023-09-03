@@ -2,16 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="230dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_dialog_noalpha"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_margin="5dp"
         android:text="@string/title_pc_keyboard_config"
-        android:textColor="@color/text_title_main"
         android:textSize="@dimen/text_big" />
 
     <ScrollView
@@ -28,13 +26,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_alpha_size"
-                    android:textColor="@color/text_title_main"
                     android:textSize="@dimen/text_mid" />
 
                 <SeekBar
@@ -52,12 +49,11 @@
                     android:layout_margin="5dp"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/input_onscreen_keyboard_dialog_text_alpha"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_mid" />
 
                 </LinearLayout>
@@ -70,13 +66,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_size"
-                    android:textColor="@color/text_title_main"
                     android:textSize="@dimen/text_mid" />
 
                 <SeekBar
@@ -94,12 +89,11 @@
                     android:layout_margin="5dp"
                     android:orientation="vertical">
 
-                    <TextView
+                    <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/input_onscreen_keyboard_dialog_text_size"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_mid" />
 
                 </LinearLayout>
@@ -111,13 +105,12 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="5dp"
                     android:text="@string/title_show"
-                    android:textColor="@color/text_title_main"
                     android:textSize="@dimen/text_mid" />
 
                 <RadioGroup
@@ -133,7 +126,6 @@
                         android:layout_weight="1"
                         android:checked="true"
                         android:text="@string/title_all"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                     <RadioButton
@@ -143,7 +135,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="@string/title_in_game"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                     <RadioButton
@@ -153,7 +144,6 @@
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:text="@string/title_out_game"
-                        android:textColor="@color/text_info"
                         android:textSize="@dimen/text_small" />
 
                 </RadioGroup>

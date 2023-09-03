@@ -25,6 +25,8 @@ import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import com.google.android.material.materialswitch.MaterialSwitch;
+
+import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
 
 import org.koishi.launcher.h2co3.R;
@@ -48,6 +50,8 @@ import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 
 import java.util.HashMap;
 import java.util.Objects;
+
+import rikka.material.app.MaterialDialog;
 
 
 public class VirtualController extends BaseController implements View.OnClickListener, CompoundButton.OnCheckedChangeListener {
@@ -434,14 +438,14 @@ public class VirtualController extends BaseController implements View.OnClickLis
         saveConfigToFile();
     }
 
-    private static class VirtualControllerSetting extends Dialog {
+    private static class VirtualControllerSetting extends MaterialDialog {
         public VirtualControllerSetting(@NonNull Context context) {
             super(context);
             setContentView(R.layout.dialog_controller_functions);
         }
     }
 
-    private static class DragFloatActionButton extends LinearLayout implements ViewGroup.OnTouchListener {
+    private static class DragFloatActionButton extends LinearLayoutCompat implements ViewGroup.OnTouchListener {
 
         private static final String TAG = "DragButton";
         private int parentHeight;

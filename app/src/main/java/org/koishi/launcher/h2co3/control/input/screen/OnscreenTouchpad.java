@@ -20,6 +20,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
@@ -322,7 +325,7 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         return this.mController;
     }
 
-    private static class OnscreenTouchpadConfigDialog extends Dialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Dialog.OnCancelListener, RadioButton.OnCheckedChangeListener {
+    private static class OnscreenTouchpadConfigDialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Dialog.OnCancelListener, RadioButton.OnCheckedChangeListener {
 
 
         private final static String TAG = "OnscreenTouchConfigDialog";
@@ -350,28 +353,31 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         private Button buttonRestore;
         private int originalSpeedProgress;
         private int originalDelayProgress;
+        AlertDialog dialog;
 
         public OnscreenTouchpadConfigDialog(@NonNull Context context, OnscreenInput input) {
-            super(context);
-            this.setContentView(R.layout.dialog_onscreen_touchpad_config);
             this.mContext = context;
             this.mInput = input;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_onscreen_touchpad_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            this.seekbarSpeed = this.findViewById(R.id.input_onscreen_touchpad_dialog_seekbar_speed);
-            this.seekbarDelay = this.findViewById(R.id.input_onscreen_touchpad_dialog_seekbar_delay);
-            this.textSpeed = this.findViewById(R.id.input_onscreen_touchpad_dialog_text_speed);
-            this.textDelay = this.findViewById(R.id.input_onscreen_touchpad_dialog_text_delay);
-            this.radioSlide = this.findViewById(R.id.input_onscreen_touchpad_dialog_radio_slide);
-            this.radioPoint = this.findViewById(R.id.input_onscreen_touchpad_dialog_radio_point);
-            this.buttonOK = this.findViewById(R.id.input_onscreen_touchpad_dialog_button_ok);
-            this.buttonCancel = this.findViewById(R.id.input_onscreen_touchpad_dialog_button_cancel);
-            this.buttonRestore = this.findViewById(R.id.input_onscreen_touchpad_dialog_button_restore);
+            this.seekbarSpeed = view.findViewById(R.id.input_onscreen_touchpad_dialog_seekbar_speed);
+            this.seekbarDelay = view.findViewById(R.id.input_onscreen_touchpad_dialog_seekbar_delay);
+            this.textSpeed = view.findViewById(R.id.input_onscreen_touchpad_dialog_text_speed);
+            this.textDelay = view.findViewById(R.id.input_onscreen_touchpad_dialog_text_delay);
+            this.radioSlide = view.findViewById(R.id.input_onscreen_touchpad_dialog_radio_slide);
+            this.radioPoint = view.findViewById(R.id.input_onscreen_touchpad_dialog_radio_point);
+            this.buttonOK = view.findViewById(R.id.input_onscreen_touchpad_dialog_button_ok);
+            this.buttonCancel = view.findViewById(R.id.input_onscreen_touchpad_dialog_button_cancel);
+            this.buttonRestore = view.findViewById(R.id.input_onscreen_touchpad_dialog_button_restore);
 
             for (View v : new View[]{buttonOK, buttonCancel, buttonRestore}) {
                 v.setOnClickListener(this);
@@ -412,11 +418,11 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         public void onClick(View v) {
 
             if (v == buttonOK) {
-                this.dismiss();
+                dialog.dismiss();
             }
 
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
 
             if (v == buttonRestore) {
@@ -478,15 +484,12 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
 
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalSpeedProgress = seekbarSpeed.getProgress();
             originalDelayProgress = seekbarDelay.getProgress();
             int originalTouchpadMode;

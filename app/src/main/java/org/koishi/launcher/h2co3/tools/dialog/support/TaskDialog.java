@@ -2,22 +2,27 @@ package org.koishi.launcher.h2co3.tools.dialog.support;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.koishi.launcher.h2co3.R;
 
-public class TaskDialog extends Dialog {
+public class TaskDialog extends MaterialAlertDialogBuilder {
 
     private final TextView textTotalTaskName;
     private final TextView textCurrentTaskName;
 
     public TaskDialog(@NonNull Context context, boolean cancelable) {
         super(context);
-        setContentView(R.layout.dialog_task);
-        textTotalTaskName = findViewById(R.id.dialog_task_text_total_task_name);
-        textCurrentTaskName = findViewById(R.id.dialog_task_text_current_task_name);
+        View dialogView = LayoutInflater.from(context).inflate(R.layout.dialog_task, null);
+        setView(dialogView);
+        textTotalTaskName = dialogView.findViewById(R.id.dialog_task_text_total_task_name);
+        textCurrentTaskName = dialogView.findViewById(R.id.dialog_task_text_current_task_name);
         setCancelable(cancelable);
     }
 

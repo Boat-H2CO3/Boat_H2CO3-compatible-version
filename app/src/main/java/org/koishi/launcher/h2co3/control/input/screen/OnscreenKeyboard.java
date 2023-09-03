@@ -20,6 +20,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
@@ -376,7 +379,7 @@ public class OnscreenKeyboard implements OnscreenInput {
         return this.mController;
     }
 
-    private static class OnscreenKeyboardConfigDialog extends Dialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Dialog.OnCancelListener, CompoundButton.OnCheckedChangeListener {
+    private static class OnscreenKeyboardConfigDialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, Dialog.OnCancelListener, CompoundButton.OnCheckedChangeListener {
 
         private final static String TAG = "OnscreenKeyboardConfigDialog";
         private final static int DEFAULT_ALPHA_PROGRESS = 40;
@@ -413,29 +416,32 @@ public class OnscreenKeyboard implements OnscreenInput {
         private int originalMarginLeft;
         private int originalMarginTop;
         private int originalShow;
+        AlertDialog dialog;
 
         public OnscreenKeyboardConfigDialog(@NonNull Context context, OnscreenInput input) {
-            super(context);
-            setContentView(R.layout.dialog_onscreen_keyboard_config);
             mContext = context;
             mInput = input;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_onscreen_keyboard_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            buttonOK = this.findViewById(R.id.input_onscreen_keyboard_dialog_button_ok);
-            buttonCancel = this.findViewById(R.id.input_onscreen_keyboard_dialog_button_cancel);
-            buttonRestore = this.findViewById(R.id.input_onscreen_keyboard_dialog_button_restore);
-            seekbarAlpha = this.findViewById(R.id.input_onscreen_keyboard_dialog_seekbar_alpha);
-            seekbarSize = this.findViewById(R.id.input_onscreen_keyboard_dialog_seekbar_size);
-            textAlpha = this.findViewById(R.id.input_onscreen_keyboard_dialog_text_alpha);
-            textSize = this.findViewById(R.id.input_onscreen_keyboard_dialog_text_size);
-            rbtAll = this.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_all);
-            rbtInGame = this.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_in_game);
-            rbtOutGame = this.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_out_game);
+            buttonOK = view.findViewById(R.id.input_onscreen_keyboard_dialog_button_ok);
+            buttonCancel = view.findViewById(R.id.input_onscreen_keyboard_dialog_button_cancel);
+            buttonRestore = view.findViewById(R.id.input_onscreen_keyboard_dialog_button_restore);
+            seekbarAlpha = view.findViewById(R.id.input_onscreen_keyboard_dialog_seekbar_alpha);
+            seekbarSize = view.findViewById(R.id.input_onscreen_keyboard_dialog_seekbar_size);
+            textAlpha = view.findViewById(R.id.input_onscreen_keyboard_dialog_text_alpha);
+            textSize = view.findViewById(R.id.input_onscreen_keyboard_dialog_text_size);
+            rbtAll = view.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_all);
+            rbtInGame = view.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_in_game);
+            rbtOutGame = view.findViewById(R.id.input_onscreen_keyboard_dialog_rbt_out_game);
 
             for (View v : new View[]{buttonOK, buttonCancel, buttonRestore}) {
                 v.setOnClickListener(this);
@@ -463,11 +469,11 @@ public class OnscreenKeyboard implements OnscreenInput {
         public void onClick(View v) {
 
             if (v == buttonOK) {
-                this.dismiss();
+                dialog.dismiss();
             }
 
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
 
             if (v == buttonRestore) {
@@ -542,9 +548,8 @@ public class OnscreenKeyboard implements OnscreenInput {
 
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalAlphaProgress = seekbarAlpha.getProgress();
             originalSizeProgress = seekbarSize.getProgress();
             originalMarginLeft = (int) mInput.getPos()[0];
@@ -552,9 +557,7 @@ public class OnscreenKeyboard implements OnscreenInput {
             originalShow = ((OnscreenKeyboard) mInput).getShowStat();
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 

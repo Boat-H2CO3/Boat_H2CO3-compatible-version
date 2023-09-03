@@ -22,6 +22,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
@@ -308,10 +311,11 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         return this.mController;
     }
 
-    class InputDialog extends Dialog implements View.OnClickListener {
+    class InputDialog implements View.OnClickListener {
 
         private final Controller mController;
 
+        AlertDialog dialog;
         private final EditText editBox;
         private final Button buttonNone;
         private final Button buttonEnter;
@@ -322,17 +326,18 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         private static final String TAG = "InputDialog";
 
         public InputDialog(@NonNull Context context, Controller controller) {
-            super(context);
-            setContentView(R.layout.dialog_input);
-            setCanceledOnTouchOutside(true);
-            Objects.requireNonNull(getWindow()).getAttributes().dimAmount = 0f;
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
             this.mController = controller;
 
-            this.editBox = findViewById(R.id.dialog_input_edit_box);
-            this.buttonNone = findViewById(R.id.dialog_input_button_none);
-            this.buttonEnter = findViewById(R.id.dialog_input_button_enter);
-            this.buttonTEnter = findViewById(R.id.dialog_input_button_t_enter);
-            this.buttonCancel = findViewById(R.id.dialog_input_button_cancel);
+            this.editBox = view.findViewById(R.id.dialog_input_edit_box);
+            this.buttonNone = view.findViewById(R.id.dialog_input_button_none);
+            this.buttonEnter = view.findViewById(R.id.dialog_input_button_enter);
+            this.buttonTEnter = view.findViewById(R.id.dialog_input_button_t_enter);
+            this.buttonCancel = view.findViewById(R.id.dialog_input_button_cancel);
             this.multi_line = context.getSharedPreferences(InputBoxConfigDialog.spFileName, InputBoxConfigDialog.spMode).getBoolean(InputBoxConfigDialog.sp_multi_line_name, true);
 
             editBox.setOnKeyListener((v, keyCode, event) -> {
@@ -354,13 +359,13 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         public void onClick(View v) {
 
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
 
             if (v == buttonNone) {
                 if (editBox.getText() != null && !editBox.getText().toString().equals("")) {
                     mController.typeWords(editBox.getText().toString());
-                    if (!multi_line) dismiss();
+                    if (!multi_line) dialog.dismiss();
                     else editBox.setText("");
                 }
             }
@@ -370,7 +375,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
                     if (!editBox.getText().toString().equals(""))
                         mController.typeWords(editBox.getText().toString());
                     sendKey(KeyMap.KEYMAP_KEY_ENTER);
-                    if (!multi_line) dismiss();
+                    if (!multi_line) dialog.dismiss();
                     else editBox.setText("");
                 }
             }
@@ -382,7 +387,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
                     if (!editBox.getText().toString().equals(""))
                         mController.typeWords(editBox.getText().toString());
                     sendKey(KeyMap.KEYMAP_KEY_ENTER);
-                    if (!multi_line) dismiss();
+                    if (!multi_line) dialog.dismiss();
                     else editBox.setText("");
                 }
             }
@@ -392,9 +397,8 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             Timer timer = new Timer();
             timer.schedule(new TimerTask() {
                 @Override
@@ -406,7 +410,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         }
     }
 
-    private static class InputBoxConfigDialog extends Dialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
+    private static class InputBoxConfigDialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
 
         public final static String spFileName = "input_inputbox_config";
         public final static int spMode = Context.MODE_PRIVATE;
@@ -430,6 +434,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         private final static String TAG = "InputBoxConfigDialog";
         private final OnscreenInput mInput;
         private final Context mContext;
+        AlertDialog dialog;
         private SeekBar seekbarSize;
         private SeekBar seekbarAlpha;
         private TextView textSize;
@@ -457,32 +462,34 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
 
         public InputBoxConfigDialog(Context context, OnscreenInput input) {
-            super(context);
-            setContentView(R.layout.dialog_inputbox_config);
             this.mContext = context;
             this.mInput = input;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_inputbox_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            seekbarSize = this.findViewById(R.id.input_inputbox_dialog_seekbar_size);
-            seekbarAlpha = this.findViewById(R.id.input_inputbox_dialog_seekbar_alpha);
-            textSize = this.findViewById(R.id.input_inputbox_dialog_text_size);
-            textAlpha = this.findViewById(R.id.input_inputbox_dialog_text_alpha);
-            buttonOK = this.findViewById(R.id.input_inputbox_dialog_button_ok);
-            buttonCancel = this.findViewById(R.id.input_inputbox_dialog_button_cancel);
-            buttonRestore = this.findViewById(R.id.input_inputbox_dialog_button_restore);
-            buttonMoveLeft = this.findViewById(R.id.input_inputbox_dialog_button_move_left);
-            buttonMoveRight = this.findViewById(R.id.input_inputbox_dialog_button_move_right);
-            buttonMoveUp = this.findViewById(R.id.input_inputbox_dialog_button_move_up);
-            buttonMoveDown = this.findViewById(R.id.input_inputbox_dialog_button_move_down);
-            cbMultiLine = this.findViewById(R.id.input_inputbox_dialog_cb_multi_line);
-            rbtAll = this.findViewById(R.id.input_inputbox_dialog_rbt_all);
-            rbtInGame = this.findViewById(R.id.input_inputbox_dialog_rbt_in_game);
-            rbtOutGame = this.findViewById(R.id.input_inputbox_dialog_rbt_out_game);
+            seekbarSize = view.findViewById(R.id.input_inputbox_dialog_seekbar_size);
+            seekbarAlpha = view.findViewById(R.id.input_inputbox_dialog_seekbar_alpha);
+            textSize = view.findViewById(R.id.input_inputbox_dialog_text_size);
+            textAlpha = view.findViewById(R.id.input_inputbox_dialog_text_alpha);
+            buttonOK = view.findViewById(R.id.input_inputbox_dialog_button_ok);
+            buttonCancel = view.findViewById(R.id.input_inputbox_dialog_button_cancel);
+            buttonRestore = view.findViewById(R.id.input_inputbox_dialog_button_restore);
+            buttonMoveLeft = view.findViewById(R.id.input_inputbox_dialog_button_move_left);
+            buttonMoveRight = view.findViewById(R.id.input_inputbox_dialog_button_move_right);
+            buttonMoveUp = view.findViewById(R.id.input_inputbox_dialog_button_move_up);
+            buttonMoveDown = view.findViewById(R.id.input_inputbox_dialog_button_move_down);
+            cbMultiLine = view.findViewById(R.id.input_inputbox_dialog_cb_multi_line);
+            rbtAll = view.findViewById(R.id.input_inputbox_dialog_rbt_all);
+            rbtInGame = view.findViewById(R.id.input_inputbox_dialog_rbt_in_game);
+            rbtOutGame = view.findViewById(R.id.input_inputbox_dialog_rbt_out_game);
 
             //设定监听
             for (View v : new View[]{buttonOK, buttonCancel, buttonRestore, buttonMoveDown, buttonMoveUp, buttonMoveLeft, buttonMoveRight}) {
@@ -510,9 +517,8 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalAlphaProgress = seekbarAlpha.getProgress();
             originalSizeProgress = seekbarSize.getProgress();
             originalMarginLeft = (int) mInput.getPos()[0];
@@ -551,11 +557,11 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         public void onClick(View v) {
 
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
 
             if (v == buttonOK) {
-                this.dismiss();
+                dialog.dismiss();
             }
 
             if (v == buttonRestore) {
@@ -693,9 +699,7 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 

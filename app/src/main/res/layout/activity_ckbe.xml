@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="org.koishi.launcher.h2co3.control.ckb.CustomizeKeyboardEditorActivity">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.MaterialToolbar
         android:id="@+id/ckbe_toolbar"
         android:layout_width="match_parent"
         android:layout_height="30dp"
@@ -35,7 +35,7 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.MaterialToolbar>
 
     <androidx.drawerlayout.widget.DrawerLayout
         android:id="@+id/ckbe_drawerlayout"

@@ -71,7 +71,7 @@ public class VersionFragment extends Fragment {
 
     private final String sd1 = LAUNCHER_FILE_DIR + ".minecraft";
     private Button mbtn_serarch;
-    private Dialog mDialog;
+    private MaterialAlertDialogBuilder mDialog;
     private EditText met_search;
     private LinearLayout page;
     private FloatingActionButton dir, ver;
@@ -88,10 +88,10 @@ public class VersionFragment extends Fragment {
         public void handleMessage(@NonNull Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {
-                mDialog.dismiss();
+                mDialog.create().dismiss();
             }
             if (msg.what == 1) {
-                mDialog.dismiss();
+                mDialog.create().dismiss();
                 mDbDao.insertData(getBoatDir);
                 mAdapter.updata(mDbDao.queryData(""));
                 Snackbar.make(page, getResources().getString(R.string.ver_add_done), Snackbar.LENGTH_LONG)
@@ -203,10 +203,10 @@ public class VersionFragment extends Fragment {
     }
 
     public void showDirDialog() {
-        mDialog = new Dialog(requireActivity());
+        mDialog = new MaterialAlertDialogBuilder(requireActivity());
         View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_dialog_directory, null);
-        mDialog.setContentView(dialogView);
-        //mDialog.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundColor(Color.TRANSPARENT);
+        mDialog.setView(dialogView);
+
         MaterialButton cancel = dialogView.findViewById(R.id.custom_dir_cancel);
         MaterialButton start = dialogView.findViewById(R.id.custom_dir_ok);
         TextInputLayout lay = dialogView.findViewById(R.id.dialog_dir_lay);
@@ -235,7 +235,9 @@ public class VersionFragment extends Fragment {
             }
         });
 
-        cancel.setOnClickListener(v -> mDialog.dismiss());
+        AlertDialog dialog = mDialog.create();
+
+        cancel.setOnClickListener(v -> dialog.dismiss());
         start.setOnClickListener(v -> {
             if (Objects.requireNonNull(et.getText()).toString().trim().length() != 0) {
                 boolean hasData = mDbDao.hasData(et.getText().toString().trim());
@@ -257,23 +259,15 @@ public class VersionFragment extends Fragment {
                     Snackbar.make(page, getResources().getString(R.string.ver_already_exists), Snackbar.LENGTH_LONG)
                             .setAction("Action", null).show();
                 }
-
-                //
                 mAdapter.updata(mDbDao.queryData(""));
-
             } else {
                 Snackbar.make(page, "Please input", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
-
+            dialog.dismiss();
         });
 
-        mDialog.setContentView(dialogView);
-        WindowManager windowManager = requireActivity().getWindowManager();
-        Display display = windowManager.getDefaultDisplay();
-        WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-        lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
-        mDialog.show();
+        dialog.show();
     }
 
     public void newDir() {
@@ -545,9 +539,10 @@ public class VersionFragment extends Fragment {
         }
 
         public void showExecDialog(String dir) {
-            mDialog = new Dialog(requireActivity());
+            MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(requireActivity());
             View dialogView = requireActivity().getLayoutInflater().inflate(R.layout.custom_dialog_choose_exec, null);
-            mDialog.setContentView(dialogView);
+            dialogBuilder.setView(dialogView);
+            // 设置对话框的其他内容
             String load = CHTools.getAppCfg("allVerLoad", "false");
             String loadDir;
             if (load.equals("true")) {
@@ -561,17 +556,18 @@ public class VersionFragment extends Fragment {
                 Bundle bundle = new Bundle();
                 bundle.putString("mod", loadDir);
                 i.putExtras(bundle);
-                //i.putExtra("dat",c);
                 requireActivity().startActivity(i);
             });
-            //mDialog.getWindow().findViewById(R.id.design_bottom_sheet).setBackgroundColor(Color.TRANSPARENT);
 
-            mDialog.setContentView(dialogView);
+            AlertDialog dialog = dialogBuilder.create();
+
             WindowManager windowManager = requireActivity().getWindowManager();
             Display display = windowManager.getDefaultDisplay();
-            WindowManager.LayoutParams lp = Objects.requireNonNull(mDialog.getWindow()).getAttributes();
-            lp.width = (int) (display.getWidth() * 0.9); //设置宽度 dialog.getWindow().setAttributes(lp);
-            mDialog.show();
+            WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+            lp.width = (int) (display.getWidth() * 0.9);
+            dialog.getWindow().setAttributes(lp);
+
+            dialog.show();
         }
 
         //数据源的数量

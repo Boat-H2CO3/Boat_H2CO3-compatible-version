@@ -2,32 +2,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_dialog_noalpha"
     android:orientation="vertical">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="5dp"
         android:text="@string/title_custom_keyboard_config"
-        android:textColor="@color/text_title_main"
         android:textSize="@dimen/text_big" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:layout_marginStart="2dp"
         android:text="@string/title_button_config"
-        android:textColor="@color/text_info"
         android:textSize="@dimen/text_small" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/background_gray_corner"
         android:orientation="vertical">
 
         <LinearLayout
@@ -35,13 +31,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
                 android:text="@string/title_mode"
-                android:textColor="@color/text_title_main"
                 android:textSize="@dimen/text_big" />
 
             <RadioGroup
@@ -58,7 +53,6 @@
                     android:layout_weight="1"
                     android:checked="true"
                     android:text="@string/title_edit"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
                 <RadioButton
@@ -68,7 +62,6 @@
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:text="@string/title_effect"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
             </RadioGroup>
@@ -85,16 +78,15 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="2dp"
                     android:text="@string/title_step"
-                    android:textColor="@color/text_title_main"
                     android:textSize="@dimen/text_big" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -102,16 +94,14 @@
                     android:gravity="end"
                     android:text="@string/title_total_count"
                     android:textAlignment="viewEnd"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
-                <TextView
+                <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/input_customize_keyboard_dialog_text_button_sum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="2dp"
-                    android:textColor="@color/text_info"
                     android:textSize="@dimen/text_mid" />
 
                 <Button
@@ -142,7 +132,7 @@
 
     </LinearLayout>
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="start"
@@ -155,7 +145,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
-        android:background="@drawable/background_gray_corner"
         android:orientation="vertical">
 
         <LinearLayout
@@ -163,13 +152,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
                 android:text="@string/title_choice"
-                android:textColor="@color/text_title_main"
                 android:textSize="@dimen/text_big" />
 
             <LinearLayout
@@ -226,13 +214,12 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <TextView
+            <com.google.android.material.textview.MaterialTextView
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="2dp"
                 android:text="@string/title_save"
-                android:textColor="@color/text_title_main"
                 android:textSize="@dimen/text_big" />
 
             <LinearLayout

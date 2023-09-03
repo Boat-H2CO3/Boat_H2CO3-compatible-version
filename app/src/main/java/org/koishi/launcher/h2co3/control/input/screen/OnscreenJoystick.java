@@ -22,6 +22,8 @@ import android.widget.RadioButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
+
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
 import org.koishi.launcher.h2co3.control.event.BaseKeyEvent;
@@ -29,6 +31,8 @@ import org.koishi.launcher.h2co3.control.input.OnscreenInput;
 import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.kongqw.rockerlibrary.view.RockerView.*;
 import com.kongqw.rockerlibrary.view.RockerView;
 
@@ -338,7 +342,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         return this.mController;
     }
 
-    private static class OnscreenJoystickConfigDialog extends Dialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
+    private static class OnscreenJoystickConfigDialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
 
         private final static String TAG = "OnscreenJoystickConfigDialog";
         private final static int DEFAULT_ALPHA_PROCESS = 40;
@@ -374,29 +378,32 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         private int originalInputSize;
         private int screenWidth;
         private int screenHeight;
+        AlertDialog dialog;
 
         public OnscreenJoystickConfigDialog(Context context, OnscreenInput input) {
-            super(context);
-            setContentView(R.layout.dialog_onscreen_joystick_config);
             this.mContext = context;
             this.mInput = input;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_onscreen_joystick_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            buttonOK = findViewById(R.id.input_onscreen_joystick_dialog_button_ok);
-            buttonCancel = findViewById(R.id.input_onscreen_joystick_dialog_button_cancel);
-            buttonRestore = findViewById(R.id.input_onscreen_joystick_dialog_button_restore);
-            seekbarAlpha = findViewById(R.id.input_onscreen_joystick_dialog_seekbar_alpha);
-            seekbarSize = findViewById(R.id.input_onscreen_joystick_dialog_seekbar_size);
-            textAlpha = findViewById(R.id.input_onscreen_joystick_dialog_text_alpha);
-            textSize = findViewById(R.id.input_onscreen_joystick_dialog_text_size);
-            rbtAll = this.findViewById(R.id.input_onscreen_joystick_dialog_rbt_all);
-            rbtInGame = this.findViewById(R.id.input_onscreen_joystick_dialog_rbt_in_game);
-            rbtOutGame = this.findViewById(R.id.input_onscreen_joystick_dialog_rbt_out_game);
+            buttonOK = view.findViewById(R.id.input_onscreen_joystick_dialog_button_ok);
+            buttonCancel = view.findViewById(R.id.input_onscreen_joystick_dialog_button_cancel);
+            buttonRestore = view.findViewById(R.id.input_onscreen_joystick_dialog_button_restore);
+            seekbarAlpha = view.findViewById(R.id.input_onscreen_joystick_dialog_seekbar_alpha);
+            seekbarSize = view.findViewById(R.id.input_onscreen_joystick_dialog_seekbar_size);
+            textAlpha = view.findViewById(R.id.input_onscreen_joystick_dialog_text_alpha);
+            textSize = view.findViewById(R.id.input_onscreen_joystick_dialog_text_size);
+            rbtAll = view.findViewById(R.id.input_onscreen_joystick_dialog_rbt_all);
+            rbtInGame = view.findViewById(R.id.input_onscreen_joystick_dialog_rbt_in_game);
+            rbtOutGame = view.findViewById(R.id.input_onscreen_joystick_dialog_rbt_out_game);
 
             //设定监听
             for (View v : new View[]{buttonOK, buttonCancel, buttonRestore}) {
@@ -441,9 +448,8 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
             }
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalAlphaProgress = seekbarAlpha.getProgress();
             originalSizeProgress = seekbarSize.getProgress();
             originalMarginLeft = (int) mInput.getPos()[0];
@@ -451,19 +457,17 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
             originalShow = ((OnscreenJoystick) mInput).getShowStat();
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 
         @Override
         public void onClick(View v) {
             if (v == buttonOK) {
-                this.dismiss();
+                dialog.dismiss();
             }
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
             if (v == buttonRestore) {
 

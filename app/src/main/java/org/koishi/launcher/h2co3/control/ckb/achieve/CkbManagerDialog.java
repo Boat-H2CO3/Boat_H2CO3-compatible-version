@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.FileObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -17,6 +18,9 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
@@ -32,9 +36,10 @@ import java.util.TimerTask;
 
 import cosine.boat.utils.CHTools;
 
-public class CkbManagerDialog extends Dialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, Dialog.OnCancelListener {
+public class CkbManagerDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, Dialog.OnCancelListener {
 
     private final Context mContext;
+    private AlertDialog dialog;
     private final CkbManager mManager;
     private RadioButton radioEditable;
     private RadioButton radioGame;
@@ -54,27 +59,30 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
     private final static String TAG = "CkbConfigDialog";
 
     public CkbManagerDialog(@NonNull Context context, CkbManager manager) {
-        super(context);
-        this.setContentView(R.layout.dialog_customize_keyboard_config);
         this.mContext = context;
         this.mManager = manager;
         initUI();
     }
 
     private void initUI() {
-
-        radioEditable = findViewById(R.id.input_customize_keyboard_dialog_radio_editable);
-        radioGame = findViewById(R.id.input_customize_keyboard_dialog_radio_ingame);
-        textButtonSum = findViewById(R.id.input_customize_keyboard_dialog_text_button_sum);
-        buttonAdd = findViewById(R.id.input_customize_keyboard_dialog_button_add);
-        spinnerSelected = findViewById(R.id.input_customize_keyboard_dialog_spinner_select);
-        editFileName = findViewById(R.id.input_customize_keyboard_dialog_edit_filename);
-        buttonLoad = findViewById(R.id.input_customize_keyboard_dialog_button_load);
-        buttonExport = findViewById(R.id.input_customize_keyboard_dialog_button_export);
-        buttonOK = findViewById(R.id.input_customize_keyboard_dialog_button_ok);
-        buttonDel = findViewById(R.id.input_customize_keyboard_dialog_button_delete);
-        buttonClear = findViewById(R.id.input_customize_keyboard_dialog_button_clear);
-        buttonDefault = findViewById(R.id.input_customize_keyboard_dialog_button_default);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_customize_keyboard_config, null);
+        MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+        builder.setView(view);
+        builder.setCancelable(true);
+        dialog = builder.create();
+        dialog.setOnCancelListener(this);
+        radioEditable = view.findViewById(R.id.input_customize_keyboard_dialog_radio_editable);
+        radioGame = view.findViewById(R.id.input_customize_keyboard_dialog_radio_ingame);
+        textButtonSum = view.findViewById(R.id.input_customize_keyboard_dialog_text_button_sum);
+        buttonAdd = view.findViewById(R.id.input_customize_keyboard_dialog_button_add);
+        spinnerSelected = view.findViewById(R.id.input_customize_keyboard_dialog_spinner_select);
+        editFileName = view.findViewById(R.id.input_customize_keyboard_dialog_edit_filename);
+        buttonLoad = view.findViewById(R.id.input_customize_keyboard_dialog_button_load);
+        buttonExport = view.findViewById(R.id.input_customize_keyboard_dialog_button_export);
+        buttonOK = view.findViewById(R.id.input_customize_keyboard_dialog_button_ok);
+        buttonDel = view.findViewById(R.id.input_customize_keyboard_dialog_button_delete);
+        buttonClear = view.findViewById(R.id.input_customize_keyboard_dialog_button_clear);
+        buttonDefault = view.findViewById(R.id.input_customize_keyboard_dialog_button_default);
 
         //设定监听
         for (View v : new View[]{buttonAdd, buttonLoad, buttonExport, buttonOK, buttonDel, buttonClear, buttonDefault}) {
@@ -83,7 +91,7 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
         for (RadioButton r : new RadioButton[]{radioGame, radioEditable}) {
             r.setOnCheckedChangeListener(this);
         }
-        this.setOnCancelListener(this);
+        dialog.setOnCancelListener(this);
 
         //是否显示模式选项
 
@@ -92,18 +100,16 @@ public class CkbManagerDialog extends Dialog implements View.OnClickListener, Co
 
     }
 
-    @Override
     public void dismiss() {
-        super.dismiss();
+        dialog.dismiss();
         //关闭目录监听
         fileListener.stopWatching();
         //关闭按键数量刷新
         setCountsRefresh(false);
     }
 
-    @Override
     public void show() {
-        super.show();
+        dialog.show();
         //启用目录变化监听
         fileListener = new KeyboardFileListener(this);
         fileListener.startWatching();

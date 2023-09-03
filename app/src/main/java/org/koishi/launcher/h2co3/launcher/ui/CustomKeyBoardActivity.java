@@ -15,6 +15,5 @@ public class CustomKeyBoardActivity extends H2CO3Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_key_board);
-
     }
 }

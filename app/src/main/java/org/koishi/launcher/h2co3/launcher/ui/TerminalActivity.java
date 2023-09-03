@@ -22,7 +22,6 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jrummyapps.android.shell.CommandResult;
-import com.jrummyapps.android.shell.Shell;
 
 import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
@@ -146,7 +145,7 @@ public class TerminalActivity extends H2CO3Activity {
     protected void onDestroy() {
         super.onDestroy();
         if (isFinishing()) {
-            Shell.SU.closeConsole();
+            //Shell.
         }
     }
 
@@ -184,10 +183,11 @@ public class TerminalActivity extends H2CO3Activity {
         @Override
         protected CommandResult doInBackground(String... commands) {
             if (asRoot) {
-                return Shell.SU.run(commands);
+                //return Shell.SU.run(commands);
             } else {
-                return Shell.SH.run(commands);
+                //return Shell.SH.run(commands);
             }
+            return null;
         }
 
         @Override

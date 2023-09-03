@@ -108,6 +108,12 @@
             android:name=".control.ckb.CustomizeKeyboardEditorActivity"
             android:configChanges="screenSize|keyboard|navigation|orientation|keyboardHidden"
             android:screenOrientation="userLandscape" />
+        <activity
+            android:name="cosine.boat.ui.CrashActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+
     </application>
 
 </manifest>

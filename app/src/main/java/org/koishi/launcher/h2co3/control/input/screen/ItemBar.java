@@ -16,6 +16,9 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
@@ -229,7 +232,7 @@ public class ItemBar implements OnscreenInput {
         return this.mController;
     }
 
-    private static class ItembarConfigDialog extends Dialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener {
+    private static class ItembarConfigDialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener {
 
         private final static String TAG = "ItembarConfigDialog";
         private final static int DEFAULT_ALPHA_PROGRESS = 60;
@@ -250,6 +253,7 @@ public class ItemBar implements OnscreenInput {
         private final static String sp_pos_x_name = "pos_x";
         private final static String sp_pos_y_name = "pos_y";
         private final Context mContext;
+        AlertDialog dialog;
         private final OnscreenInput mInput;
         private Button buttonOK;
         private Button buttonCancel;
@@ -273,28 +277,30 @@ public class ItemBar implements OnscreenInput {
 
 
         public ItembarConfigDialog(@NonNull Context context, OnscreenInput input) {
-            super(context);
-            setContentView(R.layout.dialog_itembar_config);
             mContext = context;
             mInput = input;
             init();
         }
 
         private void init() {
-            this.setCanceledOnTouchOutside(false);
-            this.setOnCancelListener(this);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_itembar_config, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            dialog.setOnCancelListener(this);
 
-            buttonOK = this.findViewById(R.id.input_itembar_dialog_button_ok);
-            buttonCancel = this.findViewById(R.id.input_itembar_dialog_button_cancel);
-            buttonRestore = this.findViewById(R.id.input_itembar_dialog_button_restore);
-            buttonMoveLeft = this.findViewById(R.id.input_itembar_dialog_button_move_left);
-            buttonMoveRight = this.findViewById(R.id.input_itembar_dialog_button_move_right);
-            buttonMoveUp = this.findViewById(R.id.input_itembar_dialog_button_move_up);
-            buttonMoveDown = this.findViewById(R.id.input_itembar_dialog_button_move_down);
-            seekbarAlpha = this.findViewById(R.id.input_itembar_dialog_seekbar_alpha);
-            seekbarSize = this.findViewById(R.id.input_itembar_dialog_seekbar_size);
-            textAlpha = this.findViewById(R.id.input_itembar_dialog_text_alpha);
-            textSize = this.findViewById(R.id.input_itembar_dialog_text_size);
+            buttonOK = view.findViewById(R.id.input_itembar_dialog_button_ok);
+            buttonCancel = view.findViewById(R.id.input_itembar_dialog_button_cancel);
+            buttonRestore = view.findViewById(R.id.input_itembar_dialog_button_restore);
+            buttonMoveLeft = view.findViewById(R.id.input_itembar_dialog_button_move_left);
+            buttonMoveRight = view.findViewById(R.id.input_itembar_dialog_button_move_right);
+            buttonMoveUp = view.findViewById(R.id.input_itembar_dialog_button_move_up);
+            buttonMoveDown = view.findViewById(R.id.input_itembar_dialog_button_move_down);
+            seekbarAlpha = view.findViewById(R.id.input_itembar_dialog_seekbar_alpha);
+            seekbarSize = view.findViewById(R.id.input_itembar_dialog_seekbar_size);
+            textAlpha = view.findViewById(R.id.input_itembar_dialog_text_alpha);
+            textSize = view.findViewById(R.id.input_itembar_dialog_text_size);
 
             for (View v : new View[]{buttonOK, buttonCancel, buttonRestore, buttonMoveUp, buttonMoveDown, buttonMoveLeft, buttonMoveRight}) {
                 v.setOnClickListener(this);
@@ -320,11 +326,11 @@ public class ItemBar implements OnscreenInput {
         public void onClick(View v) {
 
             if (v == buttonCancel) {
-                this.cancel();
+                dialog.cancel();
             }
 
             if (v == buttonOK) {
-                this.dismiss();
+                dialog.dismiss();
             }
 
             if (v == buttonRestore) {
@@ -353,9 +359,8 @@ public class ItemBar implements OnscreenInput {
 
         }
 
-        @Override
         public void show() {
-            super.show();
+            dialog.show();
             originalAlphaProgress = seekbarAlpha.getProgress();
             originalSizeProgress = seekbarSize.getProgress();
             originalMarginLeft = (int) mInput.getPos()[0];
@@ -412,9 +417,7 @@ public class ItemBar implements OnscreenInput {
         public void onStopTrackingTouch(SeekBar seekBar) {
         }
 
-        @Override
         public void onStop() {
-            super.onStop();
             saveConfigToFile();
         }
 
