@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.SurfaceTexture;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.Surface;
 import android.view.TextureView;
@@ -13,7 +12,6 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.Timer;
 import java.util.Vector;
@@ -30,9 +28,9 @@ public class BoatActivity extends MaterialActivity implements TextureView.Surfac
         System.loadLibrary("boat");
     }
 
+    public final float scaleFactor = 1.0F;
     public TextureView mainTextureView;
     public BoatCallback boatCallback;
-    public final float scaleFactor = 1.0F;
     public Timer timer;
     public RelativeLayout base;
     public int initialX;

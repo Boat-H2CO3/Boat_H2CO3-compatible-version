@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         // 这里只提供一个示例
 
         // 省略下载逻辑
-        Log.d("",url);
+        Log.d("", url);
     }
 
     private class DownloadManifestTask extends AsyncTask<Void, Void, List<String>> {

@@ -1,7 +1,8 @@
 package org.koishi.launcher.h2co3.control.codes;
 
-import org.koishi.launcher.h2co3.control.definitions.map.KeyMap;
 import com.lwjgl.input.Keyboard;
+
+import org.koishi.launcher.h2co3.control.definitions.map.KeyMap;
 
 import java.util.HashMap;
 

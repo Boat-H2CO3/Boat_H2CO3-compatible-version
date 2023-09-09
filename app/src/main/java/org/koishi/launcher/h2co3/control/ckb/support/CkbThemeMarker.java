@@ -10,13 +10,12 @@ import android.graphics.drawable.shapes.RoundRectShape;
 
 public class CkbThemeMarker {
 
-    private final static String TAG = "CkbThemeMaker";
     public final static int DESIGN_SIGNLE_FILL = 1; //单层纯色背景
     public final static int DESIGN_SIGNLE_RING = 2; //单边框空心背景
     public final static int DESIGN_DOUBLE_RING = 3; //双边框空心背景
     public final static int DESIGN_BLACK_SHADOW = 4; //阴影背景
-
     public final static String[] DESIGNS = new String[]{"1", "2", "3", "4"};
+    private final static String TAG = "CkbThemeMaker";
 
     public static LayerDrawable getDesign(final CkbThemeRecorder recorder) {
 

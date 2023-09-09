@@ -1,7 +1,5 @@
 package com.mistake.revision;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
@@ -18,6 +16,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import cosine.boat.H2CO3Application;
+import cosine.boat.utils.CHTools;
 
 public class BUG extends H2CO3Application implements Application.ActivityLifecycleCallbacks {
     @Override
@@ -66,6 +65,7 @@ public class BUG extends H2CO3Application implements Application.ActivityLifecyc
 
 
         this.registerActivityLifecycleCallbacks(this);
+        CHTools.loadPaths(this);
         //设置默认的未捕获的异常处理程序
         Thread.setDefaultUncaughtExceptionHandler((p1, p2) -> {
 
@@ -78,7 +78,7 @@ public class BUG extends H2CO3Application implements Application.ActivityLifecyc
             byte[] bug = baos.toByteArray();
 
             try {
-                FileOutputStream f = new FileOutputStream(LAUNCHER_FILE_DIR+"/log.txt");
+                FileOutputStream f = new FileOutputStream(CHTools.PUBLIC_FILE_PATH + "/log.txt");
 
                 f.write(i.toString().getBytes());
 

@@ -48,7 +48,7 @@ public class LoadMe {
         Log.w("LoadMe", String.valueOf(args));
         handler.post(callback::onStart);
 
-        BOAT_LIB_DIR = CHTools.getBoatCfg("runtimePath", "") + "/boat";
+        BOAT_LIB_DIR = CHTools.RUNTIME_DIR + "/boat";
         System.out.println(BOAT_LIB_DIR);
 
         boolean isJava17 = javaPath.endsWith("jre_17");
@@ -148,7 +148,7 @@ public class LoadMe {
 
             setupExitTrap(context);
 
-            redirectStdio(home + "/boat_latest_log.txt");
+            redirectStdio(CHTools.LOG_DIR + "/client_output.txt");
             chdir(gameDir);
 
             String[] finalArgs = new String[args.size()];
@@ -161,7 +161,7 @@ public class LoadMe {
                 }
             }
             Log.d("Debug", sb.toString());
-            BoatUtils.writeFile(new File(home + "/params.txt"), sb.toString());
+            BoatUtils.writeFile(new File(CHTools.LOG_DIR + "/params.txt"), sb.toString());
 
             int exitCode = dlexec(finalArgs);
             System.out.println("OpenJDK exited with code : " + exitCode);
@@ -173,12 +173,12 @@ public class LoadMe {
 
     public static void startVirGLService(Context context, String home, String tmpdir) {
 
-        BOAT_LIB_DIR = context.getDir("runtime", 0).getAbsolutePath() + "/boat";
+        BOAT_LIB_DIR = CHTools.RUNTIME_DIR + "/boat";
 
         patchLinker();
 
         try {
-            redirectStdio(home + "/boat_service_log.txt");
+            redirectStdio(CHTools.LOG_DIR + "/boat_service_log.txt");
 
             setenv("HOME", home);
             setenv("TMPDIR", tmpdir);

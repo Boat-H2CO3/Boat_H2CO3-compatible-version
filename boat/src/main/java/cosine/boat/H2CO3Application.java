@@ -15,8 +15,8 @@ import cat.ereza.customactivityoncrash.config.CaocConfig;
 import cosine.boat.ui.CrashActivity;
 
 public class H2CO3Application extends Application implements Application.ActivityLifecycleCallbacks {
-    public static Activity mCurrentActivity;
     public static final H2CO3Application mInstance = null;
+    public static Activity mCurrentActivity;
     public SharedPreferences mPref;
     private boolean is_OTG = false;
 

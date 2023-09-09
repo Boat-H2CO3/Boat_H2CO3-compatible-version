@@ -17,23 +17,23 @@ public class KeyboardRecorder {
         this.screenHeight = sh;
     }
 
-    public void setRecorderDatas(GameButtonRecorder[] data) {
-        this.games = data;
-    }
-
     public GameButtonRecorder[] getRecorderDatas() {
         return games;
+    }
+
+    public void setRecorderDatas(GameButtonRecorder[] data) {
+        this.games = data;
     }
 
     public int[] getScreenData() {
         return new int[]{screenWidth, screenHeight};
     }
 
-    public void setVersionCode(int version) {
-        this.versionCode = version;
-    }
-
     public int getVersionCode() {
         return this.versionCode;
+    }
+
+    public void setVersionCode(int version) {
+        this.versionCode = version;
     }
 }

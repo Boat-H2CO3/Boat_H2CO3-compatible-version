@@ -48,6 +48,11 @@ public class Gyroscope implements Input, SensorEventListener {
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
+    }
+
+    @Override
     public void runConfigure() {
 
     }
@@ -55,11 +60,6 @@ public class Gyroscope implements Input, SensorEventListener {
     @Override
     public void saveConfig() {
 
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
     }
 
     @Override

@@ -1,6 +1,5 @@
 package org.koishi.launcher.h2co3.tools.dialog.support;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

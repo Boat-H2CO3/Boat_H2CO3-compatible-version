@@ -1,7 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.utils.CHTools.boatCfg;
+import static cosine.boat.utils.CHTools.*;
 
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
@@ -36,8 +35,8 @@ import com.mistake.revision.LauncherSettingModel;
 import com.mistake.revision.adapter.Version_List_Adpater;
 import com.mistake.revision.view.PullListView;
 
-import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Activity;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -47,6 +46,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import cosine.boat.utils.CHTools;
 import okhttp3.Call;
 import okhttp3.Response;
 
@@ -69,7 +69,7 @@ public class VanillaActivity extends H2CO3Activity {
 
     public static String getDir() {
         try {
-            FileInputStream in = new FileInputStream(boatCfg);
+            FileInputStream in = new FileInputStream(BOATCFG);
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -79,7 +79,7 @@ public class VanillaActivity extends H2CO3Activity {
         } catch (Exception e) {
             System.out.println(e);
         }
-        return LAUNCHER_FILE_DIR + ".minecraft";
+        return MINECRAFT_DIR;
     }
 
     public static void verifyStoragePermissions(H2CO3Activity activity) {
@@ -101,6 +101,7 @@ public class VanillaActivity extends H2CO3Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        CHTools.loadPaths(this);
         setContentView(R.layout.activity_download);
 
         //getWindow().setStatusBarColor(getResources().getColor(R.color.material_blue_dark));

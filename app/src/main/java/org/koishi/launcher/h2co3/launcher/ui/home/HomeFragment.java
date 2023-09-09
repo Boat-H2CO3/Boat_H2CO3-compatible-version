@@ -1,8 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.ui.home;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.utils.CHTools.boatCfg;
-
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -23,7 +20,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -47,7 +43,6 @@ import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
-import cosine.boat.utils.CHTools;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -60,6 +55,7 @@ import com.mistake.revision.Download.DownloadFragment;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Fragment;
 import org.koishi.launcher.h2co3.launcher.launch.boat.BoatClientActivity;
 import org.koishi.launcher.h2co3.launcher.ui.InstructionActivity;
 import org.koishi.launcher.h2co3.launcher.ui.VanillaActivity;
@@ -91,7 +87,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class HomeFragment extends Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
+import cosine.boat.utils.CHTools;
+
+public class HomeFragment extends H2CO3Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 
     private final Handler handler = new Handler(Looper.getMainLooper());
 
@@ -456,6 +454,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
                              ViewGroup container, Bundle savedInstanceState) {
 
         View root = inflater.inflate(R.layout.fragment_home, container, false);
+        CHTools.loadPaths(requireContext());
 
         /*-----------------主页面--------------------*/
 
@@ -494,11 +493,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         handler.postDelayed(task, 1000);
 
         /*-----------------文件检查--------------------*/
-        boolean existMcConfig = FileExists(boatCfg);
+        boolean existMcConfig = FileExists(CHTools.BOATCFG);
         //boolean existRuntime = FileExists("/data/data/"+requireActivity().getPackageName()+"/libopenal.so.1");
-        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
-        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
-        f = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
+        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR));
+        File file = new File(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR) + "/versions");
+        f = CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR);
 
         list = root.findViewById(R.id.ver_list);
 
@@ -678,13 +677,19 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
         dbHelper = new DBHelper(getActivity());
         dbHelper.queryAllUserName();//offline.setText("Demo");
 
-        SharedPreferences nameSp = requireActivity().getSharedPreferences("name", getContext().MODE_PRIVATE);
-        SharedPreferences passSp = requireActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE);
-        SharedPreferences apiSp = requireActivity().getSharedPreferences("api", getContext().MODE_PRIVATE);
+        requireContext();
+        SharedPreferences nameSp = requireActivity().getSharedPreferences("name", Context.MODE_PRIVATE);
+        requireContext();
+        SharedPreferences passSp = requireActivity().getSharedPreferences("pass", Context.MODE_PRIVATE);
+        requireContext();
+        SharedPreferences apiSp = requireActivity().getSharedPreferences("api", Context.MODE_PRIVATE);
 
-        editorName = requireActivity().getSharedPreferences("name", getContext().MODE_PRIVATE).edit();
-        editorPass = requireActivity().getSharedPreferences("pass", getContext().MODE_PRIVATE).edit();
-        editorApi = requireActivity().getSharedPreferences("api", getContext().MODE_PRIVATE).edit();
+        requireContext();
+        editorName = requireActivity().getSharedPreferences("name", Context.MODE_PRIVATE).edit();
+        requireContext();
+        editorPass = requireActivity().getSharedPreferences("pass", Context.MODE_PRIVATE).edit();
+        requireContext();
+        editorApi = requireActivity().getSharedPreferences("api", Context.MODE_PRIVATE).edit();
 
         //offline = root.findViewById(R.id.offline);
         newacc.setOnClickListener(v -> {
@@ -942,8 +947,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     @SuppressLint("SetTextI18n")
     @Override
     public void onClick(View v) {
-        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
-        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
+        File file = new File(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR) + "/versions");
+        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR));
         if (v == mLaunchBoatButton) {
             launchBoat();
         }
@@ -1032,8 +1037,8 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
 
     public void launchBoat() {
-        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
-        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
+        File file = new File(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR) + "/versions");
+        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR));
         if (existGame && Objects.requireNonNull(file.list()).length != 0 && file.isDirectory()) {
             BoatClientActivity.attachControllerInterface();
             startActivity(new Intent(requireActivity(), BoatClientActivity.class));
@@ -1069,7 +1074,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      * -----------------补全UI--------------------
      */
     public void launchFragment() {
-        String dir = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
+        String dir = CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR);
         String link = CHTools.getBoatCfg("sourceLink", "https://download.mcbbs.net");
         File f = new File(dir);
         File fv = new File(dir + "/versions");
@@ -1148,7 +1153,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
      */
     public void setVersion(String version) {
         try {
-            FileInputStream in = new FileInputStream(boatCfg);
+            FileInputStream in = new FileInputStream(CHTools.BOATCFG);
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -1156,7 +1161,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
             JSONObject json = new JSONObject(str);
             json.remove("currentVersion");
             json.put("currentVersion", f + "/versions/" + version.trim());
-            FileWriter fr = new FileWriter(boatCfg);
+            FileWriter fr = new FileWriter(CHTools.BOATCFG);
             fr.write(json.toString());
             fr.close();
         } catch (Exception e) {
@@ -1166,7 +1171,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
 
     public String getVer() {
         try {
-            FileInputStream in = new FileInputStream(boatCfg);
+            FileInputStream in = new FileInputStream(CHTools.BOATCFG);
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -1319,11 +1324,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Navi
     @Override
     public void onResume() {
         super.onResume();
-        boolean existMcConfig = FileExists(boatCfg);
+        boolean existMcConfig = FileExists(CHTools.BOATCFG);
         //boolean existRuntime = FileExists("/data/data/"+requireActivity().getPackageName()+"/libopenal.so.1");
-        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
-        File file = new File(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft") + "/versions");
-        f = CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft");
+        boolean existGame = FileExists(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR));
+        File file = new File(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR) + "/versions");
+        f = CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR);
         /**重载版本列表**/
         if (existMcConfig && existGame) {
             if (file.exists() && file.isDirectory()) {

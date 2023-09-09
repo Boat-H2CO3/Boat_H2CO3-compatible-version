@@ -1,7 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.launch.boat;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -42,7 +40,7 @@ import cosine.boat.function.BoatCallback;
 import cosine.boat.keycodes.BoatKeycodes;
 import cosine.boat.utils.CHTools;
 
-public class BoatClientActivity extends BoatActivity implements View.OnClickListener,Client {
+public class BoatClientActivity extends BoatActivity implements View.OnClickListener, Client {
 
     private final static int CURSOR_SIZE = 16; //dp
     private final int[] grabbedPointer = new int[]{0, 0};
@@ -58,6 +56,67 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
     private VirtualController virtualController;
     private HardwareController hardwareController;
     private boolean grabbed = false;
+    @SuppressLint("HandlerLeak")
+    public final Handler cursorModeHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(@NonNull Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == BoatInput.CursorDisabled) {
+                BoatClientActivity.this.setGrabCursor(true);
+                virtualController.setGrabCursor(true);
+                hardwareController.setGrabCursor(true);
+                BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
+            }
+            if (msg.what == BoatInput.CursorEnabled) {
+                BoatClientActivity.this.setGrabCursor(false);
+                virtualController.setGrabCursor(false);
+                hardwareController.setGrabCursor(false);
+                BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
+            }
+        }
+    };
+
+    public static void attachControllerInterface() {
+        BoatClientActivity.boatInterface = new BoatClientActivity.IBoat() {
+            private VirtualController virtualController;
+            private HardwareController hardwareController;
+            private Timer timer;
+
+            public void onActivityCreate(BoatActivity boatActivity) {
+                virtualController = new VirtualController((Client) boatActivity, KEYMAP_TO_X);
+                hardwareController = new HardwareController((Client) boatActivity, KEYMAP_TO_X);
+            }
+
+            @Override
+            public void setGrabCursor(boolean isGrabbed) {
+                virtualController.setGrabCursor(isGrabbed);
+                hardwareController.setGrabCursor(isGrabbed);
+            }
+
+            @Override
+            public void onStop() {
+                virtualController.onStop();
+                hardwareController.onStop();
+            }
+
+            @Override
+            public void onResume() {
+                virtualController.onResumed();
+                hardwareController.onResumed();
+            }
+
+            @Override
+            public void onPause() {
+                virtualController.onPaused();
+                hardwareController.onPaused();
+            }
+
+            @Override
+            public boolean dispatchGenericMotionEvent(MotionEvent event) {
+                return hardwareController.dispatchMotionKeyEvent(event);
+            }
+        };
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,7 +182,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         BoatActivity.setBoatNativeWindow(new Surface(surface));
                         BoatInput.setEventPipe();
 
-                        String runtimePath = CHTools.getBoatCfg("runtimePath", "");
+                        String runtimePath = CHTools.RUNTIME_DIR;
                         String javaPath;
                         String java = LauncherConfig.loadjava();
                         // Java版本选择
@@ -135,7 +194,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         String gl = LauncherConfig.loadgl();
                         System.out.print(gl);
                         String boatRenderer;
-                        String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
+                        String lwjglPath = CHTools.RUNTIME_DIR + "/boat";
                         if (LauncherConfig.loadgl().equals("VirGL")) {
                             boatRenderer = "VirGL";
                         } else {
@@ -146,7 +205,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                         MinecraftVersion mcVersion = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "")));
                         boolean isHighVersion = mcVersion.minimumLauncherVersion >= 21;
                         startGame(javaPath,
-                                LAUNCHER_FILE_DIR,
+                                CHTools.PUBLIC_FILE_PATH,
                                 isHighVersion,
                                 args,
                                 boatRenderer,
@@ -245,19 +304,19 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
         super.setPointer(x, y);
         if (!grabbed) {
             this.mouseCursor.post(() -> {
-                if (x >= 0 && x <= width){
+                if (x >= 0 && x <= width) {
                     mouseCursor.setX(x);
                     grabbedPointer[0] = x;
-                }else {
-                    mouseCursor.setX(width/2);
-                    grabbedPointer[0] = width/2;
+                } else {
+                    mouseCursor.setX(width / 2);
+                    grabbedPointer[0] = width / 2;
                 }
-                if (y >= 0 && y <= height){
+                if (y >= 0 && y <= height) {
                     mouseCursor.setY(y);
                     grabbedPointer[1] = y;
-                }else {
-                    mouseCursor.setY(height/2);
-                    grabbedPointer[1] = height/2;
+                } else {
+                    mouseCursor.setY(height / 2);
+                    grabbedPointer[1] = height / 2;
                 }
             });
         }
@@ -317,66 +376,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
             mouseCursor.post(() -> mouseCursor.setVisibility(View.INVISIBLE));
         }
     }
-    @SuppressLint("HandlerLeak")
-    public final Handler cursorModeHandler = new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(@NonNull Message msg) {
-            super.handleMessage(msg);
-            if (msg.what == BoatInput.CursorDisabled) {
-                BoatClientActivity.this.setGrabCursor(true);
-                virtualController.setGrabCursor(true);
-                hardwareController.setGrabCursor(true);
-                BoatClientActivity.this.cursorMode = BoatInput.CursorDisabled;
-            }
-            if (msg.what == BoatInput.CursorEnabled) {
-                BoatClientActivity.this.setGrabCursor(false);
-                virtualController.setGrabCursor(false);
-                hardwareController.setGrabCursor(false);
-                BoatClientActivity.this.cursorMode = BoatInput.CursorEnabled;
-            }
-        }
-    };
-    public static void attachControllerInterface() {
-        BoatClientActivity.boatInterface = new BoatClientActivity.IBoat() {
-            private VirtualController virtualController;
-            private HardwareController hardwareController;
-            private Timer timer;
 
-            public void onActivityCreate(BoatActivity boatActivity) {
-                virtualController = new VirtualController((Client) boatActivity, KEYMAP_TO_X);
-                hardwareController = new HardwareController((Client) boatActivity, KEYMAP_TO_X);
-            }
-
-            @Override
-            public void setGrabCursor(boolean isGrabbed) {
-                virtualController.setGrabCursor(isGrabbed);
-                hardwareController.setGrabCursor(isGrabbed);
-            }
-
-            @Override
-            public void onStop() {
-                virtualController.onStop();
-                hardwareController.onStop();
-            }
-
-            @Override
-            public void onResume() {
-                virtualController.onResumed();
-                hardwareController.onResumed();
-            }
-
-            @Override
-            public void onPause() {
-                virtualController.onPaused();
-                hardwareController.onPaused();
-            }
-
-            @Override
-            public boolean dispatchGenericMotionEvent(MotionEvent event) {
-                return hardwareController.dispatchMotionKeyEvent(event);
-            }
-        };
-    }
     @Override
     public void onBackPressed() {
         boolean mouse = false;
@@ -388,8 +388,7 @@ public class BoatClientActivity extends BoatActivity implements View.OnClickList
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q && device.isExternal()) {
                         mouse = true;
                         break;
-                    }
-                    else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+                    } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
                         mouse = true;
                         break;
                     }

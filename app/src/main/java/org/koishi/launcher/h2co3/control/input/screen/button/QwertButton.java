@@ -10,6 +10,9 @@ import org.koishi.launcher.h2co3.R;
 
 public class QwertButton extends BaseButton {
 
+    private String char_none;
+    private String char_shift;
+    private String char_capslock;
     public QwertButton(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.QwertButton);
@@ -18,10 +21,6 @@ public class QwertButton extends BaseButton {
         setCharCaps(array.getString(R.styleable.QwertButton_char_capslock));
         array.recycle();
     }
-
-    private String char_none;
-    private String char_shift;
-    private String char_capslock;
 
     public String getCharNone() {
         return char_none;

@@ -3,12 +3,13 @@ package org.koishi.launcher.h2co3.control.ckb.support;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import org.koishi.launcher.h2co3.control.ckb.achieve.CkbManager;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButtonOld;
 import org.koishi.launcher.h2co3.control.definitions.map.MouseMap;
 import org.koishi.launcher.h2co3.tools.ColorUtils;
-import com.google.gson.Gson;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class GameButtonConverter {
 
-    private final Context mContext;
     private final static String TAG = "GameButtonConverter";
+    private final Context mContext;
 
     public GameButtonConverter(Context context) {
         this.mContext = context;

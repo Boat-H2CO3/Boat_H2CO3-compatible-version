@@ -1,11 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="selecterButtonStyle">
-        <item name="background">@drawable/selecter_button</item>
-        <item name="android:textSize">8sp</item>
-        <item name="textAllCaps">false</item>
-        <item name="android:textColor">#FFFFFFFF</item>
-    </style>
-
 </resources>

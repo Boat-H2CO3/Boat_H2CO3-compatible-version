@@ -14,17 +14,20 @@ import org.koishi.launcher.h2co3.control.input.HwInput;
 
 public class Keyboard implements HwInput {
 
-    private Controller mController;
-    private AndroidKeyMap androidKeyMap;
-
-    private boolean isEnabled;
-
     private final static String TAG = "OtgKeyboard";
     private final static int type = KEYBOARD_BUTTON;
+    private Controller mController;
+    private AndroidKeyMap androidKeyMap;
+    private boolean isEnabled;
 
     @Override
     public boolean isEnabled() {
         return this.isEnabled;
+    }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
     }
 
     @Override
@@ -54,11 +57,6 @@ public class Keyboard implements HwInput {
     @Override
     public void saveConfig() {
 
-    }
-
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
     }
 
     private void sendKeyEvent(String keyName, boolean pressed) {

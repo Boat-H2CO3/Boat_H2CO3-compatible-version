@@ -30,15 +30,14 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cosine.boat.utils.CHTools;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
-import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Activity;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,6 +49,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
+
+import cosine.boat.utils.CHTools;
 
 public class ModsActivity extends H2CO3Activity {
 

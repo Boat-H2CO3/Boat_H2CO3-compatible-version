@@ -1,6 +1,7 @@
 package org.koishi.launcher.h2co3.tools;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -8,6 +9,10 @@ import android.os.Message;
 import androidx.annotation.NonNull;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * Created by shenhua on 1/17/2017.
@@ -47,14 +52,41 @@ public class AssetsUtils {
         return instance;
     }
 
-    public AssetsUtils copyAssetsToSD(final String srcPath, final String sdPath) {
-        new Thread(() -> {
-            copyAssetsToDst(context, srcPath, sdPath);
-            if (isSuccess)
-                handler.obtainMessage(SUCCESS).sendToTarget();
-            else
-                handler.obtainMessage(FAILED, errorStr).sendToTarget();
-        }).start();
+    public AssetsUtils copyAssetsToSD(final String assetsPath, final String destinationPath) {
+        AssetManager assetManager = context.getAssets();
+
+        try {
+            String[] files = assetManager.list(assetsPath);
+            if (files != null && files.length > 0) {
+                // 创建目标文件夹
+                File destinationFolder = new File(destinationPath);
+                if (!destinationFolder.exists()) {
+                    destinationFolder.mkdirs();
+                }
+
+                for (String file : files) {
+                    String assetsFilePath = assetsPath + File.separator + file;
+                    String destinationFilePath = destinationPath + File.separator + file;
+
+                    copyAssetsToSD(assetsFilePath, destinationFilePath);
+                }
+            } else {
+                // 复制文件
+                InputStream inputStream = assetManager.open(assetsPath);
+                OutputStream outputStream = new FileOutputStream(destinationPath);
+
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
+                }
+
+                inputStream.close();
+                outputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 

@@ -5,13 +5,13 @@ import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
-import org.koishi.launcher.h2co3.tools.dialog.support.TaskDialog;
-import org.koishi.launcher.h2co3.tools.filechooser.FileChooserDialog;
-
 import com.flask.colorpicker.ColorPickerView;
 import com.flask.colorpicker.builder.ColorPickerDialogBuilder;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
+import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
+import org.koishi.launcher.h2co3.tools.dialog.support.TaskDialog;
+import org.koishi.launcher.h2co3.tools.filechooser.FileChooserDialog;
 
 public class DialogUtils {
 

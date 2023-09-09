@@ -13,6 +13,7 @@
         kongqw:areaBackground="@drawable/default_area_bg"
         kongqw:rockerBackground="@drawable/default_rocker_bg"
         kongqw:rockerRadius="30dp" />
+
     <Button
         android:id="@+id/joystick_move"
         android:layout_width="50dp"

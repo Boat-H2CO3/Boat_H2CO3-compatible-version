@@ -14,14 +14,14 @@ import java.util.TimerTask;
 
 public abstract class BaseController implements Controller {
     private final static String TAG = "BaseController";
-    public ArrayList<Input> inputs;
+    private final static int DEFAULT_INTERVAL_TIME = 5000;
     public final Client client;
     public final Context context;
-    private Timer mTimer;
-    private final static int DEFAULT_INTERVAL_TIME = 5000;
     private final int internalTime;
     private final Config mConfig;
     private final boolean isTimerEnable;
+    public ArrayList<Input> inputs;
+    private Timer mTimer;
 
     public BaseController(Client client, int intervalTime, boolean enableTimer) {
         this.client = client;

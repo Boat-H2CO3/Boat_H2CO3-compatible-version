@@ -30,6 +30,7 @@ public class Mouse implements HwInput {
     private boolean isEnabled = false;
     private int screenWidth;
     private int screenHeight;
+    private Timer mTimer;
 
     @Override
     public int getSource() {
@@ -63,15 +64,14 @@ public class Mouse implements HwInput {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
-    }
-
-    @Override
     public boolean isEnabled() {
         return this.isEnabled;
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
+    }
 
     //私有事件封装
     private void sendPointerInc(int x, int y) {
@@ -176,8 +176,6 @@ public class Mouse implements HwInput {
     public Controller getController() {
         return this.mController;
     }
-
-    private Timer mTimer;
 
     private void createTimer() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

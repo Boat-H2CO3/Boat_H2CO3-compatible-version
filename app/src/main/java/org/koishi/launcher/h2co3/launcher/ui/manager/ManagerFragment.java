@@ -1,7 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.ui.manager;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.utils.CHTools.boatCfg;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
@@ -19,7 +17,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import cosine.boat.utils.CHTools;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -33,6 +30,8 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
+
+import cosine.boat.utils.CHTools;
 
 public class ManagerFragment extends Fragment {
 
@@ -79,7 +78,7 @@ public class ManagerFragment extends Fragment {
 
     public static void setDir(String dir) {
         try {
-            FileInputStream in = new FileInputStream(boatCfg);
+            FileInputStream in = new FileInputStream(CHTools.BOATCFG);
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -93,7 +92,7 @@ public class ManagerFragment extends Fragment {
             json.put("game_assets", dir + "/assets/virtual/legacy");
             json.put("assets_root", dir + "/assets");
             json.put("currentVersion", dir + "/versions");
-            FileWriter fr = new FileWriter(boatCfg);
+            FileWriter fr = new FileWriter(CHTools.BOATCFG);
             fr.write(json.toString());
             fr.close();
         } catch (Exception e) {
@@ -114,9 +113,11 @@ public class ManagerFragment extends Fragment {
 
         pbM = root.findViewById(R.id.pb_m);
 
+        CHTools.loadPaths(requireContext());
+
         mSetButton.setOnClickListener(v -> setDirectory());
         mResetButton.setOnClickListener(v -> reset());
-        mDirectory.setText(CHTools.getBoatCfg("game_directory", LAUNCHER_FILE_DIR + ".minecraft"));
+        mDirectory.setText(CHTools.getBoatCfg("game_directory", CHTools.MINECRAFT_DIR));
 
         mOutputButton.setOnClickListener(v -> setOutput());
 
@@ -181,8 +182,8 @@ public class ManagerFragment extends Fragment {
         mResetButton.setEnabled(true);
         mOutput.setEnabled(true);
         mOutputButton.setEnabled(true);
-        setDir(LAUNCHER_FILE_DIR + ".minecraft");
-        mDirectory.setText(LAUNCHER_FILE_DIR + ".minecraft");
+        setDir(CHTools.MINECRAFT_DIR);
+        mDirectory.setText(CHTools.MINECRAFT_DIR);
     }
 
 }

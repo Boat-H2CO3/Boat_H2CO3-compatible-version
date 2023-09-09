@@ -23,8 +23,8 @@ import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.textfield.TextInputEditText;
 import com.jrummyapps.android.shell.CommandResult;
 
-import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Activity;
 
 import java.util.Objects;
 

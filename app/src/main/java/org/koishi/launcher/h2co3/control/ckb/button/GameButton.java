@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatButton;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.koishi.launcher.h2co3.control.ckb.achieve.CkbManager;
 import org.koishi.launcher.h2co3.control.ckb.achieve.GameButtonDialog;
 import org.koishi.launcher.h2co3.control.ckb.support.CallCustomizeKeyboard;
@@ -28,27 +29,15 @@ import org.koishi.launcher.h2co3.control.event.BaseKeyEvent;
 import org.koishi.launcher.h2co3.tools.ColorUtils;
 import org.koishi.launcher.h2co3.tools.DisplayUtils;
 
-import org.apache.commons.text.StringEscapeUtils;
-
 import java.util.Arrays;
 import java.util.HashMap;
 
 @SuppressLint("ViewConstructor")
 public class GameButton extends AppCompatButton implements View.OnTouchListener {
 
-    private final CallCustomizeKeyboard mCall;
-    private final Controller mController;
-    private final Context mContext;
-    private final CkbManager mManager;
-
-    private int buttonMode;
-    private int screenWidth;
-    private int screenHeight;
-
     public final static int MODE_MOVEABLE_EDITABLE = 1;
     public final static int MODE_PREVIEW = 2;
     public final static int MODE_GAME = 3;
-
     public final static int MAX_KEYMAP_SIZE = 4;
     public final static int MAX_KEY_SIZE_DP = 250;
     public final static int MIN_KEY_SIZE_DP = 20;
@@ -60,7 +49,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public final static int MAX_CORNER_SIZE_PT = 100;
     public final static int MIN_MOVE_DISTANCE = 10;
     public final static int MAX_CHARS_LENTH = 50;
-
     public final static int DEFAULT_DESIGN_INDEX = CkbThemeMarker.DESIGN_SIGNLE_FILL;
     public final static int DEFAULT_BUTTON_MODE = MODE_MOVEABLE_EDITABLE;
     public final static int DEFAULT_KEY_SIZE_DP = 50;
@@ -69,16 +57,20 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public final static int DEFAULT_TEXT_SIZE_SP = 5;
     public final static String DEFAULT_BACK_COLOR_HEX = "#000000";
     public final static String DEFAULT_TEXT_COLOR_HEX = "#FFFFFF";
-
-    private final static String TAG = "GameButton";
     public final static int KEY_TYPE = KEYBOARD_BUTTON;
     public final static int POINTER_TYPE = MOUSE_POINTER;
     public final static int MOUSE_TYPE = MOUSE_BUTTON;
-
     public final static int SHOW_ALL = 0;
     public final static int SHOW_IN_GAME = 1;
     public final static int SHOW_OUT_GAME = 2;
-
+    private final static String TAG = "GameButton";
+    private final CallCustomizeKeyboard mCall;
+    private final Controller mController;
+    private final Context mContext;
+    private final CkbManager mManager;
+    private int buttonMode;
+    private int screenWidth;
+    private int screenHeight;
     private String[] keyMaps;  //最多映射N个按键
     private int[] keyTypes; //映射的按键的类型
     private CkbThemeRecorder mRecorder; //主题记录器
@@ -96,7 +88,13 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     private boolean isChars; //是否是字符输入
     private String keyChars; //字符
     private boolean isFirstAdded = false; //被首次创建
-
+    private HashMap<String, Boolean> stateMap;
+    private boolean isBeingPressed = false;
+    private int initialX = 0;
+    private int initialY = 0;
+    private boolean hasDragged = false;
+    private int touchPosX;
+    private int touchPosY;
 
     public GameButton(@NonNull Context context, @NonNull CallCustomizeKeyboard call, @NonNull CkbManager manager) {
         this(context, call, null, manager);
@@ -165,12 +163,12 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
 
     }
 
-    public void setInputChars(boolean b) {
-        this.isChars = b;
-    }
-
     public boolean isInputChars() {
         return this.isChars;
+    }
+
+    public void setInputChars(boolean b) {
+        this.isChars = b;
     }
 
     public boolean setChars(String chars) {
@@ -186,24 +184,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return this.keyChars;
     }
 
-    public void setKeyMaps(String[] map) {
-        if (map.length == MAX_KEYMAP_SIZE) {
-            String[] tmp = new String[MAX_KEYMAP_SIZE];
-            System.arraycopy(map, 0, tmp, 0, MAX_KEYMAP_SIZE);
-            this.keyMaps = tmp;
-        } else {
-        }
-    }
-
-    public void setKeyTypes(int[] types) {
-        if (types.length == MAX_KEYMAP_SIZE) {
-            int[] tmp = new int[MAX_KEYMAP_SIZE];
-            System.arraycopy(types, 0, tmp, 0, MAX_KEYMAP_SIZE);
-            this.keyTypes = tmp;
-        } else {
-        }
-    }
-
     public String[] setKeyMaps(String keyName, int index) {
         if (index > MAX_KEYMAP_SIZE || index < 0) {
             return null;
@@ -211,24 +191,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
             keyMaps[index] = keyName;
             return keyMaps;
         }
-    }
-
-    public GameButton setButtonMode(int mode) {
-        if (mode == MODE_GAME || mode == MODE_MOVEABLE_EDITABLE || mode == MODE_PREVIEW) {
-            this.buttonMode = mode;
-            updateUI();
-        }
-        return this;
-    }
-
-    public void setKeep(boolean isKeep) {
-        this.isKeep = isKeep;
-    }
-
-    public void setHide(boolean isHide) {
-        this.isHide = isHide;
-        //UI刷新
-        updateUI();
     }
 
     public boolean setBackColor(String colorHex) {
@@ -289,19 +251,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         }
     }
 
-    public void setCornerRadius(int radius) {
-        radius = clamp(radius, MIN_CORNER_SIZE_PT, MAX_CORNER_SIZE_PT);
-        this.mRecorder.setCornerRadiusPt(radius);
-        updateUI();
-    }
-
-    public void setAlphaSize(int alphaPt) {
-        alphaPt = clamp(alphaPt, MIN_ALPHA_SIZE_PT, MAX_ALPHA_SIZE_PT);
-
-        this.setAlpha(alphaPt * 0.01f);
-        this.alphaSize = alphaPt;
-    }
-
     public boolean setKeyName(String str) {
         if (str != null) {
             this.setText(str);
@@ -319,16 +268,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.textSize = spValue;
     }
 
-    public void setShow(int s) {
-        this.show = s;
-        updateUI();
-    }
-
-    public void setDesignIndex(int index) {
-        this.mRecorder.setDesignIndex(index);
-        updateUI();
-    }
-
     public String[] getColorHexs() {
         int[] c = mRecorder.getColors();
         String[] tmp = new String[CkbThemeRecorder.COLOR_INDEX_LENGTH];
@@ -343,10 +282,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.isGrabbed = mode;
         //执行UI刷新
         updateUI();
-    }
-
-    public void setViewerFollow(boolean follow) {
-        this.viewerFollow = follow;
     }
 
     public GameButton getNewButtonLikeThis() {
@@ -372,8 +307,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         g.setChars(this.keyChars);
         return g;
     }
-
-    private HashMap<String, Boolean> stateMap;
 
     private void sendKey(String keyName, boolean pressed, int type) {
 
@@ -412,10 +345,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
     public void unsetFirstAdded() {
         this.isFirstAdded = false;
     }
-
-    private boolean isBeingPressed = false;
-    private int initialX = 0;
-    private int initialY = 0;
 
     private void inputPointerEvent(MotionEvent e) {
         switch (e.getAction()) {
@@ -486,10 +415,6 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         if (str == null) return null;
         return StringEscapeUtils.unescapeJava(str);
     }
-
-    private boolean hasDragged = false;
-    private int touchPosX;
-    private int touchPosY;
 
     private void editView(MotionEvent e) {
         switch (e.getAction()) {
@@ -614,18 +539,37 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         this.setBackground(CkbThemeMarker.getDesign(mRecorder));
     }
 
-    //getter
-
     public int getButtonMode() {
         return buttonMode;
+    }
+
+    public GameButton setButtonMode(int mode) {
+        if (mode == MODE_GAME || mode == MODE_MOVEABLE_EDITABLE || mode == MODE_PREVIEW) {
+            this.buttonMode = mode;
+            updateUI();
+        }
+        return this;
     }
 
     public String[] getKeyMaps() {
         return keyMaps;
     }
 
+    public void setKeyMaps(String[] map) {
+        if (map.length == MAX_KEYMAP_SIZE) {
+            String[] tmp = new String[MAX_KEYMAP_SIZE];
+            System.arraycopy(map, 0, tmp, 0, MAX_KEYMAP_SIZE);
+            this.keyMaps = tmp;
+        } else {
+        }
+    }
+
     public boolean isKeep() {
         return isKeep;
+    }
+
+    public void setKeep(boolean isKeep) {
+        this.isKeep = isKeep;
     }
 
     public String getBackColorHex() {
@@ -644,6 +588,8 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return keySize;
     }
 
+    //getter
+
     public int getTextProgress() {
         return textSize;
     }
@@ -652,8 +598,21 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return mRecorder.getCornerRadiusPt();
     }
 
+    public void setCornerRadius(int radius) {
+        radius = clamp(radius, MIN_CORNER_SIZE_PT, MAX_CORNER_SIZE_PT);
+        this.mRecorder.setCornerRadiusPt(radius);
+        updateUI();
+    }
+
     public int getAlphaSize() {
         return alphaSize;
+    }
+
+    public void setAlphaSize(int alphaPt) {
+        alphaPt = clamp(alphaPt, MIN_ALPHA_SIZE_PT, MAX_ALPHA_SIZE_PT);
+
+        this.setAlpha(alphaPt * 0.01f);
+        this.alphaSize = alphaPt;
     }
 
     public String getKeyName() {
@@ -664,6 +623,12 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return isHide;
     }
 
+    public void setHide(boolean isHide) {
+        this.isHide = isHide;
+        //UI刷新
+        updateUI();
+    }
+
     public boolean isFirstAdded() {
         return isFirstAdded;
     }
@@ -672,8 +637,17 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return viewerFollow;
     }
 
+    public void setViewerFollow(boolean follow) {
+        this.viewerFollow = follow;
+    }
+
     public int getDesignIndex() {
         return mRecorder.getDesignIndex();
+    }
+
+    public void setDesignIndex(int index) {
+        this.mRecorder.setDesignIndex(index);
+        updateUI();
     }
 
     public CkbThemeRecorder getThemeRecorder() {
@@ -684,8 +658,22 @@ public class GameButton extends AppCompatButton implements View.OnTouchListener 
         return this.keyTypes;
     }
 
+    public void setKeyTypes(int[] types) {
+        if (types.length == MAX_KEYMAP_SIZE) {
+            int[] tmp = new int[MAX_KEYMAP_SIZE];
+            System.arraycopy(types, 0, tmp, 0, MAX_KEYMAP_SIZE);
+            this.keyTypes = tmp;
+        } else {
+        }
+    }
+
     public int getShow() {
         return this.show;
+    }
+
+    public void setShow(int s) {
+        this.show = s;
+        updateUI();
     }
 
 }

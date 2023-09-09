@@ -8,7 +8,6 @@
     <color name="appBlack_70">#70000000</color>
     <color name="appWhite_ff_l">#FFFFFFFF</color>
     <color name="appTint">#AA000000</color>
-    <color name="bgTint">@color/colorPrimary</color>
 
     <color name="md_theme_primary">#4359A9</color>
     <color name="md_theme_onPrimary">#FFFFFF</color>

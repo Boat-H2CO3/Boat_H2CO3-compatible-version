@@ -59,6 +59,8 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
     private long cursorDownTime;
     private int posX;
     private int posY;
+    private int initX = 0;
+    private int initY = 0;
 
     @Override
     public boolean load(Context context, Controller controller) {
@@ -96,9 +98,6 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         }
         return false;
     }
-
-    private int initX = 0;
-    private int initY = 0;
 
     private void locateCursor(MotionEvent event) {
         if (mController.isGrabbed()) {
@@ -342,6 +341,7 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         private final static String sp_delay_name = "delay";
         private final Context mContext;
         private final OnscreenInput mInput;
+        AlertDialog dialog;
         private SeekBar seekbarSpeed;
         private SeekBar seekbarDelay;
         private TextView textSpeed;
@@ -353,7 +353,6 @@ public class OnscreenTouchpad implements OnscreenInput, KeyMap, MouseMap {
         private Button buttonRestore;
         private int originalSpeedProgress;
         private int originalDelayProgress;
-        AlertDialog dialog;
 
         public OnscreenTouchpadConfigDialog(@NonNull Context context, OnscreenInput input) {
             this.mContext = context;

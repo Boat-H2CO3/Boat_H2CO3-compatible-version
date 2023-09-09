@@ -1,10 +1,8 @@
 package org.koishi.launcher.h2co3.launcher.ui.version;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-import static cosine.boat.utils.CHTools.boatCfg;
+import static cosine.boat.utils.CHTools.*;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -31,7 +29,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import cosine.boat.utils.CHTools;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -60,6 +57,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
+import cosine.boat.utils.CHTools;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link VersionFragment#newInstance} factory method to
@@ -69,7 +68,7 @@ import java.util.Objects;
 
 public class VersionFragment extends Fragment {
 
-    private final String sd1 = LAUNCHER_FILE_DIR + ".minecraft";
+    private final String sd1 = MINECRAFT_DIR;
     private Button mbtn_serarch;
     private MaterialAlertDialogBuilder mDialog;
     private EditText met_search;
@@ -127,6 +126,8 @@ public class VersionFragment extends Fragment {
         // Inflate the layout for this fragment
         View root = inflater.inflate(R.layout.fragment_versions, container, false);
         page = root.findViewById(R.id.dir_layout);
+
+        CHTools.loadPaths(requireContext());
 
         dir = root.findViewById(R.id.ver_new_dir);
         dir.setOnClickListener(v -> showDirDialog());
@@ -303,7 +304,7 @@ public class VersionFragment extends Fragment {
 
     public void setDir(String dir) {
         try {
-            FileInputStream in = new FileInputStream(boatCfg);
+            FileInputStream in = new FileInputStream(BOATCFG);
             byte[] b = new byte[in.available()];
             in.read(b);
             in.close();
@@ -317,7 +318,7 @@ public class VersionFragment extends Fragment {
             json.put("game_assets", dir + "/assets/virtual/legacy");
             json.put("assets_root", dir + "/assets");
             json.put("currentVersion", dir + "/versions");
-            FileWriter fr = new FileWriter(boatCfg);
+            FileWriter fr = new FileWriter(BOATCFG);
             fr.write(json.toString());
             fr.close();
         } catch (Exception e) {
@@ -348,9 +349,7 @@ public class VersionFragment extends Fragment {
             } else {
                 lay.setStrokeWidth(0);
             }
-            String sd3 = LAUNCHER_FILE_DIR + ".minecraft";
-            String sd2 = LAUNCHER_FILE_DIR + ".minecraft";
-            if (datas.get(position).equals(sd1) || datas.get(position).equals(sd2) || datas.get(position).equals(sd3)) {
+            if (datas.get(position).equals(sd1)) {
                 del.setVisibility(View.GONE);
                 delDir.setVisibility(View.GONE);
             } else {
@@ -449,7 +448,7 @@ public class VersionFragment extends Fragment {
 
         public void setDir(String dir) {
             try {
-                FileInputStream in = new FileInputStream(boatCfg);
+                FileInputStream in = new FileInputStream(BOATCFG);
                 byte[] b = new byte[in.available()];
                 in.read(b);
                 in.close();
@@ -463,7 +462,7 @@ public class VersionFragment extends Fragment {
                 json.put("game_assets", dir + "/assets/virtual/legacy");
                 json.put("assets_root", dir + "/assets");
                 json.put("currentVersion", dir + "/versions");
-                FileWriter fr = new FileWriter(boatCfg);
+                FileWriter fr = new FileWriter(BOATCFG);
                 fr.write(json.toString());
                 fr.close();
             } catch (Exception e) {

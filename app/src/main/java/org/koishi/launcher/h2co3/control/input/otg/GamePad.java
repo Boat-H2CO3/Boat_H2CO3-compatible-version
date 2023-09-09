@@ -20,15 +20,40 @@ public class GamePad implements HwInput {
 
     private final static int POINTER_SEND_LAG = 5;
     private final static int EVENT_DEAL_LAG = 5;
-
-    private Controller mController;
-    private boolean isEnabled;
-
     private final static int type_1 = KEYBOARD_BUTTON;
     private final static int type_2 = MOUSE_BUTTON;
     private final static int type_3 = MOUSE_POINTER_INC;
-
+    private final static float G_LT_THR_VALUE = 1f;
+    private final static float G_RT_THR_VALUE = 1f;
+    private final static float G_L_B_THR_POSITIVE = 0.15f;
+    private final static float G_L_B_THR_NEGATIVE = -0.15f;
+    private final static String G_L_B_X_POSITIVE_KEY = KeyMap.KEYMAP_KEY_D;
+    private final static String G_L_B_X_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_A;
+    private final static String G_L_B_Y_POSITIVE_KEY = KeyMap.KEYMAP_KEY_S;
+    private final static String G_L_B_Y_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_W;
+    private final static float G_HAT_THR_POSITIVE = 1f;
+    private final static float G_HAT_THR_NEGATIVE = -1f;
+    private final static String G_HAT_X_POSITIVE_KEY = KeyMap.KEYMAP_KEY_F3;
+    private final static String G_HAT_X_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_F2;
+    private final static String G_HAT_Y_POSITIVE_KEY = KeyMap.KEYMAP_KEY_ESC;
+    private final static String G_HAT_Y_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_F5;
+    private final static float G_R_B_THR_POSITIVE = 0.02f;
+    private final static float G_R_B_THR_NEGATIVE = -0.02f;
+    private final static float G_R_B_NUM_TIMES = 10f;
+    private Controller mController;
+    private boolean isEnabled;
     private boolean G_B_PRESS;
+    private boolean G_LT_PRESS;
+    private boolean G_RT_PRESS;
+    private boolean G_L_B_X_POSITIVE_PRESS;
+    private boolean G_L_B_X_NEGATIVE_PRESS;
+    private boolean G_L_B_Y_POSITIVE_PRESS;
+    private boolean G_L_B_Y_NEGATIVE_PRESS;
+    private boolean G_HAT_X_POSITIVE_PRESS;
+    private boolean G_HAT_X_NEGATIVE_PRESS;
+    private boolean G_HAT_Y_POSITIVE_PRESS;
+    private boolean G_HAT_Y_NEGATIVE_PRESS;
+    private GamePadThread mGamePadThread;
 
     @Override
     public boolean onKey(KeyEvent event) {
@@ -123,40 +148,6 @@ public class GamePad implements HwInput {
     private void sendEvent(String keyName, boolean pressed, int keyType) {
         mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, keyType, null));
     }
-
-
-    private boolean G_LT_PRESS;
-    private boolean G_RT_PRESS;
-    private final static float G_LT_THR_VALUE = 1f;
-    private final static float G_RT_THR_VALUE = 1f;
-
-    private boolean G_L_B_X_POSITIVE_PRESS;
-    private boolean G_L_B_X_NEGATIVE_PRESS;
-    private boolean G_L_B_Y_POSITIVE_PRESS;
-    private boolean G_L_B_Y_NEGATIVE_PRESS;
-    private final static float G_L_B_THR_POSITIVE = 0.15f;
-    private final static float G_L_B_THR_NEGATIVE = -0.15f;
-    private final static String G_L_B_X_POSITIVE_KEY = KeyMap.KEYMAP_KEY_D;
-    private final static String G_L_B_X_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_A;
-    private final static String G_L_B_Y_POSITIVE_KEY = KeyMap.KEYMAP_KEY_S;
-    private final static String G_L_B_Y_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_W;
-
-    private boolean G_HAT_X_POSITIVE_PRESS;
-    private boolean G_HAT_X_NEGATIVE_PRESS;
-    private boolean G_HAT_Y_POSITIVE_PRESS;
-    private boolean G_HAT_Y_NEGATIVE_PRESS;
-    private final static float G_HAT_THR_POSITIVE = 1f;
-    private final static float G_HAT_THR_NEGATIVE = -1f;
-    private final static String G_HAT_X_POSITIVE_KEY = KeyMap.KEYMAP_KEY_F3;
-    private final static String G_HAT_X_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_F2;
-    private final static String G_HAT_Y_POSITIVE_KEY = KeyMap.KEYMAP_KEY_ESC;
-    private final static String G_HAT_Y_NEGATIVE_KEY = KeyMap.KEYMAP_KEY_F5;
-
-    private final static float G_R_B_THR_POSITIVE = 0.02f;
-    private final static float G_R_B_THR_NEGATIVE = -0.02f;
-    private final static float G_R_B_NUM_TIMES = 10f;
-    private GamePadThread mGamePadThread;
-
 
     @Override
     public boolean onMotionKey(MotionEvent event) {
@@ -510,11 +501,34 @@ public class GamePad implements HwInput {
 
     private class GamePadThread extends Thread {
 
+        private GamePadRunnable mRunnable;
+        private boolean isPaused = true;
+
+        @Override
+        public void run() {
+            super.run();
+            mRunnable = new GamePadRunnable(this);
+            mRunnable.run();
+        }
+
+        public boolean isPaused() {
+            return this.isPaused;
+        }
+
+        public void setPaused(boolean b) {
+            //Log.e(TAG, "Thread: setPaused." + isPaused);
+            this.isPaused = b;
+        }
+
+        public GamePadRunnable getRunnable() {
+            return this.mRunnable;
+        }
+
         private class GamePadRunnable implements Runnable {
+            private final GamePadThread mThread;
             private int xInc;
             private int yInc;
             private long lastPointerTime;
-            private final GamePadThread mThread;
 
             public GamePadRunnable(GamePadThread thread) {
                 this.mThread = thread;
@@ -544,29 +558,6 @@ public class GamePad implements HwInput {
                 this.yInc = yInc;
                 this.lastPointerTime = System.currentTimeMillis();
             }
-        }
-
-        @Override
-        public void run() {
-            super.run();
-            mRunnable = new GamePadRunnable(this);
-            mRunnable.run();
-        }
-
-        public void setPaused(boolean b) {
-            //Log.e(TAG, "Thread: setPaused." + isPaused);
-            this.isPaused = b;
-        }
-
-        public boolean isPaused() {
-            return this.isPaused;
-        }
-
-        private GamePadRunnable mRunnable;
-        private boolean isPaused = true;
-
-        public GamePadRunnable getRunnable() {
-            return this.mRunnable;
         }
     }
 }

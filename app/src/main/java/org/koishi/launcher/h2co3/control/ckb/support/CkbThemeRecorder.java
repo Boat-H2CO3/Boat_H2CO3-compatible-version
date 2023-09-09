@@ -14,10 +14,6 @@ public class CkbThemeRecorder {
         }
     }
 
-    public void setCornerRadiusPt(int radius) {
-        this.cornerRadiusPt = radius;
-    }
-
     public int getCornerRadius() {
         return (int) (cornerRadiusPt * 0.01f * 180);
     }
@@ -26,12 +22,8 @@ public class CkbThemeRecorder {
         return this.cornerRadiusPt;
     }
 
-    public void setDesignIndex(int index) {
-        this.designIndex = index;
-    }
-
-    public void setTextColor(int color) {
-        this.textColor = color;
+    public void setCornerRadiusPt(int radius) {
+        this.cornerRadiusPt = radius;
     }
 
     public int getColor(int index) {
@@ -50,7 +42,15 @@ public class CkbThemeRecorder {
         return designIndex;
     }
 
+    public void setDesignIndex(int index) {
+        this.designIndex = index;
+    }
+
     public int getTextColor() {
         return textColor;
+    }
+
+    public void setTextColor(int color) {
+        this.textColor = color;
     }
 }

@@ -18,12 +18,11 @@ import org.koishi.launcher.h2co3.control.input.OnscreenInput;
 
 public class CustomizeKeyboard implements OnscreenInput, Controller, CallCustomizeKeyboard {
 
-    private Controller mController;
     private final String TAG = "CustomKeyboard";
     private final int type = KEYBOARD_BUTTON;
-
     public CkbManager mManager;
     public CkbManagerDialog mDialog;
+    private Controller mController;
 
     @Override
     public boolean load(Context context, Controller controller) {

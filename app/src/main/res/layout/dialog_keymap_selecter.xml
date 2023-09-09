@@ -77,8 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="25dp"
                 android:layout_gravity="center"
-                android:layout_weight="1"
                 android:layout_margin="5dp"
+                android:layout_weight="1"
                 android:text="@string/title_mouse_cb"
                 custom:button_name="MOUSE_BUTTON_MIDDLE" />
 

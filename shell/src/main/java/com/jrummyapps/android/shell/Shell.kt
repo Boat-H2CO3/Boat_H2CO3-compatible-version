@@ -658,6 +658,7 @@ class Shell @Throws(NotFoundException::class) @JvmOverloads constructor(
                 null -> {
                     await(); true
                 }
+
                 else -> await(timeout.value, timeout.unit)
             }
         }

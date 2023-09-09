@@ -17,10 +17,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import org.koishi.launcher.h2co3.control.controller.Controller;
-import org.koishi.launcher.h2co3.control.definitions.manifest.AppManifest;
 import org.koishi.launcher.h2co3.control.input.Input;
 import org.koishi.launcher.h2co3.tools.DisplayUtils;
-import org.koishi.launcher.h2co3.tools.FileTool;
 import org.koishi.launcher.h2co3.views.LineTextView;
 
 import java.io.File;
@@ -28,6 +26,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import cosine.boat.LoadMe;
+import cosine.boat.utils.CHTools;
+import cosine.boat.utils.FileUtils;
 
 public class DebugInfo implements Input, View.OnClickListener {
     private final static String TAG = "DebugInfo";
@@ -38,6 +38,8 @@ public class DebugInfo implements Input, View.OnClickListener {
     //private Button switchButton;
     private LogView mLogView;
     //private boolean isShowInfo = true;
+    private boolean firstWrite = true;
+    private boolean isWrite = true;
 
     @Override
     public boolean load(Context context, Controller controller) {
@@ -132,13 +134,10 @@ public class DebugInfo implements Input, View.OnClickListener {
     public void onClick(View v) {
     }
 
-    private boolean firstWrite = true;
-    private boolean isWrite = true;
-
     private void writeLog(String log) {
         if (!isWrite)
             return;
-        File logFile = new File(AppManifest.BOAT_LOG_FILE);
+        File logFile = new File(CHTools.LOG_DIR + "/client_output.txt");
         if (!logFile.exists()) {
             try {
                 if (!logFile.createNewFile()) {
@@ -149,10 +148,10 @@ public class DebugInfo implements Input, View.OnClickListener {
             }
         }
         if (firstWrite) {
-            FileTool.writeData(logFile.getAbsolutePath(), log);
+            FileUtils.writeData(logFile.getAbsolutePath(), log);
             firstWrite = false;
         } else {
-            FileTool.addStringLineToFile(log, logFile);
+            FileUtils.addStringLineToFile(log, logFile);
         }
 
 

@@ -16,8 +16,6 @@
     <!--color-->
 
     <string name="nav_header_account_mode">在线模式</string>
-    <string name="launcher_initial_install_check">检查文件…</string>
-    <string name="launcher_initial_install_start">正在安装默认主体文件…</string>
 
     <string name="login_account">邮箱</string>
     <string name="login_password">密码</string>
@@ -156,7 +154,6 @@
     <string name="title_global_setting">全局设定</string>
     <string name="title_custom_keyboard">自定义键盘</string>
     <string name="title_pc_keyboard">PC键盘</string>
-    <string name="title_pc_mouse">PC鼠标</string>
     <string name="title_pe_keyboard">MCPE键盘</string>
     <string name="title_pe_itembar">MCPE物品栏</string>
     <string name="title_pe_joystick">MCPE摇杆</string>
@@ -226,5 +223,8 @@
     <string name="tips_try_to_convert_keyboard_layout">是否尝试转换这个键盘文件？</string>
     <string name="tips_successed_to_convert_keyboard_file">转换成功，新的文件名为: %s</string>
     <string name="tips_failed_to_convert_keyboard_file">键盘文件转换失败.</string>
+
+    <string name="splash_runtime_title">安装或更新运行环境</string>
+    <string name="splash_runtime_install">安装 / 更新</string>
 
 </resources>

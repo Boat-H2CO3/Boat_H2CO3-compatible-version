@@ -25,7 +25,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.ckb.support.CustomizeKeyboardMaker;
-import org.koishi.launcher.h2co3.tools.FileTool;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 
@@ -35,12 +34,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import cosine.boat.utils.CHTools;
+import cosine.boat.utils.FileUtils;
 
 public class CkbManagerDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, Dialog.OnCancelListener {
 
+    private final static String TAG = "CkbConfigDialog";
     private final Context mContext;
-    private AlertDialog dialog;
     private final CkbManager mManager;
+    private AlertDialog dialog;
     private RadioButton radioEditable;
     private RadioButton radioGame;
     private TextView textButtonSum;
@@ -54,11 +55,11 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
     private Button buttonClear;
     private Button buttonDefault;
     private KeyboardFileListener fileListener;
-
-
-    private final static String TAG = "CkbConfigDialog";
+    private ArrayList<String> data;
+    private Timer mTimer;
 
     public CkbManagerDialog(@NonNull Context context, CkbManager manager) {
+        CHTools.loadPaths(context);
         this.mContext = context;
         this.mManager = manager;
         initUI();
@@ -113,7 +114,7 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
         //启用目录变化监听
         fileListener = new KeyboardFileListener(this);
         fileListener.startWatching();
-        updataUI();
+        updateUI();
         //启用按键数量刷新
         setCountsRefresh(true);
     }
@@ -124,8 +125,8 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
     }
 
     private void removeSelectedFile() {
-        String filePath = CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + spinnerSelected.getSelectedItem().toString();
-        FileTool.deleteFile(new File(filePath));
+        String filePath = CHTools.CONTROLLER_DIR + "/" + spinnerSelected.getSelectedItem().toString();
+        FileUtils.deleteFile(new File(filePath));
     }
 
     private void loadSelectedFile() {
@@ -162,7 +163,7 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
 
             //检查文件是否存在重复，如果重复，提示是否覆盖。
             boolean run = true;
-            for (String str : FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards")) {
+            for (String str : FileUtils.listChildFilesFromTargetDir(CHTools.CONTROLLER_DIR)) {
                 if (str.equals(fn + ".json")) {
                     run = false;
                     DialogUtils.createBothChoicesDialog(mContext, mContext.getString(R.string.title_warn), mContext.getString(R.string.tips_filename_has_been_used), mContext.getString(R.string.title_over_write), mContext.getString(R.string.title_cancel), new DialogSupports() {
@@ -244,16 +245,14 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
         }
     }
 
-    private ArrayList<String> data;
-
-    public void updataUI() {
+    public void updateUI() {
         if (data == null) {
             data = new ArrayList<>();
-            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards"));
+            data.addAll(FileUtils.listChildFilesFromTargetDir(CHTools.CONTROLLER_DIR));
             spinnerSelected.setAdapter(new ArrayAdapter<>(mContext, android.R.layout.simple_spinner_dropdown_item, data));
         } else {
             data.clear();
-            data.addAll(FileTool.listChildFilesFromTargetDir(CHTools.LAUNCHER_DATA_DIR + "/Keyboards"));
+            data.addAll(FileUtils.listChildFilesFromTargetDir(CHTools.CONTROLLER_DIR));
             ((BaseAdapter) spinnerSelected.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -261,8 +260,6 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
     public void setButtonCounts(final int counts) {
         this.textButtonSum.post(() -> textButtonSum.setText(String.valueOf(counts)));
     }
-
-    private Timer mTimer;
 
     public void setCountsRefresh(boolean able) {
         if (able) {
@@ -285,7 +282,7 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
         private final CkbManagerDialog mDialog;
 
         public KeyboardFileListener(CkbManagerDialog dialog) {
-            super(CHTools.LAUNCHER_DATA_DIR + "/Keyboards");
+            super(CHTools.CONTROLLER_DIR);
             this.mDialog = dialog;
         }
 
@@ -294,7 +291,7 @@ public class CkbManagerDialog implements View.OnClickListener, CompoundButton.On
             switch (event) {
                 case FileObserver.CREATE:
                 case FileObserver.DELETE:
-                    mDialog.updataUI();
+                    mDialog.updateUI();
                     break;
                 default:
                     break;

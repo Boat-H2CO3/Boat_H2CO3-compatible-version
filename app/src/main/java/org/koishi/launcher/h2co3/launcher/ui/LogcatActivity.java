@@ -1,7 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +16,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.tabs.TabLayout;
 
-import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Activity;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -28,6 +26,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import cosine.boat.utils.CHTools;
 
 public class LogcatActivity extends H2CO3Activity {
 
@@ -38,7 +38,7 @@ public class LogcatActivity extends H2CO3Activity {
     //public TextView textList, li;
     public List<String> clientTxt() {
         //将读出来的一行行数据使用List存储
-        String filePath = LAUNCHER_FILE_DIR + "boat_latest_log.txt";
+        String filePath = CHTools.LOG_DIR + "/client_output.txt";
 
         List<String> newList = new ArrayList<>();
         try {
@@ -69,7 +69,7 @@ public class LogcatActivity extends H2CO3Activity {
 
     public List<String> appTxt() {
         //将读出来的一行行数据使用List存储
-        String filePath = LAUNCHER_FILE_DIR + "log.txt";
+        String filePath = CHTools.LOG_DIR + "log.txt";
 
         List<String> newList = new ArrayList<>();
         try {
@@ -100,7 +100,7 @@ public class LogcatActivity extends H2CO3Activity {
 
     public List<String> paramsTxt() {
         //将读出来的一行行数据使用List存储
-        String filePath = LAUNCHER_FILE_DIR + "params.txt";
+        String filePath = CHTools.LOG_DIR + "params.txt";
 
         List<String> newList = new ArrayList<>();
         try {
@@ -165,7 +165,7 @@ public class LogcatActivity extends H2CO3Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logcat);
-
+        CHTools.loadPaths(this);
 
         logLay = findViewById(R.id.log_lay);
 

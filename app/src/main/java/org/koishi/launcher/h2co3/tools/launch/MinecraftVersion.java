@@ -429,13 +429,13 @@ public class MinecraftVersion {
         public String url;
     }
 
-    public class Library {
-        public String name;
-        public HashMap<String, Download> downloads;
-    }
-
     public static class Arguments {
         private Object[] game;
         private Object[] jvm;
+    }
+
+    public class Library {
+        public String name;
+        public HashMap<String, Download> downloads;
     }
 }

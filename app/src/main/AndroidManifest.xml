@@ -79,10 +79,6 @@
             android:screenOrientation="portrait"
             tools:ignore="LockedOrientationActivity" />
         <activity
-            android:name=".launcher.ui.InitialActivity"
-            android:screenOrientation="portrait"
-            tools:ignore="LockedOrientationActivity" />
-        <activity
             android:name=".launcher.launch.boat.BoatClientActivity"
             android:alwaysRetainTaskState="false"
             android:configChanges="fontScale|keyboard|keyboardHidden|locale|orientation|screenLayout|uiMode|screenSize|navigation"
@@ -104,6 +100,7 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/filepaths" />
         </provider>
+
         <activity
             android:name=".control.ckb.CustomizeKeyboardEditorActivity"
             android:configChanges="screenSize|keyboard|navigation|orientation|keyboardHidden"

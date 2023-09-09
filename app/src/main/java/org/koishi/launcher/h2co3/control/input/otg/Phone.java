@@ -52,13 +52,13 @@ public class Phone implements HwInput {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        this.isEnabled = enabled;
+    public boolean isEnabled() {
+        return this.isEnabled;
     }
 
     @Override
-    public boolean isEnabled() {
-        return this.isEnabled;
+    public void setEnabled(boolean enabled) {
+        this.isEnabled = enabled;
     }
 
     @Override

@@ -1,15 +1,12 @@
 package org.koishi.launcher.h2co3.launcher.ui.custom;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,8 +22,6 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.launcher.ui.SettingsActivity;
 import org.koishi.launcher.h2co3.launcher.ui.TerminalActivity;
-
-import java.util.Objects;
 
 public class CustomFragment extends Fragment {
 

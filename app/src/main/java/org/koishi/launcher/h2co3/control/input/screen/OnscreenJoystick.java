@@ -24,6 +24,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.kongqw.rockerlibrary.view.RockerView;
+
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.controller.Controller;
 import org.koishi.launcher.h2co3.control.event.BaseKeyEvent;
@@ -32,40 +35,29 @@ import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-import com.kongqw.rockerlibrary.view.RockerView.*;
-import com.kongqw.rockerlibrary.view.RockerView;
-
 public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListener {
 
+    public final static int SHOW_ALL = 0;
+    public final static int SHOW_IN_GAME = 1;
+    public final static int SHOW_OUT_GAME = 2;
+    private final static int type = KEYBOARD_BUTTON;
+    private final static int widthDp = 200;
+    private final static int heightDp = 200;
+    private final static String TAG = "OnscreenJoystick";
+    private final int[] viewPos = new int[2];
     private LinearLayout onscreenJoystick;
     private RockerView joystick;
     private Button buttonMove;
     private boolean moveable;
     private OnscreenJoystickConfigDialog configDialog;
-
     private Controller mController;
-
     private int screenWidth;
     private int screenHeight;
-
     private boolean enable;
-
-    public final static int SHOW_ALL = 0;
-    public final static int SHOW_IN_GAME = 1;
-    public final static int SHOW_OUT_GAME = 2;
     private int show;
-
-    private final static int type = KEYBOARD_BUTTON;
-
-    private final static int widthDp = 200;
-    private final static int heightDp = 200;
     private int posX;
     private int posY;
-
-
-    private final static String TAG = "OnscreenJoystick";
-
+    private String lastKeyName = "";
 
     @Override
     public void setUiMoveable(boolean moveable) {
@@ -93,6 +85,12 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
     }
 
     @Override
+    public void setEnabled(boolean enabled) {
+        this.enable = enabled;
+        updateUI();
+    }
+
+    @Override
     public void setMargins(int left, int top, int right, int bottom) {
         ViewGroup.LayoutParams p = onscreenJoystick.getLayoutParams();
         ((ViewGroup.MarginLayoutParams) p).setMargins(left, top, 0, 0);
@@ -105,6 +103,17 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
     public int[] getSize() {
         return new int[]{onscreenJoystick.getLayoutParams().width, onscreenJoystick.getLayoutParams().height};
 
+    }
+
+    public void setSize(int s) {
+        ViewGroup.LayoutParams p = onscreenJoystick.getLayoutParams();
+        p.height = s;
+        p.width = s;
+        //控件重绘
+        onscreenJoystick.requestLayout();
+        onscreenJoystick.invalidate();
+        joystick.refreshDrawableState();
+        joystick.invalidate();
     }
 
     @Override
@@ -126,8 +135,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         }
         return false;
     }
-
-    private final int[] viewPos = new int[2];
 
     private void moveViewByTouch(View v, MotionEvent e) {
         switch (e.getAction()) {
@@ -222,8 +229,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
 
     }
 
-    private String lastKeyName = "";
-
     @Override
     public void direction(RockerView.Direction direction) {
         String keyName;
@@ -266,12 +271,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
 
     }
 
-    @Override
-    public void setEnabled(boolean enabled) {
-        this.enable = enabled;
-        updateUI();
-    }
-
     private void updateUI() {
         if (enable) {
             if (mController.isGrabbed()) {
@@ -292,13 +291,13 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         }
     }
 
+    public int getShowStat() {
+        return this.show;
+    }
+
     public void setShowStat(int s) {
         this.show = s;
         updateUI();
-    }
-
-    public int getShowStat() {
-        return this.show;
     }
 
     @Override
@@ -310,17 +309,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
 
     private void sendKeyEvent(String keyName, boolean pressed) {
         mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
-    }
-
-    public void setSize(int s) {
-        ViewGroup.LayoutParams p = onscreenJoystick.getLayoutParams();
-        p.height = s;
-        p.width = s;
-        //控件重绘
-        onscreenJoystick.requestLayout();
-        onscreenJoystick.invalidate();
-        joystick.refreshDrawableState();
-        joystick.invalidate();
     }
 
     public void setAlpha(float a) {
@@ -360,6 +348,7 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         private final static String sp_show_name = "show";
         private final Context mContext;
         private final OnscreenInput mInput;
+        AlertDialog dialog;
         private Button buttonOK;
         private Button buttonCancel;
         private Button buttonRestore;
@@ -378,7 +367,6 @@ public class OnscreenJoystick implements OnscreenInput, RockerView.OnShakeListen
         private int originalInputSize;
         private int screenWidth;
         private int screenHeight;
-        AlertDialog dialog;
 
         public OnscreenJoystickConfigDialog(Context context, OnscreenInput input) {
             this.mContext = context;

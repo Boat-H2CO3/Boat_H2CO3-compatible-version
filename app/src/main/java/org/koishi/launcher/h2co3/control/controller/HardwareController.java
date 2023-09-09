@@ -34,18 +34,17 @@ import java.util.ArrayList;
 public class HardwareController extends BaseController implements HwController {
 
     private final static String TAG = "HardwareController";
-    private final AndroidKeyMap androidKeyMap = new AndroidKeyMap();
-    public final HwInput keyboard;
-    public final HwInput phone;
-    public final HwInput mouse;
-    public final HwInput gamepad;
-    private final Translation mTranslation;
-    private USBDeviceReceiver mUsbReceiver;
-
     private final static int INPUT_DEVICE_MOUSE = 101;
     private final static int INPUT_DEVICE_KEYBOARD = 102;
     private final static int INPUT_DEVICE_GAMEPAD = 103;
     private final static int INPUT_DEVICE_UNKNOWN = 109;
+    public final HwInput keyboard;
+    public final HwInput phone;
+    public final HwInput mouse;
+    public final HwInput gamepad;
+    private final AndroidKeyMap androidKeyMap = new AndroidKeyMap();
+    private final Translation mTranslation;
+    private USBDeviceReceiver mUsbReceiver;
 
     public HardwareController(Client client, int transType) {
         super(client, false);
@@ -71,6 +70,16 @@ public class HardwareController extends BaseController implements HwController {
         //注册广播接收器
         registerReceiver();
 
+    }
+
+    public static int distinguishInputDevices(InputDevice device) {
+        if ((device.getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE && (device.getSources() & (InputDevice.SOURCE_KEYBOARD | InputDevice.SOURCE_JOYSTICK)) == 0) {
+            return HardwareController.INPUT_DEVICE_MOUSE;
+        } else if ((device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && (device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC)) {
+            return HardwareController.INPUT_DEVICE_KEYBOARD;
+        } else if (((device.getSources() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) && ((device.getSources() & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK)) {
+            return HardwareController.INPUT_DEVICE_GAMEPAD;
+        } else return HardwareController.INPUT_DEVICE_UNKNOWN;
     }
 
     @Override
@@ -236,16 +245,6 @@ public class HardwareController extends BaseController implements HwController {
                 info = "Unknown: " + event;
         }
         Log.e(event.getTag(), info);
-    }
-
-    public static int distinguishInputDevices(InputDevice device) {
-        if ((device.getSources() & InputDevice.SOURCE_MOUSE) == InputDevice.SOURCE_MOUSE && (device.getSources() & (InputDevice.SOURCE_KEYBOARD | InputDevice.SOURCE_JOYSTICK)) == 0) {
-            return HardwareController.INPUT_DEVICE_MOUSE;
-        } else if ((device.getSources() & InputDevice.SOURCE_KEYBOARD) != 0 && (device.getKeyboardType() == InputDevice.KEYBOARD_TYPE_ALPHABETIC)) {
-            return HardwareController.INPUT_DEVICE_KEYBOARD;
-        } else if (((device.getSources() & InputDevice.SOURCE_GAMEPAD) == InputDevice.SOURCE_GAMEPAD) && ((device.getSources() & InputDevice.SOURCE_JOYSTICK) == InputDevice.SOURCE_JOYSTICK)) {
-            return HardwareController.INPUT_DEVICE_GAMEPAD;
-        } else return HardwareController.INPUT_DEVICE_UNKNOWN;
     }
 
     @Override

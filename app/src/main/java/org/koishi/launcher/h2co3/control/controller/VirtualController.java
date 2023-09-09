@@ -8,7 +8,6 @@ import static org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent.MOUS
 import static org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent.TYPE_WORDS;
 
 import android.animation.ObjectAnimator;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.AttributeSet;
@@ -21,13 +20,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
-import com.google.android.material.materialswitch.MaterialSwitch;
-
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.material.materialswitch.MaterialSwitch;
 
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.ckb.support.CustomizeKeyboardMaker;

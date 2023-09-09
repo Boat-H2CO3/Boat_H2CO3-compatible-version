@@ -33,10 +33,10 @@ public class ItemBar implements OnscreenInput {
 
     private final static String TAG = "ItemBar";
     private final static int type = KEYBOARD_BUTTON;
-    private Controller mController;
-    private LinearLayout itemBar;
     private final boolean moveable = false;
     private final ItemButton[] itemButtons = new ItemButton[9];
+    private Controller mController;
+    private LinearLayout itemBar;
     private boolean enable;
     private ItembarConfigDialog configDialog;
     private int posX;
@@ -253,8 +253,8 @@ public class ItemBar implements OnscreenInput {
         private final static String sp_pos_x_name = "pos_x";
         private final static String sp_pos_y_name = "pos_y";
         private final Context mContext;
-        AlertDialog dialog;
         private final OnscreenInput mInput;
+        AlertDialog dialog;
         private Button buttonOK;
         private Button buttonCancel;
         private Button buttonRestore;

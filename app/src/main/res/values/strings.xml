@@ -22,8 +22,6 @@
     <!--extra-->
     <!--color-->
     <string name="nav_header_account_mode">Online</string>
-    <string name="launcher_initial_install_check">Checking file...</string>
-    <string name="launcher_initial_install_start">Initialing file...</string>
 
     <string name="login_account">Email</string>
     <string name="login_password">Password</string>
@@ -180,7 +178,6 @@
     <string name="title_global_setting">Global Settings</string>
     <string name="title_custom_keyboard">Custom Keyboard</string>
     <string name="title_pc_keyboard">PC Keyboard</string>
-    <string name="title_pc_mouse">PC Mouse</string>
     <string name="title_pe_keyboard">MCPE Keyboard</string>
     <string name="title_pe_itembar">MCPE Item Bar</string>
     <string name="title_pe_joystick">MCPE Joystick</string>
@@ -225,7 +222,7 @@
     <string name="title_wheel_down">Wheel Down</string>
     <string name="title_un_alpha_size">Opacity</string>
     <string name="title_colorpicker">Color picker</string>
-    <string name="title_multi_line">Multi line</string>
+    <string name="title_multi_line" translatable="false">Multi line</string>
     <string name="title_order">Order</string>
     <string name="title_input">Input</string>
     <string name="title_shortcut">Shortcut</string>
@@ -255,5 +252,12 @@
     <string name="title_enter" translatable="false">Enter</string>
     <string name="title_t_enter" translatable="false">T + Enter</string>
     <string name="title_done" translatable="false">Done</string>
+
+    <string name="splash_runtime_title">Install or update app runtime</string>
+    <string name="splash_runtime_boat" translatable="false">BOAT LIBRARY</string>
+    <string name="splash_control_keyboard" translatable="false">Default Keyboard</string>
+    <string name="splash_runtime_java8" translatable="false">JRE 8</string>
+    <string name="splash_runtime_java17" translatable="false">JRE 17</string>
+    <string name="splash_runtime_install">Install / Update</string>
 
 </resources>

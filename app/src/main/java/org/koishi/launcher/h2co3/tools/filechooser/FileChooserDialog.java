@@ -9,13 +9,13 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.tools.filechooser.adapter.FileAdapter;
 import org.koishi.launcher.h2co3.tools.filechooser.model.ChooserFile;
 import org.koishi.launcher.h2co3.tools.filechooser.model.ChooserStackDirectory;
 import org.koishi.launcher.h2co3.tools.filechooser.model.MarginItemDecoration;
-
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import java.io.File;
 import java.util.ArrayList;

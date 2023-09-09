@@ -5,6 +5,9 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.ckb.support.CallCustomizeKeyboard;
@@ -16,8 +19,6 @@ import org.koishi.launcher.h2co3.control.controller.Controller;
 import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -32,13 +33,12 @@ import cosine.boat.utils.CHTools;
 
 public class CkbManager {
 
-    private final static String TAG = "CkbManager";
     public final static int MAX_KEYBOARD_SIZE = 160;
     public final static int MIN_KEYBOARD_SIZE = 0;
     public final static String LAST_KEYBOARD_LAYOUT_NAME = "default";
     public final static int SHOW_BUTTON = 1;
     public final static int HIDE_BUTTON = 2;
-
+    private final static String TAG = "CkbManager";
     private final Context mContext;
     private final CallCustomizeKeyboard mCall;
     private final Controller mController;
@@ -52,10 +52,27 @@ public class CkbManager {
 
     public CkbManager(@NonNull Context context, @NonNull CallCustomizeKeyboard call, Controller controller) {
         super();
+        CHTools.loadPaths(context);
         this.mContext = context;
         this.mCall = call;
         this.mController = controller;
         init();
+    }
+
+    public static boolean outputFile(KeyboardRecorder kr, String fileName) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        StringBuilder jsonString = new StringBuilder(gson.toJson(kr));
+        jsonString.insert(0, "/*\n *This file is craeted by Boat_H2CO3\n *Please DON'T edit the file if you don't know how it works.\n*/\n");
+        try {
+            FileWriter jsonWriter = new FileWriter(CHTools.APP_DATA_PATH + "/Keyboards" + "/" + fileName + ".json");
+            BufferedWriter out = new BufferedWriter(jsonWriter);
+            out.write(jsonString.toString());
+            out.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public int[] getDisplaySize() {
@@ -133,6 +150,10 @@ public class CkbManager {
         return buttonList.size();
     }
 
+    public int getButtonsMode() {
+        return this.buttonMode;
+    }
+
     public void setButtonsMode(int mode) {
         if (mode == GameButton.MODE_GAME || mode == GameButton.MODE_MOVEABLE_EDITABLE || mode == GameButton.MODE_PREVIEW) {
             for (GameButton g : buttonList) {
@@ -141,10 +162,6 @@ public class CkbManager {
             this.buttonMode = mode;
         } else {
         }
-    }
-
-    public int getButtonsMode() {
-        return this.buttonMode;
     }
 
     public GameButton[] getGameButtons() {
@@ -182,22 +199,6 @@ public class CkbManager {
         kr.setVersionCode(KeyboardRecorder.VERSION_THIS);
 
         outputFile(kr, fileName);
-    }
-
-    public static boolean outputFile(KeyboardRecorder kr, String fileName) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        StringBuilder jsonString = new StringBuilder(gson.toJson(kr));
-        jsonString.insert(0, "/*\n *This file is craeted by Boat_H2CO3\n *Please DON'T edit the file if you don't know how it works.\n*/\n");
-        try {
-            FileWriter jsonWriter = new FileWriter(CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + fileName + ".json");
-            BufferedWriter out = new BufferedWriter(jsonWriter);
-            out.write(jsonString.toString());
-            out.close();
-            return true;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return false;
-        }
     }
 
     public void autoSaveKeyboard() {
@@ -239,7 +240,7 @@ public class CkbManager {
     }
 
     public boolean loadKeyboard(String fileName) {
-        File file = new File(CHTools.LAUNCHER_DATA_DIR + "/Keyboards" + "/" + fileName);
+        File file = new File(CHTools.APP_DATA_PATH + "/Keyboards" + "/" + fileName);
         return loadKeyboard(file);
     }
 

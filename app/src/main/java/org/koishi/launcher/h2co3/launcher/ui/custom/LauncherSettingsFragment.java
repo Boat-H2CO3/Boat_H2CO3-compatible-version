@@ -1,8 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.ui.custom;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_DATA_DIR;
-import static cosine.boat.utils.CHTools.LAUNCHER_FILE_DIR;
-
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,7 +17,6 @@ import androidx.preference.EditTextPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import cosine.boat.utils.CHTools;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.koishi.launcher.h2co3.R;
@@ -31,6 +27,7 @@ import org.koishi.launcher.h2co3.launcher.ui.SplashActivity;
 import java.io.File;
 import java.util.Objects;
 
+import cosine.boat.utils.CHTools;
 import rikka.material.preference.MaterialSwitchPreference;
 
 public class LauncherSettingsFragment extends PreferenceFragmentCompat {
@@ -57,6 +54,8 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.launcher_settings_preferences, rootKey);
+
+        CHTools.loadPaths(requireContext());
 
         delRun = findPreference("set_reset_cfg");
         if (delRun != null) {
@@ -117,7 +116,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
                     //TODO
                     new Thread(() -> {
                         //String file2= "/data/data/org.koishi.launcher.h2co3/app_runtime";
-                        deleteFile(LAUNCHER_FILE_DIR + "h2co3Cfg.json");
+                        deleteFile(CHTools.PUBLIC_FILE_PATH + "/h2co3Cfg.json");
                         deleteFile(CHTools.H2CO3CfgPath());
                         requireActivity().finish();
                         startActivity(new Intent(requireActivity(), SplashActivity.class));
@@ -158,7 +157,7 @@ public class LauncherSettingsFragment extends PreferenceFragmentCompat {
     }
 
     private void killlist() {
-        File file2 = new File(LAUNCHER_DATA_DIR);
+        File file2 = new File(CHTools.APP_DATA_PATH);
         deleteDirWihtFile(file2);
     }
 

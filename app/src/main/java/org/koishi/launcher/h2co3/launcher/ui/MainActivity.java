@@ -12,8 +12,8 @@ import androidx.navigation.ui.NavigationUI;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import org.koishi.launcher.h2co3.H2CO3Activity;
 import org.koishi.launcher.h2co3.R;
+import org.koishi.launcher.h2co3.component.H2CO3Activity;
 
 public class MainActivity extends H2CO3Activity {
 

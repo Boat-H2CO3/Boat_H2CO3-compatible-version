@@ -1,6 +1,8 @@
 #include <android/log.h>
 #include "boat_internal.h"
+
 BoatEvent current_event;
+
 void EventQueue_init(EventQueue *queue) {
     queue->count = 0;
     queue->head = NULL;
@@ -78,7 +80,8 @@ void boatSetCursorMode(int mode) {
         abort();
     }
     (*env)->CallVoidMethod(env, mBoat.boatActivity, BoatActivity_setCursorMode, mode);
-    (*env)->CallVoidMethod(env, mBoat.class_BoatActivity, mBoat.setGrabCursorId, mode == CursorDisabled ? JNI_TRUE : JNI_FALSE);
+    (*env)->CallVoidMethod(env, mBoat.class_BoatActivity, mBoat.setGrabCursorId,
+                           mode == CursorDisabled ? JNI_TRUE : JNI_FALSE);
     (*mBoat.android_jvm)->DetachCurrentThread(mBoat.android_jvm);
 }
 
@@ -120,6 +123,7 @@ int boatPollEvent(BoatEvent *event) {
     }
     return ret;
 }
+
 JNIEXPORT jintArray JNICALL
 Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
     jintArray ja = (*env)->NewIntArray(env, 2);
@@ -127,6 +131,7 @@ Java_cosine_boat_BoatInput_getPointer(JNIEnv *env, jclass thiz) {
     (*env)->SetIntArrayRegion(env, ja, 0, 2, arr);
     return ja;
 }
+
 JNIEXPORT void JNICALL
 Java_cosine_boat_BoatInput_pushEvent(JNIEnv *env, jclass clazz, jlong time, jint type, jint p1,
                                      jint p2) {

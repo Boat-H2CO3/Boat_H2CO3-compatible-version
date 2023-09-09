@@ -46,6 +46,7 @@ public class OnscreenKeyboard implements OnscreenInput {
     private final static int heightDp = 130;
     private final static String colorHexEnable = "#149CFF";
     private final static String colorHexDisable = "#000000";
+    private final int[] OnscreenKeyboardPos = new int[2];
     private Controller mController;
     private LinearLayout onscreenKeyboard;
     private boolean moveable = false;
@@ -60,7 +61,6 @@ public class OnscreenKeyboard implements OnscreenInput {
     private boolean enableType = false;
     private boolean enableShift = false;
     private OnscreenKeyboardConfigDialog configDialog;
-    private final int[] OnscreenKeyboardPos = new int[2];
     private int screenWidth;
     private int screenHeight;
     private int posX;
@@ -397,6 +397,7 @@ public class OnscreenKeyboard implements OnscreenInput {
         private final static String sp_show_name = "show";
         private final Context mContext;
         private final OnscreenInput mInput;
+        AlertDialog dialog;
         private Button buttonOK;
         private Button buttonCancel;
         private Button buttonRestore;
@@ -416,7 +417,6 @@ public class OnscreenKeyboard implements OnscreenInput {
         private int originalMarginLeft;
         private int originalMarginTop;
         private int originalShow;
-        AlertDialog dialog;
 
         public OnscreenKeyboardConfigDialog(@NonNull Context context, OnscreenInput input) {
             mContext = context;

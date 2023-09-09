@@ -239,6 +239,13 @@ public class DownloadFragment extends DialogFragment {
         getDialog().getWindow().setAttributes(params);
         super.onResume();
 
+    }
+
+    //字体颜色
+    private TextView basefindViewById(View base, int id) {
+        TextView a = base.findViewById(id);
+        a.setTextColor(Color.GRAY);
+        return a;
     }    private final View.OnClickListener onclick = new View.OnClickListener() {
 
         @Override
@@ -260,13 +267,6 @@ public class DownloadFragment extends DialogFragment {
             }
         }
     };
-
-    //字体颜色
-    private TextView basefindViewById(View base, int id) {
-        TextView a = base.findViewById(id);
-        a.setTextColor(Color.GRAY);
-        return a;
-    }
 
     private void Download_client_Assets(String json) {
         try {
@@ -524,6 +524,77 @@ public class DownloadFragment extends DialogFragment {
         } catch (Exception e) {
             setText(e.toString());
         }
+    }
+
+    private void Dwonload_Version_json(String id, String url) {
+        File e = new File(Version_json);
+        if (!e.exists()) {
+            download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
+        } else {
+            if (e.isDirectory()) {
+                //文件夹怎么删除?
+                e.delete();
+                download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
+            } else {
+                mpath1.setText(String.format("Version->%s->json", Version));
+                mpath_progress1.setProgress(100);//留空白不好看
+                mhandler.sendEmptyMessage(2);
+            }
+        }
+    }
+
+    private void run_download_libraries() {
+        success_libraries = 0;
+        overall_libraries = 0;
+        Temporary = new ArrayList<>();
+        ArrayList<Object> unexists_File_Manager = new ArrayList<>();
+        for (LibrariesUtil util : libraries) {
+            if (util.get()) {
+                File file = new File(Version_libraries + util.getpath());
+                util.setpath(file.getAbsolutePath());
+
+                util.seturl(Turn_Url(API_Libraries, util.getname()));
+
+                if (file.exists()) {
+                    if (file.isDirectory()) {
+                        file.delete();
+                        unexists_File_Manager.add(util);
+                        overall_libraries += util.getsize();
+                    } else {
+                        if (file.length() != util.getsize()) {
+                            file.delete();
+                            unexists_File_Manager.add(util);
+                            overall_libraries += util.getsize();
+                        }
+                    }
+                } else {
+                    unexists_File_Manager.add(util);
+                    overall_libraries += util.getsize();
+                }
+            } else {
+                File file = new File(Turn_Path(Version_libraries, util.getname()));
+                util.setpath(file.getAbsolutePath());
+                if (file.exists()) {
+                    if (file.isDirectory()) {
+                        file.delete();
+                        unexists_File_Manager.add(util);
+                    } else {
+                        //此为数据缺失
+                    }
+                } else {
+                    unexists_File_Manager.add(util);
+                }
+
+            }
+        }
+        if (unexists_File_Manager.size() >= 1) {
+            libraries_loader_size = unexists_File_Manager.size();
+
+            Temporary = unexists_File_Manager;
+            mhandler.sendEmptyMessageDelayed(1000, 50);
+        } else {
+            mhandler.sendEmptyMessage(5);
+        }
     }    private final Handler mhandler = new Handler(new Handler.Callback() {
         @SuppressLint("SetTextI18n")
         @Override
@@ -645,77 +716,6 @@ public class DownloadFragment extends DialogFragment {
             return false;
         }
     });
-
-    private void Dwonload_Version_json(String id, String url) {
-        File e = new File(Version_json);
-        if (!e.exists()) {
-            download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
-        } else {
-            if (e.isDirectory()) {
-                //文件夹怎么删除?
-                e.delete();
-                download_manager_1(url, game_directory + "/versions/" + id, Version + ".json", 2, "Version->" + Version + "->json", 0);
-            } else {
-                mpath1.setText(String.format("Version->%s->json", Version));
-                mpath_progress1.setProgress(100);//留空白不好看
-                mhandler.sendEmptyMessage(2);
-            }
-        }
-    }
-
-    private void run_download_libraries() {
-        success_libraries = 0;
-        overall_libraries = 0;
-        Temporary = new ArrayList<>();
-        ArrayList<Object> unexists_File_Manager = new ArrayList<>();
-        for (LibrariesUtil util : libraries) {
-            if (util.get()) {
-                File file = new File(Version_libraries + util.getpath());
-                util.setpath(file.getAbsolutePath());
-
-                util.seturl(Turn_Url(API_Libraries, util.getname()));
-
-                if (file.exists()) {
-                    if (file.isDirectory()) {
-                        file.delete();
-                        unexists_File_Manager.add(util);
-                        overall_libraries += util.getsize();
-                    } else {
-                        if (file.length() != util.getsize()) {
-                            file.delete();
-                            unexists_File_Manager.add(util);
-                            overall_libraries += util.getsize();
-                        }
-                    }
-                } else {
-                    unexists_File_Manager.add(util);
-                    overall_libraries += util.getsize();
-                }
-            } else {
-                File file = new File(Turn_Path(Version_libraries, util.getname()));
-                util.setpath(file.getAbsolutePath());
-                if (file.exists()) {
-                    if (file.isDirectory()) {
-                        file.delete();
-                        unexists_File_Manager.add(util);
-                    } else {
-                        //此为数据缺失
-                    }
-                } else {
-                    unexists_File_Manager.add(util);
-                }
-
-            }
-        }
-        if (unexists_File_Manager.size() >= 1) {
-            libraries_loader_size = unexists_File_Manager.size();
-
-            Temporary = unexists_File_Manager;
-            mhandler.sendEmptyMessageDelayed(1000, 50);
-        } else {
-            mhandler.sendEmptyMessage(5);
-        }
-    }
 
     //https://bmclapi2.bangbang93.com/version/1.7.10/server boat json
     private String Turn_Url(String api, String a) {

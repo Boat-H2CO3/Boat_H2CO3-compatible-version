@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+
 import com.google.android.material.materialswitch.MaterialSwitch;
 
 import org.koishi.launcher.h2co3.R;
@@ -32,70 +33,71 @@ import java.util.Arrays;
 
 public class GameButtonDialog extends Dialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener, Dialog.OnCancelListener, View.OnFocusChangeListener, Spinner.OnItemSelectedListener {
 
+    public final static int DEFAULT_MOVE_DISTANCE = 1;
+    public final static int DEFAULT_MARGIN_DISTANCE = 2;
+    private final static String TAG = "GameButtonDialog";
+    private final static int COLOR_TYPE_TEXT = 0;
+    private final static int COLOR_TYPE_BACK = 1;
     private final Context mContext;
     private final GameButton mGameButton;
     private final CkbManager mManager;
-
     private EditText editKeyName;
-
     private Button buttonReduceWidth;
     private EditText editKeyWidth;
     private Button buttonPlusWidth;
-
     private Button buttonReduceHeight;
     private EditText editKeyHeight;
     private Button buttonPlusHeight;
-
     private Button buttonReduceLeft;
     private EditText editKeyLeft;
     private Button buttonPlusLeft;
-
     private Button buttonReduceTop;
     private EditText editKeyTop;
     private Button buttonPlusTop;
-
     private TextView textMap1;
     private TextView textMap2;
     private TextView textMap3;
     private TextView textMap4;
-
     private EditText editBackColor;
     private View viewBackColorPreview;
-
     private EditText editTextColor;
     private View viewTextColorPreview;
-
     private SeekBar seekbarTextSize;
     private TextView textTextSize;
-
     private SeekBar seekbarCornerSize;
     private TextView textCornerSize;
-
     private SeekBar seekbarAlpha;
     private TextView textAlpha;
-
     private MaterialSwitch switchKeep;
     private MaterialSwitch switchHide;
     private MaterialSwitch switchViewerFollow;
     private MaterialSwitch switchChars;
     private EditText editChars;
-
     private RadioButton rbtShowAll;
     private RadioButton rbtShowInGame;
     private RadioButton rbtShowOutGame;
-
     private Spinner spinnerDesign;
-
     private Button buttonOK;
     private Button buttonCancel;
     private Button buttonDel;
     private Button buttonCopy;
-
-    public final static int DEFAULT_MOVE_DISTANCE = 1;
-    public final static int DEFAULT_MARGIN_DISTANCE = 2;
-    private final static String TAG = "GameButtonDialog";
-
-
+    private String originalKeyName;
+    private float[] originalKeySize;
+    private float[] originalKeyPos;
+    private String[] originalMaps;
+    private String originalBackColorHex;
+    private String originalTextColorHex;
+    private int originalAlpha;
+    private int originalTextSize;
+    private int originalCornerSize;
+    private boolean originalKeep;
+    private boolean originalHide;
+    private boolean originalViewerFollow;
+    private boolean originalAutoHide;
+    private int originalDesignIndex;
+    private int originalShow;
+    private String originalChars;
+    private boolean originalIsChars;
     public GameButtonDialog(@NonNull Context context, GameButton gamebutton, CkbManager manager) {
         super(context);
         setContentView(R.layout.dialog_gamebutton_config);
@@ -536,24 +538,6 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
 
     }
 
-    private String originalKeyName;
-    private float[] originalKeySize;
-    private float[] originalKeyPos;
-    private String[] originalMaps;
-    private String originalBackColorHex;
-    private String originalTextColorHex;
-    private int originalAlpha;
-    private int originalTextSize;
-    private int originalCornerSize;
-    private boolean originalKeep;
-    private boolean originalHide;
-    private boolean originalViewerFollow;
-    private boolean originalAutoHide;
-    private int originalDesignIndex;
-    private int originalShow;
-    private String originalChars;
-    private boolean originalIsChars;
-
     private void recordGameButton() {
         this.originalKeyName = mGameButton.getKeyName();
         this.originalKeySize = mGameButton.getKeySize();
@@ -620,9 +604,6 @@ public class GameButtonDialog extends Dialog implements View.OnClickListener, Se
         textMap3.setText(tmp[2]);
         textMap4.setText(tmp[3]);
     }
-
-    private final static int COLOR_TYPE_TEXT = 0;
-    private final static int COLOR_TYPE_BACK = 1;
 
     private void showColorPicker(String originalHex, final EditText et, final View v, final int type) {
         int color = ColorUtils.hex2Int(originalHex);

@@ -1,7 +1,5 @@
 package org.koishi.launcher.h2co3.launcher.launch.boat;
 
-import static cosine.boat.utils.CHTools.LAUNCHER_DATA_USER_DIR;
-
 import android.content.Context;
 import android.util.Log;
 
@@ -18,7 +16,6 @@ import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Objects;
 import java.util.Vector;
 
 import cosine.boat.utils.CHTools;
@@ -121,8 +118,8 @@ public class LauncherConfig extends HashMap<String, String> {
     public static Vector<String> getMcArgs(LauncherConfig config, Context context, int width, int height) {
         try {
             MinecraftVersion version = MinecraftVersion.fromDirectory(new File(CHTools.getBoatCfg("currentVersion", "Null")));
-            String runtimePath = CHTools.getBoatCfg("runtimePath", "");
-            String lwjglPath = CHTools.getBoatCfg("runtimePath", "") + "/boat";
+            String runtimePath = CHTools.RUNTIME_DIR;
+            String lwjglPath = CHTools.RUNTIME_DIR + "/boat";
             String server = "server";
             // 识别表单
             String javaPath;
@@ -217,7 +214,8 @@ public class LauncherConfig extends HashMap<String, String> {
             }
             args.add("-Dlwjgl.platform=Boat_H2CO3");
             args.add("-Dos.name=Linux");
-            args.add("-Djava.io.tmpdir=" + LAUNCHER_DATA_USER_DIR);
+            args.add("-Djava.io.tmpdir=" + CHTools.CACHE_DIR);
+            CHTools.loadPaths(context);
             String[] accountArgs;
             accountArgs = new String[0];
             Collections.addAll(args, accountArgs);

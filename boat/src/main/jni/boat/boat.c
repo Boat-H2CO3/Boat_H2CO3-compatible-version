@@ -49,8 +49,8 @@ JNIEXPORT void JNICALL Java_cosine_boat_BoatActivity_nOnCreate(JNIEnv *env, jobj
     mBoat.setCursorMode = (*env)->GetMethodID(env, mBoat.class_BoatActivity, "setCursorMode",
                                               "(I)V");
     mBoat.setGrabCursorId = (*env)->GetMethodID(env,
-                                               mBoat.class_BoatActivity, "setGrabCursor",
-                                               "(Z)V");
+                                                mBoat.class_BoatActivity, "setGrabCursor",
+                                                "(Z)V");
     if (mBoat.setGrabCursorId == NULL) {
         BOAT_INTERNAL_LOG("Failed to find method: BoatActivity::setGrabCursor");
         abort();

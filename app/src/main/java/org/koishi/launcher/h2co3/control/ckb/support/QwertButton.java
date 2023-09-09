@@ -11,14 +11,14 @@ import org.koishi.launcher.h2co3.R;
 
 public class QwertButton extends androidx.appcompat.widget.AppCompatButton {
 
+    private String button_name;
+
     public QwertButton(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         @SuppressLint("CustomViewStyleable") TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.BaseButton);
         setButtonName(array.getString(R.styleable.BaseButton_button_name));
         array.recycle();
     }
-
-    private String button_name;
 
     public String getButtonName() {
         return button_name;

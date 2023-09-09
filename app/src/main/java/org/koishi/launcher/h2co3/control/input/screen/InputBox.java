@@ -36,41 +36,33 @@ import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 
-import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
+    public final static int SHOW_ALL = 0;
+    public final static int SHOW_IN_GAME = 1;
+    public final static int SHOW_OUT_GAME = 2;
+    private final static int type_1 = TYPE_WORDS;
+    private final static int type_2 = KEYBOARD_BUTTON;
+    private final static String TAG = "InputBox";
+    private final static String[] ORDERS = new String[]{"/gamemode 0", "/gamemode creative", "/time set 0", "/time set 13000"};
+    private final static int widthDp = 110; //dp
+    private final static int heightDp = 50; //dp
+    private final int[] pos = new int[2];
     private Context mContext;
     private Controller mController;
     private LinearLayout inputBox;
     private Button buttonFromSoft;
     private Button buttonFromPre;
-
     private int screenWidth;
     private int screenHeight;
-
-    private final static int type_1 = TYPE_WORDS;
-    private final static int type_2 = KEYBOARD_BUTTON;
-    private final static String TAG = "InputBox";
-
-    private final static String[] ORDERS = new String[]{"/gamemode 0", "/gamemode creative", "/time set 0", "/time set 13000"};
-
-    public final static int SHOW_ALL = 0;
-    public final static int SHOW_IN_GAME = 1;
-    public final static int SHOW_OUT_GAME = 2;
     private int show;
-
-    private final static int widthDp = 110; //dp
-    private final static int heightDp = 50; //dp
-
     private InputBoxConfigDialog configDialog;
-
     private boolean enable;
     private int posX;
     private int posY;
-
 
     @Override
     public void setUiMoveable(boolean moveable) {
@@ -126,8 +118,6 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
     public boolean onTouch(View v, MotionEvent event) {
         return false;
     }
-
-    private final int[] pos = new int[2];
 
     private void moveViewByTouch(View v, MotionEvent e) {
         switch (e.getAction()) {
@@ -254,11 +244,6 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
         inputBox.invalidate();
     }
 
-    public void setShowStat(int s) {
-        this.show = s;
-        updateUI();
-    }
-
     private void sendKey(String keyName) {
         mController.sendKey(new BaseKeyEvent(TAG, keyName, true, KeyEvent.KEYBOARD_BUTTON, null));
         mController.sendKey(new BaseKeyEvent(TAG, keyName, false, KeyEvent.KEYBOARD_BUTTON, null));
@@ -266,6 +251,11 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
 
     public int getShowStat() {
         return this.show;
+    }
+
+    public void setShowStat(int s) {
+        this.show = s;
+        updateUI();
     }
 
     @Override
@@ -309,105 +299,6 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
     @Override
     public Controller getController() {
         return this.mController;
-    }
-
-    class InputDialog implements View.OnClickListener {
-
-        private final Controller mController;
-
-        AlertDialog dialog;
-        private final EditText editBox;
-        private final Button buttonNone;
-        private final Button buttonEnter;
-        private final Button buttonTEnter;
-        private final Button buttonCancel;
-        private final boolean multi_line;
-
-        private static final String TAG = "InputDialog";
-
-        public InputDialog(@NonNull Context context, Controller controller) {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
-            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
-            builder.setView(view);
-            builder.setCancelable(true);
-            dialog = builder.create();
-            this.mController = controller;
-
-            this.editBox = view.findViewById(R.id.dialog_input_edit_box);
-            this.buttonNone = view.findViewById(R.id.dialog_input_button_none);
-            this.buttonEnter = view.findViewById(R.id.dialog_input_button_enter);
-            this.buttonTEnter = view.findViewById(R.id.dialog_input_button_t_enter);
-            this.buttonCancel = view.findViewById(R.id.dialog_input_button_cancel);
-            this.multi_line = context.getSharedPreferences(InputBoxConfigDialog.spFileName, InputBoxConfigDialog.spMode).getBoolean(InputBoxConfigDialog.sp_multi_line_name, true);
-
-            editBox.setOnKeyListener((v, keyCode, event) -> {
-                //当输入框为空的时候，拦截Backspace的按键事件，然后向控制器发送退格事件
-                if (event.getAction() == android.view.KeyEvent.ACTION_DOWN && keyCode == android.view.KeyEvent.KEYCODE_BACK && editBox.getText().toString().equals("")) {
-                    sendKey(KeyMap.KEYMAP_KEY_BACKSPACE);
-                    return true;
-                }
-                return false;
-            });
-
-            for (View v : new View[]{buttonNone, buttonCancel, buttonTEnter, buttonEnter}) {
-                v.setOnClickListener(this);
-            }
-
-        }
-
-        @Override
-        public void onClick(View v) {
-
-            if (v == buttonCancel) {
-                dialog.cancel();
-            }
-
-            if (v == buttonNone) {
-                if (editBox.getText() != null && !editBox.getText().toString().equals("")) {
-                    mController.typeWords(editBox.getText().toString());
-                    if (!multi_line) dialog.dismiss();
-                    else editBox.setText("");
-                }
-            }
-
-            if (v == buttonEnter) {
-                if (editBox.getText() != null) {
-                    if (!editBox.getText().toString().equals(""))
-                        mController.typeWords(editBox.getText().toString());
-                    sendKey(KeyMap.KEYMAP_KEY_ENTER);
-                    if (!multi_line) dialog.dismiss();
-                    else editBox.setText("");
-                }
-            }
-
-            if (v == buttonTEnter) {
-                if (editBox.getText() != null) {
-                    sendKey(KeyMap.KEYMAP_KEY_T);
-                    sleep();
-                    if (!editBox.getText().toString().equals(""))
-                        mController.typeWords(editBox.getText().toString());
-                    sendKey(KeyMap.KEYMAP_KEY_ENTER);
-                    if (!multi_line) dialog.dismiss();
-                    else editBox.setText("");
-                }
-            }
-        }
-
-        private void showKeyboard() {
-
-        }
-
-        public void show() {
-            dialog.show();
-            Timer timer = new Timer();
-            timer.schedule(new TimerTask() {
-                @Override
-                public void run() {
-                    InputMethodManager inputManager = (InputMethodManager) editBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    inputManager.showSoftInput(editBox, 0);
-                }
-            }, 100);
-        }
     }
 
     private static class InputBoxConfigDialog implements View.OnClickListener, Dialog.OnCancelListener, SeekBar.OnSeekBarChangeListener, CompoundButton.OnCheckedChangeListener {
@@ -759,6 +650,103 @@ public class InputBox implements OnscreenInput, KeyMap, View.OnClickListener {
                 }
             }
 
+        }
+    }
+
+    class InputDialog implements View.OnClickListener {
+
+        private static final String TAG = "InputDialog";
+        private final Controller mController;
+        private final EditText editBox;
+        private final Button buttonNone;
+        private final Button buttonEnter;
+        private final Button buttonTEnter;
+        private final Button buttonCancel;
+        private final boolean multi_line;
+        AlertDialog dialog;
+
+        public InputDialog(@NonNull Context context, Controller controller) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_input, null);
+            MaterialAlertDialogBuilder builder = new MaterialAlertDialogBuilder(mContext);
+            builder.setView(view);
+            builder.setCancelable(true);
+            dialog = builder.create();
+            this.mController = controller;
+
+            this.editBox = view.findViewById(R.id.dialog_input_edit_box);
+            this.buttonNone = view.findViewById(R.id.dialog_input_button_none);
+            this.buttonEnter = view.findViewById(R.id.dialog_input_button_enter);
+            this.buttonTEnter = view.findViewById(R.id.dialog_input_button_t_enter);
+            this.buttonCancel = view.findViewById(R.id.dialog_input_button_cancel);
+            this.multi_line = context.getSharedPreferences(InputBoxConfigDialog.spFileName, InputBoxConfigDialog.spMode).getBoolean(InputBoxConfigDialog.sp_multi_line_name, true);
+
+            editBox.setOnKeyListener((v, keyCode, event) -> {
+                //当输入框为空的时候，拦截Backspace的按键事件，然后向控制器发送退格事件
+                if (event.getAction() == android.view.KeyEvent.ACTION_DOWN && keyCode == android.view.KeyEvent.KEYCODE_BACK && editBox.getText().toString().equals("")) {
+                    sendKey(KeyMap.KEYMAP_KEY_BACKSPACE);
+                    return true;
+                }
+                return false;
+            });
+
+            for (View v : new View[]{buttonNone, buttonCancel, buttonTEnter, buttonEnter}) {
+                v.setOnClickListener(this);
+            }
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            if (v == buttonCancel) {
+                dialog.cancel();
+            }
+
+            if (v == buttonNone) {
+                if (editBox.getText() != null && !editBox.getText().toString().equals("")) {
+                    mController.typeWords(editBox.getText().toString());
+                    if (!multi_line) dialog.dismiss();
+                    else editBox.setText("");
+                }
+            }
+
+            if (v == buttonEnter) {
+                if (editBox.getText() != null) {
+                    if (!editBox.getText().toString().equals(""))
+                        mController.typeWords(editBox.getText().toString());
+                    sendKey(KeyMap.KEYMAP_KEY_ENTER);
+                    if (!multi_line) dialog.dismiss();
+                    else editBox.setText("");
+                }
+            }
+
+            if (v == buttonTEnter) {
+                if (editBox.getText() != null) {
+                    sendKey(KeyMap.KEYMAP_KEY_T);
+                    sleep();
+                    if (!editBox.getText().toString().equals(""))
+                        mController.typeWords(editBox.getText().toString());
+                    sendKey(KeyMap.KEYMAP_KEY_ENTER);
+                    if (!multi_line) dialog.dismiss();
+                    else editBox.setText("");
+                }
+            }
+        }
+
+        private void showKeyboard() {
+
+        }
+
+        public void show() {
+            dialog.show();
+            Timer timer = new Timer();
+            timer.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    InputMethodManager inputManager = (InputMethodManager) editBox.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    inputManager.showSoftInput(editBox, 0);
+                }
+            }, 100);
         }
     }
 

@@ -32,15 +32,15 @@ import java.util.TimerTask;
 
 public class CustomizeKeyboardEditorActivity extends AppCompatActivity implements View.OnSystemUiVisibilityChangeListener, View.OnClickListener, DrawerLayout.DrawerListener, CallCustomizeKeyboard, Client {
 
+    private final static int SYSTEM_UI_HIDE_DELAY_MS = 3000;
+    private final int[] pointer = new int[]{0, 0};
     private Toolbar mToolbar;
     private ViewGroup mLayout_main;
-
-    private final int[] pointer = new int[]{0, 0};
     private Controller mController;
     private boolean isGrabbed;
     private TimerTask systemUiTimerTask;
     private Timer mTimer;
-    private final static int SYSTEM_UI_HIDE_DELAY_MS = 3000;
+    private Float viewPosY;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +60,6 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
             mTimer = new Timer();
         });
     }
-
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
@@ -146,15 +145,12 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         };
     }
 
-
     @Override
     public void onClick(View v) {
         if (v == mLayout_main) {
             switchToolbar();
         }
     }
-
-    private Float viewPosY;
 
     @Override
     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {

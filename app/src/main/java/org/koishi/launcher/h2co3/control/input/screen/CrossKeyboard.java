@@ -4,11 +4,9 @@ import static org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent.KEYB
 import static org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent.MARK_KEYNAME_SPLIT_STRING;
 
 import android.annotation.SuppressLint;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -38,35 +36,31 @@ import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 import java.util.Arrays;
 
 public class CrossKeyboard implements OnscreenInput, KeyMap {
+    public final static int SHOW_ALL = 0;
+    public final static int SHOW_IN_GAME = 1;
+    public final static int SHOW_OUT_GAME = 2;
+    private final static int type = KEYBOARD_BUTTON;
+    private final static String TAG = "CrossKey";
+    private final static String spFileName = "input_crosskeyboard_config";
+    private final static int spMode = Context.MODE_PRIVATE;
+    private final static int widthDp = 160;
+    private final static int heightDp = 160;
+    private final int[] viewPos = new int[2];
     private Context mContext;
     private Controller mController;
     private LinearLayout crossKeyboard;
     private CrossButton[] crosskeyChildren;
     private boolean moveable = false;
     private boolean enable;
-
-    private final static int type = KEYBOARD_BUTTON;
-    private final static String TAG = "CrossKey";
-
-    private final static String spFileName = "input_crosskeyboard_config";
-    private final static int spMode = Context.MODE_PRIVATE;
-
-    public final static int SHOW_ALL = 0;
-    public final static int SHOW_IN_GAME = 1;
-    public final static int SHOW_OUT_GAME = 2;
     private int show;
-
-    private final static int widthDp = 160;
-    private final static int heightDp = 160;
-
     private int posX;
     private int posY;
-
     private int screenWidth;
     private int screenHeight;
-    private final int[] viewPos = new int[2];
-
     private CrossKeyboardConfigDialog configDialog;
+    private CrossButton[] visiableButtons = new CrossButton[]{};
+    private String lastKeyName = "";
+    private boolean shift = false;
 
     @SuppressLint({"InflateParams", "ClickableViewAccessibility"})
     @Override
@@ -100,7 +94,6 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         vg.removeView(crossKeyboard);
         return true;
     }
-
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -146,6 +139,15 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
     @Override
     public int[] getSize() {
         return new int[]{crossKeyboard.getLayoutParams().width, crossKeyboard.getLayoutParams().height};
+    }
+
+    public void setSize(int s) {
+        ViewGroup.LayoutParams p = crossKeyboard.getLayoutParams();
+        p.height = s;
+        p.width = s;
+        //控件重绘
+        crossKeyboard.requestLayout();
+        crossKeyboard.invalidate();
     }
 
     @Override
@@ -275,8 +277,6 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
 
     }
 
-    private CrossButton[] visiableButtons = new CrossButton[]{};
-
     private void uiUpdate(int location, MotionEvent e) {
 
         CrossButton[] group;
@@ -321,9 +321,6 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         }
 
     }
-
-    private String lastKeyName = "";
-    private boolean shift = false;
 
     private void makeKeyEvent(int location, MotionEvent e) {
 
@@ -447,15 +444,6 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         mController.sendKey(new BaseKeyEvent(TAG, keyName, pressed, type, null));
     }
 
-    public void setSize(int s) {
-        ViewGroup.LayoutParams p = crossKeyboard.getLayoutParams();
-        p.height = s;
-        p.width = s;
-        //控件重绘
-        crossKeyboard.requestLayout();
-        crossKeyboard.invalidate();
-    }
-
     public void setAlpha(float a) {
         crossKeyboard.setAlpha(a);
     }
@@ -466,14 +454,14 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
     }
 
     @Override
-    public void setEnabled(boolean enabled) {
-        this.enable = enabled;
-        updateUI();
+    public boolean isEnabled() {
+        return this.enable;
     }
 
     @Override
-    public boolean isEnabled() {
-        return this.enable;
+    public void setEnabled(boolean enabled) {
+        this.enable = enabled;
+        updateUI();
     }
 
     private void updateUI() {
@@ -496,13 +484,13 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         }
     }
 
+    public int getShowStat() {
+        return this.show;
+    }
+
     public void setShowStat(int s) {
         this.show = s;
         updateUI();
-    }
-
-    public int getShowStat() {
-        return this.show;
     }
 
     @Override
@@ -520,7 +508,7 @@ public class CrossKeyboard implements OnscreenInput, KeyMap {
         return this.mController;
     }
 
-   private static class CrossKeyboardConfigDialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, DialogInterface.OnCancelListener, CompoundButton.OnCheckedChangeListener {
+    private static class CrossKeyboardConfigDialog implements View.OnClickListener, SeekBar.OnSeekBarChangeListener, DialogInterface.OnCancelListener, CompoundButton.OnCheckedChangeListener {
         private final static String TAG = "CrossKeyboardConfigDialog";
         private final static int DEFAULT_ALPHA_PROCESS = 40;
         private final static int DEFAULT_SIZE_PROGRESS = 0;
