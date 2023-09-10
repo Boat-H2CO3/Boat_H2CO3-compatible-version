@@ -33,8 +33,8 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cosine.boat.utils.CHTools;
-import cosine.boat.utils.FileUtils;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
+import org.koishi.launcher.h2co3core.utils.FileUtils;
 
 public class CkbManagerDialog implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, Dialog.OnCancelListener {
 

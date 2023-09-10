@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.abstracts;
 
-import org.koishi.launcher.h2co3.tools.json.Json;
+import org.koishi.launcher.h2co3core.utils.json.Json;
 
 import java.io.UnsupportedEncodingException;
 

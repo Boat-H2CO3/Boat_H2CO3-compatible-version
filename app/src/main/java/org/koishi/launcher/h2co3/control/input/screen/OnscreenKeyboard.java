@@ -29,7 +29,7 @@ import org.koishi.launcher.h2co3.control.controller.Controller;
 import org.koishi.launcher.h2co3.control.event.BaseKeyEvent;
 import org.koishi.launcher.h2co3.control.input.OnscreenInput;
 import org.koishi.launcher.h2co3.control.input.screen.button.QwertButton;
-import org.koishi.launcher.h2co3.tools.ColorUtils;
+import org.koishi.launcher.h2co3core.utils.ColorUtils;
 import org.koishi.launcher.h2co3.tools.DisplayUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;

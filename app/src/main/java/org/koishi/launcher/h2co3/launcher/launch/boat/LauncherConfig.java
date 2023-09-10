@@ -18,7 +18,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Vector;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 
 public class LauncherConfig extends HashMap<String, String> {

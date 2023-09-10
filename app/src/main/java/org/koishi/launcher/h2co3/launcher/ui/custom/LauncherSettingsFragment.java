@@ -27,7 +27,7 @@ import org.koishi.launcher.h2co3.launcher.ui.SplashActivity;
 import java.io.File;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 import rikka.material.preference.MaterialSwitchPreference;
 
 public class LauncherSettingsFragment extends PreferenceFragmentCompat {

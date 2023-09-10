@@ -38,7 +38,7 @@ import cosine.boat.BoatActivity;
 import cosine.boat.BoatInput;
 import cosine.boat.function.BoatCallback;
 import cosine.boat.keycodes.BoatKeycodes;
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class BoatClientActivity extends BoatActivity implements View.OnClickListener, Client {
 

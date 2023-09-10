@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui.version;
 
-import static cosine.boat.utils.CHTools.*;
+import static org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools.*;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -43,7 +43,7 @@ import org.koishi.launcher.h2co3.R;
 import org.koishi.launcher.h2co3.adapters.BaseRecycleAdapter;
 import org.koishi.launcher.h2co3.launcher.ui.ModsActivity;
 import org.koishi.launcher.h2co3.launcher.ui.VanillaActivity;
-import org.koishi.launcher.h2co3.tools.data.DbDao;
+import org.koishi.launcher.h2co3core.utils.data.DbDao;
 import org.koishi.launcher.h2co3.tools.file.AppExecute;
 
 import java.io.File;
@@ -57,7 +57,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 /**
  * A simple {@link Fragment} subclass.

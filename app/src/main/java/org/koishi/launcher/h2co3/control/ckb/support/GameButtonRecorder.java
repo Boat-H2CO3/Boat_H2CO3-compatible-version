@@ -5,7 +5,7 @@ import android.content.Context;
 import org.koishi.launcher.h2co3.control.ckb.achieve.CkbManager;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.controller.Controller;
-import org.koishi.launcher.h2co3.tools.ColorUtils;
+import org.koishi.launcher.h2co3core.utils.ColorUtils;
 
 public class GameButtonRecorder {
     public String[] keyMaps = new String[GameButton.MAX_KEYMAP_SIZE];

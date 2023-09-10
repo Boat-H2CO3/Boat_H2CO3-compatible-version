@@ -50,7 +50,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class ModsActivity extends H2CO3Activity {
 

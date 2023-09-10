@@ -4,9 +4,9 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import org.koishi.launcher.h2co3.tools.json.model.JsonArray;
-import org.koishi.launcher.h2co3.tools.json.model.JsonObject;
-import org.koishi.launcher.h2co3.tools.json.model.JsonString;
+import org.koishi.launcher.h2co3core.utils.json.model.JsonArray;
+import org.koishi.launcher.h2co3core.utils.json.model.JsonObject;
+import org.koishi.launcher.h2co3core.utils.json.model.JsonString;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.abstracts.Authenticator;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.abstracts.exception.AuthenticationException;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.model.mojang.MinecraftToken;

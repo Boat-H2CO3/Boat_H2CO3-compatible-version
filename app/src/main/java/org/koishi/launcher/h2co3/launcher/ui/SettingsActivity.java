@@ -13,7 +13,7 @@ import org.koishi.launcher.h2co3.launcher.ui.custom.LauncherSettingsFragment;
 
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class SettingsActivity extends H2CO3Activity {
 

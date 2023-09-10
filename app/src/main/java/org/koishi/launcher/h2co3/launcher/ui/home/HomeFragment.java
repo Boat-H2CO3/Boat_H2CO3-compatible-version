@@ -40,7 +40,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.browser.customtabs.CustomTabsIntent;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.google.android.material.button.MaterialButton;
@@ -59,7 +58,7 @@ import org.koishi.launcher.h2co3.component.H2CO3Fragment;
 import org.koishi.launcher.h2co3.launcher.launch.boat.BoatClientActivity;
 import org.koishi.launcher.h2co3.launcher.ui.InstructionActivity;
 import org.koishi.launcher.h2co3.launcher.ui.VanillaActivity;
-import org.koishi.launcher.h2co3.tools.data.DBHelper;
+import org.koishi.launcher.h2co3core.utils.data.DBHelper;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.abstracts.exception.AuthenticationException;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.model.mojang.MinecraftAuthenticator;
 import org.koishi.launcher.h2co3.tools.login.NewLoginTask.auth.model.mojang.MinecraftToken;
@@ -87,7 +86,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class HomeFragment extends H2CO3Fragment implements View.OnClickListener, NavigationView.OnNavigationItemSelectedListener {
 

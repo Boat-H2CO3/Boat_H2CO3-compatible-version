@@ -17,7 +17,7 @@ import org.koishi.launcher.h2co3.component.H2CO3Activity;
 import java.io.UnsupportedEncodingException;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class InstructionActivity extends H2CO3Activity {
 

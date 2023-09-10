@@ -26,8 +26,8 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 import cosine.boat.LoadMe;
-import cosine.boat.utils.CHTools;
-import cosine.boat.utils.FileUtils;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
+import org.koishi.launcher.h2co3core.utils.FileUtils;
 
 public class DebugInfo implements Input, View.OnClickListener {
     private final static String TAG = "DebugInfo";

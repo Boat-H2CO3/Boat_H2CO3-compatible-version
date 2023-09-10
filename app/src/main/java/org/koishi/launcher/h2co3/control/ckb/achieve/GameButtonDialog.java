@@ -25,7 +25,7 @@ import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.ckb.support.CkbThemeMarker;
 import org.koishi.launcher.h2co3.control.ckb.support.QwertButton;
 import org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent;
-import org.koishi.launcher.h2co3.tools.ColorUtils;
+import org.koishi.launcher.h2co3core.utils.ColorUtils;
 import org.koishi.launcher.h2co3.tools.dialog.DialogUtils;
 import org.koishi.launcher.h2co3.tools.dialog.support.DialogSupports;
 

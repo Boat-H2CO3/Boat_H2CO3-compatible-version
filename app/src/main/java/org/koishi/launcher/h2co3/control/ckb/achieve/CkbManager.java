@@ -29,7 +29,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.nio.file.Files;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class CkbManager {
 

@@ -27,6 +27,7 @@ import org.koishi.launcher.h2co3.control.definitions.id.key.KeyEvent;
 import org.koishi.launcher.h2co3.control.input.screen.CustomizeKeyboard;
 import org.koishi.launcher.h2co3.tools.PicUtils;
 
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -110,7 +111,7 @@ public class CustomizeKeyboardEditorActivity extends AppCompatActivity implement
         });
 
         //设置背景
-        mLayout_main.setBackground(new BitmapDrawable(getResources(), PicUtils.blur(this, 10, ((BitmapDrawable) ContextCompat.getDrawable(this, R.drawable.background)).getBitmap())));
+        mLayout_main.setBackground(new BitmapDrawable(getResources(), PicUtils.blur(this, 10, ((BitmapDrawable) Objects.requireNonNull(ContextCompat.getDrawable(this, R.drawable.background))).getBitmap())));
 
         //初始化控制器
         mController = new VirtualController(this, KeyEvent.KEYMAP_TO_X) {

@@ -12,8 +12,8 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/H2CO3Core" />
+            <option value="$PROJECT_DIR$/Launch" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/boat" />
             <option value="$PROJECT_DIR$/markdown" />
             <option value="$PROJECT_DIR$/shell" />
           </set>

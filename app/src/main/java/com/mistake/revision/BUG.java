@@ -16,7 +16,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 
 import cosine.boat.H2CO3Application;
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class BUG extends H2CO3Application implements Application.ActivityLifecycleCallbacks {
     @Override

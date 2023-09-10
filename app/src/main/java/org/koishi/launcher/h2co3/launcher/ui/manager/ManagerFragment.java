@@ -22,7 +22,7 @@ import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONObject;
 import org.koishi.launcher.h2co3.R;
-import org.koishi.launcher.h2co3.tools.data.DbDao;
+import org.koishi.launcher.h2co3core.utils.data.DbDao;
 import org.koishi.launcher.h2co3.tools.file.AppExecute;
 
 import java.io.File;
@@ -31,7 +31,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class ManagerFragment extends Fragment {
 

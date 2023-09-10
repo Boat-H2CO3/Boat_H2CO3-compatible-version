@@ -9,7 +9,7 @@ import org.koishi.launcher.h2co3.control.ckb.achieve.CkbManager;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButton;
 import org.koishi.launcher.h2co3.control.ckb.button.GameButtonOld;
 import org.koishi.launcher.h2co3.control.definitions.map.MouseMap;
-import org.koishi.launcher.h2co3.tools.ColorUtils;
+import org.koishi.launcher.h2co3core.utils.ColorUtils;
 
 import java.io.File;
 import java.io.FileInputStream;

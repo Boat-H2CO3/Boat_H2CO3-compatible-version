@@ -5,7 +5,7 @@ import org.koishi.launcher.h2co3.launcher.launch.boat.LauncherConfig;
 
 import java.util.Vector;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 
 public class TouchInjector {
 

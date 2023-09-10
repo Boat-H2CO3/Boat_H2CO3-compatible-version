@@ -1,6 +1,6 @@
 package org.koishi.launcher.h2co3.launcher.ui;
 
-import static cosine.boat.utils.CHTools.*;
+import static org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools.*;
 
 import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
@@ -46,7 +46,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import cosine.boat.utils.CHTools;
+import org.koishi.launcher.h2co3core.utils.cainiaohh.CHTools;
 import okhttp3.Call;
 import okhttp3.Response;
 
